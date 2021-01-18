@@ -1,0 +1,15 @@
+#Gradle
+.gradle/
+build/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# App
+captcha/*
+hook.properties
+scripts/*
+log/*
