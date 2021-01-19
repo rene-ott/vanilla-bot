@@ -1,0 +1,10 @@
+applet:
+  qualified_name: com.rsc.applet.b
+  fields:
+    mud_client:
+
+mud_client:
+  qualified_name: com.rsc.d
+  fields:
+    npc_list:
+    npc_list_index:
