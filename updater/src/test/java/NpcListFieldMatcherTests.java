@@ -1,4 +1,4 @@
-import rscvanilla.hooker.matchers.mudclient.NpcListFieldMatcher;
+import rscvanilla.hooker.matchers.fields.mudclient.NpcListFieldMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package rscvanilla.hooker.matchers.mudclient;
+package rscvanilla.hooker.matchers.fields.mudclient;
 
 import rscvanilla.hooker.matchers.FieldMatcher;
 

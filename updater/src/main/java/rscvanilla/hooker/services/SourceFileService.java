@@ -1,4 +1,4 @@
-package rscvanilla.hooker.io;
+package rscvanilla.hooker.services;
 
 import rscvanilla.hooker.infrastructure.annotations.TempDirPath;
 import org.apache.commons.lang3.ArrayUtils;
@@ -12,12 +12,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 
-public class SourceFileIO {
+public class SourceFileService {
 
-    private String tempDirPath;
+    private final String tempDirPath;
 
     @Inject
-    public SourceFileIO(@TempDirPath String tempDirPath) {
+    public SourceFileService(@TempDirPath String tempDirPath) {
 
         this.tempDirPath = tempDirPath;
     }

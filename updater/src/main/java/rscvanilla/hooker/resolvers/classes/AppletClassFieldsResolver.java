@@ -1,6 +1,7 @@
-package rscvanilla.hooker.resolvers;
+package rscvanilla.hooker.resolvers.classes;
 
-import rscvanilla.hooker.matchers.applet.AppletClassFieldMatcher;
+import rscvanilla.hooker.matchers.fields.applet.AppletClassFieldMatcher;
+import rscvanilla.hooker.resolvers.ClassFieldsBaseResolver;
 
 import javax.inject.Inject;
 import java.util.Set;

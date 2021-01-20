@@ -1,4 +1,4 @@
-package rscvanilla.hooker.io;
+package rscvanilla.hooker.services;
 
 import rscvanilla.hooker.infrastructure.annotations.OutputDirPath;
 import rscvanilla.hooker.infrastructure.annotations.WorkingDirPath;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class HooksFileIO {
+public class HooksFileService {
 
     private final static String HOOKS_FILE_NAME = "hooks.yaml";
     private final static String TEMPLATE_FILE_NAME = "template.yaml";
@@ -20,9 +20,9 @@ public class HooksFileIO {
     private final String outputDirPath;
 
     @Inject
-    public HooksFileIO(HooksFileSerializer serializer,
-                       @OutputDirPath String outputDirPath,
-                       @WorkingDirPath String workingDirectoryPath
+    public HooksFileService(HooksFileSerializer serializer,
+                            @OutputDirPath String outputDirPath,
+                            @WorkingDirPath String workingDirectoryPath
     ) {
 
         this.outputDirPath = outputDirPath;

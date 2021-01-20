@@ -22,6 +22,6 @@ public class Main {
             new FieldMatcherModule()
         );
 
-        injector.getInstance(HookService.class).findFieldHooks();
+        injector.getInstance(HooksFileGenerator.class).generate();
     }
 }

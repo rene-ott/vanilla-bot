@@ -7,7 +7,7 @@ import rscvanilla.hooker.infrastructure.annotations.WorkingDirPath;
 
 public class FilePathModule extends AbstractModule {
 
-    private String workingDirPath;
+    private final String workingDirPath;
     private final String tempDirPath;
     private final String outputDirPath;
 

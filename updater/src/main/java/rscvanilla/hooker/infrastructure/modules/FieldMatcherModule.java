@@ -2,11 +2,11 @@ package rscvanilla.hooker.infrastructure.modules;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
-import rscvanilla.hooker.matchers.applet.AppletClassFieldMatcher;
-import rscvanilla.hooker.matchers.applet.MudClientFieldMatcher;
-import rscvanilla.hooker.matchers.mudclient.MudClientClassFieldMatcher;
-import rscvanilla.hooker.matchers.mudclient.NpcListFieldMatcher;
-import rscvanilla.hooker.matchers.mudclient.NpcListIndexFieldMatcher;
+import rscvanilla.hooker.matchers.fields.applet.AppletClassFieldMatcher;
+import rscvanilla.hooker.matchers.fields.applet.MudClientFieldMatcher;
+import rscvanilla.hooker.matchers.fields.mudclient.MudClientClassFieldMatcher;
+import rscvanilla.hooker.matchers.fields.mudclient.NpcListFieldMatcher;
+import rscvanilla.hooker.matchers.fields.mudclient.NpcListIndexFieldMatcher;
 
 public class FieldMatcherModule extends AbstractModule {
 

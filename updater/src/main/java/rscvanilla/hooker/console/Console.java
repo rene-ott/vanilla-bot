@@ -23,13 +23,6 @@ public class Console {
         System.out.println(oldFile == null ? "null" : oldFile.getSection());
         System.out.println();
 
-        System.out.println("-----------------> MATCH <------------------");
-        System.out.println("[NEW FILE]");
-        System.out.println(newFile.getMatch());
-        System.out.println("[OLD FILE]");
-        System.out.println(oldFile == null ? "null" : oldFile.getMatch());
-        System.out.println();
-
         System.out.println("-----------------> FIELD <------------------");
         System.out.println("[NEW FILE]");
         System.out.println(newFile.getFieldName());

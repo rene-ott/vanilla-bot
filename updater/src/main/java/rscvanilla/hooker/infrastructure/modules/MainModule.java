@@ -1,18 +1,20 @@
 package rscvanilla.hooker.infrastructure.modules;
 
 import com.google.inject.AbstractModule;
-import rscvanilla.hooker.HookService;
+import rscvanilla.hooker.HooksFileGenerator;
 import rscvanilla.hooker.serializer.HooksFileSerializer;
-import rscvanilla.hooker.io.HooksFileIO;
-import rscvanilla.hooker.io.SourceFileIO;
+import rscvanilla.hooker.services.ClassFieldFinderService;
+import rscvanilla.hooker.services.HooksFileService;
+import rscvanilla.hooker.services.SourceFileService;
 
 public class MainModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(HookService.class);
+        bind(HooksFileGenerator.class);
         bind(HooksFileSerializer.class);
-        bind(HooksFileIO.class);
-        bind(SourceFileIO.class);
+        bind(HooksFileService.class);
+        bind(SourceFileService.class);
+        bind(ClassFieldFinderService.class);
     }
 }

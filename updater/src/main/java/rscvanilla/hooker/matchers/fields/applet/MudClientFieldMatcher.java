@@ -1,4 +1,4 @@
-package rscvanilla.hooker.matchers.applet;
+package rscvanilla.hooker.matchers.fields.applet;
 
 import rscvanilla.hooker.matchers.FieldMatcherBase;
 
