@@ -1,9 +1,8 @@
-import hooker.matchers.mudclient.NpcListFieldMatcher;
+import rscvanilla.hooker.matchers.mudclient.NpcListFieldMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.*;
 
 
 public class NpcListFieldMatcherTests extends BaseTests {
