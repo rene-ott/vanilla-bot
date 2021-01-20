@@ -1,12 +1,10 @@
 package rscvanilla.hooker.services;
 
-import rscvanilla.hooker.infrastructure.annotations.TempDirPath;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,24 +12,23 @@ import java.util.regex.Pattern;
 
 public class SourceFileService {
 
-    private final String tempDirPath;
+    private final TempDirService tempDirService;
 
     @Inject
-    public SourceFileService(@TempDirPath String tempDirPath) {
-
-        this.tempDirPath = tempDirPath;
+    public SourceFileService(TempDirService tempDirService) {
+        this.tempDirService = tempDirService;
     }
 
     public String readOldFile(String qualifiedClassName) {
-        return readFile("old", qualifiedClassName);
+        return readFile(tempDirService.getOldDirPath(), qualifiedClassName);
     }
 
     public String readNewFile(String qualifiedClassName) {
-        return readFile("new", qualifiedClassName);
+        return readFile(tempDirService.getNewDirPath(), qualifiedClassName);
     }
 
     // TODO Exception handling
-    private String readFile(String dirName, String qualifiedClassName) {
+    private String readFile(String tempDirPath, String qualifiedClassName) {
 
         var packageAndClassName = getPackageAndClassNameFromQName(qualifiedClassName);
         var packageName = packageAndClassName.getLeft();
@@ -40,7 +37,7 @@ public class SourceFileService {
         var classFileName = className + ".java";
         var packageDirNames = getPackageDirNames(packageName);
 
-        var path = Path.of(tempDirPath + File.separator + dirName, ArrayUtils.addAll(packageDirNames, classFileName));
+        var path = Path.of(tempDirPath, ArrayUtils.addAll(packageDirNames, classFileName));
 
         try {
             return Files.readString(path);
@@ -55,7 +52,7 @@ public class SourceFileService {
         return packageName.split("\\.");
     }
 
-    //TODO Custom exceptions
+    //TODO custom exceptions
     private static Pair<String, String> getPackageAndClassNameFromQName(String qualifiedName) {
         var reversedQualifiedName = StringUtils.reverse(qualifiedName);
 

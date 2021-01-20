@@ -1,7 +1,7 @@
 package rscvanilla.hooker.infrastructure.modules;
 
 import com.google.inject.AbstractModule;
-import rscvanilla.hooker.HooksFileGenerator;
+import rscvanilla.hooker.services.HooksFileGenerator;
 import rscvanilla.hooker.serializer.HooksFileSerializer;
 import rscvanilla.hooker.services.ClassFieldFinderService;
 import rscvanilla.hooker.services.HooksFileService;

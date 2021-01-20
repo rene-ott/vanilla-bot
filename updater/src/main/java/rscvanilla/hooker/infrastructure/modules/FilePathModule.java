@@ -1,9 +1,7 @@
 package rscvanilla.hooker.infrastructure.modules;
 
 import com.google.inject.AbstractModule;
-import rscvanilla.hooker.infrastructure.annotations.OutputDirPath;
-import rscvanilla.hooker.infrastructure.annotations.TempDirPath;
-import rscvanilla.hooker.infrastructure.annotations.WorkingDirPath;
+import rscvanilla.hooker.infrastructure.annotations.*;
 
 public class FilePathModule extends AbstractModule {
 
@@ -11,10 +9,20 @@ public class FilePathModule extends AbstractModule {
     private final String tempDirPath;
     private final String outputDirPath;
 
-    public FilePathModule(String workingDirPath, String tempDirPath, String outputDirPath) {
+    private final String newJarPath;
+    private final String oldJarPath;
+
+    public FilePathModule(String workingDirPath,
+                          String tempDirPath,
+                          String outputDirPath,
+                          String newJarPath,
+                          String oldJarPath
+    ) {
         this.workingDirPath = workingDirPath;
         this.tempDirPath = tempDirPath;
         this.outputDirPath = outputDirPath;
+        this.newJarPath = newJarPath;
+        this.oldJarPath = oldJarPath;
     }
 
     @Override
@@ -22,5 +30,7 @@ public class FilePathModule extends AbstractModule {
         bindConstant().annotatedWith(WorkingDirPath.class).to(workingDirPath);
         bindConstant().annotatedWith(TempDirPath.class).to(tempDirPath);
         bindConstant().annotatedWith(OutputDirPath.class).to(outputDirPath);
+        bindConstant().annotatedWith(OldJarPath.class).to(oldJarPath);
+        bindConstant().annotatedWith(NewJarPath.class).to(newJarPath);
     }
 }

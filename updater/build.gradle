@@ -1,9 +1,11 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
     id 'java'
+    id "application"
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+group 'rscvanilla'
+version 'pre-alpha'
 
 repositories {
     mavenCentral()
@@ -17,11 +19,97 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.google.guava:guava:30.1-jre"
     implementation "org.apache.commons:commons-lang3:3.11"
+    implementation "org.apache.commons:commons-io:1.3.2"
     implementation "com.google.inject:guice:5.0.0-BETA-1"
-    implementation  project(':model')
+    implementation "com.beust:jcommander:1.78"
+    implementation project(':model')
 
 }
 
 test {
     useJUnitPlatform()
 }
+
+def rootDir = project.rootDir
+def buildDir = project.buildDir
+
+mainClassName = "rscvanilla.hooker.Main"
+
+def distDir = "${buildDir}/dist"
+def libsDir = "${buildDir}/libs"
+
+def archiveName = "hooker";
+def templateFileName = "template"
+def versionedDirName = "hooker-${project.version}"
+def inputJarsDirName = "input"
+
+shadowJar {
+    manifest {
+        attributes 'Class-Path': '/libs/java-decompiler.jar'
+        archivesBaseName = archiveName
+        version(null)
+        classifier(null)
+    }
+}
+
+task cleanDistDir(type: Delete) {
+    dependsOn shadowJar
+
+    doLast {
+        delete distDir
+    }
+}
+
+task copyJarToDist(type: Copy) {
+    dependsOn cleanDistDir
+    from "${libsDir}/${archiveName}.jar" into "${distDir}"
+}
+
+task copyTemplateToDist(type: Copy) {
+    dependsOn copyJarToDist
+    from "${rootDir}/${templateFileName}.yaml" into "${distDir}"
+}
+
+task moveArtifactsToVersionedDir {
+    dependsOn copyTemplateToDist
+
+    doLast {
+        ant.move file: "${distDir}/${archiveName}.jar", todir: "${distDir}/${versionedDirName}"
+        ant.move file: "${distDir}/${templateFileName}.yaml", todir: "${distDir}/${versionedDirName}"
+    }
+}
+
+task generateInputDir() {
+    dependsOn moveArtifactsToVersionedDir
+
+    mkdir "${distDir}/${versionedDirName}/${inputJarsDirName}"
+}
+
+task createRunInputScripts(type: CreateStartScripts) {
+    dependsOn generateInputDir
+
+    applicationName = "run-with-input"
+    outputDir = file("${distDir}/${versionedDirName}")
+    doLast {
+        delete unixScript
+        windowsScript.text = "@echo off\njava -jar hooker.jar -o %cd%/input/old.jar -n %cd%/input/new.jar\n@echo on\npause"
+    }
+}
+
+task zipVersionedDir(type: Zip) {
+    dependsOn createRunInputScripts
+
+    archiveFileName = "${versionedDirName}.zip"
+    destinationDirectory = file(distDir)
+    from "${distDir}/${versionedDirName}"
+}
+
+task publish() {
+    dependsOn zipVersionedDir
+    doLast {
+        println "Publishing ${versionedDirName}."
+    }
+}
+
+
+
