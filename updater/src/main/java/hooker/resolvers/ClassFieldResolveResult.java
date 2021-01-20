@@ -1,6 +1,7 @@
 package hooker.resolvers;
 
 import hooker.matchers.FieldMatcherResult;
+import hooker.matchers.FieldMatcherResultStatus;
 import model.common.ClassField;
 
 public class ClassFieldResolveResult {
@@ -28,5 +29,13 @@ public class ClassFieldResolveResult {
 
     public ClassField getClassField() {
         return classField;
+    }
+
+    public boolean isFieldNameAccepted() {
+        return newFileMatcherResult.getStatus() == FieldMatcherResultStatus.SINGLE;
+    }
+
+    public String getAcceptedFieldName() {
+        return newFileMatcherResult.getFieldName();
     }
 }

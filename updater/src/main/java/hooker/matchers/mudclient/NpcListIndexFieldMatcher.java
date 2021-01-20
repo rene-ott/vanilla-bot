@@ -1,18 +1,18 @@
 package hooker.matchers.mudclient;
 
-import hooker.matchers.BaseFieldMatcher;
+import hooker.matchers.FieldMatcherBase;
 
 import java.util.regex.Pattern;
 
-public class NpcListIndexFieldMatcher extends BaseFieldMatcher implements MudClientClassFieldMatcher {
+public class NpcListIndexFieldMatcher extends FieldMatcherBase implements MudClientClassFieldMatcher {
 
     public NpcListIndexFieldMatcher() {
         pattern = Pattern.compile(
-            " {3}private com\\.rsc\\.b\\.c [a-zA-Z]{2};\\R" +
+            "(?<pre> {3}private com\\.rsc\\.b\\.c [a-zA-Z]{2};\\R" +
             " {3}private int [a-zA-Z]{2};\\R" +
             " {3}private final int\\[] [a-zA-Z]{2};\\R" +
             " {3}private final int\\[] [a-zA-Z]{2};\\R" +
-            " {3}private int (?<fieldName>[a-zA-Z]{2});",
+            " {3}private int )(?<fieldName>[a-zA-Z]{2})(?<post>;)",
             Pattern.MULTILINE
         );
     }

@@ -3,8 +3,8 @@ package hooker.infrastructure.modules;
 import com.google.inject.AbstractModule;
 import hooker.MainServiceClass;
 import hooker.serializer.HooksFileSerializer;
-import hooker.services.HooksFileService;
-import hooker.services.SourceFileService;
+import hooker.io.HooksFileIO;
+import hooker.io.SourceFileIO;
 
 public class MainModule extends AbstractModule {
 
@@ -12,7 +12,7 @@ public class MainModule extends AbstractModule {
     protected void configure() {
         bind(MainServiceClass.class);
         bind(HooksFileSerializer.class);
-        bind(HooksFileService.class);
-        bind(SourceFileService.class);
+        bind(HooksFileIO.class);
+        bind(SourceFileIO.class);
     }
 }

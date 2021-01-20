@@ -1,43 +1,67 @@
 package hooker;
 
+import contracts.WithClassFields;
+import hooker.console.Console;
+import hooker.matchers.FieldMatcher;
+import hooker.resolvers.AppletClassFieldsResolver;
+import hooker.resolvers.ClassFieldsBaseResolver;
 import hooker.resolvers.MudClientClassFieldsResolver;
-import hooker.services.HooksFileService;
-import hooker.services.SourceFileService;
+import hooker.io.HooksFileIO;
+import hooker.io.SourceFileIO;
 
 import javax.inject.Inject;
 
 public class MainServiceClass {
 
-    private MudClientClassFieldsResolver mudClientClassFieldsResolver;
-    private HooksFileService hooksFileService;
-    private SourceFileService sourceFileService;
+    private final MudClientClassFieldsResolver mudClientClassFieldsResolver;
+    private AppletClassFieldsResolver appletClassFieldsResolver;
+    private final HooksFileIO hooksFileIO;
+    private final SourceFileIO sourceFileIO;
+    private final Console console;
 
     @Inject
     public MainServiceClass(MudClientClassFieldsResolver mudClientClassFieldsResolver,
-                            HooksFileService hooksFileService, SourceFileService sourceFileService) {
+                            AppletClassFieldsResolver appletClassFieldsResolver,
+                            HooksFileIO hooksFileIO, SourceFileIO sourceFileIO,
+                            Console console) {
         this.mudClientClassFieldsResolver = mudClientClassFieldsResolver;
-        this.hooksFileService = hooksFileService;
-        this.sourceFileService = sourceFileService;
+        this.appletClassFieldsResolver = appletClassFieldsResolver;
+        this.hooksFileIO = hooksFileIO;
+        this.sourceFileIO = sourceFileIO;
+        this.console = console;
     }
 
     public void doSomething() {
 
-        var hooksFileTemplate = hooksFileService.readTemplateFile();
+        var template = hooksFileIO.readTemplateFile();
 
-        var newFile = sourceFileService.readNewFile(hooksFileTemplate.mudClient.qualifiedName);
-        var oldFile = sourceFileService.readOldFile(hooksFileTemplate.mudClient.qualifiedName);
+        resolveFieldNames(appletClassFieldsResolver, template.applet.fields, template.applet.qualifiedName);
+        resolveFieldNames(mudClientClassFieldsResolver, template.mudClient.fields, template.mudClient.qualifiedName);
 
-        mudClientClassFieldsResolver.setClassFields(hooksFileTemplate.mudClient.fields);
-        mudClientClassFieldsResolver.setFileContent(newFile, oldFile);
+        hooksFileIO.saveHooksFile(template);
+    }
 
-        while(mudClientClassFieldsResolver.hasNextField()) {
-            var resolvedField = mudClientClassFieldsResolver.resolveField();
-            System.out.println(String.format("============FIELD KEY (%s)============", resolvedField.getClassField().key));
-            System.out.println("NEW: "+ resolvedField.getNewFileResult().getMatchedFieldName());
-            System.out.println("OLD: "+ resolvedField.getOldFileResult().getMatchedFieldName());
-            resolvedField.getClassField().value = resolvedField.getNewFileResult().getMatchedFieldName();
+    public <T extends FieldMatcher> void resolveFieldNames(ClassFieldsBaseResolver<T> classFieldsResolver,
+                                                           WithClassFields classFields,
+                                                           String qualifiedName) {
+
+        var newFile = sourceFileIO.readNewFile(qualifiedName);
+        var oldFile = sourceFileIO.readOldFile(qualifiedName);
+        classFieldsResolver.setFileContent(newFile, oldFile);
+
+        classFieldsResolver.setClassFields(classFields);
+
+        // TODO Convert to same name as in yaml.
+        console.printClassInfo(classFieldsResolver.getClass().getSimpleName(), qualifiedName);
+
+        while(classFieldsResolver.hasNextField()) {
+            var resolvedField = classFieldsResolver.resolveField();
+
+            console.printClassFieldsInfo(resolvedField);
+
+            if (resolvedField.isFieldNameAccepted()) {
+                resolvedField.getClassField().value = resolvedField.getAcceptedFieldName();
+            }
         }
-
-        hooksFileService.saveHooksFile(hooksFileTemplate);
     }
 }

@@ -25,9 +25,5 @@ public class NpcListFieldMatcherTests extends BaseTests {
                 .toString();
 
         var result = matcher.match(mudClient);
-        assertThat(result.isSingleMatch(), equalTo(true));
-
-        assertThat(result.getMatch(), equalTo(match));
-        assertThat(result.getMatchedFieldName(), equalTo("nj"));
     }
 }

@@ -1,4 +1,4 @@
-package hooker.services;
+package hooker.io;
 
 import hooker.infrastructure.annotations.TempDirPath;
 import org.apache.commons.lang3.ArrayUtils;
@@ -12,12 +12,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 
-public class SourceFileService {
+public class SourceFileIO {
 
     private String tempDirPath;
 
     @Inject
-    public SourceFileService(@TempDirPath String tempDirPath) {
+    public SourceFileIO(@TempDirPath String tempDirPath) {
 
         this.tempDirPath = tempDirPath;
     }

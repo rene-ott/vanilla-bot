@@ -1,7 +1,6 @@
-package hooker.services;
+package hooker.io;
 
 import hooker.infrastructure.annotations.OutputDirPath;
-import hooker.infrastructure.annotations.TempDirPath;
 import hooker.infrastructure.annotations.WorkingDirPath;
 import hooker.serializer.HooksFileSerializer;
 import model.HooksFile;
@@ -11,7 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class HooksFileService {
+public class HooksFileIO {
 
     private final static String HOOKS_FILE_NAME = "hooks.yaml";
     private final static String TEMPLATE_FILE_NAME = "template.yaml";
@@ -21,9 +20,9 @@ public class HooksFileService {
     private final String outputDirPath;
 
     @Inject
-    public HooksFileService(HooksFileSerializer serializer,
-                            @OutputDirPath String outputDirPath,
-                            @WorkingDirPath String workingDirectoryPath
+    public HooksFileIO(HooksFileSerializer serializer,
+                       @OutputDirPath String outputDirPath,
+                       @WorkingDirPath String workingDirectoryPath
     ) {
 
         this.outputDirPath = outputDirPath;

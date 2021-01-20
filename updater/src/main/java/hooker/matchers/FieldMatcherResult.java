@@ -1,45 +1,36 @@
 package hooker.matchers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class FieldMatcherResult {
 
-    private final List<String> matches;
-    private final List<String> matchesSections;
-    private final List<String> matchesFieldNames;
+    private FieldMatcherResultStatus status = FieldMatcherResultStatus.MISSING;
 
-    public FieldMatcherResult() {
-        matches = new ArrayList<>();
-        matchesFieldNames = new ArrayList<>();
-        matchesSections = new ArrayList<>();
+    private String match;
+    private String section;
+    private String fieldName;
+
+    public void setValues(String fieldName, String match, String section) {
+        this.match = match;
+        this.fieldName = fieldName;
+        this.section = section;
     }
 
-    public void addMatch(String match) {
-        matches.add(match);
+    public String getFieldName() {
+        return fieldName;
     }
 
-    public void addMatchSection(String matchSection) {
-        matchesSections.add(matchSection);
-    }
-
-    public void addMatchedFieldName(String fieldName) {
-        matchesFieldNames.add(fieldName);
-    }
-
-    public boolean isSingleMatch() {
-        return matches.size() == 1 && matchesSections.size() == 1 && matchesFieldNames.size() == 1;
-    }
-
-    public String getMatchedFieldName() {
-        return matchesFieldNames.get(0);
+    public String getSection() {
+        return section;
     }
 
     public String getMatch() {
-        return matches.get(0);
+        return match;
     }
 
-    public String getMatchedSection() {
-        return matchesSections.get(0);
+    public FieldMatcherResultStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(FieldMatcherResultStatus status) {
+        this.status = status;
     }
 }
