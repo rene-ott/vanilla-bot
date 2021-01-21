@@ -50,14 +50,15 @@ public class HooksFileService {
         }
     }
 
-    //TODO: Exception handling
     public void saveHooksFile(HooksFile hooksFile) {
         var value = serializer.serialize(hooksFile);
 
         try {
             Files.writeString(Path.of(outputDirPath, HOOKS_FILE_NAME), value);
+            logger.info("Saved template file to [{}]", outputDirPath);
+            logger.info("Saved template file with content:\n{}", value);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new AppException("Failed to save template file.", e);
         }
     }
 }

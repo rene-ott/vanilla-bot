@@ -49,6 +49,7 @@ public class TempDirService {
     public void deleteTempDir() {
         try {
             FileUtils.deleteDirectory(new File(tempDirPath));
+            logger.info("Deleted temp dir at [{}].", tempDirPath);
         } catch (IOException e) {
             throw new AppException("Failed to delete temp dir.", e);
         }

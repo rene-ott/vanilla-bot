@@ -12,3 +12,5 @@ build/
 temp/
 output/
 log/
+
+log.txt

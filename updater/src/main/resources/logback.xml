@@ -6,19 +6,10 @@
         </encoder>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>WARN</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log\logfile.%d{yyyy-MM-dd}.txt</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>log.txt</file>
         <encoder>
-            <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}][%level][%thread][%logger{10}][%file:%line]: %msg%n</pattern>
+            <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}][%level][%thread][%logger{10}]: %msg%n</pattern>
         </encoder>
     </appender>
 
