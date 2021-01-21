@@ -32,7 +32,7 @@ public class HooksFileGenerator {
 
     public void generateHooksFile() {
 
-        tempDirService.createTempDir();
+        tempDirService.createDir();
 
         clientJarService.decompileSourceFilesToTempDir(oldJarPath, true);
         clientJarService.decompileSourceFilesToTempDir(newJarPath, false);
@@ -40,7 +40,7 @@ public class HooksFileGenerator {
         var template = hooksFileService.readTemplateFile();
         classFieldFinderService.findAllFieldNamesForHooks(template);
 
-        tempDirService.deleteTempDir();
+        tempDirService.deleteDir();
         hooksFileService.saveHooksFile(template);
     }
 }

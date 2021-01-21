@@ -22,15 +22,15 @@ public class HooksFileService {
 
     private final HooksFileSerializer serializer;
     private final String workingDirectoryPath;
-    private final String outputDirPath;
+    private final OutputDirService outputDirService;
 
     @Inject
     public HooksFileService(HooksFileSerializer serializer,
-                            @OutputDirPath String outputDirPath,
+                            OutputDirService outputDirService,
                             @WorkingDirPath String workingDirectoryPath
     ) {
 
-        this.outputDirPath = outputDirPath;
+        this.outputDirService = outputDirService;
         this.serializer = serializer;
         this.workingDirectoryPath = workingDirectoryPath;
     }
@@ -54,11 +54,13 @@ public class HooksFileService {
         var value = serializer.serialize(hooksFile);
 
         try {
-            Files.writeString(Path.of(outputDirPath, HOOKS_FILE_NAME), value);
-            logger.info("Saved template file to [{}]", outputDirPath);
-            logger.info("Saved template file with content:\n{}", value);
+            outputDirService.createDir();
+
+            Files.writeString(Path.of(outputDirService.getDirPath(), HOOKS_FILE_NAME), value);
+            logger.info("Saved hooks file to [{}]", outputDirService.getDirPath());
+            logger.info("Saved hooks file with content:\n{}", value);
         } catch (IOException e) {
-            throw new AppException("Failed to save template file.", e);
+            throw new AppException("Failed to save hooks file.", e);
         }
     }
 }
