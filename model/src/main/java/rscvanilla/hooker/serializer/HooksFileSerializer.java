@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import rscvanilla.hooker.models.HooksFile;
-import rscvanilla.hooker.models.common.ClassField;
+import rscvanilla.hooker.models.common.ClassMember;
 import rscvanilla.hooker.serializer.extensions.ClassFieldDeserializer;
 import rscvanilla.hooker.serializer.extensions.ClassFieldSerializer;
 
@@ -46,7 +46,7 @@ public class HooksFileSerializer {
 
     private SimpleModule createModule() {
         return new SimpleModule()
-                .addSerializer(ClassField.class, new ClassFieldSerializer())
-                .addDeserializer(ClassField.class, new ClassFieldDeserializer());
+                .addSerializer(ClassMember.class, new ClassFieldSerializer())
+                .addDeserializer(ClassMember.class, new ClassFieldDeserializer());
     }
 }

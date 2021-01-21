@@ -3,7 +3,7 @@ package rscvanilla.hooker.resolvers;
 import com.google.common.base.CaseFormat;
 import rscvanilla.hooker.contracts.WithClassFields;
 import rscvanilla.hooker.matchers.FieldMatcher;
-import rscvanilla.hooker.models.common.ClassField;
+import rscvanilla.hooker.models.common.ClassMember;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class ClassFieldsBaseResolver<T> {
 
     protected final List<T> fieldMatchers;
-    protected List<ClassField> classFields;
+    protected List<ClassMember> classMembers;
 
     protected int classFieldListIndex;
 
@@ -30,9 +30,9 @@ public class ClassFieldsBaseResolver<T> {
     public void setClassFields(WithClassFields classFields) {
 
         // TODO: Validate resolver.count == field.count
-        this.classFields = Arrays.stream(classFields.getClass().getDeclaredFields()).map(it -> {
+        this.classMembers = Arrays.stream(classFields.getClass().getDeclaredFields()).map(it -> {
             try {
-                return (ClassField) it.get(classFields);
+                return (ClassMember) it.get(classFields);
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -40,7 +40,7 @@ public class ClassFieldsBaseResolver<T> {
     }
 
     public boolean hasNextField() {
-        return classFieldListIndex < classFields.size();
+        return classFieldListIndex < classMembers.size();
     }
 
     public void setFileContent(String newFileContent, String oldFileContent) {
@@ -49,7 +49,7 @@ public class ClassFieldsBaseResolver<T> {
     }
 
     public ClassFieldResolveResult resolveField() {
-        var selectedClassField = classFields.get(classFieldListIndex);
+        var selectedClassField = classMembers.get(classFieldListIndex);
         var selectedFieldMatcher = getFieldMatcherByYamlFieldName(selectedClassField.fieldName);
 
         var newFile = selectedFieldMatcher.match(newFileContent);

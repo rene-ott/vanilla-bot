@@ -2,23 +2,23 @@ package rscvanilla.hooker.resolvers;
 
 import rscvanilla.hooker.matchers.FieldMatcherResult;
 import rscvanilla.hooker.matchers.FieldMatcherResultStatus;
-import rscvanilla.hooker.models.common.ClassField;
+import rscvanilla.hooker.models.common.ClassMember;
 
 public class ClassFieldResolveResult {
 
     private final FieldMatcherResult newFileMatcherResult;
     private final FieldMatcherResult oldFileMatcherResult;
-    private final ClassField classField;
+    private final ClassMember classMember;
     private final String className;
 
     public ClassFieldResolveResult(FieldMatcherResult newFileMatcherResult,
                                    FieldMatcherResult oldFileMatcherResult,
-                                   ClassField classField,
+                                   ClassMember classMember,
                                    String className) {
 
         this.newFileMatcherResult = newFileMatcherResult;
         this.oldFileMatcherResult = oldFileMatcherResult;
-        this.classField = classField;
+        this.classMember = classMember;
         this.className = className;
     }
 
@@ -30,8 +30,8 @@ public class ClassFieldResolveResult {
         return oldFileMatcherResult;
     }
 
-    public ClassField getClassField() {
-        return classField;
+    public ClassMember getClassField() {
+        return classMember;
     }
 
     public boolean isFieldNameAccepted() {
