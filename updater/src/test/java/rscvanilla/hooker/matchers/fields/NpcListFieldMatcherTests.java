@@ -1,8 +1,11 @@
+package rscvanilla.hooker.matchers.fields;
+
 import rscvanilla.hooker.matchers.fields.mudclient.NpcListFieldMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.*;
 
 
 public class NpcListFieldMatcherTests extends BaseTests {
@@ -20,9 +23,11 @@ public class NpcListFieldMatcherTests extends BaseTests {
 
         var match = new StringBuilder()
                 .append("   private final j[] ni = new j[500];").append(lineSeparator)
-                .append("   private final j[] nj = new j[500];")
+                .append("   private final j[] ***nj*** = new j[500];")
                 .toString();
 
         var result = matcher.match(mudClient);
+        assertThat(result.getFieldName(), equalTo("nj"));
+        assertThat(result.getMatch(), equalTo(match));
     }
 }

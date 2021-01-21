@@ -1,3 +1,5 @@
+package rscvanilla.hooker.matchers.fields;
+
 import com.google.common.io.Resources;
 
 import java.io.IOException;

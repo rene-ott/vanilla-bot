@@ -32,7 +32,7 @@ test {
     useJUnitPlatform()
 }
 
-def rootDir = project.rootDir
+def projectDir = project(':updater').projectDir
 def buildDir = project.buildDir
 
 mainClassName = "rscvanilla.hooker.Main"
@@ -69,7 +69,7 @@ task copyJarToDist(type: Copy) {
 
 task copyTemplateToDist(type: Copy) {
     dependsOn copyJarToDist
-    from "${rootDir}/${templateFileName}.yaml" into "${distDir}"
+    from "${projectDir}/${templateFileName}.yaml" into "${distDir}"
 }
 
 task moveArtifactsToVersionedDir {
