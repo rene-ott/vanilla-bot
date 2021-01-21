@@ -19,7 +19,6 @@ public class ClassFieldDeserializer extends JsonDeserializer<ClassField> {
         return classField;
     }
 
-    //TODO Handle Exception
     @Override
     public ClassField getNullValue(DeserializationContext ctxt) {
         try {
@@ -27,9 +26,7 @@ public class ClassFieldDeserializer extends JsonDeserializer<ClassField> {
             classField.fieldName = ctxt.getParser().getCurrentName();
             return classField;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to read current field name value", e);
         }
-
-        return null;
     }
 }

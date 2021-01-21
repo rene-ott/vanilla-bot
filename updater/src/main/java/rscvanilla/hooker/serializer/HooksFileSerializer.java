@@ -2,6 +2,7 @@ package rscvanilla.hooker.serializer;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -23,26 +24,12 @@ public class HooksFileSerializer {
         mapper = createObjectMapper();
     }
 
-    // TODO: Throw exception
-    public HooksFile deserialize(String value) {
-        try {
-            return mapper.readValue(value, HooksFile.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public HooksFile deserialize(String value) throws JsonProcessingException {
+        return mapper.readValue(value, HooksFile.class);
     }
 
-    // TODO throw exception
-    public String serialize(HooksFile hooksFile) {
-        try {
-            return mapper.writeValueAsString(hooksFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public String serialize(HooksFile hooksFile) throws IOException {
+        return mapper.writeValueAsString(hooksFile);
     }
 
     private ObjectMapper createObjectMapper() {

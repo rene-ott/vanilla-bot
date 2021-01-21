@@ -3,7 +3,6 @@ package rscvanilla.hooker.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hooker.infrastructure.AppException;
-import rscvanilla.hooker.infrastructure.annotations.OutputDirPath;
 import rscvanilla.hooker.infrastructure.annotations.WorkingDirPath;
 import rscvanilla.hooker.serializer.HooksFileSerializer;
 import model.HooksFile;
@@ -51,9 +50,9 @@ public class HooksFileService {
     }
 
     public void saveHooksFile(HooksFile hooksFile) {
-        var value = serializer.serialize(hooksFile);
 
         try {
+            var value = serializer.serialize(hooksFile);
             outputDirService.createDir();
 
             Files.writeString(Path.of(outputDirService.getDirPath(), HOOKS_FILE_NAME), value);
