@@ -9,14 +9,17 @@ public class ClassFieldResolveResult {
     private final FieldMatcherResult newFileMatcherResult;
     private final FieldMatcherResult oldFileMatcherResult;
     private final ClassField classField;
+    private final String className;
 
     public ClassFieldResolveResult(FieldMatcherResult newFileMatcherResult,
                                    FieldMatcherResult oldFileMatcherResult,
-                                   ClassField classField) {
+                                   ClassField classField,
+                                   String className) {
 
         this.newFileMatcherResult = newFileMatcherResult;
         this.oldFileMatcherResult = oldFileMatcherResult;
         this.classField = classField;
+        this.className = className;
     }
 
     public FieldMatcherResult getNewFileResult() {
@@ -38,4 +41,6 @@ public class ClassFieldResolveResult {
     public String getAcceptedFieldName() {
         return newFileMatcherResult.getFieldName();
     }
+
+    public String getClassName() { return className; }
 }

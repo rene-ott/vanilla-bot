@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class ClassFieldsBaseResolver<T> {
 
-    protected final List<T> fieldResolvers;
+    protected final List<T> fieldMatchers;
     protected List<ClassField> classFields;
 
     protected int classFieldListIndex;
@@ -21,8 +21,8 @@ public class ClassFieldsBaseResolver<T> {
     protected String newFileContent;
     protected String oldFileContent;
 
-    public ClassFieldsBaseResolver(Set<T> fieldResolvers) {
-        this.fieldResolvers = new ArrayList<>(fieldResolvers);
+    public ClassFieldsBaseResolver(Set<T> fieldMatchers) {
+        this.fieldMatchers = new ArrayList<>(fieldMatchers);
     }
 
     // TODO: Move try catch to separate method
@@ -50,26 +50,30 @@ public class ClassFieldsBaseResolver<T> {
 
     public ClassFieldResolveResult resolveField() {
         var selectedClassField = classFields.get(classFieldListIndex);
-        var selectedFieldMatcher = getFieldMatcherByFieldName(selectedClassField.key);
+        var selectedFieldMatcher = getFieldMatcherByYamlFieldName(selectedClassField.fieldName);
 
         var newFile = selectedFieldMatcher.match(newFileContent);
         var oldFile = oldFileContent == null ? null : selectedFieldMatcher.match(oldFileContent);
 
         classFieldListIndex++;
 
-        return new ClassFieldResolveResult(newFile, oldFile, selectedClassField);
+        return new ClassFieldResolveResult(newFile, oldFile, selectedClassField, getYamlClassName());
+    }
+
+    private String getYamlClassName() {
+        return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, getClass().getSimpleName().replace("ClassFieldsResolver", ""));
+    }
+
+    private String getYamlClassFieldName(Object fieldMatcher) {
+        return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, fieldMatcher.getClass().getSimpleName().replace("FieldMatcher", ""));
     }
 
     // TODO: Throw exception if null
     // TODO: Add unchecked cast
-    private <T extends FieldMatcher> T getFieldMatcherByFieldName(String name) {
-        for (var fieldResolver : fieldResolvers) {
-            var className = fieldResolver.getClass().getSimpleName();
-            var classNameWithoutSuffix = className.replace("FieldMatcher", "");
-            var formattedClassName = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, classNameWithoutSuffix);
-
-            if (formattedClassName.equals(name)) {
-                return (T) fieldResolver;
+    private <T extends FieldMatcher> T getFieldMatcherByYamlFieldName(String name) {
+        for (var fieldMatcher : fieldMatchers) {
+            if (getYamlClassFieldName(fieldMatcher).equals(name)) {
+                return (T) fieldMatcher;
             }
         }
 

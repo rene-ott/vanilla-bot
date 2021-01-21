@@ -56,7 +56,7 @@ public class ClientJarService {
         {
             java.util.jar.JarEntry je = enu.nextElement();
 
-            System.out.println(je.getName());
+            System.out.println("INFO: Extracting " + je.getName());
 
             java.io.File fl = new java.io.File(getJarDirPath(isOld), je.getName());
             if(!fl.exists())
@@ -77,7 +77,7 @@ public class ClientJarService {
             fo.close();
             is.close();
         }
-
+        jarfile.close();
     }
 
     public void decompileSourceFilesToTempDir(String sourcePath, boolean isOld) {

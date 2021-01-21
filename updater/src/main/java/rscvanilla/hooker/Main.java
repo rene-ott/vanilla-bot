@@ -3,6 +3,7 @@ package rscvanilla.hooker;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.google.inject.Guice;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hooker.infrastructure.modules.FieldMatcherModule;
@@ -38,7 +39,6 @@ public class Main {
     private static final String OUTPUT_DIR_PATH = WORKING_DIR_PATH + File.separator + "output";
 
     public static void main(String[] args) {
-        logger.info("Hooker started.");
 
         try {
             var main = new Main();

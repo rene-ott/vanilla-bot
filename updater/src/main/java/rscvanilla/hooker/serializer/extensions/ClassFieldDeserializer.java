@@ -14,7 +14,7 @@ public class ClassFieldDeserializer extends JsonDeserializer<ClassField> {
 
         var classField = new ClassField();
         classField.value = p.getValueAsString();
-        classField.key = p.currentName();
+        classField.fieldName = p.currentName();
 
         return classField;
     }
@@ -24,7 +24,7 @@ public class ClassFieldDeserializer extends JsonDeserializer<ClassField> {
     public ClassField getNullValue(DeserializationContext ctxt) {
         try {
             var classField = new ClassField();
-            classField.key = ctxt.getParser().getCurrentName();
+            classField.fieldName = ctxt.getParser().getCurrentName();
             return classField;
         } catch (IOException e) {
             e.printStackTrace();

@@ -2,6 +2,8 @@ package rscvanilla.hooker.services;
 
 import contracts.WithClassFields;
 import model.HooksFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rscvanilla.hooker.console.Console;
 import rscvanilla.hooker.matchers.FieldMatcher;
 import rscvanilla.hooker.resolvers.ClassFieldsBaseResolver;
@@ -16,6 +18,8 @@ public class ClassFieldFinderService {
     private final Console console;
     private final MudClientClassFieldsResolver mudClientClassFieldsResolver;
     private final AppletClassFieldsResolver appletClassFieldsResolver;
+
+    private static final Logger logger = LoggerFactory.getLogger(ClassFieldFinderService.class);
 
     @Inject
     public ClassFieldFinderService(SourceFileService sourceFileService,
@@ -41,13 +45,9 @@ public class ClassFieldFinderService {
         classFieldsResolver.setFileContent(newFile, oldFile);
         classFieldsResolver.setClassFields(classFields);
 
-        // TODO Convert to same name as in yaml.
-        console.printClassInfo(classFieldsResolver.getClass().getSimpleName(), qualifiedName);
-
         while(classFieldsResolver.hasNextField()) {
             var resolvedField = classFieldsResolver.resolveField();
-
-            console.printClassFieldsInfo(resolvedField);
+            console.printFieldResolveResult(resolvedField, qualifiedName);
 
             if (resolvedField.isFieldNameAccepted()) {
                 resolvedField.getClassField().value = resolvedField.getAcceptedFieldName();
