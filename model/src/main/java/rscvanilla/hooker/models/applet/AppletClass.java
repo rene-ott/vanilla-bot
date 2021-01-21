@@ -1,6 +1,6 @@
-package model.applet;
+package rscvanilla.hooker.models.applet;
 
-import model.common.BaseClass;
+import rscvanilla.hooker.models.common.BaseClass;
 
 public class AppletClass extends BaseClass {
     public AppletClassFields fields = new AppletClassFields();

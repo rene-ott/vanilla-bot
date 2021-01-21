@@ -2,7 +2,7 @@ package rscvanilla.hooker.resolvers;
 
 import rscvanilla.hooker.matchers.FieldMatcherResult;
 import rscvanilla.hooker.matchers.FieldMatcherResultStatus;
-import model.common.ClassField;
+import rscvanilla.hooker.models.common.ClassField;
 
 public class ClassFieldResolveResult {
 

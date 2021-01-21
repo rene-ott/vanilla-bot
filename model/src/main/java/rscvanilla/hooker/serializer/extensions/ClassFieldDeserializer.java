@@ -3,7 +3,7 @@ package rscvanilla.hooker.serializer.extensions;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import model.common.ClassField;
+import rscvanilla.hooker.models.common.ClassField;
 
 import java.io.IOException;
 

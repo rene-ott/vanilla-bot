@@ -9,8 +9,8 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
-import model.HooksFile;
-import model.common.ClassField;
+import rscvanilla.hooker.models.HooksFile;
+import rscvanilla.hooker.models.common.ClassField;
 import rscvanilla.hooker.serializer.extensions.ClassFieldDeserializer;
 import rscvanilla.hooker.serializer.extensions.ClassFieldSerializer;
 
@@ -24,7 +24,7 @@ public class HooksFileSerializer {
         mapper = createObjectMapper();
     }
 
-    public HooksFile deserialize(String value) throws JsonProcessingException {
+    public HooksFile deserialize(String value) throws IOException {
         return mapper.readValue(value, HooksFile.class);
     }
 

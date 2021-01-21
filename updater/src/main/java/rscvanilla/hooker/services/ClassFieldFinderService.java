@@ -1,7 +1,7 @@
 package rscvanilla.hooker.services;
 
-import contracts.WithClassFields;
-import model.HooksFile;
+import rscvanilla.hooker.contracts.WithClassFields;
+import rscvanilla.hooker.models.HooksFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hooker.console.Console;

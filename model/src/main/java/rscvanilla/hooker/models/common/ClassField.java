@@ -1,4 +1,4 @@
-package model.common;
+package rscvanilla.hooker.models.common;
 
 public class ClassField {
     public String fieldName;

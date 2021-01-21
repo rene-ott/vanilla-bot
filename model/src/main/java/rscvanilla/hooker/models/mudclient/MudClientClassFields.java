@@ -1,7 +1,7 @@
-package model.mudclient;
+package rscvanilla.hooker.models.mudclient;
 
-import contracts.WithClassFields;
-import model.common.ClassField;
+import rscvanilla.hooker.contracts.WithClassFields;
+import rscvanilla.hooker.models.common.ClassField;
 
 public class MudClientClassFields implements WithClassFields {
     public ClassField npcList = new ClassField();

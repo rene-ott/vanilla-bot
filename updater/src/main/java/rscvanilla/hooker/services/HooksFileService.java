@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import rscvanilla.hooker.infrastructure.AppException;
 import rscvanilla.hooker.infrastructure.annotations.WorkingDirPath;
 import rscvanilla.hooker.serializer.HooksFileSerializer;
-import model.HooksFile;
+import rscvanilla.hooker.models.HooksFile;
 
 import javax.inject.Inject;
 import java.io.IOException;

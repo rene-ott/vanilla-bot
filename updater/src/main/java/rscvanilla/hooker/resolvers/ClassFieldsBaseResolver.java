@@ -1,9 +1,9 @@
 package rscvanilla.hooker.resolvers;
 
 import com.google.common.base.CaseFormat;
-import contracts.WithClassFields;
+import rscvanilla.hooker.contracts.WithClassFields;
 import rscvanilla.hooker.matchers.FieldMatcher;
-import model.common.ClassField;
+import rscvanilla.hooker.models.common.ClassField;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,7 +69,7 @@ public class ClassFieldsBaseResolver<T> {
     }
 
     // TODO: Throw exception if null
-    // TODO: Add unchecked cast
+    @SuppressWarnings("unsafe")
     private <T extends FieldMatcher> T getFieldMatcherByYamlFieldName(String name) {
         for (var fieldMatcher : fieldMatchers) {
             if (getYamlClassFieldName(fieldMatcher).equals(name)) {

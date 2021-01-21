@@ -15,7 +15,6 @@ dependencies {
     testImplementation 'org.hamcrest:hamcrest:2.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.1'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.google.guava:guava:30.1-jre"
     implementation "org.apache.commons:commons-lang3:3.11"
