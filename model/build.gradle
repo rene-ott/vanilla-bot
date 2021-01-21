@@ -1,9 +1,10 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
     id 'java'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+group 'rscvanilla'
+version 'pre-alpha'
 
 repositories {
     mavenCentral()
@@ -11,4 +12,40 @@ repositories {
 
 dependencies {
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.1'
+}
+
+def projectDir = project(':model').projectDir
+def buildDir = project.buildDir
+
+def distDir = "${buildDir}/dist"
+def libsDir = "${buildDir}/libs"
+def archiveName = "hooker-model";
+def versionedDirName = "hooker-model-${project.version}"
+def versionedDir = "${distDir}/${versionedDirName}"
+
+shadowJar {
+    manifest {
+        archivesBaseName = archiveName
+        version(null)
+        classifier(null)
+    }
+}
+
+task createDistDir(type: Delete) {
+    dependsOn shadowJar
+
+    doLast {
+        delete distDir
+        mkdir versionedDir
+    }
+}
+
+task copyJarToDist(type: Copy) {
+    dependsOn createDistDir
+    from "${libsDir}/${archiveName}.jar" into "${versionedDir}"
+}
+
+task publishModel() {
+    dependsOn copyJarToDist
+    println "Publishing hooker-model"
 }
