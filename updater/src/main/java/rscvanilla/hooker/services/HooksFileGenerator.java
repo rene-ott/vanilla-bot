@@ -40,8 +40,10 @@ public class HooksFileGenerator {
         var template = hooksFileService.readTemplateFile();
         classFieldFinderService.findAllFieldNamesForHooks(template);
 
+        /*
         tempDirService.deleteTempDir();
 
         hooksFileService.saveHooksFile(template);
+         */
     }
 }

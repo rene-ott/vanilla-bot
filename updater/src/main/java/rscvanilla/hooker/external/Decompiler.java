@@ -32,7 +32,7 @@ public class Decompiler extends ConsoleDecompiler {
 
     public static Decompiler newInstance(String src, String dst) {
 
-        var compiler = new Decompiler(new File(dst), createOptions(), new PrintStreamLogger(new PrintStream(OutputStream.nullOutputStream())));
+        var compiler = new Decompiler(new File(dst), createOptions(), new PrintStreamLogger(System.out));
         compiler.addSource(new File(src));
 
         return compiler;

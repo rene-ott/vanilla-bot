@@ -1,27 +1,41 @@
 package rscvanilla.hooker.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rscvanilla.hooker.external.Decompiler;
+import rscvanilla.hooker.infrastructure.AppException;
+import rscvanilla.hooker.infrastructure.annotations.NewJarPath;
+import rscvanilla.hooker.infrastructure.annotations.OldJarPath;
 
 import javax.inject.Inject;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.jar.JarFile;
 
 public class ClientJarService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ClientJarService.class);
+
     private final TempDirService tempDirService;
-    private static final String client = "client";
+    private final String oldJarFileName;
+    private final String newJarFileName;
 
     @Inject
-    public ClientJarService(TempDirService tempDirService) {
+    public ClientJarService(TempDirService tempDirService,
+                            @OldJarPath String oldJarPath,
+                            @NewJarPath String newJarPath) {
 
         this.tempDirService = tempDirService;
+        this.oldJarFileName = oldJarPath == null ? null : new File(oldJarPath).getName();
+        this.newJarFileName = new File(newJarPath).getName();
+    }
+
+    private String getJarFileName(boolean isOld) {
+        return isOld ? oldJarFileName : newJarFileName;
     }
 
     private String getJarFilePath(boolean isOld) {
-        return Path.of(getJarDirPath(isOld), client + ".jar").toString();
+        return Path.of(getJarDirPath(isOld), getJarFileName(isOld)).toString();
     }
 
     private String getJarDirPath(boolean isOld) {
@@ -71,13 +85,16 @@ public class ClientJarService {
             return;
         }
 
+        logger.info("Decompiling {} JAR from source [{}]", isOld ? "old" : "new", sourcePath);
         decompileJar(sourcePath, isOld);
+        logger.info("Decompiled {} JAR from source [{}]", isOld ? "old" : "new", sourcePath);
 
-        // TODO Handle exceptions
         try {
+            logger.info("Extracting {} JAR from temp [{}]", isOld ? "old" : "new", getJarFilePath(isOld));
             extractJar(isOld);
+            logger.info("Extracted {} JAR from temp [{}]", isOld ? "old" : "new", getJarFilePath(isOld));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new AppException("Failed to extract JAR file.", e);
         }
     }
 }

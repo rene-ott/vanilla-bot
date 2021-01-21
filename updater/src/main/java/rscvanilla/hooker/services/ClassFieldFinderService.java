@@ -35,11 +35,10 @@ public class ClassFieldFinderService {
     private <T extends FieldMatcher> void findFieldNamesWithResolver(ClassFieldsBaseResolver<T> classFieldsResolver,
                                                                     WithClassFields classFields,
                                                                     String qualifiedName) {
-
         var newFile = sourceFileService.readNewFile(qualifiedName);
         var oldFile = sourceFileService.readOldFile(qualifiedName);
-        classFieldsResolver.setFileContent(newFile, oldFile);
 
+        classFieldsResolver.setFileContent(newFile, oldFile);
         classFieldsResolver.setClassFields(classFields);
 
         // TODO Convert to same name as in yaml.

@@ -3,6 +3,8 @@ package rscvanilla.hooker;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.google.inject.Guice;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rscvanilla.hooker.infrastructure.modules.FieldMatcherModule;
 import rscvanilla.hooker.infrastructure.modules.FilePathModule;
 import rscvanilla.hooker.infrastructure.modules.MainModule;
@@ -13,6 +15,8 @@ import rscvanilla.hooker.services.HooksFileGenerator;
 import java.io.File;
 
 public class Main {
+
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     @Parameter(
         names = "-n",
@@ -33,12 +37,22 @@ public class Main {
     private static final String TEMP_DIR_PATH = WORKING_DIR_PATH + File.separator + "temp";
     private static final String OUTPUT_DIR_PATH = WORKING_DIR_PATH + File.separator + "output";
 
-    // TODO Add logger
     public static void main(String[] args) {
+        logger.info("Hooker started.");
 
-        var main = new Main();
-        JCommander.newBuilder().addObject(main).build().parse(args);
-        main.run();
+        try {
+            var main = new Main();
+            JCommander.newBuilder().addObject(main).build().parse(args);
+
+            logger.info("Old JAR path: {}", main.oldJarPath);
+            logger.info("New JAR path: {}", main.newJarPath);
+
+            main.run();
+
+            logger.info("Hooker ended.");
+        } catch (Exception e) {
+            logger.error("Hooker failed: ", e);
+        }
     }
 
     public void run() {

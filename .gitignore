@@ -11,3 +11,4 @@ build/
 # App
 temp/
 output/
+log/

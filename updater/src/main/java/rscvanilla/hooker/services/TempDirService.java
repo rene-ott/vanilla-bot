@@ -2,6 +2,9 @@ package rscvanilla.hooker.services;
 
 import com.google.common.io.MoreFiles;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import rscvanilla.hooker.infrastructure.AppException;
 import rscvanilla.hooker.infrastructure.annotations.TempDirPath;
 
 import javax.inject.Inject;
@@ -11,6 +14,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class TempDirService {
+
+    private static final Logger logger = LoggerFactory.getLogger(TempDirService.class);
 
     private final String tempDirPath;
 
@@ -31,22 +36,21 @@ public class TempDirService {
         return tempDirPath + File.separator + DIR_OLD;
     }
 
-    // TODO Exception handling
     public void createTempDir() {
         deleteTempDirIfExists();
         try {
             Files.createDirectory(Path.of(tempDirPath));
+            logger.info("Generated temp dir at [{}].", tempDirPath);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new AppException("Failed to create temp dir.", e);
         }
     }
 
-    // TODO Exception handling
     public void deleteTempDir() {
         try {
             FileUtils.deleteDirectory(new File(tempDirPath));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new AppException("Failed to delete temp dir.", e);
         }
     }
 
