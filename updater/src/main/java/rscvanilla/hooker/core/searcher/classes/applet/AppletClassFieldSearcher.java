@@ -1,4 +1,4 @@
-package rscvanilla.hooker.core.searcher.classes;
+package rscvanilla.hooker.core.searcher.classes.applet;
 
 import rscvanilla.hooker.core.matcher.classes.applet.AppletClassFieldNameMatcher;
 import rscvanilla.hooker.core.searcher.ClassMemberBaseSearcher;

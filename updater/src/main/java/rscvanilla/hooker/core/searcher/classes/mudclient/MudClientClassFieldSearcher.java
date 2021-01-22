@@ -1,4 +1,4 @@
-package rscvanilla.hooker.core.searcher.classes;
+package rscvanilla.hooker.core.searcher.classes.mudclient;
 
 import rscvanilla.hooker.core.matcher.classes.mudclient.MudClientClassFieldNameMatcher;
 import rscvanilla.hooker.core.searcher.ClassMemberBaseSearcher;

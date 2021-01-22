@@ -19,7 +19,7 @@ public class HooksService {
     }
 
     public void setClassValuesTo(Hooks hooks) {
-        mudClientClassMemberService.setClassMemberValuesTo(hooks.mudClient);
-        appletClassMemberService.setClassMemberValuesTo(hooks.applet);
+        mudClientClassMemberService.setValuesToClassMembers(hooks.mudClient);
+        appletClassMemberService.setValuesToClassMembers(hooks.applet);
     }
 }

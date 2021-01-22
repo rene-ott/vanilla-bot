@@ -25,7 +25,7 @@ public class ClassMemberBaseSearcher<T extends ClassMemberNameMatcher> implement
 
     public void setSearchableClassMembers(WithClassMembers classWithMembers) {
         this.classMemberYamlKeys = Arrays.stream(classWithMembers.getClass().getFields())
-                .map(AnnotationUtils::getClassMemberYamlKey)
+                .map(AnnotationUtils::getYamlClassMemberKey)
                 .sorted()
                 .collect(Collectors.toList());
     }
@@ -56,7 +56,7 @@ public class ClassMemberBaseSearcher<T extends ClassMemberNameMatcher> implement
 
     private ClassMemberNameMatcher getMemberNameMatcherByYamlKey(String name) {
         for (var fieldMatcher : memberNameMatchers) {
-            if (AnnotationUtils.getClassMemberYamlKey(fieldMatcher.getClass()).equals(name)) {
+            if (AnnotationUtils.getYamlClassMemberKey(fieldMatcher.getClass()).equals(name)) {
                 return fieldMatcher;
             }
         }

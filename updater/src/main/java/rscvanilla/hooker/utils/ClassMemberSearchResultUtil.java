@@ -1,6 +1,8 @@
 package rscvanilla.hooker.utils;
 
 import org.apache.commons.lang3.StringUtils;
+import rscvanilla.hooker.contracts.WithClassMemberGroups;
+import rscvanilla.hooker.contracts.WithClassMembers;
 import rscvanilla.hooker.core.matcher.ClassMemberNameMatchStatus;
 import rscvanilla.hooker.core.searcher.ClassMemberSearchResult;
 
@@ -8,16 +10,19 @@ import java.util.Scanner;
 
 public class ClassMemberSearchResultUtil {
 
-    public static String createOutputString(ClassMemberSearchResult resolveResult, Class<?> clazz) {
+    public static String createOutputString(ClassMemberSearchResult resolveResult,
+                                            WithClassMembers withClassMembers,
+                                            WithClassMemberGroups withClassMemberGroups) {
         var sb = new StringBuilder();
 
         var oldFileMatch = resolveResult.getNewFileMatch();
         var newFileMatch = resolveResult.getOldFileMatch();
 
         var classMemberYamlKey = resolveResult.getClassMemberYamlKey();
-        var className = AnnotationUtils.getClassYamlKey(clazz);
+        var className = AnnotationUtils.getYamlClassInfo(withClassMemberGroups.getClass());
+        var groupName = AnnotationUtils.getYamlClassInfo(withClassMembers.getClass());
 
-        sb.append(String.format("%n#====================>[%s].[%s] <===================#%n", className, classMemberYamlKey));
+        sb.append(String.format("%n#====================>[%s].[%s].[%s] <===================#%n", className, groupName, classMemberYamlKey));
         sb.append(" * Match status:").append(System.lineSeparator());
         if (oldFileMatch != null) {
             sb.append("   - Old: ").append(oldFileMatch.getStatus()).append(System.lineSeparator());

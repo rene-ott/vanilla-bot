@@ -5,7 +5,7 @@ import com.beust.jcommander.Parameter;
 import com.google.inject.Guice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rscvanilla.hooker.infrastructure.modules.FieldMatcherModule;
+import rscvanilla.hooker.infrastructure.modules.ClassMemberMatcherModule;
 import rscvanilla.hooker.infrastructure.modules.FilePathModule;
 import rscvanilla.hooker.infrastructure.modules.MainModule;
 import rscvanilla.hooker.infrastructure.validators.ValidateHasValueParamValidator;
@@ -59,7 +59,7 @@ public class Main {
         var injector = Guice.createInjector(
                 new MainModule(),
                 new FilePathModule(WORKING_DIR_PATH, TEMP_DIR_PATH, OUTPUT_DIR_PATH, newJarPath, oldJarPath),
-                new FieldMatcherModule()
+                new ClassMemberMatcherModule()
         );
 
         injector.getInstance(HooksFileGenerator.class).generateHooksFile();
