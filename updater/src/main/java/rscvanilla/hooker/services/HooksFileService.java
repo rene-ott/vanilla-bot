@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import rscvanilla.hooker.infrastructure.AppException;
 import rscvanilla.hooker.infrastructure.annotations.WorkingDirPath;
 import rscvanilla.hooker.serializer.HooksFileSerializer;
-import rscvanilla.hooker.models.HooksFile;
+import rscvanilla.hooker.models.Hooks;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class HooksFileService {
         this.workingDirectoryPath = workingDirectoryPath;
     }
 
-    public HooksFile readTemplateFile() {
+    public Hooks readTemplateFile() {
         try {
             var templateFilePath = Path.of(workingDirectoryPath, TEMPLATE_FILE_NAME);
             var templateString = Files.readString(templateFilePath);
@@ -49,10 +49,10 @@ public class HooksFileService {
         }
     }
 
-    public void saveHooksFile(HooksFile hooksFile) {
+    public void saveHooksFile(Hooks hooks) {
 
         try {
-            var value = serializer.serialize(hooksFile);
+            var value = serializer.serialize(hooks);
             outputDirService.createDir();
 
             Files.writeString(Path.of(outputDirService.getDirPath(), HOOKS_FILE_NAME), value);

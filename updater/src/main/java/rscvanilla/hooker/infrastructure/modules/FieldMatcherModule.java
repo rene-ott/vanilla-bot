@@ -2,11 +2,11 @@ package rscvanilla.hooker.infrastructure.modules;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
-import rscvanilla.hooker.matchers.fields.applet.AppletClassFieldMatcher;
-import rscvanilla.hooker.matchers.fields.applet.MudClientFieldMatcher;
-import rscvanilla.hooker.matchers.fields.mudclient.MudClientClassFieldMatcher;
-import rscvanilla.hooker.matchers.fields.mudclient.NpcListFieldMatcher;
-import rscvanilla.hooker.matchers.fields.mudclient.NpcListIndexFieldMatcher;
+import rscvanilla.hooker.core.matcher.classes.applet.AppletClassFieldNameMatcher;
+import rscvanilla.hooker.core.matcher.classes.applet.fields.MudClientFieldNameMatcher;
+import rscvanilla.hooker.core.matcher.classes.mudclient.MudClientClassFieldNameMatcher;
+import rscvanilla.hooker.core.matcher.classes.mudclient.fields.NpcListFieldNameMatcher;
+import rscvanilla.hooker.core.matcher.classes.mudclient.fields.NpcListIndexFieldNameMatcher;
 
 public class FieldMatcherModule extends AbstractModule {
 
@@ -16,19 +16,19 @@ public class FieldMatcherModule extends AbstractModule {
         configureAppletClassFieldMatchers();
     }
 
-    private Multibinder<MudClientClassFieldMatcher> configureMudClientClassFieldMatchers() {
-        var binder = Multibinder.newSetBinder(binder(), MudClientClassFieldMatcher.class);
+    private Multibinder<MudClientClassFieldNameMatcher> configureMudClientClassFieldMatchers() {
+        var binder = Multibinder.newSetBinder(binder(), MudClientClassFieldNameMatcher.class);
 
-        binder.addBinding().to(NpcListFieldMatcher.class);
-        binder.addBinding().to(NpcListIndexFieldMatcher.class);
+        binder.addBinding().to(NpcListFieldNameMatcher.class);
+        binder.addBinding().to(NpcListIndexFieldNameMatcher.class);
 
         return binder;
     }
 
-    private Multibinder<AppletClassFieldMatcher> configureAppletClassFieldMatchers() {
-        var binder = Multibinder.newSetBinder(binder(), AppletClassFieldMatcher.class);
+    private Multibinder<AppletClassFieldNameMatcher> configureAppletClassFieldMatchers() {
+        var binder = Multibinder.newSetBinder(binder(), AppletClassFieldNameMatcher.class);
 
-        binder.addBinding().to(MudClientFieldMatcher.class);
+        binder.addBinding().to(MudClientFieldNameMatcher.class);
 
         return binder;
     }

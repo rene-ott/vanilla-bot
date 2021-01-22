@@ -8,8 +8,3 @@ mud_client:
   fields:
     npc_list:
     npc_list_index:
-  methods:
-    walk_to_area:
-  interceptors:
-    on_game_settings:
-    

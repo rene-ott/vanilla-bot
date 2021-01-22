@@ -1,5 +1,6 @@
 package rscvanilla.hooker.services;
 
+import rscvanilla.hooker.core.HooksService;
 import rscvanilla.hooker.infrastructure.annotations.NewJarPath;
 import rscvanilla.hooker.infrastructure.annotations.OldJarPath;
 
@@ -7,7 +8,7 @@ import javax.inject.Inject;
 
 public class HooksFileGenerator {
 
-    private final ClassFieldFinderService classFieldFinderService;
+    private final HooksService hooksService;
     private final HooksFileService hooksFileService;
     private final TempDirService tempDirService;
     private final ClientJarService clientJarService;
@@ -15,14 +16,14 @@ public class HooksFileGenerator {
     private final String newJarPath;
 
     @Inject
-    public HooksFileGenerator(ClassFieldFinderService classFieldFinderService,
+    public HooksFileGenerator(HooksService hooksService,
                               HooksFileService hooksFileService,
                               TempDirService tempDirService,
                               ClientJarService clientJarService,
                               @OldJarPath String oldJarPath,
                               @NewJarPath String newJarPath
     ) {
-        this.classFieldFinderService = classFieldFinderService;
+        this.hooksService = hooksService;
         this.hooksFileService = hooksFileService;
         this.tempDirService = tempDirService;
         this.clientJarService = clientJarService;
@@ -32,15 +33,15 @@ public class HooksFileGenerator {
 
     public void generateHooksFile() {
 
-        tempDirService.createDir();
+        // tempDirService.createDir();
 
-        clientJarService.decompileSourceFilesToTempDir(oldJarPath, true);
-        clientJarService.decompileSourceFilesToTempDir(newJarPath, false);
+        // clientJarService.decompileSourceFilesToTempDir(oldJarPath, true);
+        // clientJarService.decompileSourceFilesToTempDir(newJarPath, false);
 
         var template = hooksFileService.readTemplateFile();
-        classFieldFinderService.findAllFieldNamesForHooks(template);
+        hooksService.setClassValuesTo(template);
 
-        tempDirService.deleteDir();
-        hooksFileService.saveHooksFile(template);
+        //tempDirService.deleteDir();
+        //hooksFileService.saveHooksFile(template);
     }
 }

@@ -3,14 +3,13 @@ package rscvanilla.hooker;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.google.inject.Guice;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hooker.infrastructure.modules.FieldMatcherModule;
 import rscvanilla.hooker.infrastructure.modules.FilePathModule;
 import rscvanilla.hooker.infrastructure.modules.MainModule;
-import rscvanilla.hooker.paramvalidator.ValidateHasValue;
-import rscvanilla.hooker.paramvalidator.ValidateJarExists;
+import rscvanilla.hooker.infrastructure.validators.ValidateHasValueParamValidator;
+import rscvanilla.hooker.infrastructure.validators.ValidateJarExistsParamValidator;
 import rscvanilla.hooker.services.HooksFileGenerator;
 
 import java.io.File;
@@ -22,7 +21,7 @@ public class Main {
     @Parameter(
         names = "-n",
         description = "New client.jar path from which field names are matched. Hooks file is generated based on matched values.",
-        validateWith = { ValidateHasValue.class, ValidateJarExists.class },
+        validateWith = { ValidateHasValueParamValidator.class, ValidateJarExistsParamValidator.class },
         required = true
     )
     String newJarPath;
@@ -30,7 +29,7 @@ public class Main {
     @Parameter(
         names = "-o",
         description = "Old client.jar path from which field names are matched (Optional). Used for manual verification.",
-        validateWith = { ValidateJarExists.class }
+        validateWith = { ValidateJarExistsParamValidator.class }
     )
     String oldJarPath;
 

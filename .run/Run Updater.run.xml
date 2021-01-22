@@ -4,7 +4,7 @@
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="MAIN_CLASS_NAME" value="rscvanilla.hooker.Main" />
     <module name="vanilla-bot-hooker.updater.main" />
-    <option name="PROGRAM_PARAMETERS" value="-n $/FileDirRelativeToProjectRoot$\input\new.jar -o $/FileDirRelativeToProjectRoot$\input\old.jar" />
+    <option name="PROGRAM_PARAMETERS" value="-n $ProjectFileDir$\updater\input\new.jar -o $ProjectFileDir$\updater\input\old.jar" />
     <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
     <method v="2">
       <option name="Make" enabled="true" />
