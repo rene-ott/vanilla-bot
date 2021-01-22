@@ -1,8 +1,8 @@
 package rscvanilla.hooker.models.applet;
 
-import rscvanilla.hooker.contracts.WithClassFields;
+import rscvanilla.hooker.contracts.WithClassMembers;
 import rscvanilla.hooker.models.common.ClassMember;
 
-public class AppletClassFields implements WithClassFields {
+public class AppletClassMembers implements WithClassMembers {
     public ClassMember mudClient;
 }

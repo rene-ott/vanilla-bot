@@ -1,8 +1,8 @@
 package rscvanilla.hooker.resolvers;
 
 import com.google.common.base.CaseFormat;
-import rscvanilla.hooker.contracts.WithClassFields;
-import rscvanilla.hooker.matchers.FieldMatcher;
+import rscvanilla.hooker.contracts.WithClassMembers;
+import rscvanilla.hooker.matchers.ClassMemberNameMatcher;
 import rscvanilla.hooker.models.common.ClassMember;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class ClassFieldsBaseResolver<T> {
 
     // TODO: Move try catch to separate method
     // TODO: Sort
-    public void setClassFields(WithClassFields classFields) {
+    public void setClassFields(WithClassMembers classFields) {
 
         // TODO: Validate resolver.count == field.count
         this.classMembers = Arrays.stream(classFields.getClass().getDeclaredFields()).map(it -> {
@@ -70,7 +70,7 @@ public class ClassFieldsBaseResolver<T> {
 
     // TODO: Throw exception if null
     @SuppressWarnings("unsafe")
-    private <T extends FieldMatcher> T getFieldMatcherByYamlFieldName(String name) {
+    private <T extends ClassMemberNameMatcher> T getFieldMatcherByYamlFieldName(String name) {
         for (var fieldMatcher : fieldMatchers) {
             if (getYamlClassFieldName(fieldMatcher).equals(name)) {
                 return (T) fieldMatcher;

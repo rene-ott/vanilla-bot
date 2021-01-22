@@ -1,5 +1,6 @@
 package rscvanilla.hooker.matchers.fields.mudclient;
 
-import rscvanilla.hooker.matchers.FieldMatcher;
+import rscvanilla.hooker.matchers.ClassMemberNameMatcher;
 
-public interface MudClientClassFieldMatcher extends FieldMatcher { }
+public interface MudClientClassFieldMatcher extends ClassMemberNameMatcher {
+}

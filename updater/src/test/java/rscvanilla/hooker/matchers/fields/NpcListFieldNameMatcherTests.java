@@ -8,7 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.*;
 
 
-public class NpcListFieldMatcherTests extends BaseTests {
+public class NpcListFieldNameMatcherTests extends BaseTests {
 
     private NpcListFieldMatcher matcher;
 

@@ -1,10 +1,10 @@
 package rscvanilla.hooker.matchers.fields.mudclient;
 
-import rscvanilla.hooker.matchers.FieldMatcherBase;
+import rscvanilla.hooker.matchers.ClassMemberNameRegexMatcher;
 
 import java.util.regex.Pattern;
 
-public class NpcListIndexFieldMatcher extends FieldMatcherBase implements MudClientClassFieldMatcher {
+public class NpcListIndexFieldMatcher extends ClassMemberNameRegexMatcher implements MudClientClassFieldMatcher {
 
     public NpcListIndexFieldMatcher() {
         pattern = Pattern.compile(

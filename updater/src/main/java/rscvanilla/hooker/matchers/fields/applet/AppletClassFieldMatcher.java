@@ -1,5 +1,6 @@
 package rscvanilla.hooker.matchers.fields.applet;
 
-import rscvanilla.hooker.matchers.FieldMatcher;
+import rscvanilla.hooker.matchers.ClassMemberNameMatcher;
 
-public interface AppletClassFieldMatcher extends FieldMatcher { }
+public interface AppletClassFieldMatcher extends ClassMemberNameMatcher {
+}

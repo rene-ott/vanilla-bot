@@ -1,9 +1,9 @@
 package rscvanilla.hooker.models.mudclient;
 
-import rscvanilla.hooker.contracts.WithClassFields;
-import rscvanilla.hooker.models.common.ClassMember;
+import rscvanilla.hooker.annotations.FieldIdentifier;
+import rscvanilla.hooker.contracts.WithClassMembers;
 
-public class MudClientClassFields implements WithClassFields {
-    public ClassMember npcList = new ClassMember();
-    public ClassMember npcListIndex = new ClassMember();
+public class MudClientClassFields implements WithClassMembers {
+    @FieldIdentifier("npc_list") public String npcList;
+    @FieldIdentifier("npc_list_index") public String npcListIndex;
 }

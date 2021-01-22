@@ -1,11 +1,11 @@
 package rscvanilla.hooker.services;
 
-import rscvanilla.hooker.contracts.WithClassFields;
+import rscvanilla.hooker.contracts.WithClassMembers;
 import rscvanilla.hooker.models.HooksFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hooker.console.Console;
-import rscvanilla.hooker.matchers.FieldMatcher;
+import rscvanilla.hooker.matchers.ClassMemberNameMatcher;
 import rscvanilla.hooker.resolvers.ClassFieldsBaseResolver;
 import rscvanilla.hooker.resolvers.classes.AppletClassFieldsResolver;
 import rscvanilla.hooker.resolvers.classes.MudClientClassFieldsResolver;
@@ -23,7 +23,8 @@ public class ClassFieldFinderService {
 
     @Inject
     public ClassFieldFinderService(SourceFileService sourceFileService,
-                                   Console console, MudClientClassFieldsResolver mudClientClassFieldsResolver,
+                                   Console console,
+                                   MudClientClassFieldsResolver mudClientClassFieldsResolver,
                                    AppletClassFieldsResolver appletClassFieldsResolver) {
         this.sourceFileService = sourceFileService;
         this.console = console;
@@ -36,9 +37,9 @@ public class ClassFieldFinderService {
         findFieldNamesWithResolver(mudClientClassFieldsResolver, template.mudClient.fields, template.mudClient.qualifiedName);
     }
 
-    private <T extends FieldMatcher> void findFieldNamesWithResolver(ClassFieldsBaseResolver<T> classFieldsResolver,
-                                                                    WithClassFields classFields,
-                                                                    String qualifiedName) {
+    private <T extends ClassMemberNameMatcher> void findFieldNamesWithResolver(ClassFieldsBaseResolver<T> classFieldsResolver,
+                                                                               WithClassMembers classFields,
+                                                                               String qualifiedName) {
         var newFile = sourceFileService.readNewFile(qualifiedName);
         var oldFile = sourceFileService.readOldFile(qualifiedName);
 

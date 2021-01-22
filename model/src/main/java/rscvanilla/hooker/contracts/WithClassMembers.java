@@ -1,3 +1,3 @@
 package rscvanilla.hooker.contracts;
 
-public interface WithClassFields { }
+public interface WithClassMembers { }

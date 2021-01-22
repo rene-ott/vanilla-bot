@@ -1,10 +1,10 @@
 package rscvanilla.hooker.matchers.fields.applet;
 
-import rscvanilla.hooker.matchers.FieldMatcherBase;
+import rscvanilla.hooker.matchers.ClassMemberNameRegexMatcher;
 
 import java.util.regex.Pattern;
 
-public class MudClientFieldMatcher extends FieldMatcherBase implements AppletClassFieldMatcher {
+public class MudClientFieldMatcher extends ClassMemberNameRegexMatcher implements AppletClassFieldMatcher {
 
     public MudClientFieldMatcher() {
         pattern = Pattern.compile(

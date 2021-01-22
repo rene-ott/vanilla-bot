@@ -1,6 +1,6 @@
 package rscvanilla.hooker.matchers;
 
-public class FieldMatcherResult {
+public class ClassMemberNameMatch {
 
     private FieldMatcherResultStatus status = FieldMatcherResultStatus.MISSING;
 

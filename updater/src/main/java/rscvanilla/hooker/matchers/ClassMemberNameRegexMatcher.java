@@ -3,12 +3,12 @@ package rscvanilla.hooker.matchers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FieldMatcherBase implements FieldMatcher {
+public class ClassMemberNameRegexMatcher implements ClassMemberNameMatcher {
 
     protected Pattern pattern;
 
-    public FieldMatcherResult match(String fileContent) {
-        var result = new FieldMatcherResult();
+    public ClassMemberNameMatch match(String fileContent) {
+        var result = new ClassMemberNameMatch();
 
         var matcher = pattern.matcher(fileContent);
 
