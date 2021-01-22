@@ -1,11 +1,12 @@
 package rscvanilla.hooker.core.services;
 
 import org.slf4j.Logger;
+import rscvanilla.hooker.contracts.WithClassMemberGroups;
+import rscvanilla.hooker.contracts.WithClassMembers;
 import rscvanilla.hooker.services.ConsoleService;
-import rscvanilla.hooker.contracts.WithFields;
+import rscvanilla.hooker.contracts.WithFieldGroup;
 import rscvanilla.hooker.core.searcher.ClassMemberSearcher;
 import rscvanilla.hooker.services.SourceFileService;
-import rscvanilla.hooker.utils.AnnotationUtils;
 import rscvanilla.hooker.utils.ClassMemberSearchResultUtil;
 
 public class ClassMemberBaseService<TFieldSearcher extends ClassMemberSearcher> {
@@ -27,16 +28,27 @@ public class ClassMemberBaseService<TFieldSearcher extends ClassMemberSearcher> 
         this.logger = logger;
     }
 
-    public void setClassMemberValuesTo(WithFields clazz) {
+    public void setClassMemberValuesTo(WithClassMemberGroups clazz) {
         var qualifiedName = clazz.getQualifiedName();
 
         var newFile = sourceFileService.readNewFile(qualifiedName);
         var oldFile = sourceFileService.readOldFile(qualifiedName);
 
-        fieldSearcher.setSearchableFileContent(newFile, oldFile);
-        fieldSearcher.setSearchableClassMembers(clazz.getFields());
+        if (clazz instanceof WithFieldGroup) {
+            setClassMemberValuesTo(clazz, ((WithFieldGroup)clazz).getFields(), fieldSearcher, newFile, oldFile);
+        }
+    }
 
-        for (var searchResult : fieldSearcher.searchMembers()) {
+    private void setClassMemberValuesTo(WithClassMemberGroups clazz,
+                                        WithClassMembers classMembers,
+                                        ClassMemberSearcher classMemberSearcher,
+                                        String newFileContent,
+                                        String oldFileContent) {
+
+        fieldSearcher.setSearchableFileContent(newFileContent, oldFileContent);
+        fieldSearcher.setSearchableClassMembers(classMembers);
+
+        for (var searchResult : classMemberSearcher.searchMembers()) {
             var outputString = ClassMemberSearchResultUtil.createOutputString(searchResult, clazz.getClass());
 
             if (searchResult.isSingleMatch()) {
@@ -47,4 +59,5 @@ public class ClassMemberBaseService<TFieldSearcher extends ClassMemberSearcher> 
             console.pressEnterToContinue();
         }
     }
+
 }

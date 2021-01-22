@@ -1,5 +1,5 @@
 package rscvanilla.hooker.contracts;
 
-public interface WithFields extends WithQualifiedName {
+public interface WithFieldGroup extends WithQualifiedName {
     WithClassMembers getFields();
 }
