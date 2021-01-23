@@ -5,10 +5,9 @@ import com.google.inject.Guice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hook.updater.infrastructure.AppParameters;
-import rscvanilla.hook.updater.infrastructure.modules.AppletClassMemberNameMatcherModule;
 import rscvanilla.hook.updater.infrastructure.modules.FilePathModule;
 import rscvanilla.hook.updater.infrastructure.modules.MainModule;
-import rscvanilla.hook.updater.infrastructure.modules.MudClientClassMemberNameMatcherModule;
+import rscvanilla.hook.updater.infrastructure.modules.ClassMemberNameMatcherModule;
 import rscvanilla.hook.updater.services.HooksFileGenerator;
 
 import java.io.File;
@@ -45,8 +44,7 @@ public class Main {
         var injector = Guice.createInjector(
                 new MainModule(parameters),
                 new FilePathModule(WORKING_DIR_PATH, TEMP_DIR_PATH, OUTPUT_DIR_PATH),
-                new AppletClassMemberNameMatcherModule(),
-                new MudClientClassMemberNameMatcherModule()
+                new ClassMemberNameMatcherModule()
         );
 
         injector.getInstance(HooksFileGenerator.class).generateHooksFile();

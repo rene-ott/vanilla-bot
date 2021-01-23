@@ -15,8 +15,8 @@ public class ClassMemberSearchResultUtil {
                                             WithClassMemberGroups withClassMemberGroups) {
         var sb = new StringBuilder();
 
-        var oldFileMatch = resolveResult.getNewFileMatch();
-        var newFileMatch = resolveResult.getOldFileMatch();
+        var oldFileMatch = resolveResult.getOldFileMatch();
+        var newFileMatch = resolveResult.getNewFileMatch();
 
         var classMemberYamlKey = resolveResult.getClassMemberYamlKey();
         var className = AnnotationUtils.getYamlClassInfo(withClassMemberGroups.getClass());

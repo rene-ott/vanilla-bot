@@ -6,8 +6,14 @@ applet:
 mud_client:
   qualified_name: com.rsc.d
   fields:
+    ground_item_list:
+    ground_item_list_index:
+    ground_object_list:
+    ground_object_list_index:
     npc_list:
     npc_list_index:
+    wall_object_list:
+    wall_object_list_index:
 
   methods:
     walk_to_area:
