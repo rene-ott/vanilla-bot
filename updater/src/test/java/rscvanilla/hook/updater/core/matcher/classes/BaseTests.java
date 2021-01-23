@@ -1,4 +1,4 @@
-package rscvanilla.hook.updater.core.matcher.classes.applet.fields;
+package rscvanilla.hook.updater.core.matcher.classes;
 
 import com.google.common.io.Resources;
 

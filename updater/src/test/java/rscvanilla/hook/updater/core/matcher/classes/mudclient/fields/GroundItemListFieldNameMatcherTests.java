@@ -1,14 +1,14 @@
-package rscvanilla.hook.updater.core.matcher.classes.applet.fields;
+package rscvanilla.hook.updater.core.matcher.classes.mudclient.fields;
 
-import rscvanilla.hook.updater.core.matcher.classes.mudclient.fields.NpcListFieldNameMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import rscvanilla.hook.updater.core.matcher.classes.BaseTests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.*;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 
-public class NpcListFieldNameMatcherTests extends BaseTests {
+public class GroundItemListFieldNameMatcherTests extends BaseTests {
 
     private NpcListFieldNameMatcher matcher;
 
@@ -27,7 +27,7 @@ public class NpcListFieldNameMatcherTests extends BaseTests {
                 .toString();
 
         var result = matcher.match(mudClient);
-        assertThat(result.getMemberName(), equalTo("nj"));
+        assertThat(result.getMemberName(), equalTo("oE"));
         assertThat(result.getMatch(), equalTo(match));
     }
 }
