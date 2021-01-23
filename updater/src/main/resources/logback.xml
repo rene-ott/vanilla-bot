@@ -12,6 +12,9 @@
         </encoder>
     </appender>
 
+    <logger name="org.reflections" level="OFF"/>
+
+
     <root level="DEBUG">
         <appender-ref ref="FILE" />
         <appender-ref ref="STDOUT" />

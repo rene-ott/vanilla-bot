@@ -71,18 +71,23 @@ public class ClassMemberBaseService<TFieldSearcher extends ClassMemberSearcher,
         classMemberSearcher.setSearchableFileContent(newFileContent, oldFileContent);
         classMemberSearcher.setSearchableClassMembers(withClassMembers);
 
+        if (!parameters.skipVerification) {
+            console.clear();
+        }
+
         for (var searchResult : classMemberSearcher.searchMembers()) {
             var outputString = ClassMemberSearchResultUtil.createOutputString(searchResult, withClassMembers, withClassMemberGroups);
 
             if (searchResult.isSingleMatch()) {
-                logger.info(System.lineSeparator() + outputString);
+                logger.info(outputString);
                 setValueToClassMember(withClassMembers, searchResult);
             } else {
-                logger.warn(System.lineSeparator() + outputString);
+                logger.warn(outputString);
             }
 
             if (!parameters.skipVerification) {
                 console.pressEnterToContinue();
+                console.clear();
             }
         }
     }

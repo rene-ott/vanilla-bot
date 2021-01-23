@@ -87,7 +87,11 @@ task createRunInputScripts(type: CreateStartScripts) {
     outputDir = file("${distDir}/${versionedDirName}")
     doLast {
         delete unixScript
-        windowsScript.text = "@echo off\njava -jar hook-updater.jar -o %cd%/input/old.jar -n %cd%/input/new.jar\n@echo on\npause"
+        windowsScript.text = "@echo off\n" +
+                "mode con:cols=120 lines=40\n" +
+                "java -jar hook-updater.jar -o %cd%/input/old.jar -n %cd%/input/new.jar\n" +
+                "@echo on\n" +
+                "pause"
     }
 }
 

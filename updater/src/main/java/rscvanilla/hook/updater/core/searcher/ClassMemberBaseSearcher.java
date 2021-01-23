@@ -39,7 +39,7 @@ public class ClassMemberBaseSearcher<T extends ClassMemberNameMatcher> implement
 
         var resultList = new ArrayList<ClassMemberSearchResult>();
 
-        for (var classMemberYamlKey : classMemberYamlKeys){
+        for (var classMemberYamlKey : classMemberYamlKeys.stream().sorted().collect(Collectors.toList())){
             var selectedMemberNameMatcher = getMemberNameMatcherByYamlKey(classMemberYamlKey);
             if (selectedMemberNameMatcher == null) {
                 throw new AppException(String.format("Missing member name matcher with yaml key: [%s]", classMemberYamlKey));

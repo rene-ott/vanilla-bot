@@ -1,5 +1,7 @@
 package rscvanilla.hook.updater.services;
 
+import java.io.IOException;
+
 public class ConsoleService {
 
     public void pressEnterToContinue()
@@ -10,5 +12,14 @@ public class ConsoleService {
             System.in.read();
         }
         catch(Exception e) { }
+    }
+
+    // TODO Handle exception
+    public void clear() {
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

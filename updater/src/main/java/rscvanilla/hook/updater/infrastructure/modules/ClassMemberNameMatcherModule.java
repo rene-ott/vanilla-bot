@@ -22,7 +22,7 @@ public class ClassMemberNameMatcherModule extends AbstractModule {
 
     private <T> void configureSubTypesOf(Class<T> clazz) {
         var binder = Multibinder.newSetBinder(binder(), clazz);
-        var reflections = new Reflections("", new SubTypesScanner());
+        var reflections = new Reflections("rscvanilla", new SubTypesScanner());
         reflections.getSubTypesOf(clazz).forEach(it -> binder.addBinding().to(it));
     }
 }
