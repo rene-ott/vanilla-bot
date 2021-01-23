@@ -1,5 +1,6 @@
 package rscvanilla.hook.updater.services;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hook.updater.infrastructure.AppException;
@@ -8,8 +9,8 @@ import rscvanilla.hook.model.Hooks;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -21,21 +22,19 @@ public class HooksFileService {
     private final static String TEMPLATE_FILE_NAME = "template.yaml";
 
     private final HooksFileSerializer serializer;
-    private final OutputDirService outputDirService;
+    private final OutputDirectoryService outputDirectoryService;
 
     @Inject
     public HooksFileService(HooksFileSerializer serializer,
-                            OutputDirService outputDirService
+                            OutputDirectoryService outputDirectoryService
     ) {
-
-        this.outputDirService = outputDirService;
+        this.outputDirectoryService = outputDirectoryService;
         this.serializer = serializer;
     }
 
     public Hooks readTemplateFile() {
         try {
-            var templateFilePath = Path.of(getTemplateFileURI());
-            var templateString = Files.readString(templateFilePath);
+            var templateString = IOUtils.toString(getTemplateInputStream(), StandardCharsets.UTF_8.name());
             var serializedTemplateFile = serializer.deserialize(templateString);
 
             logger.info("Read template file with content:\n{}", templateString);
@@ -46,22 +45,17 @@ public class HooksFileService {
         }
     }
 
-    private URI getTemplateFileURI() {
-        try {
-            return getClass().getClassLoader().getResource(TEMPLATE_FILE_NAME).toURI();
-        } catch (URISyntaxException e) {
-            throw  new AppException("Missing resource file.");
-        }
+    private InputStream getTemplateInputStream() {
+        return getClass().getClassLoader().getResourceAsStream(TEMPLATE_FILE_NAME);
     }
 
     public void saveHooksFile(Hooks hooks) {
 
         try {
             var value = serializer.serialize(hooks);
-            outputDirService.createDir();
 
-            Files.writeString(Path.of(outputDirService.getDirPath(), HOOKS_FILE_NAME), value);
-            logger.info("Saved hooks file to [{}]", outputDirService.getDirPath());
+            Files.writeString(Path.of(outputDirectoryService.getRootDirPath(), HOOKS_FILE_NAME), value);
+            logger.info("Saved hooks file to [{}]", outputDirectoryService.getRootDirPath());
             logger.info("Saved hooks file with content:\n{}", value);
         } catch (IOException e) {
             throw new AppException("Failed to save hooks file.", e);

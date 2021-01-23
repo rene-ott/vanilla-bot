@@ -9,19 +9,19 @@ public class HooksFileGenerator {
 
     private final HooksService hooksService;
     private final HooksFileService hooksFileService;
-    private final TempDirService tempDirService;
+    private final OutputDirectoryService outputDirectoryService;
     private final ClientJarService clientJarService;
     private final AppParameters appParameters;
 
     @Inject
     public HooksFileGenerator(HooksService hooksService,
                               HooksFileService hooksFileService,
-                              TempDirService tempDirService,
+                              OutputDirectoryService outputDirectoryService,
                               ClientJarService clientJarService,
                               AppParameters appParameters) {
         this.hooksService = hooksService;
         this.hooksFileService = hooksFileService;
-        this.tempDirService = tempDirService;
+        this.outputDirectoryService = outputDirectoryService;
         this.clientJarService = clientJarService;
         this.appParameters = appParameters;
     }
@@ -29,7 +29,7 @@ public class HooksFileGenerator {
     public void generateHooksFile() {
 
         if (!appParameters.skipDecompilation) {
-            tempDirService.createDir();
+            outputDirectoryService.createTempDir();
 
             clientJarService.decompileSourceFilesToTempDir(appParameters.oldJarPath, true);
             clientJarService.decompileSourceFilesToTempDir(appParameters.newJarPath, false);
@@ -39,7 +39,7 @@ public class HooksFileGenerator {
         hooksService.setClassValuesTo(template);
 
         if (!appParameters.skipTempDirDeletion) {
-            tempDirService.deleteDir();
+            outputDirectoryService.deleteTempDir();
         }
 
         hooksFileService.saveHooksFile(template);

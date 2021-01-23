@@ -41,7 +41,6 @@ def distDir = "${buildDir}/dist"
 def libsDir = "${buildDir}/libs"
 
 def archiveName = "hook-updater";
-def templateFileName = "template"
 def versionedDirName = "hook-updater-${project.version}"
 def inputJarsDirName = "input"
 
@@ -67,17 +66,11 @@ task copyJarToDist(type: Copy) {
     from "${libsDir}/${archiveName}.jar" into "${distDir}"
 }
 
-task copyTemplateToDist(type: Copy) {
-    dependsOn copyJarToDist
-    from "${projectDir}/${templateFileName}.yaml" into "${distDir}"
-}
-
 task moveArtifactsToVersionedDir {
-    dependsOn copyTemplateToDist
+    dependsOn copyJarToDist
 
     doLast {
         ant.move file: "${distDir}/${archiveName}.jar", todir: "${distDir}/${versionedDirName}"
-        ant.move file: "${distDir}/${templateFileName}.yaml", todir: "${distDir}/${versionedDirName}"
     }
 }
 

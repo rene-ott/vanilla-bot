@@ -12,19 +12,19 @@ import java.util.regex.Pattern;
 
 public class SourceFileService {
 
-    private final TempDirService tempDirService;
+    private final OutputDirectoryService outputDirectoryService;
 
     @Inject
-    public SourceFileService(TempDirService tempDirService) {
-        this.tempDirService = tempDirService;
+    public SourceFileService(OutputDirectoryService outputDirectoryService) {
+        this.outputDirectoryService = outputDirectoryService;
     }
 
     public String readOldFile(String qualifiedClassName) {
-        return readFile(tempDirService.getOldDirPath(), qualifiedClassName);
+        return readFile(outputDirectoryService.getTempOldDirPath(), qualifiedClassName);
     }
 
     public String readNewFile(String qualifiedClassName) {
-        return readFile(tempDirService.getNewDirPath(), qualifiedClassName);
+        return readFile(outputDirectoryService.getTempNewDirPath(), qualifiedClassName);
     }
 
     // TODO Exception handling

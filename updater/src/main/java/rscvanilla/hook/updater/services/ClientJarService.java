@@ -15,15 +15,14 @@ public class ClientJarService {
 
     private static final Logger logger = LoggerFactory.getLogger(ClientJarService.class);
 
-    private final TempDirService tempDirService;
+    private final OutputDirectoryService outputDirectoryService;
     private final String oldJarFileName;
     private final String newJarFileName;
 
     @Inject
-    public ClientJarService(TempDirService tempDirService,
+    public ClientJarService(OutputDirectoryService outputDirectoryService,
                             AppParameters parameters) {
-
-        this.tempDirService = tempDirService;
+        this.outputDirectoryService = outputDirectoryService;
         this.oldJarFileName = parameters.oldJarPath == null ? null : new File(parameters.oldJarPath).getName();
         this.newJarFileName = new File(parameters.newJarPath).getName();
     }
@@ -37,7 +36,7 @@ public class ClientJarService {
     }
 
     private String getJarDirPath(boolean isOld) {
-        return isOld ? tempDirService.getOldDirPath() : tempDirService.getNewDirPath();
+        return isOld ? outputDirectoryService.getTempOldDirPath() : outputDirectoryService.getTempNewDirPath();
     }
 
     private void decompileJar(String source, boolean isOld) {
