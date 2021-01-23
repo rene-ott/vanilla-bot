@@ -35,14 +35,14 @@ test {
 def projectDir = project(':updater').projectDir
 def buildDir = project.buildDir
 
-mainClassName = "rscvanilla.hooker.Main"
+mainClassName = "rscvanilla.hook.updater.Main"
 
 def distDir = "${buildDir}/dist"
 def libsDir = "${buildDir}/libs"
 
-def archiveName = "hooker";
+def archiveName = "hook-updater";
 def templateFileName = "template"
-def versionedDirName = "hooker-${project.version}"
+def versionedDirName = "hook-updater-${project.version}"
 def inputJarsDirName = "input"
 
 shadowJar {
@@ -94,7 +94,7 @@ task createRunInputScripts(type: CreateStartScripts) {
     outputDir = file("${distDir}/${versionedDirName}")
     doLast {
         delete unixScript
-        windowsScript.text = "@echo off\njava -jar hooker.jar -o %cd%/input/old.jar -n %cd%/input/new.jar\n@echo on\npause"
+        windowsScript.text = "@echo off\njava -jar hook-updater.jar -o %cd%/input/old.jar -n %cd%/input/new.jar\n@echo on\npause"
     }
 }
 

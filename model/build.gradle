@@ -14,13 +14,12 @@ dependencies {
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.1'
 }
 
-def projectDir = project(':model').projectDir
 def buildDir = project.buildDir
 
 def distDir = "${buildDir}/dist"
 def libsDir = "${buildDir}/libs"
-def archiveName = "hooker-model";
-def versionedDirName = "hooker-model-${project.version}"
+def archiveName = "hook-model";
+def versionedDirName = "hook-model-${project.version}"
 def versionedDir = "${distDir}/${versionedDirName}"
 
 shadowJar {
@@ -47,5 +46,5 @@ task copyJarToDist(type: Copy) {
 
 task publishModel() {
     dependsOn copyJarToDist
-    println "Publishing hooker-model"
+    println "Publishing hook-model"
 }
