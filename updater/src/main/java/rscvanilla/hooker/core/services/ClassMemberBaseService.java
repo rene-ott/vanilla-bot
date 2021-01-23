@@ -1,19 +1,19 @@
 package rscvanilla.hooker.core.services;
 
 import org.slf4j.Logger;
-import rscvanilla.hooker.contracts.WithClassMemberGroups;
-import rscvanilla.hooker.contracts.WithClassMembers;
-import rscvanilla.hooker.contracts.WithMethodGroup;
+import rscvanilla.hooker.contracts.*;
 import rscvanilla.hooker.services.ConsoleService;
-import rscvanilla.hooker.contracts.WithFieldGroup;
 import rscvanilla.hooker.core.searcher.ClassMemberSearcher;
 import rscvanilla.hooker.services.SourceFileService;
 import rscvanilla.hooker.utils.ClassMemberSearchResultUtil;
 
-public class ClassMemberBaseService<TFieldSearcher extends ClassMemberSearcher, TMethodSearcher extends ClassMemberSearcher> {
+public class ClassMemberBaseService<TFieldSearcher extends ClassMemberSearcher,
+                                    TMethodSearcher extends ClassMemberSearcher,
+                                    TInterceptorSearcher extends ClassMemberSearcher> {
 
     protected TFieldSearcher fieldSearcher;
     protected TMethodSearcher methodSearcher;
+    protected TInterceptorSearcher interceptorSearcher;
 
     protected final SourceFileService sourceFileService;
     protected final ConsoleService console;
@@ -22,11 +22,13 @@ public class ClassMemberBaseService<TFieldSearcher extends ClassMemberSearcher, 
 
     protected ClassMemberBaseService(TFieldSearcher fieldSearcher,
                                      TMethodSearcher methodSearcher,
+                                     TInterceptorSearcher interceptorSearcher,
                                      SourceFileService sourceFileService,
                                      ConsoleService consoleService,
                                      Logger logger) {
         this.fieldSearcher = fieldSearcher;
         this.methodSearcher = methodSearcher;
+        this.interceptorSearcher = interceptorSearcher;
         this.sourceFileService = sourceFileService;
         this.console = consoleService;
         this.logger = logger;
@@ -44,6 +46,10 @@ public class ClassMemberBaseService<TFieldSearcher extends ClassMemberSearcher, 
 
         if (clazz instanceof WithMethodGroup) {
             setValuesToClassMembers(((WithMethodGroup)clazz).getMethods(), clazz, methodSearcher, newFile, oldFile);
+        }
+
+        if (clazz instanceof WithInterceptorGroup) {
+            setValuesToClassMembers(((WithInterceptorGroup) clazz).getInterceptors(),clazz, interceptorSearcher, newFile, oldFile);
         }
     }
 
