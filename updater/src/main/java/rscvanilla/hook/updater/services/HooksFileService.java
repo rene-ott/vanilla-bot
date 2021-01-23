@@ -3,12 +3,13 @@ package rscvanilla.hook.updater.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hook.updater.infrastructure.AppException;
-import rscvanilla.hook.updater.infrastructure.annotations.WorkingDirPath;
 import rscvanilla.hook.model.serializer.HooksFileSerializer;
 import rscvanilla.hook.model.Hooks;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -20,32 +21,36 @@ public class HooksFileService {
     private final static String TEMPLATE_FILE_NAME = "template.yaml";
 
     private final HooksFileSerializer serializer;
-    private final String workingDirectoryPath;
     private final OutputDirService outputDirService;
 
     @Inject
     public HooksFileService(HooksFileSerializer serializer,
-                            OutputDirService outputDirService,
-                            @WorkingDirPath String workingDirectoryPath
+                            OutputDirService outputDirService
     ) {
 
         this.outputDirService = outputDirService;
         this.serializer = serializer;
-        this.workingDirectoryPath = workingDirectoryPath;
     }
 
     public Hooks readTemplateFile() {
         try {
-            var templateFilePath = Path.of(workingDirectoryPath, TEMPLATE_FILE_NAME);
+            var templateFilePath = Path.of(getTemplateFileURI());
             var templateString = Files.readString(templateFilePath);
             var serializedTemplateFile = serializer.deserialize(templateString);
 
-            logger.info("Read template file from [{}].", templateFilePath);
             logger.info("Read template file with content:\n{}", templateString);
 
             return serializedTemplateFile;
         } catch (IOException e) {
             throw new AppException("Failed to read template file.", e);
+        }
+    }
+
+    private URI getTemplateFileURI() {
+        try {
+            return getClass().getClassLoader().getResource(TEMPLATE_FILE_NAME).toURI();
+        } catch (URISyntaxException e) {
+            throw  new AppException("Missing resource file.");
         }
     }
 
