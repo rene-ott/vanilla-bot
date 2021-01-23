@@ -4,8 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hook.updater.external.Decompiler;
 import rscvanilla.hook.updater.infrastructure.AppException;
-import rscvanilla.hook.updater.infrastructure.annotations.NewJarPath;
-import rscvanilla.hook.updater.infrastructure.annotations.OldJarPath;
+import rscvanilla.hook.updater.infrastructure.AppParameters;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -22,12 +21,11 @@ public class ClientJarService {
 
     @Inject
     public ClientJarService(TempDirService tempDirService,
-                            @OldJarPath String oldJarPath,
-                            @NewJarPath String newJarPath) {
+                            AppParameters parameters) {
 
         this.tempDirService = tempDirService;
-        this.oldJarFileName = oldJarPath == null ? null : new File(oldJarPath).getName();
-        this.newJarFileName = new File(newJarPath).getName();
+        this.oldJarFileName = parameters.oldJarPath == null ? null : new File(parameters.oldJarPath).getName();
+        this.newJarFileName = new File(parameters.newJarPath).getName();
     }
 
     private String getJarFileName(boolean isOld) {

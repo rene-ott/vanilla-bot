@@ -3,8 +3,8 @@
     <option name="ALTERNATIVE_JRE_PATH" value="openjdk-15" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="MAIN_CLASS_NAME" value="rscvanilla.hook.updater.Main" />
-    <module name="vanilla-bot-hooker.updater.main" />
-    <option name="PROGRAM_PARAMETERS" value="-n $ProjectFileDir$\updater\input\new.jar -o $ProjectFileDir$\updater\input\old.jar" />
+    <module name="vanilla-bot-hook-updater.updater.main" />
+    <option name="PROGRAM_PARAMETERS" value="-n $ProjectFileDir$\updater\input\new.jar -o $ProjectFileDir$\updater\input\old.jar -sv -st -sd" />
     <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
     <method v="2">
       <option name="Make" enabled="true" />

@@ -1,38 +1,23 @@
 package rscvanilla.hook.updater;
 
 import com.beust.jcommander.JCommander;
-import com.beust.jcommander.Parameter;
 import com.google.inject.Guice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import rscvanilla.hook.updater.infrastructure.AppParameters;
 import rscvanilla.hook.updater.infrastructure.modules.AppletClassMemberNameMatcherModule;
 import rscvanilla.hook.updater.infrastructure.modules.FilePathModule;
 import rscvanilla.hook.updater.infrastructure.modules.MainModule;
 import rscvanilla.hook.updater.infrastructure.modules.MudClientClassMemberNameMatcherModule;
-import rscvanilla.hook.updater.infrastructure.validators.ValidateHasValueParamValidator;
-import rscvanilla.hook.updater.infrastructure.validators.ValidateJarExistsParamValidator;
 import rscvanilla.hook.updater.services.HooksFileGenerator;
 
 import java.io.File;
 
 public class Main {
 
+    private static final AppParameters parameters = new AppParameters();
+
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
-
-    @Parameter(
-        names = "-n",
-        description = "New client.jar path from which field names are matched. Hooks file is generated based on matched values.",
-        validateWith = { ValidateHasValueParamValidator.class, ValidateJarExistsParamValidator.class },
-        required = true
-    )
-    String newJarPath;
-
-    @Parameter(
-        names = "-o",
-        description = "Old client.jar path from which field names are matched (Optional). Used for manual verification.",
-        validateWith = { ValidateJarExistsParamValidator.class }
-    )
-    String oldJarPath;
 
     private static final String WORKING_DIR_PATH = System.getProperty("user.dir");
     private static final String TEMP_DIR_PATH = WORKING_DIR_PATH + File.separator + "temp";
@@ -42,10 +27,10 @@ public class Main {
 
         try {
             var main = new Main();
-            JCommander.newBuilder().addObject(main).build().parse(args);
+            JCommander.newBuilder().addObject(parameters).build().parse(args);
 
-            logger.info("Old JAR path: {}", main.oldJarPath);
-            logger.info("New JAR path: {}", main.newJarPath);
+            logger.info("Old JAR path: {}", parameters.oldJarPath);
+            logger.info("New JAR path: {}", parameters.newJarPath);
 
             main.run();
 
@@ -58,8 +43,8 @@ public class Main {
     public void run() {
 
         var injector = Guice.createInjector(
-                new MainModule(),
-                new FilePathModule(WORKING_DIR_PATH, TEMP_DIR_PATH, OUTPUT_DIR_PATH, newJarPath, oldJarPath),
+                new MainModule(parameters),
+                new FilePathModule(WORKING_DIR_PATH, TEMP_DIR_PATH, OUTPUT_DIR_PATH),
                 new AppletClassMemberNameMatcherModule(),
                 new MudClientClassMemberNameMatcherModule()
         );

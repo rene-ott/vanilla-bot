@@ -1,8 +1,7 @@
 package rscvanilla.hook.updater.services;
 
 import rscvanilla.hook.updater.core.HooksService;
-import rscvanilla.hook.updater.infrastructure.annotations.NewJarPath;
-import rscvanilla.hook.updater.infrastructure.annotations.OldJarPath;
+import rscvanilla.hook.updater.infrastructure.AppParameters;
 
 import javax.inject.Inject;
 
@@ -12,36 +11,37 @@ public class HooksFileGenerator {
     private final HooksFileService hooksFileService;
     private final TempDirService tempDirService;
     private final ClientJarService clientJarService;
-    private final String oldJarPath;
-    private final String newJarPath;
+    private final AppParameters appParameters;
 
     @Inject
     public HooksFileGenerator(HooksService hooksService,
                               HooksFileService hooksFileService,
                               TempDirService tempDirService,
                               ClientJarService clientJarService,
-                              @OldJarPath String oldJarPath,
-                              @NewJarPath String newJarPath
-    ) {
+                              AppParameters appParameters) {
         this.hooksService = hooksService;
         this.hooksFileService = hooksFileService;
         this.tempDirService = tempDirService;
         this.clientJarService = clientJarService;
-        this.oldJarPath = oldJarPath;
-        this.newJarPath = newJarPath;
+        this.appParameters = appParameters;
     }
 
     public void generateHooksFile() {
 
-        // tempDirService.createDir();
+        if (!appParameters.skipDecompilation) {
+            tempDirService.createDir();
 
-        // clientJarService.decompileSourceFilesToTempDir(oldJarPath, true);
-        // clientJarService.decompileSourceFilesToTempDir(newJarPath, false);
+            clientJarService.decompileSourceFilesToTempDir(appParameters.oldJarPath, true);
+            clientJarService.decompileSourceFilesToTempDir(appParameters.newJarPath, false);
+        }
 
         var template = hooksFileService.readTemplateFile();
         hooksService.setClassValuesTo(template);
 
-        //tempDirService.deleteDir();
-        //hooksFileService.saveHooksFile(template);
+        if (!appParameters.skipTempDirDeletion) {
+            tempDirService.deleteDir();
+        }
+
+        hooksFileService.saveHooksFile(template);
     }
 }
