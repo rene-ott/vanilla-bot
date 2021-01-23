@@ -10,11 +10,11 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class GroundObjectListIndexFieldNameMatcherTests extends BaseTests {
 
-    private NpcListFieldNameMatcher matcher;
+    private GroundObjectListIndexFieldNameMatcher matcher;
 
     @BeforeEach
     public void setMatcher() {
-        matcher = new NpcListFieldNameMatcher();
+        matcher = new GroundObjectListIndexFieldNameMatcher();
     }
 
     @Test
@@ -22,8 +22,10 @@ public class GroundObjectListIndexFieldNameMatcherTests extends BaseTests {
         var mudClient = readClassMudClient();
 
         var match = new StringBuilder()
-                .append("   private final j[] ni = new j[500];").append(lineSeparator)
-                .append("   private final j[] ***nj*** = new j[500];")
+                .append("   private int bq;").append(lineSeparator)
+                .append("   private int ***pr***;").append(lineSeparator)
+                .append("   private int ps;").append(lineSeparator)
+                .append("   private com.rsc.b.b pt;")
                 .toString();
 
         var result = matcher.match(mudClient);

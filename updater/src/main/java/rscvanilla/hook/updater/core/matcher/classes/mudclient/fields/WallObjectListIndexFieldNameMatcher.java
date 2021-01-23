@@ -11,7 +11,12 @@ public class WallObjectListIndexFieldNameMatcher extends ClassMemberNameBaseMatc
 
     public WallObjectListIndexFieldNameMatcher() {
         pattern = Pattern.compile(
-            "xxxx",
+            "(?<pre> {3}private boolean [a-zA-Z]{2};\\R" +
+            " {3}private int [a-zA-Z]{2};\\R" +
+            " {3}private int [a-zA-Z]{2};\\R" +
+            " {3}private int )(?<fieldName>[a-zA-Z]{2})(?<post>;\\R" +
+            " {3}private int [a-zA-Z]{2};\\R" +
+            " {3}private String [a-zA-Z]{2};)",
             Pattern.MULTILINE
         );
     }

@@ -11,7 +11,10 @@ public class GroundObjectListIndexFieldNameMatcher extends ClassMemberNameBaseMa
 
     public GroundObjectListIndexFieldNameMatcher() {
         pattern = Pattern.compile(
-            "xxxx",
+            "(?<pre> {3}private int [a-zA-Z]{2};\\R" +
+            " {3}private int )(?<fieldName>[a-zA-Z]{2})(?<post>;\\R" +
+            " {3}private int [a-zA-Z]{2};\\R" +
+            " {3}private com\\.rsc\\.b\\.b [a-zA-Z]{2};)",
             Pattern.MULTILINE
         );
     }

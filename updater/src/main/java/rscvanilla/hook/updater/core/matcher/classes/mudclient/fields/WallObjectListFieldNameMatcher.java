@@ -11,7 +11,9 @@ public class WallObjectListFieldNameMatcher extends ClassMemberNameBaseMatcher i
 
     public WallObjectListFieldNameMatcher() {
         pattern = Pattern.compile(
-            "xxxx",
+            "(?<pre> {3}private com\\.rsc\\.e\\.e\\[] [a-zA-Z]{2};\\R" +
+            " {3}private m\\[] )(?<fieldName>[a-zA-Z]{2})(?<post>;\\R" +
+            " {3}private com\\.rsc\\.e\\.f\\[] [a-zA-Z]{2};)",
             Pattern.MULTILINE
         );
     }

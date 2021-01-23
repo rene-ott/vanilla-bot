@@ -27,6 +27,7 @@ public class ClassMemberNameBaseMatcher implements ClassMemberNameMatcher {
                 result.setStatus(ClassMemberNameMatchStatus.SINGLE);
             } else if (result.getStatus() == ClassMemberNameMatchStatus.SINGLE) {
                 result.setStatus(ClassMemberNameMatchStatus.MULTIPLE);
+                result.setValues(null, null, null);
             }
         }
 

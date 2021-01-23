@@ -11,10 +11,10 @@ public class MudClientFieldNameMatcher extends ClassMemberNameBaseMatcher implem
 
     public MudClientFieldNameMatcher() {
         pattern = Pattern.compile(
-            "(?<pre>) {3}d (?<fieldName>[a-zA-Z]{2});\\R" +
-            " {3}private c [a-zA-Z]{2};" +
-            " {3}private a [a-zA-Z]{2};" +
-            " {3}private Graphics [a-zA-Z]{2};",
+            "(?<pre> {3}d )(?<fieldName>[a-zA-Z]{2})(?<post>;\\R" +
+            " {3}private c [a-zA-Z]{2};\\R" +
+            " {3}private a [a-zA-Z]{2};\\R" +
+            " {3}private Graphics [a-zA-Z]{2};)",
             Pattern.MULTILINE
         );
     }

@@ -1,5 +1,6 @@
 package rscvanilla.hook.updater.core.matcher.classes.mudclient.fields;
 
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import rscvanilla.hook.updater.core.matcher.classes.BaseTests;
@@ -10,11 +11,11 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class GroundItemListFieldNameMatcherTests extends BaseTests {
 
-    private NpcListFieldNameMatcher matcher;
+    private GroundItemListFieldNameMatcher matcher;
 
     @BeforeEach
     public void setMatcher() {
-        matcher = new NpcListFieldNameMatcher();
+        matcher = new GroundItemListFieldNameMatcher();
     }
 
     @Test
@@ -22,8 +23,9 @@ public class GroundItemListFieldNameMatcherTests extends BaseTests {
         var mudClient = readClassMudClient();
 
         var match = new StringBuilder()
-                .append("   private final j[] ni = new j[500];").append(lineSeparator)
-                .append("   private final j[] ***nj*** = new j[500];")
+                .append("   private m[] oD;").append(lineSeparator)
+                .append("   private com.rsc.e.f[] ***oE***;").append(lineSeparator)
+                .append("   private com.rsc.d.b.d oF;")
                 .toString();
 
         var result = matcher.match(mudClient);

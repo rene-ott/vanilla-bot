@@ -11,7 +11,9 @@ public class GroundItemListFieldNameMatcher extends ClassMemberNameBaseMatcher i
 
     public GroundItemListFieldNameMatcher() {
         pattern = Pattern.compile(
-            "xxxx",
+            "(?<pre> {3}private m\\[] [a-zA-Z]{2};\\R" +
+            " {3}private com\\.rsc\\.e\\.f\\[] )(?<fieldName>[a-zA-Z]{2})(?<post>;\\R" +
+            " {3}private com\\.rsc\\.d\\.b\\.d [a-zA-Z]{2};)",
             Pattern.MULTILINE
         );
     }

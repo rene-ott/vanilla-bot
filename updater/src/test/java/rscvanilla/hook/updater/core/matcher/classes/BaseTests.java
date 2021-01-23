@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 public class BaseTests {
 
-    protected String lineSeparator = "\n";
+    protected String lineSeparator = System.lineSeparator();
 
     protected String readResource(final String fileName) {
         try {
@@ -18,7 +18,6 @@ public class BaseTests {
         }
     }
 
-    protected String readClassMudClient() {
-        return readResource("d.java");
-    }
+    protected String readClassMudClient() { return readResource("d.java"); }
+    protected String readClassApplet() { return readResource("b.java"); }
 }
