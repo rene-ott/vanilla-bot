@@ -31,6 +31,15 @@ mud_client:
     wall_object_list:
     wall_object_list_index:
 
+    fatigue_sleeping:
+    fatigue_stat:
+    is_sleeping:
+    game_mode:
+    auto_login_timeout:
+    is_options_menu_visible:
+    options_count:
+    is_bank_visible:
+
   methods:
     walk_to_area:
 

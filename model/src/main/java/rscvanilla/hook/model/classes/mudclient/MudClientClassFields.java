@@ -42,4 +42,14 @@ public class MudClientClassFields implements WithClassMembers {
     @YamlClassMemberKey("user_name") public String userName;
     @YamlClassMemberKey("user_password") public String userPassword;
     @YamlClassMemberKey("user") public String user;
+
+    @YamlClassMemberKey("fatigue_sleeping") public String fatigueSleeping;
+    @YamlClassMemberKey("fatigue_stat") public String fatigueStat;
+    @YamlClassMemberKey("is_sleeping") public String isSleeping;
+    @YamlClassMemberKey("game_mode") public String gameMode;
+
+    @YamlClassMemberKey("auto_login_timeout") public String autoLoginTimeout;
+    @YamlClassMemberKey("is_options_menu_visible") public String isOptionsMenuVisible;
+    @YamlClassMemberKey("options_count") public String optionsCount;
+    @YamlClassMemberKey("is_bank_visible") public String isBankVisible;
 }
