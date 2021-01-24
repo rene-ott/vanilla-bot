@@ -52,4 +52,7 @@ public class MudClientClassFields implements WithClassMembers {
     @YamlClassMemberKey("is_options_menu_visible") public String isOptionsMenuVisible;
     @YamlClassMemberKey("options_count") public String optionsCount;
     @YamlClassMemberKey("is_bank_visible") public String isBankVisible;
+
+    @YamlClassMemberKey("mouse_button_click") public String mouseButtonClick;
+    @YamlClassMemberKey("show_dialog_server_message") public String showDialogServerMessage;
 }

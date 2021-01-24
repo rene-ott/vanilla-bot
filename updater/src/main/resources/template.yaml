@@ -40,8 +40,12 @@ mud_client:
     options_count:
     is_bank_visible:
 
+    mouse_button_click:
+    show_dialog_server_message:
+
   methods:
     walk_to_area:
+    show_login_screen:
 
   interceptors:
     game_settings:

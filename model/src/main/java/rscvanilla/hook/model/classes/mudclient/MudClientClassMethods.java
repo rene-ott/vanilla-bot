@@ -9,4 +9,5 @@ import rscvanilla.hook.model.contracts.WithClassMembers;
 @YamlClassInfo("methods")
 public class MudClientClassMethods implements WithClassMembers {
     @YamlClassMemberKey("walk_to_area") public String walkToArea;
+    @YamlClassMemberKey("show_login_screen") public String showLoginScreen;
 }
