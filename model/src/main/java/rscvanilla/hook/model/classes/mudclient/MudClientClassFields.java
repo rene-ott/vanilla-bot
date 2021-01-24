@@ -8,6 +8,8 @@ import rscvanilla.hook.model.contracts.WithClassMembers;
 @JsonPropertyOrder(alphabetic = true)
 @YamlClassInfo("fields")
 public class MudClientClassFields implements WithClassMembers {
+    @YamlClassMemberKey("combat_style") public String combatStyle;
+
     @YamlClassMemberKey("ground_item_list") public String groundItemList;
     @YamlClassMemberKey("ground_item_list_index") public String groundItemListIndex;
 
@@ -28,4 +30,10 @@ public class MudClientClassFields implements WithClassMembers {
 
     @YamlClassMemberKey("inventory_item_list") public String inventoryItemList;
     @YamlClassMemberKey("inventory_item_list_index") public String inventoryItemListIndex;
+
+    @YamlClassMemberKey("inventory_equipped_item_slots") public String inventoryEquippedItemSlots;
+    @YamlClassMemberKey("inventory_item_slots_counts") public String inventoryItemSlotsCounts;
+
+    @YamlClassMemberKey("selected_inventory_item_index") public String selectedInventoryItemIndex;
+    @YamlClassMemberKey("selected_spell") public String selectedSpell;
 }

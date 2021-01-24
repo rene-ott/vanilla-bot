@@ -6,18 +6,23 @@ applet:
 mud_client:
   qualified_name: com.rsc.d
   fields:
+    combat_style:
     ground_item_list:
     ground_item_list_index:
     ground_object_list:
     ground_object_list_index:
     inventory_item_list:
     inventory_item_list_index:
+    inventory_equipped_item_slots:
+    inventory_item_slots_counts:
     mid_region_base_x:
     mid_region_base_y:
     npc_list:
     npc_list_index:
     player_position_x:
     player_position_y:
+    selected_inventory_item_index:
+    selected_spell:
     wall_object_list:
     wall_object_list_index:
 
