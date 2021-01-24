@@ -1,59 +1,55 @@
+---
 applet:
   qualified_name: com.rsc.applet.b
   fields:
     mud_client:
-
 mud_client:
   qualified_name: com.rsc.d
   fields:
+    auto_login_timeout:
     combat_style:
+    fatigue_sleeping:
+    fatigue_stat:
+    game_mode:
     ground_item_list:
     ground_item_list_index:
     ground_object_list:
     ground_object_list_index:
+    inventory_equipped_item_slots:
     inventory_item_list:
     inventory_item_list_index:
-    inventory_equipped_item_slots:
     inventory_item_slots_counts:
+    is_bank_visible:
+    is_options_menu_visible:
+    is_sleeping:
     mid_region_base_x:
     mid_region_base_y:
+    mouse_button_click:
     npc_list:
     npc_list_index:
-    player_position_x:
-    player_position_y:
+    options_count:
     player_list:
     player_list_index:
-    user_name:
-    user_password:
-    user:
+    player_position_x:
+    player_position_y:
     selected_inventory_item_index:
     selected_spell:
+    show_dialog_server_message:
+    user:
+    user_name:
+    user_password:
     wall_object_list:
     wall_object_list_index:
-
-    fatigue_sleeping:
-    fatigue_stat:
-    is_sleeping:
-    game_mode:
-    auto_login_timeout:
-    is_options_menu_visible:
-    options_count:
-    is_bank_visible:
-
-    mouse_button_click:
-    show_dialog_server_message:
-
   methods:
-    walk_to_area:
-    send_walk_to_ground_item:
-    send_chat_message:
-    walk_to_object:
     login:
     logout:
-    walk_to_wall:
+    send_chat_message:
+    send_walk_to_ground_item:
     show_login_screen:
-
+    walk_to_area:
+    walk_to_object:
+    walk_to_wall:
   interceptors:
-    game_settings:
     game_captcha:
     game_message:
+    game_settings:

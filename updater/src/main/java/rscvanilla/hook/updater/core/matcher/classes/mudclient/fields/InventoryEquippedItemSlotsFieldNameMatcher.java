@@ -8,11 +8,6 @@ import java.util.regex.Pattern;
 
 @YamlClassMemberKey("inventory_equipped_item_slots")
 public class InventoryEquippedItemSlotsFieldNameMatcher extends ClassMemberNameBaseMatcher implements MudClientClassFieldNameMatcher {
-
-
-    public final int[] nx = new int[99];
-    private final int[] ny = new int[35];
-    private final int nz = 30;
     public InventoryEquippedItemSlotsFieldNameMatcher() {
         pattern = Pattern.compile(
             "(?<pre> {3}public final int\\[] [a-zA-Z]{2} = new int\\[99];\\R" +

@@ -5,7 +5,6 @@ import com.google.inject.Guice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hook.updater.infrastructure.AppParameters;
-import rscvanilla.hook.updater.infrastructure.modules.FilePathModule;
 import rscvanilla.hook.updater.infrastructure.modules.MainModule;
 import rscvanilla.hook.updater.infrastructure.modules.ClassMemberNameMatcherModule;
 import rscvanilla.hook.updater.services.HooksFileGenerator;
@@ -17,10 +16,6 @@ public class Main {
     private static final AppParameters parameters = new AppParameters();
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
-
-    private static final String WORKING_DIR_PATH = System.getProperty("user.dir");
-    private static final String TEMP_DIR_PATH = WORKING_DIR_PATH + File.separator + "temp";
-    private static final String OUTPUT_DIR_PATH = WORKING_DIR_PATH + File.separator + "output";
 
     public static void main(String[] args) {
 
@@ -43,7 +38,6 @@ public class Main {
 
         var injector = Guice.createInjector(
                 new MainModule(parameters),
-                new FilePathModule(WORKING_DIR_PATH, TEMP_DIR_PATH, OUTPUT_DIR_PATH),
                 new ClassMemberNameMatcherModule()
         );
 

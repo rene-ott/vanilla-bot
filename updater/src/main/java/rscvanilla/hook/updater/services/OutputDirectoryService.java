@@ -4,7 +4,6 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hook.updater.infrastructure.AppException;
-import rscvanilla.hook.updater.infrastructure.annotations.OutputDirPath;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -23,7 +22,7 @@ public class OutputDirectoryService {
     private final String outputDirPath;
 
     @Inject
-    public OutputDirectoryService(@OutputDirPath String outputDirPath) {
+    public OutputDirectoryService(String outputDirPath) {
         this.outputDirPath = outputDirPath;
     }
 

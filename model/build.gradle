@@ -18,7 +18,7 @@ def buildDir = project.buildDir
 
 def distDir = "${buildDir}/dist"
 def libsDir = "${buildDir}/libs"
-def archiveName = "hook-model";
+def archiveName = "hook-model"
 def versionedDirName = "hook-model-${project.version}"
 def versionedDir = "${distDir}/${versionedDirName}"
 
