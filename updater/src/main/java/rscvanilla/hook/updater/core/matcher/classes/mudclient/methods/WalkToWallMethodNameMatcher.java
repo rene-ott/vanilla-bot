@@ -6,12 +6,13 @@ import rscvanilla.hook.updater.core.matcher.classes.mudclient.MudClientClassMeth
 
 import java.util.regex.Pattern;
 
-@YamlClassMemberKey("walk_to_area")
-public class WalkToAreaMethodNameMatcher extends ClassMemberNameBaseMatcher implements MudClientClassMethodNameMatcher {
+@YamlClassMemberKey("walk_to_wall")
+public class WalkToWallMethodNameMatcher extends ClassMemberNameBaseMatcher implements MudClientClassMethodNameMatcher {
 
-    public WalkToAreaMethodNameMatcher() {
+    public WalkToWallMethodNameMatcher() {
         pattern = Pattern.compile(
-            "(?<pre> {3}private void )(?<fieldName>[a-zA-Z]{1,2})(?<post>\\(int var1, int var2, int var3, int var4, int var5, int var6, boolean var7, boolean var8\\) \\{)",
+            "(?<pre> {3}private void )(?<fieldName>[a-zA-Z])(?<post>\\(int var1, int var2, int var3\\) \\{\\R" +
+            " {6}if \\(var3 == 0\\) \\{)",
             Pattern.MULTILINE
         );
     }

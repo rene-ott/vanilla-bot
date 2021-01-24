@@ -9,4 +9,6 @@ import rscvanilla.hook.model.contracts.WithClassMembers;
 @YamlClassInfo("interceptors")
 public class MudClientClassInterceptors implements WithClassMembers {
     @YamlClassMemberKey("game_settings") public String gameSettings;
+    @YamlClassMemberKey("game_message") public String gameMessage;
+    @YamlClassMemberKey("game_captcha") public String gameCaptcha;
 }

@@ -45,7 +45,15 @@ mud_client:
 
   methods:
     walk_to_area:
+    send_walk_to_ground_item:
+    send_chat_message:
+    walk_to_object:
+    login:
+    logout:
+    walk_to_wall:
     show_login_screen:
 
   interceptors:
     game_settings:
+    game_captcha:
+    game_message:
