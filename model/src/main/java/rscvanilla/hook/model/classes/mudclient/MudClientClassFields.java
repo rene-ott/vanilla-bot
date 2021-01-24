@@ -25,4 +25,7 @@ public class MudClientClassFields implements WithClassMembers {
 
     @YamlClassMemberKey("mid_region_base_x") public String mid_region_base_x;
     @YamlClassMemberKey("mid_region_base_y") public String mid_region_base_y;
+
+    @YamlClassMemberKey("inventory_item_list") public String inventoryItemList;
+    @YamlClassMemberKey("inventory_item_list_index") public String inventoryItemListIndex;
 }

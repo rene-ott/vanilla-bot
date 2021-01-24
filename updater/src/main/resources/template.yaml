@@ -10,6 +10,10 @@ mud_client:
     ground_item_list_index:
     ground_object_list:
     ground_object_list_index:
+    inventory_item_list:
+    inventory_item_list_index:
+    mid_region_base_x:
+    mid_region_base_y:
     npc_list:
     npc_list_index:
     player_position_x:
