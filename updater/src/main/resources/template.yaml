@@ -21,6 +21,11 @@ mud_client:
     npc_list_index:
     player_position_x:
     player_position_y:
+    player_list:
+    player_list_index:
+    user_name:
+    user_password:
+    user:
     selected_inventory_item_index:
     selected_spell:
     wall_object_list:
