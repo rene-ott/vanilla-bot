@@ -12,6 +12,8 @@ mud_client:
     ground_object_list_index:
     npc_list:
     npc_list_index:
+    player_position_x:
+    player_position_y:
     wall_object_list:
     wall_object_list_index:
 

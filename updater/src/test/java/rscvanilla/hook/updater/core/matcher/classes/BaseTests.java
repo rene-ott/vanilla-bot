@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 public class BaseTests {
 
-    protected String lineSeparator = System.lineSeparator();
+    protected String lineSeparator = "\r\n";
 
     protected String readResource(final String fileName) {
         try {
