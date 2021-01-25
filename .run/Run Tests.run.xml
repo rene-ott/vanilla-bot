@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value=":updater:test" />
+          <option value=":hook-updater:test" />
         </list>
       </option>
       <option name="vmOptions" value="" />

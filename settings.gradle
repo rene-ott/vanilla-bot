@@ -1,4 +1,4 @@
-rootProject.name = 'vanilla-bot-hook-updater'
-include 'model'
-include 'updater'
+rootProject.name = 'vanilla-bot'
+include 'hook-model'
+include 'hook-updater'
 
