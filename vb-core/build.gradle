@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    compile fileTree(dir: 'lib', include: '*.jar')
+    implementation "com.google.guava:guava:30.1-jre"
+    implementation "com.google.inject:guice:5.0.0-BETA-1"
+    implementation "org.apache.commons:commons-lang3:3.11"
+    implementation "org.javassist:javassist:3.27.0-GA"
+    implementation "ch.qos.logback:logback-classic:1.2.3"
+    implementation "ch.qos.logback:logback-core:1.2.3"
+    implementation "org.slf4j:slf4j-api:1.7.30"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task reloadScripts() {
+    dependsOn classes.doLast {
+        delete fileTree("${projectDir}/scripts")
+        copy {
+            from "${projectDir}/src/main/java/scripts"
+            into "${projectDir}/scripts"
+        }
+        copy {
+            from "${buildDir}/classes/java/main/scripts"
+            into "${projectDir}/scripts"
+        }
+    }
+}

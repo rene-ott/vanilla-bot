@@ -1,4 +1,5 @@
 rootProject.name = 'vanilla-bot'
-include 'hook-model'
-include 'hook-updater'
+include 'vb-hook-model'
+include 'vb-hook-updater'
+include 'vb-core'
 

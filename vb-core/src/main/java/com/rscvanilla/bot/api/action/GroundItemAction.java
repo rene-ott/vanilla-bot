@@ -1,0 +1,65 @@
+package com.rscvanilla.bot.api.action;
+
+import com.rscvanilla.bot.api.BaseAction;
+import com.rscvanilla.bot.api.action.WalkAction;
+import com.rscvanilla.bot.api.models.OpCodeOut;
+import com.rscvanilla.bot.api.wrappers.RSGroundItem;
+import com.rscvanilla.bot.mc.MudClientHooker;
+
+import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+public class GroundItemAction extends BaseAction {
+
+    private WalkAction walkAction;
+
+    @Inject
+    public GroundItemAction(MudClientHooker hooks,
+                            WalkAction walkAction
+    ) {
+        super(hooks);
+        this.walkAction = walkAction;
+    }
+
+    public boolean isItemOnGround(int...ids) {
+        return getGroundItemById(ids) != null;
+    }
+
+    public void takeItemFromGround(int...ids) {
+        var groundItem = getGroundItemById(ids);
+
+        if (groundItem == null)
+            return;
+
+        var itemLocalPositionX = groundItem.getLocalPosition().getX();
+        var itemLocalPositionY = groundItem.getLocalPosition().getY();
+        var playerLocalPosition = hooker.getUser().getLocalPosition();
+
+        walkAction.walkToGroundItem(itemLocalPositionX, itemLocalPositionY, true);
+        if (playerLocalPosition.getX() == itemLocalPositionX && playerLocalPosition.getY() == itemLocalPositionY) {
+
+            hooker.getPacketBuilder()
+                    .setOpCode(OpCodeOut.TAKE_ITEM_FROM_GROUND)
+                    .putShort(groundItem.getGlobalPosition().getX())
+                    .putShort(groundItem.getGlobalPosition().getY())
+                    .putShort(groundItem.getId())
+                    .send();
+        }
+    }
+
+    private RSGroundItem getGroundItemById(int...ids) {
+
+        var groundItems = hooker.getGroundItemList()
+                .stream()
+                .filter(Objects::nonNull)
+                .filter(it -> Arrays.stream(ids).anyMatch(id -> id == it.getId()))
+                .collect(Collectors.toList());
+
+        if (groundItems.isEmpty())
+            return null;
+
+        return (RSGroundItem) hooker.getUser().getNearest(groundItems);
+    }
+}
