@@ -12,13 +12,13 @@ import com.rscvanilla.bot.infrastructure.BotException;
 import com.rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import com.rscvanilla.bot.mc.helpers.HookLoader;
 import com.rscvanilla.bot.mc.helpers.MudClientHookerUtil;
-import com.rscvanilla.bot.mc.interceptors.captcha.MudClientCaptchaInterceptor;
-import com.rscvanilla.bot.mc.interceptors.gamesettings.MudClientGameSettingsInterceptor;
-import com.rscvanilla.bot.mc.interceptors.ingamemessage.MudClientInGameMessageInterceptor;
 import com.rscvanilla.bot.mc.proxies.FieldHook;
 import com.rscvanilla.bot.mc.proxies.MethodHook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
+import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
+import rscvanilla.contracts.interceptors.MudClientInGameMessageInterceptor;
 import rscvanilla.hook.model.Hooks;
 import rscvanilla.hook.model.classes.applet.AppletClassFields;
 import rscvanilla.hook.model.classes.mudclient.MudClientClassFields;
@@ -121,7 +121,7 @@ public class MudClientHooker {
 
     @Inject
     @SuppressWarnings("unused") // Injected by Guice
-    private void setCaptchaInterceptor(MudClientCaptchaInterceptor interceptor) {
+    public void setCaptchaInterceptor(MudClientCaptchaInterceptor interceptor) {
         captchaInterceptor.setValue(interceptor);
     }
 

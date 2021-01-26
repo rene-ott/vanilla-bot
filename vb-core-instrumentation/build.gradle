@@ -1,0 +1,68 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
+    id 'java'
+}
+
+group 'rscvanilla'
+version 'pre-alpha'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation files("../libs/client.jar")
+    implementation "org.javassist:javassist:3.27.0-GA"
+    implementation "com.google.inject:guice:5.0.0-BETA-1"
+    implementation project(':vb-hook-model')
+    implementation project(':vb-core-contracts')
+}
+
+def coreProjectDir = project(":vb-core").projectDir
+def coreLibDir = "${coreProjectDir}/lib"
+
+def buildDir = project.buildDir
+def distDir = "${buildDir}/dist"
+def libsDir = "${buildDir}/libs"
+def archiveName = "vanilla-bot-agent"
+def versionedDirName = "vanilla-bot-agent-${project.version}"
+def versionedDir = "${distDir}/${versionedDirName}"
+
+shadowJar {
+    manifest {
+        attributes(
+                "Manifest-Version": 1.0,
+                "Premain-Class": "rscvanilla.instrumentation.PreMain",
+                "Can-Redefine-Classes": true,
+                "Can-Retransform-Classes": true
+
+        )
+        archivesBaseName = archiveName
+        version(null)
+        classifier(null)
+    }
+}
+
+task createDistDir(type: Delete) {
+    dependsOn shadowJar
+
+    doLast {
+        delete distDir
+        mkdir versionedDir
+    }
+}
+
+task copyJarToDist(type: Copy) {
+    dependsOn createDistDir
+    from "${libsDir}/${archiveName}.jar" into "${versionedDir}"
+}
+
+task publishVanillaBotAgent() {
+    dependsOn copyJarToDist
+    println "Publishing Vanilla Bot Agent"
+}
+
+task copyJarToCoreLibs(type: Copy) {
+    dependsOn publishVanillaBotAgent
+    from "${libsDir}/${archiveName}.jar" into "${coreLibDir}"
+}

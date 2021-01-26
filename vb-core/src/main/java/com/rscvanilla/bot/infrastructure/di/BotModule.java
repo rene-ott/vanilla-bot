@@ -13,19 +13,16 @@ import com.rscvanilla.bot.VanillaBot;
 import com.rscvanilla.bot.VanillaGameApplet;
 import com.rscvanilla.bot.api.action.*;
 import com.rscvanilla.bot.gui.BotFrame;
+import com.rscvanilla.bot.infrastructure.BotException;
 import com.rscvanilla.bot.infrastructure.annotations.CaptchaDirectoryPath;
 import com.rscvanilla.bot.infrastructure.annotations.ScriptsDirectoryPath;
 import com.rscvanilla.bot.infrastructure.printer.Printer;
 import com.rscvanilla.bot.infrastructure.printer.TabPrinter;
-import com.rscvanilla.bot.infrastructure.HooksReader;
 import com.rscvanilla.bot.mc.MudClientHooker;
 import com.rscvanilla.bot.mc.interceptors.captcha.CaptchaImageHandler;
 import com.rscvanilla.bot.mc.interceptors.captcha.CaptchaImageRecognizer;
-import com.rscvanilla.bot.mc.interceptors.captcha.MudClientCaptchaInterceptor;
 import com.rscvanilla.bot.mc.interceptors.gamesettings.GameSettingsHandler;
-import com.rscvanilla.bot.mc.interceptors.gamesettings.MudClientGameSettingsInterceptor;
 import com.rscvanilla.bot.mc.interceptors.ingamemessage.InGameMessageHandler;
-import com.rscvanilla.bot.mc.interceptors.ingamemessage.MudClientInGameMessageInterceptor;
 import com.rscvanilla.bot.script.ScriptDependencyContext;
 import com.rscvanilla.bot.script.engine.ScriptEngine;
 import com.rscvanilla.bot.script.engine.ScriptFactory;
@@ -33,9 +30,14 @@ import com.rscvanilla.bot.script.engine.ScriptList;
 import com.rscvanilla.bot.script.engine.executor.ScriptThreadExecutor;
 import com.rscvanilla.bot.script.engine.loader.ScriptLoader;
 import com.rscvanilla.bot.watcher.ScriptDirectoryContentChangeWatcher;
+import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
+import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
+import rscvanilla.contracts.interceptors.MudClientInGameMessageInterceptor;
 import rscvanilla.hook.model.Hooks;
+import rscvanilla.hook.model.HooksFileReader;
 
 import javax.inject.Singleton;
+import java.io.IOException;
 
 public class BotModule extends AbstractModule {
 
@@ -85,7 +87,12 @@ public class BotModule extends AbstractModule {
     }
 
     private void bindHooksFile() {
-        bind(Hooks.class).toInstance(HooksReader.readHooksFile());
+        try {
+            var fileReader = HooksFileReader.readHooksFile();
+            bind(Hooks.class).toInstance(fileReader);
+        } catch (IOException e) {
+            throw new BotException("Reading hooks file failed", e);
+        }
     }
 
     private void bindEventBus() {

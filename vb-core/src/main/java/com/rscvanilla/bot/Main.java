@@ -18,9 +18,8 @@ public class Main {
     public static void main(String [] args) {
 
         try {
-            CodeModifier.modifyClientJar(getClientJarPath());
             Guice.createInjector(new BotModule(getCaptchaDirPath(), getScriptsDirectoryPath())).getInstance(VanillaBot.class).load();
-        } catch (BotException | NotFoundException | CannotCompileException e) {
+        } catch (BotException e) {
             logger.error("BOT FAILED:", e);
         }
     }

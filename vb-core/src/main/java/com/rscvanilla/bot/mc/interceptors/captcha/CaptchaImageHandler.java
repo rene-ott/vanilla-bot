@@ -5,6 +5,7 @@ import com.rscvanilla.bot.api.models.OpCodeOut;
 import com.rscvanilla.bot.events.MessageEvent;
 import com.rscvanilla.bot.infrastructure.printer.Printer;
 import com.rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
 
 import javax.imageio.ImageIO;
 import javax.inject.Inject;

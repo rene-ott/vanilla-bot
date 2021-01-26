@@ -1,18 +1,19 @@
 package com.rscvanilla.bot.bcel;
 
-import com.rscvanilla.bot.infrastructure.HooksReader;
-import com.rscvanilla.bot.mc.interceptors.captcha.MudClientCaptchaInterceptor;
-import com.rscvanilla.bot.mc.interceptors.gamesettings.MudClientGameSettingsInterceptor;
-import com.rscvanilla.bot.mc.interceptors.ingamemessage.MudClientInGameMessageInterceptor;
 import javassist.*;
+import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
+import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
+import rscvanilla.contracts.interceptors.MudClientInGameMessageInterceptor;
 import rscvanilla.hook.model.Hooks;
+import rscvanilla.hook.model.HooksFileReader;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class CodeModifier {
 
-    public static void modifyClientJar(String clientJarFilePath) throws NotFoundException, CannotCompileException {
-        var hookProperties = HooksReader.readHooksFile();
+    public static void modifyClientJar(String clientJarFilePath) throws NotFoundException, CannotCompileException, IOException {
+        var hookProperties = HooksFileReader.readHooksFile();
 
         var classPool = getClassPool(clientJarFilePath);
 

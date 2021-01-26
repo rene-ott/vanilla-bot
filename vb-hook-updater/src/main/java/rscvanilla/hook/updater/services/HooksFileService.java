@@ -4,7 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hook.updater.infrastructure.AppException;
-import rscvanilla.hook.model.serializer.HooksFileSerializer;
+import rscvanilla.hook.model.HooksFileSerializer;
 import rscvanilla.hook.model.Hooks;
 
 import javax.inject.Inject;

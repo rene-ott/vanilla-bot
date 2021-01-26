@@ -4,7 +4,7 @@
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="MAIN_CLASS_NAME" value="com.rscvanilla.bot.Main" />
     <module name="vanilla-bot.vb-core.main" />
-    <option name="VM_PARAMETERS" value="-DsocksProxyHost=45.140.19.84 -DsocksProxyPort=45786" />
+    <option name="VM_PARAMETERS" value="-javaagent:&quot;C:\Users\Rene\Desktop\Repositories\vanilla-bot\vb-core\lib\vanilla-bot-agent.jar&quot; -DsocksProxyHost=92.118.113.86 -DsocksProxyPort=45786" />
     <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
     <extension name="coverage">
       <pattern>

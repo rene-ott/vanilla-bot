@@ -4,6 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.rscvanilla.bot.events.InGameMessageReceivedEvent;
 import com.rscvanilla.bot.events.MessageEvent;
 import org.apache.commons.lang3.StringUtils;
+import rscvanilla.contracts.interceptors.MudClientInGameMessageInterceptor;
 
 import javax.inject.Inject;
 

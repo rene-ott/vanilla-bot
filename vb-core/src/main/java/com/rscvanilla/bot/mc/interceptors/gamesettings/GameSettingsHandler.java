@@ -2,11 +2,12 @@ package com.rscvanilla.bot.mc.interceptors.gamesettings;
 
 import com.rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import com.rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
 
 import javax.inject.Inject;
 
 //TODO Separate settings class & move fields to mudclient
-public class GameSettingsHandler implements MudClientGameSettingsInterceptor{
+public class GameSettingsHandler implements MudClientGameSettingsInterceptor {
 
     private MudClientHooker hooker;
 
