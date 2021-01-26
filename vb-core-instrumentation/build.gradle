@@ -23,7 +23,7 @@ def coreLibDir = "${coreProjectDir}/lib"
 def buildDir = project.buildDir
 def distDir = "${buildDir}/dist"
 def libsDir = "${buildDir}/libs"
-def archiveName = "vanilla-bot-agent"
+def archiveName = "agent"
 def versionedDirName = "vanilla-bot-agent-${project.version}"
 def versionedDir = "${distDir}/${versionedDirName}"
 
@@ -31,9 +31,7 @@ shadowJar {
     manifest {
         attributes(
                 "Manifest-Version": 1.0,
-                "Agent-Class": "rscvanilla.instrumentation.PreMain",
-                "Can-Redefine-Classes": true,
-                "Can-Retransform-Classes": true,
+                "Premain-Class": "rscvanilla.instrumentation.PreMain"
         )
         minimize()
         archivesBaseName = archiveName

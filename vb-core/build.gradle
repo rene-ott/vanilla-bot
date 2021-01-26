@@ -4,15 +4,15 @@ plugins {
 }
 
 group 'org.example'
-version '1.0-SNAPSHOT'
+version 'pre-alpha'
 
 repositories {
     mavenCentral()
-    maven { url "https://jitpack.io" }
 }
 
 dependencies {
-    compile fileTree(dir: 'lib', include: '*.jar')
+    shadow files("lib/client.jar")
+    shadow files("lib/agent.jar")
     implementation "com.google.guava:guava:30.1-jre"
     implementation "com.google.inject:guice:5.0.0-BETA-1"
     implementation "org.apache.commons:commons-lang3:3.11"
@@ -45,7 +45,7 @@ task reloadScripts() {
 def buildDir = project.buildDir
 def distDir = "${buildDir}/dist"
 def libsDir = "${buildDir}/libs"
-def archiveName = "vanilla-bot"
+def archiveName = "bot"
 def versionedDirName = "vanilla-bot-${project.version}"
 def versionedDir = "${distDir}/${versionedDirName}"
 
@@ -53,7 +53,7 @@ shadowJar {
     manifest {
         attributes(
                 "Manifest-Version": 1.0,
-                "Main-Class": "com.rscvanilla.bot.Main"
+                "Main-Class": "rscvanilla.bot.Main"
         )
         archivesBaseName = archiveName
         version(null)
@@ -74,7 +74,36 @@ task copyJarToDist(type: Copy) {
     from "${libsDir}/${archiveName}.jar" into "${versionedDir}"
 }
 
-task publishVanillaBot() {
+task copyScriptsToDist(type: Copy) {
     dependsOn copyJarToDist
+    from "${projectDir}/scripts" into "${versionedDir}/scripts"
+}
+
+task copyResToDist(type: Copy) {
+    dependsOn copyScriptsToDist
+    from "${projectDir}/res" into "${versionedDir}/res"
+}
+
+task copyLibToDist(type: Copy) {
+    dependsOn copyResToDist
+    from "${projectDir}/lib" into "${versionedDir}/lib"
+}
+
+task createRunInputScripts(type: CreateStartScripts) {
+    dependsOn copyLibToDist
+
+    applicationName = "run"
+    outputDir = file(versionedDir)
+    doLast {
+        delete unixScript
+        windowsScript.text = "@echo off\n" +
+                "java -javaagent:\"%cd%\\lib\\agent.jar\" -cp \"bot.jar;lib/*\" rscvanilla.bot.Main -DsocksProxyHost=92.118.113.86 -DsocksProxyPort=45786\n" +
+                "@echo on\n" +
+                "pause"
+    }
+}
+
+task publishVanillaBot() {
+    dependsOn createRunInputScripts
     println "Publishing Vanilla Bot"
 }

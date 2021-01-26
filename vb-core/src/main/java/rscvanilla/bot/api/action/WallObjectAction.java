@@ -1,0 +1,69 @@
+package rscvanilla.bot.api.action;
+
+import rscvanilla.bot.api.BaseAction;
+import rscvanilla.bot.api.models.OpCodeOut;
+import rscvanilla.bot.api.models.Position;
+import rscvanilla.bot.api.wrappers.RSWallObject;
+import rscvanilla.bot.mc.MudClientHooker;
+
+import javax.inject.Inject;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+public class WallObjectAction extends BaseAction {
+
+    private WalkAction walkAction;
+
+    @Inject
+    public WallObjectAction(MudClientHooker hooker, WalkAction walkAction) {
+        super(hooker);
+        this.walkAction = walkAction;
+    }
+
+    public void atWallObject(int id, Position pos) {
+        atWallObject(id, pos.getX(), pos.getY());
+    }
+
+    public void atWallObject(int id, int x, int y) {
+        var wallObject = getWallObject(id, x, y);
+        if (wallObject == null)
+            return;
+
+        atWallObjectWalkTo(wallObject);
+    }
+
+    private void atWallObjectWalkTo(RSWallObject object) {
+        var localPosition = object.getLocalPosition();
+        var globalPosition = object.getGlobalPosition();
+
+        // TODO: Figure out what the dir parameter is
+        walkAction.walkToWallObject(localPosition.getX(), localPosition.getY(), object.getDirection());
+
+        hooker.getPacketBuilder()
+                .setOpCode(OpCodeOut.WALL_COMMAND1)
+                .putShort(globalPosition.getX())
+                .putShort(globalPosition.getY())
+                .putByte(object.getDirection())
+                .send();
+    }
+
+    public boolean isWallObjectNear(int id, Position pos) {
+        return isWallObjectNear(id, pos.getX(), pos.getY());
+    }
+    public boolean isWallObjectNear(int id, int globalX, int globalY) {
+        return getWallObject(id, globalX, globalY) != null;
+    }
+
+    private RSWallObject getWallObject(int id, int x, int y) {
+        var matchedWallObjects = hooker.getWallObjectList()
+                .stream()
+                .filter(Objects::nonNull)
+                .filter(it -> id == it.getId() && it.getGlobalPosition().getX() == x && it.getGlobalPosition().getY() == y)
+                .collect(Collectors.toList());
+
+        if (matchedWallObjects.isEmpty())
+            return null;
+
+        return (RSWallObject) hooker.getUser().getNearest(matchedWallObjects);
+    }
+}

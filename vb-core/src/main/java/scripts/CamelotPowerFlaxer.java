@@ -1,9 +1,9 @@
 package scripts;
 
-import com.rscvanilla.bot.api.models.Position;
-import com.rscvanilla.bot.script.ScriptDependencyContext;
-import com.rscvanilla.bot.script.antiban.ScriptAntiBanParams;
-import com.rscvanilla.bot.script.template.RunnableScript;
+import rscvanilla.bot.api.models.Position;
+import rscvanilla.bot.script.ScriptDependencyContext;
+import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
+import rscvanilla.bot.script.template.RunnableScript;
 
 public class CamelotPowerFlaxer extends RunnableScript {
 

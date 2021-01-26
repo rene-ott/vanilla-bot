@@ -2,13 +2,13 @@
   <configuration default="false" name="Run Bot" type="Application" factoryName="Application">
     <option name="ALTERNATIVE_JRE_PATH" value="openjdk-15" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-    <option name="MAIN_CLASS_NAME" value="com.rscvanilla.bot.Main" />
+    <option name="MAIN_CLASS_NAME" value="rscvanilla.bot.Main" />
     <module name="vanilla-bot.vb-core.main" />
-    <option name="VM_PARAMETERS" value="-DsocksProxyHost=92.118.113.86 -DsocksProxyPort=45786 -Djdk.attach.allowAttachSelf=true" />
+    <option name="VM_PARAMETERS" value="-javaagent:&quot;C:\Users\Rene\Desktop\Repositories\vanilla-bot\vb-core\lib\agent.jar&quot; -DsocksProxyHost=92.118.113.86 -DsocksProxyPort=45786" />
     <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.rscvanilla.bot.*" />
+        <option name="PATTERN" value="rscvanilla.bot.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

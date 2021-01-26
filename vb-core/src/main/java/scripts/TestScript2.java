@@ -1,8 +1,8 @@
 package scripts;
 
-import com.rscvanilla.bot.script.ScriptDependencyContext;
-import com.rscvanilla.bot.script.antiban.ScriptAntiBanParams;
-import com.rscvanilla.bot.script.template.RunnableScript;
+import rscvanilla.bot.script.ScriptDependencyContext;
+import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
+import rscvanilla.bot.script.template.RunnableScript;
 
 public class TestScript2 extends RunnableScript {
 
