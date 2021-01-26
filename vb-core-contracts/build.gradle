@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.guardsquare:proguard-gradle:7.0.0'
+    }
+}
+
 plugins {
     id 'java'
 }

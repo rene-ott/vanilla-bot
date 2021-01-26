@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 group 'org.example'
@@ -39,4 +40,41 @@ task reloadScripts() {
             into "${projectDir}/scripts"
         }
     }
+}
+
+def buildDir = project.buildDir
+def distDir = "${buildDir}/dist"
+def libsDir = "${buildDir}/libs"
+def archiveName = "vanilla-bot"
+def versionedDirName = "vanilla-bot-${project.version}"
+def versionedDir = "${distDir}/${versionedDirName}"
+
+shadowJar {
+    manifest {
+        attributes(
+                "Manifest-Version": 1.0,
+                "Main-Class": "com.rscvanilla.bot.Main"
+        )
+        archivesBaseName = archiveName
+        version(null)
+        classifier(null)
+    }
+}
+
+task createDistDir(type: Delete) {
+    dependsOn shadowJar
+    doLast {
+        delete distDir
+        mkdir versionedDir
+    }
+}
+
+task copyJarToDist(type: Copy) {
+    dependsOn createDistDir
+    from "${libsDir}/${archiveName}.jar" into "${versionedDir}"
+}
+
+task publishVanillaBot() {
+    dependsOn copyJarToDist
+    println "Publishing Vanilla Bot"
 }

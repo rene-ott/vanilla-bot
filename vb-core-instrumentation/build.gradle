@@ -31,8 +31,11 @@ shadowJar {
     manifest {
         attributes(
                 "Manifest-Version": 1.0,
-                "Premain-Class": "rscvanilla.instrumentation.PreMain"
+                "Agent-Class": "rscvanilla.instrumentation.PreMain",
+                "Can-Redefine-Classes": true,
+                "Can-Retransform-Classes": true,
         )
+        minimize()
         archivesBaseName = archiveName
         version(null)
         classifier(null)
@@ -41,7 +44,6 @@ shadowJar {
 
 task createDistDir(type: Delete) {
     dependsOn shadowJar
-
     doLast {
         delete distDir
         mkdir versionedDir
