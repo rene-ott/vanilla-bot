@@ -11,7 +11,6 @@ repositories {
 }
 
 dependencies {
-    implementation files("../libs/client.jar")
     implementation "org.javassist:javassist:3.27.0-GA"
     implementation "com.google.inject:guice:5.0.0-BETA-1"
     implementation project(':vb-hook-model')
@@ -32,10 +31,7 @@ shadowJar {
     manifest {
         attributes(
                 "Manifest-Version": 1.0,
-                "Premain-Class": "rscvanilla.instrumentation.PreMain",
-                "Can-Redefine-Classes": true,
-                "Can-Retransform-Classes": true
-
+                "Premain-Class": "rscvanilla.instrumentation.PreMain"
         )
         archivesBaseName = archiveName
         version(null)
