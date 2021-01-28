@@ -59,6 +59,7 @@ shadowJar {
         version(null)
         classifier(null)
     }
+    exclude("scripts")
 }
 
 task createDistDir(type: Delete) {
@@ -79,13 +80,8 @@ task copyScriptsToDist(type: Copy) {
     from "${projectDir}/scripts" into "${versionedDir}/scripts"
 }
 
-task copyResToDist(type: Copy) {
-    dependsOn copyScriptsToDist
-    from "${projectDir}/res" into "${versionedDir}/res"
-}
-
 task copyLibToDist(type: Copy) {
-    dependsOn copyResToDist
+    dependsOn copyScriptsToDist
     from "${projectDir}/lib" into "${versionedDir}/lib"
 }
 
@@ -97,7 +93,7 @@ task createRunInputScripts(type: CreateStartScripts) {
     doLast {
         delete unixScript
         windowsScript.text = "@echo off\n" +
-                "java -javaagent:\"%cd%\\lib\\agent.jar\" -cp \"bot.jar;lib/*\" rscvanilla.bot.Main -DsocksProxyHost=92.118.113.86 -DsocksProxyPort=45786\n" +
+                "java -javaagent:\"%cd%\\lib\\agent.jar\" -cp \"bot.jar;lib/*\" rscvanilla.bot.Main\n" +
                 "@echo on\n" +
                 "pause"
     }

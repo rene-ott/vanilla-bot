@@ -1,40 +1,17 @@
 package rscvanilla.bot.mc.interceptors.captcha;
 
-import rscvanilla.bot.infrastructure.annotations.CaptchaDirectoryPath;
-
-import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class CaptchaImageRecognizer {
 
     private final List<CaptchaImage> captchaImages;
 
     @Inject
-    public CaptchaImageRecognizer(@CaptchaDirectoryPath String captchaDirectoryPath) {
-        captchaImages = loadImages(captchaDirectoryPath);
-    }
-
-    private List<CaptchaImage> loadImages(String captchaDirectoryPath) {
-
-        var srcDir = new File(captchaDirectoryPath);
-        var imageCache = new ArrayList<CaptchaImage>();
-
-        for (var f : Objects.requireNonNull(srcDir.listFiles((dir, name) -> name.endsWith(".png")))) {
-            try {
-                imageCache.add(new CaptchaImage(f.getName().replace(".png", ""), ImageIO.read(f)));
-            } catch (final IOException e) {
-
-            }
-        }
-
-        return imageCache;
+    public CaptchaImageRecognizer(CaptchaDataLoader captchaDataLoader) {
+        captchaImages = captchaDataLoader.loadCaptchaImages();
     }
 
     public String getImageWord(BufferedImage searchImage) {
@@ -42,9 +19,7 @@ public class CaptchaImageRecognizer {
         CaptchaImage bestMatchSleepWord = null;
         var smallestDifference = Double.MAX_VALUE;
 
-        for (var i = 0; i < captchaImages.size(); i++) {
-            CaptchaImage currentImage = captchaImages.get(i);
-
+        for (var currentImage : captchaImages) {
             var difference = getDifference(searchImage, currentImage.getImage());
 
             if (difference < smallestDifference) {

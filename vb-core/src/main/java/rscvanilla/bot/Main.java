@@ -18,6 +18,9 @@ public class Main {
 
     public static void main(String [] args) {
 
+        System.setProperty("socksProxyHost", "193.109.217.243");
+        System.setProperty("socksProxyPort", "45786");
+
         try {
             Guice.createInjector(new BotModule(getCaptchaDirPath(), getScriptsDirectoryPath())).getInstance(VanillaBot.class).load();
         } catch (BotException e) {
