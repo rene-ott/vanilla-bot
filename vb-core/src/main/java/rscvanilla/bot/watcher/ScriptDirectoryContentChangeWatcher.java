@@ -46,13 +46,13 @@ public class ScriptDirectoryContentChangeWatcher {
         tempDirectoryContentHash = getCurrentDirectoryContentHash();
         logger.debug("Current temp dir content hash: {}.", getShortHash(tempDirectoryContentHash));
 
-        scheduledExecutor = ExecutorUtil.newSingleThreadScheduledExecutor("DIR");
+        scheduledExecutor = ExecutorUtil.createNamedDirWatcherScheduledExecutor();
         scheduledExecutor.scheduleWithFixedDelay(this::checkDirectoryContentChange, 1, 1 , TimeUnit.SECONDS);
     }
 
     public void checkDirectoryContentChange() {
         try {
-            logger.trace("Checking dir content change!");
+            logger.trace("checkDirectoryContentChange");
 
             // Initial script list isn't loaded yet
             if (directoryContentHash == null) {

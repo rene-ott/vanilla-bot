@@ -11,7 +11,7 @@ public class ScriptThreadExecutor extends ThreadPoolExecutor {
 
     @Inject
     public ScriptThreadExecutor() {
-        super(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), ExecutorUtil.createNamedFactory("SCRIPT"));
+        super(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), ExecutorUtil.createNamedScriptThreadFactory());
     }
 
     @Override

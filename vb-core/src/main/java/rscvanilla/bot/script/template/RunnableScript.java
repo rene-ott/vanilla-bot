@@ -34,7 +34,7 @@ public abstract class RunnableScript extends Script implements Runnable, AntiBan
         antiBan = new ScriptAntiBan(antiBanParameters, this, state);
 
         inGameMessageQueue = new InGameMessageQueue();
-        antiBanScheduler = ExecutorUtil.newSingleThreadScheduledExecutor("ANTIBAN");
+        antiBanScheduler = ExecutorUtil.createNamedAntiBanScheduledExecutor();
     }
 
     @Override
