@@ -19,13 +19,11 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
 
     public static int WIDTH = 175;
 
-    private final int gridRows = 8;
+    private final int gridRows = 6;
     private final int gridColumns = 2;
     private final JPanel[][] panelHolder = new JPanel[gridRows][gridColumns];
 
     private final JCheckBox enableCheckBox;
-    private final JCheckBox playSoundCheckBox;
-    private final JCheckBox greetCheckBox;
     private final JCheckBox logoutCheckBox;
     private final JSpinner logoutMinutes;
 
@@ -51,23 +49,17 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
         panelHolder[1][0].add(new JLabel("Distance:"));
         panelHolder[1][1].add(distanceSpinner = createSpinner(1, 60, 10));
 
-        panelHolder[2][0].add(new JLabel("Sound:"));
-        panelHolder[2][1].add(playSoundCheckBox = createCheckBox(""));
+        panelHolder[2][0].add(new JLabel("Action:"));
+        panelHolder[2][1].add(actionComboBox = createActionComboBox(ACTION_NOTHING, ACTION_PAUSE, ACTION_STOP));
 
-        panelHolder[3][0].add(new JLabel("Greet:"));
-        panelHolder[3][1].add(greetCheckBox = createCheckBox(""));
+        panelHolder[3][0].add(new JLabel("Pause min:"));
+        panelHolder[3][1].add(pauseMinutesSpinner = createSpinner(1, 60, 10));
 
-        panelHolder[4][0].add(new JLabel("Action:"));
-        panelHolder[4][1].add(actionComboBox = createActionComboBox(ACTION_NOTHING, ACTION_PAUSE, ACTION_STOP));
+        panelHolder[4][0].add(new JLabel("Logout:"));
+        panelHolder[4][1].add(logoutCheckBox = createCheckBox(""));
 
-        panelHolder[5][0].add(new JLabel("Pause min:"));
-        panelHolder[5][1].add(pauseMinutesSpinner = createSpinner(1, 60, 10));
-
-        panelHolder[6][0].add(new JLabel("Logout:"));
-        panelHolder[6][1].add(logoutCheckBox = createCheckBox(""));
-
-        panelHolder[7][0].add(new JLabel("Logout min:"));
-        panelHolder[7][1].add(logoutMinutes = createSpinner(0, 5, 1));
+        panelHolder[5][0].add(new JLabel("Logout min:"));
+        panelHolder[5][1].add(logoutMinutes = createSpinner(0, 5, 1));
 
         setElementsEnabled(false, false);
         distanceSpinner.setValue(10);
@@ -149,9 +141,7 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
         if (isEnableCheckBoxEnableable) {
             enableCheckBox.setEnabled(isEnabled);
         }
-
-        greetCheckBox.setEnabled(isEnabled);
-        playSoundCheckBox.setEnabled(isEnabled);
+        
         distanceSpinner.setEnabled(isEnabled);
         actionComboBox.setEnabled(isEnabled);
         pauseMinutesSpinner.setEnabled(isEnabled && actionComboBox.getSelectedItem() == ACTION_PAUSE);
@@ -165,8 +155,6 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
 
         params.setEnabled(String.valueOf(enableCheckBox.isSelected()));
         params.setInDistance(distanceSpinner.getValue().toString());
-        params.setPlaySound(String.valueOf(playSoundCheckBox.isSelected()));
-        params.setGreet(String.valueOf(greetCheckBox.isSelected()));
         params.setAction(actionComboBox.getSelectedItem().toString());
         params.setPauseMinutes(pauseMinutesSpinner.getValue().toString());
         params.setLogout(String.valueOf(logoutCheckBox.isSelected()));

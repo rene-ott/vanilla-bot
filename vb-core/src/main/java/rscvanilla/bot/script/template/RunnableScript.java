@@ -20,7 +20,7 @@ public abstract class RunnableScript extends Script implements Runnable, AntiBan
     private final InGameMessageQueue inGameMessageQueue;
     private final RunnableScriptState state;
     private ScriptAntiBan antiBan;
-    private ScheduledExecutorService antiBanScheduler;
+    private final ScheduledExecutorService antiBanScheduler;
 
     /** Script GUI and AB thread might access this **/
     private volatile Thread scriptThread;
@@ -61,7 +61,6 @@ public abstract class RunnableScript extends Script implements Runnable, AntiBan
             } else if (state.getStatus() == RunnableScriptStatus.STOPPING) {
                 continue;
             } else if (state.getStatus() == RunnableScriptStatus.STOPPED) {
-                logger.debug("STOPPED");
                 stopScript();
             } else if (state.getStatus() == RunnableScriptStatus.RUNNING && isOnLoginScreen()) {
                 login();

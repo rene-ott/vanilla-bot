@@ -1,18 +1,14 @@
 package rscvanilla.bot.script.antiban;
 
-import rscvanilla.bot.Main;
 
 public class ScriptAntiBanParams {
 
     private boolean isEnabled;
     private int inDistance;
-    private boolean isSound;
-    private boolean isGreet;
     private String action;
     private int pauseMinutes;
     private boolean isLogout;
     private int logoutMinutes;
-    private String soundPath;
 
     public ScriptAntiBanParams() {
         inDistance = 10;
@@ -62,14 +58,6 @@ public class ScriptAntiBanParams {
         this.action = action;
     }
 
-    public boolean isGreet() {
-        return isGreet;
-    }
-
-    public void setGreet(String isGreet) {
-        this.isGreet = Boolean.parseBoolean(isGreet);
-    }
-
     public boolean isLogout() {
         return isLogout;
     }
@@ -86,35 +74,15 @@ public class ScriptAntiBanParams {
         this.logoutMinutes = Integer.parseInt(logoutMinutes);
     }
 
-    public boolean isSoundPlay() {
-        return isSound;
-    }
-
-    public void setPlaySound(String sound) {
-        isSound = Boolean.parseBoolean(sound);
-    }
-
-    //TODO FIX
-    public String getSoundPath() {
-        return Main.getAntiBanSoundPath();
-    }
-
-    public void setSoundPath(String soundPath) {
-        this.soundPath = soundPath;
-    }
-
     @Override
     public String toString() {
         return "[" +
                 "isEnabled=" + isEnabled +
                 ", inDistance=" + inDistance +
-                ", isSound=" + isSound +
-                ", isGreet=" + isGreet +
                 ", action='" + action + '\'' +
                 ", pauseMinutes=" + pauseMinutes +
                 ", isLogout=" + isLogout +
                 ", logoutMinutes=" + logoutMinutes +
-                ", soundPath='" + soundPath + '\'' +
                 ']';
     }
 }
