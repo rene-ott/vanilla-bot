@@ -105,6 +105,7 @@ public class ScriptEngine implements ScriptThreadExecutorListener {
 
     public void dispatchInGameMessage(InGameMessageReceivedEvent event) {
         if (script.getState().isRunning()) {
+            logger.trace("Dispatching in game ve");
             script.enqueueInGameMessageEvent(event);
         }
     }

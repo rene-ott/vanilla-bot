@@ -17,18 +17,17 @@ public abstract class RunnableScript extends Script implements Runnable, AntiBan
 
     private static final Logger logger = LoggerFactory.getLogger(RunnableScript.class);
 
+    // These fields are created by AWT Thread
     private final InGameMessageQueue inGameMessageQueue;
     private final RunnableScriptState state;
-    private ScriptAntiBan antiBan;
+    private final ScriptAntiBan antiBan;
     private final ScheduledExecutorService antiBanScheduler;
 
-    /** Script GUI and AB thread might access this **/
+    // Script GUI and AB thread might access this
     private volatile Thread scriptThread;
 
     public RunnableScript(ScriptDependencyContext dependencyContext, ScriptAntiBanParams antiBanParameters) {
         super(dependencyContext);
-
-        scriptThread = Thread.currentThread();
 
         state = new RunnableScriptState(this.getClass().getSimpleName());
         antiBan = new ScriptAntiBan(antiBanParameters, this, state);
@@ -37,47 +36,77 @@ public abstract class RunnableScript extends Script implements Runnable, AntiBan
         antiBanScheduler = ExecutorUtil.createNamedAntiBanScheduledExecutor();
     }
 
+    protected void onStart() {
+        logger.trace("onStart");
+
+        // This must be created here to have reference to 'script' thread.
+        scriptThread = Thread.currentThread();
+        state.start();
+
+        if (antiBan.getParams().isEnabled()) {
+            logger.debug("AntiBan [ENABLED] with parameters: " + antiBan.getParams());
+            antiBanScheduler.scheduleWithFixedDelay(this::checkAntiBan, 1, 2 , TimeUnit.SECONDS);
+        }
+    }
+
     @Override
     public void run() {
-        onStart();
+        Exception exceptionFromAnotherThread;
+        try {
+            onStart();
 
-        while (!Thread.currentThread().isInterrupted()) {
+            while (!Thread.currentThread().isInterrupted()) {
 
-            if (!state.isScriptLoopEnabled()) {
-                continue;
-            }
+                if (!state.isScriptLoopEnabled()) {
+                    continue;
+                }
 
-            if (state.getStatus() == RunnableScriptStatus.LOGGING_OUT) {
-                if (isInGame()) {
-                    logout();
+                if (state.getStatus() == RunnableScriptStatus.LOGGING_OUT) {
+                    if (isInGame()) {
+                        logout();
+                        waitFor(4000);
+                        continue;
+                    }
+
+                    state.setStatus(antiBan.getParams().isPause() ? RunnableScriptStatus.PAUSED : RunnableScriptStatus.STOPPED);
+                    continue;
+                } else if (state.getStatus() == RunnableScriptStatus.PAUSED) {
+                    continue;
+                } else if (state.getStatus() == RunnableScriptStatus.STOPPING) {
+                    continue;
+                } else if (state.getStatus() == RunnableScriptStatus.STOPPED) {
+                    stopScript();
+                } else if (state.getStatus() == RunnableScriptStatus.RUNNING && isOnLoginScreen()) {
+                    login();
                     waitFor(4000);
                     continue;
                 }
 
-                state.setStatus(antiBan.getParams().isPause() ? RunnableScriptStatus.PAUSED : RunnableScriptStatus.STOPPED);
-                continue;
-            } else if (state.getStatus() == RunnableScriptStatus.PAUSED) {
-                continue;
-            } else if (state.getStatus() == RunnableScriptStatus.STOPPING) {
-                continue;
-            } else if (state.getStatus() == RunnableScriptStatus.STOPPED) {
-                stopScript();
-            } else if (state.getStatus() == RunnableScriptStatus.RUNNING && isOnLoginScreen()) {
-                login();
-                waitFor(4000);
-                continue;
-            }
+                if (isInGame()) {
+                    if (isSleeping()) {
+                        continue;
+                    }
 
-            if (isInGame()) {
-                if (isSleeping()) {
-                    continue;
+                    loop();
                 }
-
-                loop();
             }
+
+            // If AntiBan throw exception then we stop later and rethrow exception
+            exceptionFromAnotherThread = state.getAntiBanException();
+            if (exceptionFromAnotherThread == null) {
+                onStop();
+            }
+
+        } catch (Exception e) {
+            onStop();
+            throw e;
         }
 
-        onStop();
+        // Rethrow it just to let ScriptThread executor handle it.
+        if (exceptionFromAnotherThread != null) {
+            onStop();
+            throw new RuntimeException(exceptionFromAnotherThread);
+        }
     }
 
     private void checkAntiBan() {
@@ -92,24 +121,17 @@ public abstract class RunnableScript extends Script implements Runnable, AntiBan
                 antiBan.doPauseTimeOverCheck();
             }
         } catch (Exception e) {
-            logger.error("ANTIBAN FAILED", e);
+            // This might not be the best solution, but it works.
+            state.setAntiBanException(e);
             scriptThread.interrupt();
         }
     }
 
     protected abstract void loop();
 
-    protected void onStart() {
-        state.start();
-
-        if (antiBan.getParams().isEnabled()) {
-            logger.debug("AntiBan enabled: " + antiBan.getParams());
-            antiBanScheduler.scheduleWithFixedDelay(this::checkAntiBan, 1, 2 , TimeUnit.SECONDS);
-        }
-    }
-
     protected void onStop() {
-        logger.debug("onStop");
+        logger.trace("onStop");
+
         state.stop();
         if (!antiBanScheduler.isShutdown()) {
             antiBanScheduler.shutdownNow();

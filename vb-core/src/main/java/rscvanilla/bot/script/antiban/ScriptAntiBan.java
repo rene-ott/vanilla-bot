@@ -8,6 +8,7 @@ import rscvanilla.bot.script.template.Script;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineEvent;
+import java.io.BufferedInputStream;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -76,7 +77,7 @@ public class ScriptAntiBan {
 
         writeLog("(AB) Play Sound!");
 
-        try (var ais = AudioSystem.getAudioInputStream(Script.class.getResourceAsStream("/notify.wav"))
+        try (var ais = AudioSystem.getAudioInputStream(new BufferedInputStream(Script.class.getResourceAsStream("/notify.wav")))
         ) {
             // Clip is closeable, but it shouldn't be closed before it's finished
             var clip = AudioSystem.getClip();

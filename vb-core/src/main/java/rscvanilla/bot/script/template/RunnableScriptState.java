@@ -16,6 +16,9 @@ public class RunnableScriptState {
 
     private boolean isScriptLoopEnabled;
 
+    // This should be volatile because 'script' thread references to this
+    private volatile Exception antiBanException;
+
     public RunnableScriptState(String scriptName) {
         this.scriptName = scriptName;
         isScriptLoopEnabled = true;
@@ -31,6 +34,14 @@ public class RunnableScriptState {
 
     public RunnableScriptStatus getStatus() {
         return status;
+    }
+
+    public void setAntiBanException(Exception e) {
+        this.antiBanException = e;
+    }
+
+    public Exception getAntiBanException() {
+        return this.antiBanException;
     }
 
     // TODOO Kui viga, siis

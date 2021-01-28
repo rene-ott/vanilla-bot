@@ -130,10 +130,6 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
             }
         }
 
-        if (e.getSource() == logoutMinutes) {
-
-        }
-
         createAndDispatchParamsChangedEvent();
     }
 
