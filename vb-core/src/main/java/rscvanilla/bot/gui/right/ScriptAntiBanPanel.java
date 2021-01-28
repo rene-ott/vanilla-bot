@@ -63,7 +63,7 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
 
         setElementsEnabled(false, false);
         distanceSpinner.setValue(10);
-        logoutMinutes.setValue(1);
+        logoutMinutes.setValue(5);
         pauseMinutesSpinner.setValue(10);
 
         setPreferredSize(new Dimension(WIDTH, BotFrame.HEIGHT));
@@ -121,7 +121,20 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        handleParamsChange();
+        if (e.getSource() == pauseMinutesSpinner) {
+            var pauseValue = (int) pauseMinutesSpinner.getValue();
+            var logoutValue = (int) logoutMinutes.getValue();
+
+            if (pauseValue == logoutValue) {
+                logoutMinutes.setValue(logoutValue - 1);
+            }
+        }
+
+        if (e.getSource() == logoutMinutes) {
+
+        }
+
+        createAndDispatchParamsChangedEvent();
     }
 
     @Override
@@ -134,23 +147,23 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
             logoutMinutes.setEnabled(logoutCheckBox.isSelected());
         }
 
-        handleParamsChange();
+        createAndDispatchParamsChangedEvent();
     }
 
     private void setElementsEnabled(boolean isEnabled, boolean isEnableCheckBoxEnableable) {
         if (isEnableCheckBoxEnableable) {
             enableCheckBox.setEnabled(isEnabled);
         }
-        
+
         distanceSpinner.setEnabled(isEnabled);
         actionComboBox.setEnabled(isEnabled);
-        pauseMinutesSpinner.setEnabled(isEnabled && actionComboBox.getSelectedItem() == ACTION_PAUSE);
+        pauseMinutesSpinner.setEnabled(isEnabled && actionComboBox.getSelectedItem().equals(ACTION_PAUSE));
 
-        logoutCheckBox.setEnabled(isEnabled);
+        logoutCheckBox.setEnabled(isEnabled && actionComboBox.getSelectedItem().equals(ACTION_PAUSE));
         logoutMinutes.setEnabled(isEnabled && logoutCheckBox.isSelected());
     }
 
-    public void handleParamsChange() {
+    public void createAndDispatchParamsChangedEvent() {
         var params = new ScriptAntiBanParams();
 
         params.setEnabled(String.valueOf(enableCheckBox.isSelected()));
@@ -184,9 +197,15 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
         var src = e.getSource();
 
         if (src == actionComboBox) {
-            var isPause = actionComboBox.getSelectedItem().toString().equals(ACTION_PAUSE);
+            var selectedAction = actionComboBox.getSelectedItem().toString();
+
+            var isPause = selectedAction.equals(ACTION_PAUSE);
+            var isStop = selectedAction.equals(ACTION_STOP);
+
             pauseMinutesSpinner.setEnabled(isPause);
-            handleParamsChange();
+            logoutCheckBox.setEnabled(isPause || isStop);
         }
+
+        createAndDispatchParamsChangedEvent();
     }
 }
