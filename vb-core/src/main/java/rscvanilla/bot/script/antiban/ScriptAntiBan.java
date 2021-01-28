@@ -4,33 +4,27 @@ import rscvanilla.bot.script.template.RunnableScriptState;
 import rscvanilla.bot.script.template.RunnableScriptStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import rscvanilla.bot.script.template.Script;
 
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineEvent;
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 public class ScriptAntiBan {
 
     private static final Logger logger = LoggerFactory.getLogger(ScriptAntiBan.class);
 
+    private static final long SECONDS_UNTIL_IGNORE_DETECTED_PLAYER = 10;
+
     private final ScriptAntiBanParams params;
     private final AntiBannable antiBannable;
     private final RunnableScriptState state;
 
-    private long startMillis;
-    private long logoutMillis;
+    private long pauseStartTimeInMillis;
+    private long logoutStartTimeInMillis;
 
-    private final String[] GREET_LIST = { "Hey", "Hi" };
-    private final HashMap<String, Long> greetedPlayers = new HashMap<>();
-
-    private final Set<String> detectedPlayers = new HashSet<>();
+    private final HashMap<String, Long> detectedPlayers = new HashMap<>();
 
     private volatile boolean isSoundPlaying;
 
@@ -48,32 +42,31 @@ public class ScriptAntiBan {
         return params;
     }
 
-    private boolean isPauseTimeOver() {
-        var millisDelta = System.currentTimeMillis() - startMillis;
+    private boolean isPauseOver() {
+        var millisSincePauseActivated = System.currentTimeMillis() - pauseStartTimeInMillis;
+        var pauseDurationInMinutesToMillis = TimeUnit.MINUTES.toMillis(params.getPauseMinutes());
 
-        var pauseMinutesToSeconds = TimeUnit.MINUTES.toSeconds(params.getPauseMinutes()) - 570;
-        var timeSincePauseStartedInSeconds = TimeUnit.MILLISECONDS.toSeconds(millisDelta);
+        var remainedPauseTimeInSeconds = getDifferenceInSeconds(pauseDurationInMinutesToMillis, millisSincePauseActivated);
 
-        var difference = pauseMinutesToSeconds - timeSincePauseStartedInSeconds;
-        logger.debug("Time over in {} second(s).", difference);
+        logger.debug("(AB) Pause over in [{}] second(s).", remainedPauseTimeInSeconds);
 
-        return difference < 0;
+        return remainedPauseTimeInSeconds <= 0;
     }
+
 
     private boolean isLogoutTimeOver() {
         // When logged out then -1
-        if (logoutMillis == -1) {
+        if (logoutStartTimeInMillis == -1) {
             return false;
         }
-        var millisDelta = System.currentTimeMillis() - logoutMillis;
 
-        var pauseMinutesToSeconds = TimeUnit.MINUTES.toSeconds(params.getLogoutMinutes()) - 40;
-        var timeSincePauseStartedInSeconds = TimeUnit.MILLISECONDS.toSeconds(millisDelta);
+        var millisSinceLogoutActivated = System.currentTimeMillis() - logoutStartTimeInMillis;
+        var logoutActivationDurationInMinutesToMillis = TimeUnit.MINUTES.toMillis(params.getLogoutMinutes());
 
-        var difference = pauseMinutesToSeconds - timeSincePauseStartedInSeconds;
-        logger.debug("Logout in {} second(s).", difference);
+        var remainedSecondsTillLogOut = getDifferenceInSeconds(logoutActivationDurationInMinutesToMillis, millisSinceLogoutActivated);
+        logger.debug("(AB) Logout in [{}] second(s).", remainedSecondsTillLogOut);
 
-        return difference < 0;
+        return remainedSecondsTillLogOut <= 0;
     }
 
     public synchronized void playSound() {
@@ -81,180 +74,144 @@ public class ScriptAntiBan {
             return;
         }
 
-        try {
+        writeLog("(AB) Play Sound!");
+
+        try (var ais = AudioSystem.getAudioInputStream(Script.class.getResourceAsStream("/notify.wav"))
+        ) {
+            // Clip is closeable, but it shouldn't be closed before it's finished
             var clip = AudioSystem.getClip();
-            clip.addLineListener(e -> {
-                if (e.getType() == LineEvent.Type.STOP) {
-                    isSoundPlaying = false;
-                }
-            });
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(params.getSoundPath()));
-            clip.open(inputStream);
+            clip.addLineListener(e -> { if (e.getType() == LineEvent.Type.STOP) { isSoundPlaying = false; } });
+            clip.open(ais);
             clip.start();
             isSoundPlaying = true;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
+        }
+        catch(Exception ex) {
+            logger.warn("Playing sound failed:\n", ex);
         }
     }
 
-    public void greetPlayers() {
-        var systemCurrentTimeMillis = System.currentTimeMillis();
+    public boolean isAnyNewPlayersDetected() {
+        var playersInDistance = antiBannable.getPlayerNamesInDistance(params.getInDistance());
+        if (playersInDistance.length == 0)
+            return false;
 
-        var mustGreet = false;
-        for (var player : detectedPlayers)
-        {
-            if (shouldGreetPlayer(player, systemCurrentTimeMillis)) {
-                mustGreet = true;
-                break;
+        var currentTimeInMillis = System.currentTimeMillis();
+
+        var isAnyNewPlayerDetected = false;
+        for (var player: playersInDistance) {
+
+            var isPlayerMarkedAsDetected = shouldMarkPlayerAsDetected(player, currentTimeInMillis);
+            isAnyNewPlayerDetected = isAnyNewPlayerDetected || isPlayerMarkedAsDetected;
+
+            if (isPlayerMarkedAsDetected) {
+                this.detectedPlayers.put(player, currentTimeInMillis);
+                writeLog("(AB) Player [" + player + "] has been detected.");
             }
         }
 
-        if (!mustGreet) {
-            antiBannable.print("(AB) Not greeting any detected players [" + String.join(", ", detectedPlayers) + "].");
-            return;
-        }
-        antiBannable.print("(AB) Greeting detected players [" + String.join(", ", detectedPlayers) + "].");
+        this.detectedPlayers.entrySet().removeIf(entry -> getDifferenceInSeconds(currentTimeInMillis, entry.getValue()) > SECONDS_UNTIL_IGNORE_DETECTED_PLAYER);
 
-        var index = (int) (Math.random() * 1);
-        var message = GREET_LIST[index];
-
-        antiBannable.sendChatMessage(message);
-
-        updateGreetedPlayersMap(systemCurrentTimeMillis);
+        return isAnyNewPlayerDetected;
     }
 
-    private void updateGreetedPlayersMap(long currentTimeInMillis) {
-        detectedPlayers.stream().forEach(it -> greetedPlayers.put(it, currentTimeInMillis));
-    }
-
-    public boolean shouldGreetPlayer(String playerName, long currentTimeMillis) {
-        var previousGreetTimeInMillis = greetedPlayers.get(playerName);
+    public boolean shouldMarkPlayerAsDetected(String playerName, long currentTimeInMillis) {
+        var previousGreetTimeInMillis = detectedPlayers.get(playerName);
         if (previousGreetTimeInMillis == null) {
-            antiBannable.print("(AB) Player [" + playerName + "] hasn't been greeted before.");
             return true;
         } else {
-            var deltaMinutes = TimeUnit.MILLISECONDS.toSeconds(currentTimeMillis - previousGreetTimeInMillis);
-            antiBannable.print("(AB) Player [" + playerName + "] has been greeted [" + deltaMinutes + "] minutes ago.");
-            return  deltaMinutes >= 20;
+            return getDifferenceInSeconds(currentTimeInMillis, previousGreetTimeInMillis) > SECONDS_UNTIL_IGNORE_DETECTED_PLAYER;
         }
     }
 
-    public boolean isAnyPlayerDetected() {
-        var players = antiBannable.getPlayerNamesInDistance(params.getInDistance());
-        var detectedPlayers = Arrays.stream(players).collect(Collectors.toSet());
-        if (detectedPlayers.size() == 0)
-            return false;
-
-        antiBannable.print("(AB) Player(s) near: " + String.join(",", detectedPlayers));
-        this.detectedPlayers.addAll(detectedPlayers);
-
-        return true;
+    private long getDifferenceInSeconds(long currentTimeMillis, long previousTimeInMillis) {
+        return TimeUnit.MILLISECONDS.toSeconds(currentTimeMillis - previousTimeInMillis);
     }
 
     public void doAntiBan() {
-        logger.debug("doAntiBan");
+        logger.trace("doAntiBan");
 
-        if (params.isSoundPlay()) {
-            antiBannable.print("(AB) Play Sound!");
-            playSound();
-        }
+        playSound();
 
-        if (params.isGreet()) {
-            antiBannable.print("(AB) Greet Players!");
-            greetPlayers();
+        if (!state.isRunning()) {
+            return;
         }
 
         if (params.isMissing()) {
-            doActionMissing();
-        } else if (state.isRunning()) {
-            if (params.isPause()) {
-                doActionOnPause();
-            } else if (params.isStop()) {
-                doActionStop();
-            }
+            return;
+        }
 
+        if (params.isPause()) {
+            beginPause();
+        } else if (params.isStop()) {
             if (params.isLogout()) {
-                setLogoutTimer();
+                beginStopping();
+            } else {
+                beginStop();
             }
+        }
+
+        if (params.isLogout()) {
+            setLogoutTimer();
         }
     }
 
     public void setLogoutTimer() {
-        logger.debug("setLogoutTimer");
-        logoutMillis = System.currentTimeMillis();
-    }
-
-    public void cleanUpTransientState() {
-        detectedPlayers.clear();
-    }
-
-    private void doActionMissing() {
-        logger.debug("doActionMissing");
-    }
-
-    private void doActionStop() {
-        logger.debug("doActionStop");
-        if (params.isLogout()) {
-            beginStopping();
-        } else {
-            beginStop();
-        }
-    }
-
-    private void doActionOnPause() {
-        logger.debug("doActionOnPause");
-        beginPause();
+        logger.trace("setLogoutTimer");
+        logoutStartTimeInMillis = System.currentTimeMillis();
     }
 
     public void doPauseTimeOverCheck() {
         if (state.isPaused()) {
             if (params.isLogout() && isLogoutTimeOver()) {
-                logger.debug("Logout time is over");
-                logger.debug(state.getStatus().toString());
                 beginLogout();
             }
 
-            if (isPauseTimeOver()) {
-                logger.debug("Pause time is over.");
+            if (isPauseOver()) {
                 endPause();
             }
-        } else if (state.isStopping()) {
-                if (params.isLogout()) {
-                    if (isLogoutTimeOver()) {
-                        logger.debug("Logout time is over");
-                        logger.debug(state.getStatus().toString());
-                        beginLogout();
-                    }
-                } else {
-                    beginStop();
-                }
+
+            return;
+        }
+
+        if (state.isStopping()) {
+            if (params.isLogout() && isLogoutTimeOver()) {
+                beginLogout();
+            } else {
+                beginStop();
+            }
         }
     }
 
     public void beginLogout() {
-        logoutMillis = -1;
+        logoutStartTimeInMillis = -1;
         state.setStatus(RunnableScriptStatus.LOGGING_OUT);
+        writeLog("(AB) Logging out.");
     }
 
     private void beginPause() {
-        startMillis = System.currentTimeMillis();
+        pauseStartTimeInMillis = System.currentTimeMillis();
         state.setStatus(RunnableScriptStatus.PAUSED);
-        antiBannable.print("Pausing for [" + params.getPauseMinutes() + "] min before continuing.");
+        writeLog("(AB) Pause for [" + params.getPauseMinutes() + "] min.");
     }
 
     private void endPause() {
-        startMillis = -1;
+        pauseStartTimeInMillis = -1;
         state.setStatus(RunnableScriptStatus.RUNNING);
-        antiBannable.print("Pausing ended.");
+        writeLog("(AB) Pause ended.");
     }
 
     private void beginStopping() {
-        logger.debug("beginStopping");
         state.setStatus(RunnableScriptStatus.STOPPING);
+        writeLog("(AB) Stopping.");
     }
 
     private void beginStop() {
-        logger.debug("beginStop");
         state.setStatus(RunnableScriptStatus.STOPPED);
+        writeLog("(AB) Stop.");
+    }
+
+    private void writeLog(String msg) {
+        antiBannable.print(msg);
+        logger.debug(msg);
     }
 }

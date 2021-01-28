@@ -84,8 +84,9 @@ public abstract class RunnableScript extends Script implements Runnable, AntiBan
     private void checkAntiBan() {
         try {
             if (antiBan.getParams().isEnabled()) {
-                antiBan.cleanUpTransientState();
-                if (antiBan.isAnyPlayerDetected() && state.isRunning()) {
+
+                // If isn't in game then player detection doesn't work because player list is stale.
+                if (isInGame() && state.isRunning() && antiBan.isAnyNewPlayersDetected()) {
                     antiBan.doAntiBan();
                 }
 
