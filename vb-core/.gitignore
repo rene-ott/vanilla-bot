@@ -13,3 +13,4 @@ captcha/*
 hook.properties
 scripts/*
 log/*
+output/

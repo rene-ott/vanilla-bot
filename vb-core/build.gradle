@@ -85,8 +85,13 @@ task copyLibToDist(type: Copy) {
     from "${projectDir}/lib" into "${versionedDir}/lib"
 }
 
-task createRunInputScripts(type: CreateStartScripts) {
+task copyConfigPropertiesToDist(type: Copy) {
     dependsOn copyLibToDist
+    from "${projectDir}/config.properties" into "${versionedDir}"
+}
+
+task createRunInputScripts(type: CreateStartScripts) {
+    dependsOn copyConfigPropertiesToDist
 
     applicationName = "run"
     outputDir = file(versionedDir)

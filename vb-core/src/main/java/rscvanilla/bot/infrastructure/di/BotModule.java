@@ -12,6 +12,8 @@ import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.VanillaBot;
 import rscvanilla.bot.VanillaGameApplet;
 import rscvanilla.bot.api.action.*;
+import rscvanilla.bot.config.ConfigProperties;
+import rscvanilla.bot.config.ConfigService;
 import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.annotations.ScriptsDirectoryPath;
@@ -62,6 +64,8 @@ public class BotModule extends AbstractModule {
         bind(MudClientCaptchaInterceptor.class).to(CaptchaImageHandler.class).in(Singleton.class);
         bind(CaptchaImageRecognizer.class).in(Singleton.class);
         bind(CaptchaDataLoader.class).in(Singleton.class);
+        bind(ConfigProperties.class).toInstance(new ConfigProperties());
+        bind(ConfigService.class).in(Singleton.class);
         bindConstant().annotatedWith(ScriptsDirectoryPath.class).to(scriptsDirectoryPath);
 
         bind(MudClientInGameMessageInterceptor.class).to(InGameMessageHandler.class).in(Singleton.class);

@@ -18,9 +18,6 @@ public class Main {
 
     public static void main(String [] args) {
 
-        System.setProperty("socksProxyHost", "193.109.217.243");
-        System.setProperty("socksProxyPort", "45786");
-
         try {
             Guice.createInjector(new BotModule(getCaptchaDirPath(), getScriptsDirectoryPath())).getInstance(VanillaBot.class).load();
         } catch (BotException e) {
@@ -35,10 +32,6 @@ public class Main {
     //TODO: Injectable
     public static String getAntiBanSoundPath() {
         return getUserDir() + "res" + File.separator + "antiban" + File.separator + "notify.wav";
-    }
-
-    private static String getClientJarPath() {
-        return getUserDir() + File.separator + "lib" + File.separator + "client.jar";
     }
 
     private static String getCaptchaDirPath() {

@@ -2,6 +2,7 @@ package rscvanilla.bot;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import rscvanilla.bot.config.ConfigService;
 import rscvanilla.bot.events.InGameMessageReceivedEvent;
 import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.gui.events.ScriptAntiBanParamsChangedEvent;
@@ -28,6 +29,7 @@ public class VanillaBot implements Bot, ScriptEngineListener {
     private final ScriptEngine scriptEngine;
     private final EventBus eventBus;
     private final ScriptDirectoryContentChangeWatcher scriptsDirectoryWatcher;
+    private final ConfigService configService;
 
     @Inject
     public VanillaBot(BotFrame botFrame,
@@ -35,7 +37,7 @@ public class VanillaBot implements Bot, ScriptEngineListener {
                       MudClientHooker hooker,
                       ScriptEngine scriptEngine,
                       ScriptDirectoryContentChangeWatcher scriptsDirectoryWatcher,
-                      EventBus eventBus) {
+                      EventBus eventBus, ConfigService configService) {
         this.botFrame = botFrame;
         this.gameApplet = gameApplet;
         this.hooker = hooker;
@@ -43,12 +45,14 @@ public class VanillaBot implements Bot, ScriptEngineListener {
         this.scriptsDirectoryWatcher = scriptsDirectoryWatcher;
 
         this.eventBus = eventBus;
+        this.configService = configService;
 
         this.scriptEngine.addScriptEngineListener(this);
     }
 
     @Override
     public void load() {
+        configService.configure();
         hooker.loadHooks();
         gameApplet.execute();
         botFrame.open();
