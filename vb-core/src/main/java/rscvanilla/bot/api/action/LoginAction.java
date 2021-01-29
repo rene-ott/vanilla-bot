@@ -20,5 +20,9 @@ public class LoginAction extends BaseAction {
         hooker.login();
     }
 
+    public void setLoginTimeOut() {
+
+    }
+
     public void logout() { hooker.logout(); }
 }

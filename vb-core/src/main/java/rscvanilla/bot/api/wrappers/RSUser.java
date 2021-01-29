@@ -4,6 +4,7 @@ import com.rsc.e.k;
 import rscvanilla.bot.api.contracts.Positionable;
 import rscvanilla.bot.api.models.OpCodeOut;
 import rscvanilla.bot.api.models.Position;
+import rscvanilla.bot.api.utils.PositionConverter;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mc.MudClientHooker;
 
@@ -39,7 +40,7 @@ public class RSUser extends WrappedObject<k> implements Positionable {
 
     @Override
     public Position getGlobalPosition() {
-        return new Position(hooker.userTileX.getValue() + hooker.midRegionBaseX.getValue(), hooker.userTileY.getValue() + hooker.midRegionBaseZ.getValue());
+        return PositionConverter.toGlobalPosition(getLocalPosition(), hooker.getMidRegionBase());
     }
 
     public int getFatigue() { return hooker.userFatigueStat.getValue() * 100 / 750; }

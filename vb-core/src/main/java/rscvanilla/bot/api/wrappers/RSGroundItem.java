@@ -2,6 +2,7 @@ package rscvanilla.bot.api.wrappers;
 
 import rscvanilla.bot.api.contracts.Positionable;
 import rscvanilla.bot.api.models.Position;
+import rscvanilla.bot.api.utils.PositionConverter;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mc.MudClientHooker;
 
@@ -25,6 +26,6 @@ public class RSGroundItem extends WrappedObject<com.rsc.e.f> implements Position
 
     @Override
     public Position getGlobalPosition() {
-        return new Position(getLocalPosition().getX()+ hooker.midRegionBaseX.getValue(), getLocalPosition().getY() + hooker.midRegionBaseZ.getValue());
+        return PositionConverter.toGlobalPosition(getLocalPosition(), hooker.getMidRegionBase());
     }
 }

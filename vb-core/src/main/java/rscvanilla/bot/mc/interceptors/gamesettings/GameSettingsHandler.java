@@ -1,5 +1,6 @@
 package rscvanilla.bot.mc.interceptors.gamesettings;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mc.MudClientHooker;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
@@ -23,6 +24,7 @@ public class GameSettingsHandler implements MudClientGameSettingsInterceptor {
             var mudClient = this.hooker.getRawMudClient();
 
             mudClient.rI = false; //Camera Aut
+
             mudClient.oq = true; // Admin
             mudClient.oO = true; // Mod
 
