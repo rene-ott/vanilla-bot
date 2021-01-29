@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class WallObjectAction extends BaseAction {
 
-    private WalkAction walkAction;
+    private final WalkAction walkAction;
 
     @Inject
     public WallObjectAction(MudClientHooker hooker, WalkAction walkAction) {

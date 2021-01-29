@@ -1,5 +1,6 @@
 package scripts;
 
+import rscvanilla.bot.infrastructure.utils.DebugUtil;
 import rscvanilla.bot.script.ScriptDependencyContext;
 import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
 import rscvanilla.bot.script.template.RunnableScript;
@@ -17,14 +18,11 @@ public class TestScript extends RunnableScript {
 
     @Override
     protected void loop() {
-        if (getFatigue() > 90) {
-            useSleepingBag();
-            waitFor(4000);
-            return;
-        }
+        getHooker();
+        DebugUtil.printRecursively(getHooker().wallObjectList.getValue());
+        atWallObject(2, 428, 492);
 
-        waitFor(2000);
-        print("RUNNING");
+        waitFor(3000);
     }
 
     @Override

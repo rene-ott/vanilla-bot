@@ -35,7 +35,7 @@ public class GameMessageHandler implements MudClientGameMessageInterceptor {
             case MESSAGE_TYPE_GLOBAL_CHAT -> dispatchGameGlobalChatMessage(message);
         }
 
-        if (Arrays.asList(new String[] { MESSAGE_TYPE_CHAT, MESSAGE_TYPE_GAME, MESSAGE_TYPE_GLOBAL_CHAT}).contains(messageTypeValue)) {
+        if (Arrays.asList(new String[] { MESSAGE_TYPE_CHAT, MESSAGE_TYPE_GLOBAL_CHAT}).contains(messageTypeValue)) {
             logger.debug(
                 "{}: [(sender, {}) (colorPrefix: {}) (message: {}) (unknownParam1, {}) (unknownParam2, {})]",
                 messageTypeValue, sender, colorPrefix, message, unknownParam1, unknownParam2

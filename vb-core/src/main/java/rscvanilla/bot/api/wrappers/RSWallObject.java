@@ -25,7 +25,7 @@ public class RSWallObject extends WrappedObject<m> implements Positionable {
     @Override
     @DependsOnExternal
     public Position getLocalPosition() {
-        return new Position(object.ce(), object.cf());
+        return new Position(object.cf(), object.cg());
     }
 
     @Override
