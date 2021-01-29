@@ -302,5 +302,11 @@ public class LumbridgeSwampMiner extends RunnableScript {
             throw new IllegalArgumentException("Invalid selectedValue: " + selectedValue);
         }
     }
+
+    @Override
+    protected void onChatMessageReceived(String sender, String message) { }
+
+    @Override
+    protected void onGameMessageReceived(String message) { }
 }
 

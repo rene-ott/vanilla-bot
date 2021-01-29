@@ -1,7 +1,7 @@
 package rscvanilla.instrumentation.transformations;
 
 import javassist.*;
-import rscvanilla.contracts.interceptors.MudClientInGameMessageInterceptor;
+import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
 import rscvanilla.hook.model.Hooks;
 import rscvanilla.hook.model.classes.mudclient.MudClientClassInterceptors;
 
@@ -19,9 +19,9 @@ public class AddGameMessageInterceptorTransformation {
     public AddGameMessageInterceptorTransformation(Hooks hooks) {
         this.interceptors = hooks.mudClient.interceptors;
 
-        fieldTypeName = MudClientInGameMessageInterceptor.class.getCanonicalName();
-        fieldName = MudClientInGameMessageInterceptor.MC_FIELD_NAME;
-        methodName = MudClientInGameMessageInterceptor.METHOD_NAME;
+        fieldTypeName = MudClientGameMessageInterceptor.class.getCanonicalName();
+        fieldName = MudClientGameMessageInterceptor.MC_FIELD_NAME;
+        methodName = MudClientGameMessageInterceptor.METHOD_NAME;
     }
 
     public void implement(CtClass ctClass) throws NotFoundException, CannotCompileException {

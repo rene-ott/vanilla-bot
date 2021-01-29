@@ -15,7 +15,7 @@ import java.util.List;
 public class ScriptSelectionPanel extends JPanel implements ListSelectionListener {
 
     private final JList<Class<? extends RunnableScript>> scriptSelectionList;
-    private EventBus eventBus;
+    private final EventBus eventBus;
 
     public static int WIDTH = 175;
 
@@ -63,7 +63,7 @@ public class ScriptSelectionPanel extends JPanel implements ListSelectionListene
                 var renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
                 if (renderer instanceof JLabel && value instanceof Class) {
-                    ((JLabel) renderer).setText(((Class) value).getSimpleName());
+                    ((JLabel) renderer).setText(((Class<?>) value).getSimpleName());
                 }
 
                 return renderer;

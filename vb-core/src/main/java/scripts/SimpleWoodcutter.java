@@ -27,5 +27,11 @@ public class SimpleWoodcutter extends RunnableScript {
 
         atObject(1, 0);
     }
+
+    @Override
+    protected void onChatMessageReceived(String sender, String message) { }
+
+    @Override
+    protected void onGameMessageReceived(String message) { }
 }
 

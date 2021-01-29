@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
-import rscvanilla.contracts.interceptors.MudClientInGameMessageInterceptor;
+import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
 import rscvanilla.hook.model.Hooks;
 import rscvanilla.hook.model.classes.applet.AppletClassFields;
 import rscvanilla.hook.model.classes.mudclient.MudClientClassFields;
@@ -77,7 +77,7 @@ public class MudClientHooker {
     private MethodHook<MethodHook.None> walkToWall;
 
     public FieldHook<MudClientCaptchaInterceptor> captchaInterceptor;
-    public FieldHook<MudClientInGameMessageInterceptor> inGameMessageInterceptor;
+    public FieldHook<MudClientGameMessageInterceptor> gameMessageInterceptor;
     public FieldHook<MudClientGameSettingsInterceptor> gameSettingsInterceptor;
 
     private final MudClientPacketBuilder packetBuilder;
@@ -111,7 +111,7 @@ public class MudClientHooker {
         try {
             logger.debug("Loading interceptor hooks:");
             captchaInterceptor = loadInjectedListener("captchaInterceptor", MudClientCaptchaInterceptor.MC_FIELD_NAME);
-            inGameMessageInterceptor = loadInjectedListener("inGameMessageInterceptor", MudClientInGameMessageInterceptor.MC_FIELD_NAME);
+            gameMessageInterceptor = loadInjectedListener("gameMessageInterceptor", MudClientGameMessageInterceptor.MC_FIELD_NAME);
             gameSettingsInterceptor = loadInjectedListener("gameSettingsInterceptor", MudClientGameSettingsInterceptor.MC_FIELD_NAME);
 
         } catch (BotException e) {
@@ -127,8 +127,8 @@ public class MudClientHooker {
 
     @Inject
     @SuppressWarnings("unused") // Injected by Guice
-    public void setInGameMessageInterceptor(MudClientInGameMessageInterceptor interceptor) {
-        inGameMessageInterceptor.setValue(interceptor);
+    public void setGameMessageInterceptor(MudClientGameMessageInterceptor interceptor) {
+        gameMessageInterceptor.setValue(interceptor);
     }
 
     @Inject

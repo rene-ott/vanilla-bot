@@ -43,4 +43,10 @@ public class SimpleAutoThiever extends RunnableScript {
         }
         waitFor(500);
     }
+
+    @Override
+    protected void onChatMessageReceived(String sender, String message) { }
+
+    @Override
+    protected void onGameMessageReceived(String message) { }
 }

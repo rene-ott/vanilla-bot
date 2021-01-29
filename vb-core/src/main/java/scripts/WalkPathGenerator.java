@@ -113,5 +113,11 @@ public class WalkPathGenerator extends RunnableScript {
             appendText(text);
         }
     }
+
+    @Override
+    protected void onChatMessageReceived(String sender, String message) { }
+
+    @Override
+    protected void onGameMessageReceived(String message) { }
 }
 

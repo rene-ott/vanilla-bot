@@ -147,6 +147,12 @@ public class CamelotPowerFlaxer extends RunnableScript {
         return isItemInInventory(FLAX_ID, 29);
     }
 
+    @Override
+    protected void onChatMessageReceived(String sender, String message) { }
+
+    @Override
+    protected void onGameMessageReceived(String message) { }
+
     private enum State {
         PICK,
         WALK_TO_SPIN,

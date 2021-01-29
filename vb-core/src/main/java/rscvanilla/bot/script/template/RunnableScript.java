@@ -1,8 +1,8 @@
 package rscvanilla.bot.script.template;
 
-import rscvanilla.bot.events.InGameMessageReceivedEvent;
+import rscvanilla.bot.events.messages.GameMessageEvent;
 import rscvanilla.bot.infrastructure.utils.ExecutorUtil;
-import rscvanilla.bot.mc.interceptors.ingamemessage.InGameMessageQueue;
+import rscvanilla.bot.mc.interceptors.ingamemessage.GameMessageQueue;
 import rscvanilla.bot.script.ScriptDependencyContext;
 import rscvanilla.bot.script.antiban.AntiBannable;
 import rscvanilla.bot.script.antiban.ScriptAntiBan;
@@ -18,7 +18,7 @@ public abstract class RunnableScript extends Script implements Runnable, AntiBan
     private static final Logger logger = LoggerFactory.getLogger(RunnableScript.class);
 
     // These fields are created by AWT Thread
-    private final InGameMessageQueue inGameMessageQueue;
+    private final GameMessageQueue gameMessageQueue;
     private final RunnableScriptState state;
     private final ScriptAntiBan antiBan;
     private final ScheduledExecutorService antiBanScheduler;
@@ -29,10 +29,10 @@ public abstract class RunnableScript extends Script implements Runnable, AntiBan
     public RunnableScript(ScriptDependencyContext dependencyContext, ScriptAntiBanParams antiBanParameters) {
         super(dependencyContext);
 
-        state = new RunnableScriptState(this.getClass().getSimpleName());
+        state = new RunnableScriptState(getName());
         antiBan = new ScriptAntiBan(antiBanParameters, this, state);
 
-        inGameMessageQueue = new InGameMessageQueue();
+        gameMessageQueue = new GameMessageQueue();
         antiBanScheduler = ExecutorUtil.createNamedAntiBanScheduledExecutor();
     }
 
@@ -56,10 +56,13 @@ public abstract class RunnableScript extends Script implements Runnable, AntiBan
             onStart();
 
             while (!Thread.currentThread().isInterrupted()) {
+                var messageEvent = gameMessageQueue.dequeue();
 
                 if (!state.isScriptLoopEnabled()) {
                     continue;
                 }
+
+                callGameMessageListener(messageEvent);
 
                 if (state.getStatus() == RunnableScriptStatus.LOGGING_OUT) {
                     if (isInGame()) {
@@ -161,11 +164,30 @@ public abstract class RunnableScript extends Script implements Runnable, AntiBan
         }
     }
 
-    public void enqueueInGameMessageEvent(InGameMessageReceivedEvent event) {
-        inGameMessageQueue.enqueue(event);
+    public void enqueueGameMessageEvent(GameMessageEvent event) {
+        gameMessageQueue.enqueue(event);
     }
 
     public RunnableScriptState getState() {
         return state;
+    }
+
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
+
+    void callGameMessageListener(GameMessageEvent event) {
+        if (event == null || !state.isRunning() || !isInGame() || !state.isScriptLoopEnabled()) {
+            return;
+        }
+        var type = event.getType();
+        if (event.getSender() != null && event.getSender().equals(getUserName())) {
+            return;
+        }
+
+        switch (type) {
+            case GAME -> onGameMessageReceived(event.getMessage());
+            case CHAT -> onChatMessageReceived(event.getSender(), event.getMessage());
+        }
     }
 }

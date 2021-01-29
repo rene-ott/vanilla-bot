@@ -1,7 +1,7 @@
 package rscvanilla.bot.script.engine;
 
-import rscvanilla.bot.events.InGameMessageReceivedEvent;
-import rscvanilla.bot.events.MessageEvent;
+import rscvanilla.bot.events.messages.GameMessageEvent;
+import rscvanilla.bot.events.messages.MessageEvent;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
@@ -57,7 +57,7 @@ public class ScriptEngine implements ScriptThreadExecutorListener {
             script = scriptFactory.createScript(scriptList.getSelection(), antiBanParams);
             scriptTask = scriptThreadExecutor.submit(script);
 
-            printer.print(MessageEvent.Type.BOT, "Started script [" + script.getState().getName() + "].");
+            printer.printAsBot("Started script [%s].", script.getName());
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             throw new BotException("SCRIPT START FAILED!");
         }
@@ -79,7 +79,7 @@ public class ScriptEngine implements ScriptThreadExecutorListener {
         listener.onScriptsLoaded(scriptList.getAll(), scriptList.getSelection());
 
         var message = "Loaded " + "[" + scriptList.count() +"] scripts.";
-        printer.print(MessageEvent.Type.BOT, message);
+        printer.printAsBot(message);
         logger.info(message);
     }
 
@@ -95,7 +95,7 @@ public class ScriptEngine implements ScriptThreadExecutorListener {
         listener.onScriptsLoaded(scriptList.getAll(), scriptList.getSelection());
 
         var message = "Reloaded " + "[" + scriptList.count() +"] scripts.";
-        printer.print(MessageEvent.Type.BOT, message);
+        printer.printAsBot(message);
         logger.info(message);
     }
 
@@ -103,10 +103,12 @@ public class ScriptEngine implements ScriptThreadExecutorListener {
         scriptList.setSelection(script);
     }
 
-    public void dispatchInGameMessage(InGameMessageReceivedEvent event) {
-        if (script.getState().isRunning()) {
-            logger.trace("Dispatching in game ve");
-            script.enqueueInGameMessageEvent(event);
+    public void dispatchInGameMessage(GameMessageEvent event) {
+        logger.trace("dispatchInGameMessage");
+
+        if (script != null && script.getState().isRunning()) {
+            logger.trace("dispatchInGameMessage");
+            script.enqueueGameMessageEvent(event);
         }
     }
 
@@ -123,7 +125,7 @@ public class ScriptEngine implements ScriptThreadExecutorListener {
             logger.warn(completeScriptStopMessage);
         }
 
-        printer.print(MessageEvent.Type.BOT, scriptStopMessage);
+        printer.printAsBot(scriptStopMessage);
         listener.onScriptStopped();
 
         cleanUp();

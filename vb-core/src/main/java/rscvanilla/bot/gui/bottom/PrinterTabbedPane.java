@@ -3,20 +3,21 @@ package rscvanilla.bot.gui.bottom;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import rscvanilla.bot.events.InGameMessageReceivedEvent;
-import rscvanilla.bot.events.MessageEvent;
-import rscvanilla.bot.events.MessagePrintingEvent;
+import rscvanilla.bot.events.messages.BotMessageEvent;
+import rscvanilla.bot.events.messages.GameMessageEvent;
+import rscvanilla.bot.events.messages.GameMessageType;
 
 import javax.swing.*;
 
 public class PrinterTabbedPane extends JTabbedPane {
 
-    private PrinterTabPanel botViewTab;
-    private PrinterTabPanel chatViewTab;
-    private PrinterTabPanel globalChatViewTab;
+    private final PrinterTabPanel botViewTab;
+    private final PrinterTabPanel chatViewTab;
+    private final PrinterTabPanel globalChatViewTab;
 
     public PrinterTabbedPane(EventBus eventBus) {
         setTabPlacement(JTabbedPane.BOTTOM);
+
         botViewTab = createViewTab("Bot");
         chatViewTab = createViewTab("Chat");
         globalChatViewTab = createViewTab("Global Chat");
@@ -32,31 +33,25 @@ public class PrinterTabbedPane extends JTabbedPane {
     }
 
     @Subscribe
-    public void onMessagePrintedReceived(MessagePrintingEvent event) {
-        if (!event.isMessagePrintedType()) {
-            return;
-        }
+    public void onBotMessageEventReceived(BotMessageEvent event) {
 
-        Runnable  runnable = () -> botViewTab.appendText(event.getCompleteMessage());
+        Runnable  runnable = () -> botViewTab.appendText(event.formatMessage());
         SwingUtilities.invokeLater(runnable);
     }
 
     @Subscribe
-    public void onInGameMessageReceived(InGameMessageReceivedEvent event) {
-        if (!event.isInGameMessageReceivedType()) {
-            return;
-        }
-
+    public void onGameMessageReceived(GameMessageEvent event) {
         var type = event.getType();
 
         Runnable runnable = () -> {
-            if (type == MessageEvent.Type.IN_GAME_CHAT) {
-                chatViewTab.appendText(event.getCompleteMessage());
+            if (type == GameMessageType.CHAT) {
+                chatViewTab.appendText(event.formatMessage());
             }
-            if (type == MessageEvent.Type.IN_GAME_GLOBAL_CHAT) {
-                globalChatViewTab.appendText(event.getCompleteMessage());
+            if (type == GameMessageType.GLOBAL_CHAT) {
+                globalChatViewTab.appendText(event.formatMessage());
             }
         };
+
         SwingUtilities.invokeLater(runnable);
     }
 }

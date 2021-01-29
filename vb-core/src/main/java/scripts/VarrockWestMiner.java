@@ -184,4 +184,10 @@ public class VarrockWestMiner extends RunnableScript {
 
         }
     }
+
+    @Override
+    protected void onChatMessageReceived(String sender, String message) { }
+
+    @Override
+    protected void onGameMessageReceived(String message) { }
 }

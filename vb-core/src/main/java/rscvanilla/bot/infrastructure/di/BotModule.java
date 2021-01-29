@@ -24,7 +24,7 @@ import rscvanilla.bot.mc.interceptors.captcha.CaptchaDataLoader;
 import rscvanilla.bot.mc.interceptors.captcha.CaptchaImageHandler;
 import rscvanilla.bot.mc.interceptors.captcha.CaptchaImageRecognizer;
 import rscvanilla.bot.mc.interceptors.gamesettings.GameSettingsHandler;
-import rscvanilla.bot.mc.interceptors.ingamemessage.InGameMessageHandler;
+import rscvanilla.bot.mc.interceptors.ingamemessage.GameMessageHandler;
 import rscvanilla.bot.script.ScriptDependencyContext;
 import rscvanilla.bot.script.engine.ScriptEngine;
 import rscvanilla.bot.script.engine.ScriptFactory;
@@ -34,7 +34,7 @@ import rscvanilla.bot.script.engine.loader.ScriptLoader;
 import rscvanilla.bot.watcher.ScriptDirectoryContentChangeWatcher;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
-import rscvanilla.contracts.interceptors.MudClientInGameMessageInterceptor;
+import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
 import rscvanilla.hook.model.Hooks;
 import rscvanilla.hook.model.HooksFileReader;
 
@@ -68,7 +68,7 @@ public class BotModule extends AbstractModule {
         bind(ConfigService.class).in(Singleton.class);
         bindConstant().annotatedWith(ScriptsDirectoryPath.class).to(scriptsDirectoryPath);
 
-        bind(MudClientInGameMessageInterceptor.class).to(InGameMessageHandler.class).in(Singleton.class);
+        bind(MudClientGameMessageInterceptor.class).to(GameMessageHandler.class).in(Singleton.class);
         bind(MudClientGameSettingsInterceptor.class).to(GameSettingsHandler.class).in(Singleton.class);
 
         bind(ScriptDirectoryContentChangeWatcher.class).in(Singleton.class);

@@ -3,7 +3,7 @@ package rscvanilla.bot;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import rscvanilla.bot.config.ConfigService;
-import rscvanilla.bot.events.InGameMessageReceivedEvent;
+import rscvanilla.bot.events.messages.GameMessageEvent;
 import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.gui.events.ScriptAntiBanParamsChangedEvent;
 import rscvanilla.bot.gui.events.ScriptSelectedEvent;
@@ -84,7 +84,7 @@ public class VanillaBot implements Bot, ScriptEngineListener {
 
     @Subscribe
     @SuppressWarnings("unused")
-    public void onInGameMessageReceived(InGameMessageReceivedEvent event) {
+    public void onInGameMessageReceived(GameMessageEvent event) {
         scriptEngine.dispatchInGameMessage(event);
     }
 

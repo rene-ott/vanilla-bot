@@ -3,7 +3,6 @@ package rscvanilla.bot.script.template;
 import rscvanilla.bot.api.action.*;
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.api.wrappers.RSUser;
-import rscvanilla.bot.events.MessageEvent;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.mc.MudClientHooker;
 import rscvanilla.bot.script.ScriptDependencyContext;
@@ -61,9 +60,10 @@ public abstract class Script {
     protected int getFatigue() { return user.getFatigue(); }
     protected boolean isSleeping() { return user.isSleeping(); }
     protected boolean isBusy() { return user.isBusy(); }
+    protected String getUserName()  { return user.getName(); }
 
     /** LOG **/
-    public void print(String message) { printer.print(MessageEvent.Type.SCR, message); }
+    public void print(String message) { printer.printAsScript(message); }
 
     /** PLAYER ACTION **/
     public String[] getPlayerNamesInDistance(int distance) { return playerAction.getPlayerNamesInDistance(distance); }
@@ -137,6 +137,7 @@ public abstract class Script {
     protected void walkTo(Position position) { walkAction.walkToPosition(position);}
 
     /** MESSAGE LISTENERS **/
-    protected void onChatMessageReceived(String sender, String message) { }
+    protected abstract void onChatMessageReceived(String sender, String message);
+    protected abstract void onGameMessageReceived(String message);
 }
 

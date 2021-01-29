@@ -2,7 +2,7 @@ package rscvanilla.bot.mc.interceptors.captcha;
 
 import rscvanilla.bot.api.models.OpCodeIn;
 import rscvanilla.bot.api.models.OpCodeOut;
-import rscvanilla.bot.events.MessageEvent;
+import rscvanilla.bot.events.messages.MessageEvent;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.mc.MudClientHooker;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
@@ -20,13 +20,14 @@ import java.util.concurrent.TimeUnit;
 public class CaptchaImageHandler implements MudClientCaptchaInterceptor {
 
     private String detectedWord;
-    private MudClientHooker hooks;
-    private CaptchaImageRecognizer captchaImageRecognizer;
-    private Printer logger;
+
+    private final MudClientHooker hooks;
+    private final CaptchaImageRecognizer captchaImageRecognizer;
+    private final Printer printer;
 
     @Inject
-    public CaptchaImageHandler(Printer logger, MudClientHooker hooks, CaptchaImageRecognizer captchaImageRecognizer) {
-        this.logger = logger;
+    public CaptchaImageHandler(Printer printer, MudClientHooker hooks, CaptchaImageRecognizer captchaImageRecognizer) {
+        this.printer = printer;
         this.hooks = hooks;
         this.captchaImageRecognizer = captchaImageRecognizer;
     }
@@ -70,7 +71,7 @@ public class CaptchaImageHandler implements MudClientCaptchaInterceptor {
                 detectedWord = captchaImageRecognizer.getImageWord(image);
             }
 
-            logger.print(MessageEvent.Type.BOT, "Sleep word: " + detectedWord);
+            printer.printAsBot("Sleep word: " + detectedWord);
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -71,4 +71,10 @@ public class ChickenKiller extends RunnableScript {
 
         waitFor(1000);
     }
+
+    @Override
+    protected void onChatMessageReceived(String sender, String message) { }
+
+    @Override
+    protected void onGameMessageReceived(String message) { }
 }

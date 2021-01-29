@@ -1,14 +1,13 @@
 package rscvanilla.bot.infrastructure.printer;
 
 import com.google.common.eventbus.EventBus;
-import rscvanilla.bot.events.MessageEvent;
-import rscvanilla.bot.events.MessagePrintingEvent;
+import rscvanilla.bot.events.messages.BotMessageEvent;
 
 import javax.inject.Inject;
 
 public class TabPrinter implements Printer {
 
-    public EventBus eventBus;
+    private final EventBus eventBus;
 
     @Inject
     public TabPrinter(EventBus eventBus) {
@@ -16,8 +15,12 @@ public class TabPrinter implements Printer {
     }
 
     @Override
-    public void print(MessageEvent.Type type, String message)
-    {
-        eventBus.post(new MessagePrintingEvent(type, message));
+    public void printAsBot(String message, Object... args) {
+        eventBus.post(BotMessageEvent.createBotMessage(String.format(message, args)));
+    }
+
+    @Override
+    public void printAsScript(String message, Object... args) {
+        eventBus.post(BotMessageEvent.createScriptMessage(String.format(message, args)));
     }
 }

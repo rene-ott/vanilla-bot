@@ -265,6 +265,12 @@ public class CatherbyFisherCooker extends RunnableScript {
         return isPositionInDistance(RANGE_HOUSE_DOOR_POS, 0);
     }
 
+    @Override
+    protected void onChatMessageReceived(String sender, String message) { }
+
+    @Override
+    protected void onGameMessageReceived(String message) { }
+
     private enum Action {
         CATCH_FISH,
         WALK_TO_RANGE,

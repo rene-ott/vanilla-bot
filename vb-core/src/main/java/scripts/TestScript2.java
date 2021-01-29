@@ -21,5 +21,11 @@ public class TestScript2 extends RunnableScript {
         waitFor(2000);
         print("RUNNING");
     }
+
+    @Override
+    protected void onChatMessageReceived(String sender, String message) { }
+
+    @Override
+    protected void onGameMessageReceived(String message) { }
 }
 
