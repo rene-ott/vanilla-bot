@@ -63,7 +63,7 @@ public abstract class Script {
     protected String getUserName()  { return user.getName(); }
 
     /** LOG **/
-    public void print(String message) { printer.printAsScript(message); }
+    public void print(String message, Object...args) { printer.printAsScript(String.format(message, args));}
 
     /** PLAYER ACTION **/
     public String[] getPlayerNamesInDistance(int distance) { return playerAction.getPlayerNamesInDistance(distance); }

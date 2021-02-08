@@ -10,19 +10,36 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class VarrockWestMiner extends RunnableScript {
 
-    private static Position BANK_DOOR_OUTSIDE = new Position(102, 509);
-    private static Position TO_MINE_1 = new Position(82, 509);
-    private static Position TO_MINE_2 = new Position(78, 523);
-    private static Position TO_MINE_3 = new Position(74, 537);
-    private static Position MINE = new Position(73, 545);
+    private final static Position BANK_TOP_POS = new Position(98,515);
+    private final static Position BANK_BOTTOM_POS = new Position(106, 510);
 
-    private static int[] GEM_IDS = { 157, 158, 159, 160 };
-    private int rockId;
-    private int oreId;
+    private final static int BANK_DOOR_ID = 64;
+    private final static Position BANK_DOOR_POS = new Position(102, 509);
+
+    private static final Position TO_MINE_0 = new Position(103, 509);
+    private static final Position TO_MINE_1 = new Position(82, 509);
+    private static final Position TO_MINE_2 = new Position(78, 523);
+    private static final Position TO_MINE_3 = new Position(74, 537);
+
+    private static final Position MINE = new Position(73, 545);
+    private static final Position BANK = new Position(103, 511);
+
+    private static final int[] GEM_IDS = { 157, 158, 159, 160 };
+
     private State state;
+
+    private final Params COPPER_PARAMS = new Params(new int[]{76, 546}, new int[]{100, 76, 547}, new int[]{101, 75, 546}, 150);
+    private final Params TIN_PARAMS = new Params(new int[]{79, 545}, new int[]{105, 78, 545}, new int[]{105, 79, 546}, 202);
+    private final Params IRON_PARAMS = new Params(new int[]{75, 544}, new int[]{103, 76, 544}, new int[]{102, 75, 543}, 151);
+
+    private Params scriptParams;
+
+    private boolean isPowerMining;
 
     public VarrockWestMiner(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
         super(dependencyContext, argumentContext);
@@ -32,25 +49,13 @@ public class VarrockWestMiner extends RunnableScript {
     protected void onStart() {
         super.onStart();
 
-        var frame = new JFrame("Varrock West Miner");
-
-        var rockParams = getRockParams(JOptionPane.showInputDialog(frame, "Enter rock name (Iron, Copper, Tin): "));
-        if (rockParams == null) {
-            stopScript("Invalid rock name");
-        }
-
-        rockId = rockParams[0];
-        oreId = rockParams[1];
+        disableScriptLoop();
+        new VarrockWestMiner.GUI("Varrock West Miner", Thread.currentThread()).init();
     }
 
     @Override
     protected void loop() {
         waitFor(1000);
-
-        var playersNear = getPlayerNamesInDistance(7);
-        if (playersNear.length != 0) {
-            print("Player(s) near: " + String.join(",", playersNear));
-        }
 
         if (getFatigue() > 90) {
             useSleepingBag();
@@ -75,18 +80,32 @@ public class VarrockWestMiner extends RunnableScript {
     }
 
     private void mineRock() {
-        if (isBusy()) {
-            return;
+        if (isObjectNear(scriptParams.firstRock[0], scriptParams.firstRock[1], scriptParams.firstRock[2])) {
+            atObject(scriptParams.firstRock[0], scriptParams.firstRock[1], scriptParams.firstRock[2]);
+        } else if (isObjectNear(scriptParams.secondRock[0], scriptParams.secondRock[1], scriptParams.secondRock[2])) {
+            atObject(scriptParams.secondRock[0], scriptParams.secondRock[1], scriptParams.secondRock[2]);
         }
-
-        atObject(rockId);
+        waitFor(500);
     }
 
     private void walkToBank() {
         walkTo(TO_MINE_3);
         walkTo(TO_MINE_2);
         walkTo(TO_MINE_1);
-        walkTo(BANK_DOOR_OUTSIDE);
+        walkTo(TO_MINE_0);
+        if (!isInBank() && isPositionInDistance(BANK_DOOR_POS, 1) && isBankDoorClosed()) {
+            atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+        } else {
+            walkTo(BANK);
+        }
+    }
+
+    private boolean isInBank() {
+        return isPositionInRectangle(getPosition(), BANK_TOP_POS, BANK_BOTTOM_POS);
+    }
+
+    private boolean isBankDoorClosed() {
+        return isObjectNear(BANK_DOOR_ID, BANK_DOOR_POS);
     }
 
     private void bankOres() {
@@ -107,54 +126,48 @@ public class VarrockWestMiner extends RunnableScript {
     }
 
     private void depositOresAndGems() {
-        depositAll(ArrayUtils.addAll(new int[] {oreId }, GEM_IDS));
+        depositAll(ArrayUtils.addAll(new int[] { scriptParams.oreId }, GEM_IDS));
     }
 
     private void walkToMine() {
+        if (isInBank() && isBankDoorClosed()) {
+            atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+            return;
+        }
+
         walkTo(TO_MINE_1);
         walkTo(TO_MINE_2);
         walkTo(TO_MINE_3);
+        walkTo(MINE);
+        walkTo(scriptParams.standingPosition[0], scriptParams.standingPosition[1]);
     }
 
     private boolean isInventoryEmpty() {
-        return !isItemInInventory(151);
+        return !isItemInInventory(scriptParams.oreId);
     }
 
     private State getScriptState() {
-        if (isNpcInDistance(95, 10)) {
+        if (isPowerMining)
+            return State.MINE;
+
+        if (isInBank()) {
             if (!isInventoryEmpty()) {
                 return State.BANK;
-            }
-        } else if (isPositionInDistance(MINE, 13)) {
-            if (isInventoryFull()) {
-                return State.WALK_TO_BANK;
             } else {
-                return State.MINE;
+                return State.WALK_TO_MINE;
+            }
+        } else {
+            if (!isInventoryFull()) {
+                if (isPositionInDistance(MINE, 13)) {
+                    return State.MINE;
+                } else {
+                    return State.WALK_TO_MINE;
+                }
+            } else {
+                return State.WALK_TO_BANK;
             }
         }
-        if (isInventoryFull()) {
-            return State.WALK_TO_BANK;
-        } else {
-            return State.WALK_TO_MINE;
-        }
     }
-
-    private int[] getRockParams(String oreName) {
-        if (oreName.equalsIgnoreCase("Tin")) {
-            return new int[] { 105, 202 };
-        }
-
-        if (oreName.equalsIgnoreCase("Copper")) {
-            return new int[] { 101, 150 };
-        }
-
-        if (oreName.equalsIgnoreCase("Iron")) {
-            return new int [] { 102, 151 };
-        }
-
-        return null;
-    }
-
 
     private enum State {
         BANK,
@@ -163,31 +176,141 @@ public class VarrockWestMiner extends RunnableScript {
         WALK_TO_BANK
     }
 
-    private class InputParameterGUI extends JFrame implements ActionListener {
-
-        private FlowLayout layout;
-
-        public InputParameterGUI(String name) {
-            super(name);
-            layout = new FlowLayout();
-        }
-
-        private JButton createButton(String name) {
-            var btn = new JButton(name);
-            btn.addActionListener(this);
-
-            return btn;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-        }
-    }
-
     @Override
     protected void onChatMessageReceived(String sender, String message) { }
 
     @Override
     protected void onGameMessageReceived(String message) { }
+
+    private class Params {
+
+        private final int[] standingPosition;
+        private final int[] firstRock;
+        private final int[] secondRock;
+        private final int oreId;
+
+        private Params(int[] standingPosition, int[] firstRock, int[] secondRock, int oreId) {
+            this.standingPosition = standingPosition;
+            this.firstRock = firstRock;
+            this.secondRock = secondRock;
+            this.oreId = oreId;
+        }
+    }
+
+    private class GUI extends JFrame implements ActionListener {
+
+        private final static String ACTION_COMMAND_IRON = "Iron";
+        private final static String ACTION_COMMAND_TIN = "Tin";
+        private final static String ACTION_COMMAND_COPPER = "Copper";
+
+        private final JPanel rockSelectionPanel;
+        private final ButtonGroup rockSelectionRadioButtonGroup;
+        private final JCheckBox isPowerMiningEnabled;
+        private final Thread scriptThread;
+
+        public GUI(String name, Thread scriptThread) {
+            super(name);
+            this.scriptThread = scriptThread;
+
+            rockSelectionPanel = createPanel();
+            rockSelectionRadioButtonGroup = createRadioButtons();
+            isPowerMiningEnabled = createCheckBox();
+
+            add(rockSelectionPanel, BorderLayout.CENTER);
+            add(createApplyButtonPanel(), BorderLayout.SOUTH);
+            addWindowListener(stopScriptOnClose());
+        }
+
+        public void init() {
+            setResizable(false);
+            pack();
+            setVisible(true);
+            setLocationRelativeTo(null);
+        }
+
+        private ButtonGroup createRadioButtons() {
+            var group = new ButtonGroup();
+
+            var ironButton = createRadioButton(ACTION_COMMAND_IRON, true);
+            var tinButton = createRadioButton(ACTION_COMMAND_TIN, false);
+            var copperButton = createRadioButton(ACTION_COMMAND_COPPER, false);
+
+            group.add(ironButton);
+            group.add(tinButton);
+            group.add(copperButton);
+
+            rockSelectionPanel.add(ironButton);
+            rockSelectionPanel.add(tinButton);
+            rockSelectionPanel.add(copperButton);
+
+            return group;
+        }
+
+        private JCheckBox createCheckBox() {
+            var checkBox = new JCheckBox("Powermine?");
+            checkBox.setSelected(false);
+
+            rockSelectionPanel.add(checkBox);
+
+            return checkBox;
+        }
+
+        private JPanel createPanel() {
+            var layout = new FlowLayout();
+            layout.setAlignment(FlowLayout.CENTER);
+            var panel = new JPanel(layout);
+
+            return panel;
+        }
+
+        private JPanel createApplyButtonPanel() {
+            var panel = createPanel();
+            panel.add(createApplyButton());
+
+            return panel;
+        }
+
+        private JRadioButton createRadioButton(String label, boolean isSelected) {
+            var radioButton = new JRadioButton(label);
+            radioButton.setSelected(isSelected);
+            radioButton.setActionCommand(label);
+
+            return radioButton;
+        }
+
+        private JButton createApplyButton() {
+            var button = new JButton("Apply");
+            button.addActionListener(this);
+
+            return button;
+        }
+
+        private WindowAdapter stopScriptOnClose() {
+            return new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    scriptThread.interrupt();
+                    super.windowClosing(e);
+                }
+            };
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            var command = rockSelectionRadioButtonGroup.getSelection().getActionCommand();
+
+            if (command.equals(ACTION_COMMAND_IRON)) {
+                scriptParams = IRON_PARAMS;
+            } else if (command.equals(ACTION_COMMAND_TIN)) {
+                scriptParams = TIN_PARAMS;
+            } else if (command.equals(ACTION_COMMAND_COPPER)) {
+                scriptParams = COPPER_PARAMS;
+            }
+
+            isPowerMining = isPowerMiningEnabled.isSelected();
+
+            enableScriptLoop();
+            setVisible(false);
+        }
+    }
 }

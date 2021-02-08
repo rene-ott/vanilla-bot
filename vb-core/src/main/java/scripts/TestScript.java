@@ -18,10 +18,6 @@ public class TestScript extends RunnableScript {
 
     @Override
     protected void loop() {
-        getHooker();
-        DebugUtil.printRecursively(getHooker().wallObjectList.getValue());
-        atWallObject(2, 428, 492);
-
         waitFor(3000);
     }
 

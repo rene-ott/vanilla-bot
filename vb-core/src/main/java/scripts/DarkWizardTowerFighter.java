@@ -9,6 +9,7 @@ import javax.swing.*;
 public class DarkWizardTowerFighter extends RunnableScript {
 
     private int combatStyle;
+    private String pickUpBones;
 
     private static final int BONES = 20;
     private static final int[] PICK_UP_ITEMS = { 10, 31, 32, 33, 34, 35, 36, 38, 40, 41, 42, 46, 619};
@@ -30,7 +31,10 @@ public class DarkWizardTowerFighter extends RunnableScript {
     protected void onStart() {
         super.onStart();
 
-        combatStyle = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Fight Mode"), "Enter fight mode (0-3): "));
+        var frame = new JFrame("Dark Wizard Tower Fighter");
+        combatStyle = Integer.parseInt(JOptionPane.showInputDialog(frame, "Enter fight mode (0-3): "));
+        pickUpBones = JOptionPane.showInputDialog(frame, "Pick bones: (y/n)");
+
         currentFloor = getCurrentFloor();
         previousFloor = -1;
 
@@ -51,18 +55,33 @@ public class DarkWizardTowerFighter extends RunnableScript {
             return;
         }
 
+        var currentFloor = getCurrentFloor();
+        if (currentFloor == -1) {
+            return;
+        }
+
+        if (this.currentFloor != currentFloor) {
+            this.previousFloor = this.currentFloor;
+            this.currentFloor = currentFloor;
+
+            waitFor(800); // Wait a little bit more to make sure wizards are loaded.
+            return;
+        }
+
+        if (pickUpBones.equalsIgnoreCase("y")) {
+            if (isItemInInventory(BONES)) {
+                useItem(BONES);
+                return;
+            }
+
+            if (isItemOnGround(BONES)) {
+                takeItemFromGround(BONES);
+                return;
+            }
+        }
+
         if (isItemOnGround(PICK_UP_ITEMS)) {
             takeItemFromGround(PICK_UP_ITEMS);
-            return;
-        }
-
-        if (isItemOnGround(BONES)) {
-            takeItemFromGround(BONES);
-            return;
-        }
-
-        if (isItemInInventory(BONES)) {
-            useItem(BONES);
             return;
         }
 
@@ -75,34 +94,28 @@ public class DarkWizardTowerFighter extends RunnableScript {
             return;
         }
 
-        var currentFloor = getCurrentFloor();
-        if (currentFloor == -1) {
-            return;
+        if (currentFloor == this.currentFloor) {
+            var nextFloorLadder = getNextFloorLadder(this.currentFloor, this.previousFloor);
+            atObject(nextFloorLadder[0], nextFloorLadder[1], nextFloorLadder[2]);
         }
-
-        if (this.currentFloor != currentFloor) {
-            this.previousFloor = this.currentFloor;
-            this.currentFloor = currentFloor;
-            return;
-        }
-
-        var nextFloorLadder = getNextFloorLadder(this.currentFloor, this.previousFloor);
-        atObject(nextFloorLadder[0], nextFloorLadder[1], nextFloorLadder[2]);
-        waitFor(1000);
     }
 
     private int getCurrentFloor() {
-        if (isObjectNear(FIRST_TO_SECOND_LADDER[1], FIRST_TO_SECOND_LADDER[2])) {
-            return 1;
-        }
-        if (isObjectNear(SECOND_TO_THIRD_LADDER[1], SECOND_TO_THIRD_LADDER[2])) {
-            return 2;
-        }
-        if (isObjectNear(THIRD_TO_SECOND_LADDER[1], THIRD_TO_SECOND_LADDER[2])) {
-            return 3;
+        var currentFloor = -1;
+
+        if (isPositionInDistance(FIRST_TO_SECOND_LADDER[1], FIRST_TO_SECOND_LADDER[2] + 1, 10)) {
+            currentFloor = 1;
         }
 
-        return -1;
+        if (isPositionInDistance(SECOND_TO_THIRD_LADDER[1], SECOND_TO_THIRD_LADDER[2] + 1, 10)) {
+            currentFloor = 2;
+        }
+
+        if (isPositionInDistance(THIRD_TO_SECOND_LADDER[1], THIRD_TO_SECOND_LADDER[2] + 1, 10)) {
+            currentFloor = 3;
+        }
+
+        return currentFloor;
     }
 
     private int[] getNextFloorLadder(int currentFloor, int previousFloor) {
