@@ -1,4 +1,4 @@
-package rscvanilla.bot.api.models;
+package rscvanilla.bot.api.enums;
 
 public enum OpCodeOut {
     COMBAT_STYLE(29),

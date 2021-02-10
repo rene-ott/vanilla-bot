@@ -1,4 +1,4 @@
-package rscvanilla.bot.api.wrappers;
+package rscvanilla.bot.api.models.wrappers;
 
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.mc.MudClientHooker;
@@ -9,5 +9,5 @@ public class RSNonPlayerCharacter extends RSEntity<com.rsc.e.j> {
         super(object, hooks);
     }
 
-    public Position getLocalPosition() { return getCharacterLocalPosition(); }
+    public Position getLocalPosition() { return getDynamicLocalPosition(); }
 }

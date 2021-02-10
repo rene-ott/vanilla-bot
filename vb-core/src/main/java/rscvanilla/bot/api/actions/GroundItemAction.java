@@ -1,8 +1,7 @@
-package rscvanilla.bot.api.action;
+package rscvanilla.bot.api.actions;
 
-import rscvanilla.bot.api.BaseAction;
-import rscvanilla.bot.api.models.OpCodeOut;
-import rscvanilla.bot.api.wrappers.RSGroundItem;
+import rscvanilla.bot.api.enums.OpCodeOut;
+import rscvanilla.bot.api.models.wrappers.RSGroundItem;
 import rscvanilla.bot.mc.MudClientHooker;
 
 import javax.inject.Inject;

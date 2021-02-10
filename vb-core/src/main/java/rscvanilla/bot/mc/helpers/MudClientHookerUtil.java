@@ -1,6 +1,6 @@
 package rscvanilla.bot.mc.helpers;
 
-import rscvanilla.bot.api.wrappers.WrappedObject;
+import rscvanilla.bot.api.models.wrappers.WrappedObject;
 import rscvanilla.bot.mc.MudClientHooker;
 
 import java.lang.reflect.InvocationTargetException;

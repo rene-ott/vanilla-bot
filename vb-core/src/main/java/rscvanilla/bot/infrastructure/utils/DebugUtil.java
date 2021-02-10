@@ -1,6 +1,6 @@
 package rscvanilla.bot.infrastructure.utils;
 
-import rscvanilla.bot.api.wrappers.WrappedObject;
+import rscvanilla.bot.api.models.wrappers.WrappedObject;
 import org.apache.commons.lang3.builder.MultilineRecursiveToStringStyle;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 

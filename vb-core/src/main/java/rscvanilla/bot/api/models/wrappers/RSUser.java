@@ -1,6 +1,6 @@
-package rscvanilla.bot.api.wrappers;
+package rscvanilla.bot.api.models.wrappers;
 
-import rscvanilla.bot.api.models.OpCodeOut;
+import rscvanilla.bot.api.enums.OpCodeOut;
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mc.MudClientHooker;
@@ -29,7 +29,7 @@ public class RSUser extends RSEntity<com.rsc.e.k> {
         return hooker.user.getValue().mE;
     }
 
-    public Position getLocalPosition() { return getCharacterLocalPosition(); }
+    public Position getLocalPosition() { return getDynamicLocalPosition(); }
 
     public int getFatigue() { return hooker.userFatigueStat.getValue() * 100 / 750; }
     public int getCombatStyle() { return hooker.combatStyle.getValue(); }

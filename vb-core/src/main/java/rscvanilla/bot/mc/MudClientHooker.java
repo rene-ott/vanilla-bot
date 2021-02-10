@@ -7,7 +7,7 @@ import com.rsc.e.m;
 import com.rsc.f;
 import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.api.models.Position;
-import rscvanilla.bot.api.wrappers.*;
+import rscvanilla.bot.api.models.wrappers.*;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mc.helpers.HookLoader;

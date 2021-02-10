@@ -1,8 +1,7 @@
 package rscvanilla.bot.mc.interceptors.captcha;
 
-import rscvanilla.bot.api.models.OpCodeIn;
-import rscvanilla.bot.api.models.OpCodeOut;
-import rscvanilla.bot.events.messages.MessageEvent;
+import rscvanilla.bot.api.enums.OpCodeIn;
+import rscvanilla.bot.api.enums.OpCodeOut;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.mc.MudClientHooker;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;

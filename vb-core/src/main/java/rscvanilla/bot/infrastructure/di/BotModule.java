@@ -11,7 +11,7 @@ import rscvanilla.bot.Bot;
 import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.VanillaBot;
 import rscvanilla.bot.VanillaGameApplet;
-import rscvanilla.bot.api.action.*;
+import rscvanilla.bot.api.actions.*;
 import rscvanilla.bot.config.ConfigProperties;
 import rscvanilla.bot.config.ConfigService;
 import rscvanilla.bot.gui.BotFrame;

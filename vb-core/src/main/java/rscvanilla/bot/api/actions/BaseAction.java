@@ -1,4 +1,4 @@
-package rscvanilla.bot.api;
+package rscvanilla.bot.api.actions;
 
 import rscvanilla.bot.mc.MudClientHooker;
 

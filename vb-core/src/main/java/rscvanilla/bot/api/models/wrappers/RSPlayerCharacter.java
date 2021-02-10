@@ -1,4 +1,4 @@
-package rscvanilla.bot.api.wrappers;
+package rscvanilla.bot.api.models.wrappers;
 
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
@@ -13,5 +13,5 @@ public class RSPlayerCharacter extends RSEntity<com.rsc.e.k> {
     @DependsOnExternal
     public String getName() { return object.na; }
 
-    public Position getLocalPosition() { return getCharacterLocalPosition(); }
+    public Position getLocalPosition() { return getDynamicLocalPosition(); }
 }

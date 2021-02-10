@@ -1,4 +1,4 @@
-package rscvanilla.bot.api.wrappers;
+package rscvanilla.bot.api.models.wrappers;
 
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.mc.MudClientHooker;
@@ -9,5 +9,5 @@ public class RSGroundItem extends RSEntity<com.rsc.e.f> {
         super(object, hooks);
     }
 
-    public Position getLocalPosition() { return getObjectLocalPosition(); }
+    public Position getLocalPosition() { return getStaticLocalPosition(); }
 }

@@ -1,4 +1,4 @@
-package rscvanilla.bot.api.contracts;
+package rscvanilla.bot.api.models.contracts;
 
 import rscvanilla.bot.api.models.Position;
 

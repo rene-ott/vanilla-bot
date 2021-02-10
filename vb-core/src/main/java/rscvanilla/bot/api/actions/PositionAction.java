@@ -1,6 +1,5 @@
-package rscvanilla.bot.api.action;
+package rscvanilla.bot.api.actions;
 
-import rscvanilla.bot.api.BaseAction;
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.mc.MudClientHooker;
 

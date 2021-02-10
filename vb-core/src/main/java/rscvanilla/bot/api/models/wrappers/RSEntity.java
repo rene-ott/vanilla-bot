@@ -1,9 +1,10 @@
-package rscvanilla.bot.api.wrappers;
+package rscvanilla.bot.api.models.wrappers;
 
 import com.rsc.e.d;
-import rscvanilla.bot.api.contracts.GloballyPositionable;
+import rscvanilla.bot.api.models.contracts.GloballyPositionable;
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.api.utils.PositionConverter;
+import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mc.MudClientHooker;
 
 public abstract class RSEntity<T extends d> extends WrappedObject<T> implements GloballyPositionable {
@@ -12,13 +13,21 @@ public abstract class RSEntity<T extends d> extends WrappedObject<T> implements 
         super(object, hooker);
     }
 
+    @DependsOnExternal
     public int getId() { return object.at(); }
+
+    @DependsOnExternal
     private int getPixelX() { return object.ch(); }
+
+    @DependsOnExternal
     private int getPixelY() { return object.ci(); }
+
+    @DependsOnExternal
     public int getServerIndex() { return object.ce(); }
 
-    protected Position getObjectLocalPosition() { return new Position(object.cf(), object.cg()); }
-    protected Position getCharacterLocalPosition() { return new Position((getPixelX() - 64) / 128, (getPixelY() - 64) / 128); }
+    @DependsOnExternal
+    protected Position getStaticLocalPosition() { return new Position(object.cf(), object.cg()); }
+    protected Position getDynamicLocalPosition() { return new Position((getPixelX() - 64) / 128, (getPixelY() - 64) / 128); }
 
     @Override
     public Position getGlobalPosition() {
@@ -26,4 +35,5 @@ public abstract class RSEntity<T extends d> extends WrappedObject<T> implements 
     }
 
     public abstract Position getLocalPosition();
+
 }

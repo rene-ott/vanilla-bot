@@ -1,7 +1,7 @@
 package rscvanilla.bot.script;
 
-import rscvanilla.bot.api.action.*;
-import rscvanilla.bot.api.wrappers.RSUser;
+import rscvanilla.bot.api.actions.*;
+import rscvanilla.bot.api.models.wrappers.RSUser;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.mc.MudClientHooker;
 

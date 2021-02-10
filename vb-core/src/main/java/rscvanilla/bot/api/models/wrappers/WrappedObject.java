@@ -1,4 +1,4 @@
-package rscvanilla.bot.api.wrappers;
+package rscvanilla.bot.api.models.wrappers;
 
 import rscvanilla.bot.infrastructure.utils.DebugUtil;
 import rscvanilla.bot.mc.MudClientHooker;

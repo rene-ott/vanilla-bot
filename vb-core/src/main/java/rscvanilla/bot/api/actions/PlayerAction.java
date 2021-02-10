@@ -1,7 +1,6 @@
-package rscvanilla.bot.api.action;
+package rscvanilla.bot.api.actions;
 
-import rscvanilla.bot.api.BaseAction;
-import rscvanilla.bot.api.wrappers.RSPlayerCharacter;
+import rscvanilla.bot.api.models.wrappers.RSPlayerCharacter;
 import rscvanilla.bot.mc.MudClientHooker;
 
 import javax.inject.Inject;

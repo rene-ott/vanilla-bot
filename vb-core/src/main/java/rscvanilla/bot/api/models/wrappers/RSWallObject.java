@@ -1,4 +1,4 @@
-package rscvanilla.bot.api.wrappers;
+package rscvanilla.bot.api.models.wrappers;
 
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
@@ -13,5 +13,5 @@ public class RSWallObject extends RSEntity<com.rsc.e.m> {
     @DependsOnExternal
     public int getDirection() { return object.cl(); }
 
-    public Position getLocalPosition() { return getObjectLocalPosition(); }
+    public Position getLocalPosition() { return getStaticLocalPosition(); }
 }
