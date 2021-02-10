@@ -54,6 +54,7 @@ public abstract class Script {
 
     /** USER **/
     protected Position getPosition() { return user.getGlobalPosition(); }
+    protected Position getLocalPosition() { return user.getLocalPosition(); }
     protected boolean isInCombat() { return user.isInCombat(); }
     protected int getCombatStyle() { return user.getCombatStyle(); }
     protected void setCombatStyle(int style) { user.setCombatStyle(style); }

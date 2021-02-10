@@ -97,7 +97,6 @@ public class GroundObjectAction extends BaseAction {
         var objectStream = hooker.getObjectList()
                 .stream()
                 .filter(Objects::nonNull)
-                .filter(WrappedObject::isFresh)
                 .filter(it -> Arrays.stream(listOfTupleParams)
                         .anyMatch(tuple ->
                                 (tuple[0] == null || it.getId() == tuple[0]) &&

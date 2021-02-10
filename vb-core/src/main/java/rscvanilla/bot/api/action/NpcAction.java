@@ -2,7 +2,7 @@ package rscvanilla.bot.api.action;
 
 import rscvanilla.bot.api.BaseAction;
 import rscvanilla.bot.api.models.OpCodeOut;
-import rscvanilla.bot.api.wrappers.RSCharacter;
+import rscvanilla.bot.api.wrappers.RSNonPlayerCharacter;
 import rscvanilla.bot.mc.MudClientHooker;
 
 import javax.inject.Inject;
@@ -74,7 +74,7 @@ public class NpcAction extends BaseAction {
                 .send();
     }
 
-    private RSCharacter getNearestNpcById(int...ids) {
+    private RSNonPlayerCharacter getNearestNpcById(int...ids) {
         var matchedNpcs = hooker.getNpcList()
                 .stream()
                 .filter(Objects::nonNull)
@@ -84,6 +84,6 @@ public class NpcAction extends BaseAction {
         if (matchedNpcs.isEmpty())
             return null;
 
-        return (RSCharacter) hooker.getUser().getNearest(matchedNpcs);
+        return (RSNonPlayerCharacter) hooker.getUser().getNearest(matchedNpcs);
     }
 }

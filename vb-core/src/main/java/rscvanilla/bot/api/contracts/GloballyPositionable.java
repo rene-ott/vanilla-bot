@@ -4,11 +4,10 @@ import rscvanilla.bot.api.models.Position;
 
 import java.util.List;
 
-public interface Positionable {
-    Position getLocalPosition();
+public interface GloballyPositionable {
     Position getGlobalPosition();
 
-    default Positionable getNearest(List<? extends Positionable> toObjects) {
+    default GloballyPositionable getNearest(List<? extends GloballyPositionable> toObjects) {
         var fromPosition = this.getGlobalPosition();
 
         var selectedObject = toObjects.get(0);
@@ -25,7 +24,7 @@ public interface Positionable {
         return selectedObject;
     }
 
-    default boolean isDistanceLessThanEqual(Positionable positionable, int distance) {
-        return this.getGlobalPosition().distanceTo(positionable.getGlobalPosition()) <= distance;
+    default boolean isDistanceLessThanEqual(GloballyPositionable globallyPositionable, int distance) {
+        return this.getGlobalPosition().distanceTo(globallyPositionable.getGlobalPosition()) <= distance;
     }
 }

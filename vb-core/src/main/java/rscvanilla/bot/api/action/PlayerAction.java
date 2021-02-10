@@ -1,7 +1,7 @@
 package rscvanilla.bot.api.action;
 
 import rscvanilla.bot.api.BaseAction;
-import rscvanilla.bot.api.wrappers.RSPlayer;
+import rscvanilla.bot.api.wrappers.RSPlayerCharacter;
 import rscvanilla.bot.mc.MudClientHooker;
 
 import javax.inject.Inject;
@@ -23,7 +23,7 @@ public class PlayerAction extends BaseAction {
                 .filter(Objects::nonNull)
                 .filter(it -> !it.getName().equalsIgnoreCase(userName))
                 .filter(it -> it.isDistanceLessThanEqual(hooker.getUser(), distance))
-                .map(RSPlayer::getName).toArray(String[]::new);
+                .map(RSPlayerCharacter::getName).toArray(String[]::new);
 
         return players;
     }

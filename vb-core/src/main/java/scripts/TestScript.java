@@ -18,7 +18,12 @@ public class TestScript extends RunnableScript {
 
     @Override
     protected void loop() {
+        getLocalPosition();
         waitFor(3000);
+
+
+
+
     }
 
     @Override

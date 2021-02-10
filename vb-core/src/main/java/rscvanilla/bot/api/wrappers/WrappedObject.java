@@ -15,10 +15,6 @@ public abstract class WrappedObject<T> {
         this.hooker = hooker;
     }
 
-    public boolean isFresh() {
-        return object != null;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -27,7 +23,7 @@ public abstract class WrappedObject<T> {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        return Objects.equals(object, ((WrappedObject<T>) o).object);
+        return Objects.equals(object, ((WrappedObject<?>) o).object);
     }
 
     @Override

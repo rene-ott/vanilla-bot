@@ -1,17 +1,13 @@
 package rscvanilla.bot.api.wrappers;
 
-import com.rsc.e.k;
-import rscvanilla.bot.api.contracts.Positionable;
 import rscvanilla.bot.api.models.OpCodeOut;
 import rscvanilla.bot.api.models.Position;
-import rscvanilla.bot.api.utils.PositionConverter;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mc.MudClientHooker;
 
-//TODO BASE CLASS
-public class RSUser extends WrappedObject<k> implements Positionable {
+public class RSUser extends RSEntity<com.rsc.e.k> {
 
-    public RSUser(k object, MudClientHooker hooker) {
+    public RSUser(com.rsc.e.k object, MudClientHooker hooker) {
         super(object, hooker);
     }
 
@@ -33,18 +29,9 @@ public class RSUser extends WrappedObject<k> implements Positionable {
         return hooker.user.getValue().mE;
     }
 
-    @Override
-    public Position getLocalPosition() {
-        return new Position(hooker.userTileX.getValue(), hooker.userTileY.getValue());
-    }
-
-    @Override
-    public Position getGlobalPosition() {
-        return PositionConverter.toGlobalPosition(getLocalPosition(), hooker.getMidRegionBase());
-    }
+    public Position getLocalPosition() { return getCharacterLocalPosition(); }
 
     public int getFatigue() { return hooker.userFatigueStat.getValue() * 100 / 750; }
-
     public int getCombatStyle() { return hooker.combatStyle.getValue(); }
     public boolean isSleeping() { return hooker.isSleeping.getValue(); }
 

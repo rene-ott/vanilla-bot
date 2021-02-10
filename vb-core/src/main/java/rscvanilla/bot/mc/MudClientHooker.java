@@ -196,8 +196,8 @@ public class MudClientHooker {
         return mudClient;
     }
 
-    public List<RSCharacter> getNpcList() {
-        return MudClientHookerUtil.newIndexedList(this.npcList.getValue(), this.npcListIndex.getValue(), RSCharacter.class, this);
+    public List<RSNonPlayerCharacter> getNpcList() {
+        return MudClientHookerUtil.newIndexedList(this.npcList.getValue(), this.npcListIndex.getValue(), RSNonPlayerCharacter.class, this);
     }
 
     public List<RSGroundItem> getGroundItemList() {
@@ -208,8 +208,8 @@ public class MudClientHooker {
         return MudClientHookerUtil.newIndexedList(this.objectList.getValue(), this.objectListIndex.getValue(), RSGroundObject.class, this);
     }
 
-    public List<RSPlayer> getPlayerList() {
-        return MudClientHookerUtil.newIndexedList(this.playerList.getValue(), this.playerListIndex.getValue(), RSPlayer.class, this);
+    public List<RSPlayerCharacter> getPlayerList() {
+        return MudClientHookerUtil.newIndexedList(this.playerList.getValue(), this.playerListIndex.getValue(), RSPlayerCharacter.class, this);
     }
 
     public List<RSWallObject> getWallObjectList() {
