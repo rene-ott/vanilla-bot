@@ -16,7 +16,7 @@ public abstract class Script {
     private final WalkAction walkAction;
     private final GroundItemAction groundItemAction;
     private final InventoryItemAction inventoryItemAction;
-    private final ObjectAction objectAction;
+    private final GroundObjectAction groundObjectAction;
     private final BankAction bankAction;
     private final OptionsAction optionsAction;
     private final PositionAction positionAction;
@@ -37,7 +37,7 @@ public abstract class Script {
         walkAction = dependencyContext.getWalkAction();
         groundItemAction = dependencyContext.getGroundItemAction();
         inventoryItemAction = dependencyContext.getInventoryItemAction();
-        objectAction = dependencyContext.getObjectAction();
+        groundObjectAction = dependencyContext.getObjectAction();
         bankAction = dependencyContext.getOptionsAction();
         optionsAction = dependencyContext.getOptionsMenuAction();
         positionAction = dependencyContext.getPositionAction();
@@ -108,14 +108,14 @@ public abstract class Script {
     protected boolean isItemOnGround(int...ids) { return groundItemAction.isItemOnGround(ids); }
 
     /** OBJECT ACTION **/
-    protected void atObject(int...ids) { objectAction.atObject(ids); }
-    protected void atObject2(int...ids) { objectAction.atObject2(ids); }
-    protected void atObject(int id, int x, int y) { objectAction.atObject(id, x, y); }
-    protected void atObject(int id, Position pos) { objectAction.atObject(id, pos); }
+    protected void atObject(int...ids) { groundObjectAction.atObject(ids); }
+    protected void atObject2(int...ids) { groundObjectAction.atObject2(ids); }
+    protected void atObject(int id, int x, int y) { groundObjectAction.atObject(id, x, y); }
+    protected void atObject(int id, Position pos) { groundObjectAction.atObject(id, pos); }
 
-    protected boolean isObjectNear(int x, int y) { return objectAction.isObjectNear(x, y); }
-    protected boolean isObjectNear(int id, int x, int y) { return objectAction.isObjectNear(id, x, y); }
-    protected boolean isObjectNear(int id, Position position) { return objectAction.isObjectNear(id, position.getX(), position.getY()); }
+    protected boolean isObjectNear(int x, int y) { return groundObjectAction.isObjectNear(x, y); }
+    protected boolean isObjectNear(int id, int x, int y) { return groundObjectAction.isObjectNear(id, x, y); }
+    protected boolean isObjectNear(int id, Position position) { return groundObjectAction.isObjectNear(id, position.getX(), position.getY()); }
 
     /** OPTIONS ACTION */
     public void answerOption(int pos) { optionsAction.answerOption(pos); }

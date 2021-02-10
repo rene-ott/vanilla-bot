@@ -204,8 +204,8 @@ public class MudClientHooker {
         return MudClientHookerUtil.newIndexedList(this.groundItemList.getValue(), this.groundItemListIndex.getValue(), RSGroundItem.class, this);
     }
 
-    public List<RSObject> getObjectList() {
-        return MudClientHookerUtil.newIndexedList(this.objectList.getValue(), this.objectListIndex.getValue(), RSObject.class, this);
+    public List<RSGroundObject> getObjectList() {
+        return MudClientHookerUtil.newIndexedList(this.objectList.getValue(), this.objectListIndex.getValue(), RSGroundObject.class, this);
     }
 
     public List<RSPlayer> getPlayerList() {

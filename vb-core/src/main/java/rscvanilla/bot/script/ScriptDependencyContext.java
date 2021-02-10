@@ -14,7 +14,7 @@ public class ScriptDependencyContext {
     private final PlayerAction playerAction;
     private final WalkAction walkAction;
     private final InventoryItemAction inventoryItemAction;
-    private final ObjectAction objectAction;
+    private final GroundObjectAction groundObjectAction;
     private final BankAction bankAction;
     private final OptionsAction optionsAction;
     private final PositionAction positionAction;
@@ -32,7 +32,7 @@ public class ScriptDependencyContext {
                                    PlayerAction playerAction,
                                    WalkAction walkAction,
                                    InventoryItemAction inventoryItemAction,
-                                   ObjectAction objectAction,
+                                   GroundObjectAction groundObjectAction,
                                    BankAction bankAction,
                                    OptionsAction optionsAction,
                                    PositionAction positionAction, Printer printer,
@@ -46,7 +46,7 @@ public class ScriptDependencyContext {
         this.playerAction = playerAction;
         this.walkAction = walkAction;
         this.inventoryItemAction = inventoryItemAction;
-        this.objectAction = objectAction;
+        this.groundObjectAction = groundObjectAction;
         this.bankAction = bankAction;
         this.optionsAction = optionsAction;
         this.positionAction = positionAction;
@@ -67,7 +67,7 @@ public class ScriptDependencyContext {
     public OptionsAction getOptionsMenuAction() { return optionsAction; }
     public PositionAction getPositionAction() { return positionAction; }
     public BankAction getOptionsAction() { return bankAction; }
-    public ObjectAction getObjectAction() { return objectAction; }
+    public GroundObjectAction getObjectAction() { return groundObjectAction; }
     public GroundItemAction getGroundItemAction() { return groundItemAction; }
     public NpcAction getNpcAction() { return npcAction; }
     public PlayerAction getPlayerAction() { return playerAction; }

@@ -8,9 +8,9 @@ import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mc.MudClientHooker;
 
 //TODO BASE CLASS
-public class RSObject extends WrappedObject<e> implements Positionable {
+public class RSGroundObject extends WrappedObject<e> implements Positionable {
 
-    public RSObject(e object, MudClientHooker hooks) {
+    public RSGroundObject(e object, MudClientHooker hooks) {
         super(object, hooks);
     }
 

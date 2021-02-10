@@ -13,14 +13,14 @@ import java.util.stream.IntStream;
 public class InventoryItemAction extends BaseAction {
 
     private WalkAction walkAction;
-    private ObjectAction objectAction;
+    private GroundObjectAction groundObjectAction;
 
     @Inject
     public InventoryItemAction(MudClientHooker hooks, WalkAction walkAction,
-                               ObjectAction objectAction) {
+                               GroundObjectAction groundObjectAction) {
         super(hooks);
         this.walkAction = walkAction;
-        this.objectAction = objectAction;
+        this.groundObjectAction = groundObjectAction;
     }
 
     public void useSleepingBag() {
@@ -89,7 +89,7 @@ public class InventoryItemAction extends BaseAction {
         if (itemIndex == -1)
             return;
 
-        var object = objectAction.getNearestObject(new Integer[] { objectId, null, null });
+        var object = groundObjectAction.getNearestObject(new Integer[] { objectId, null, null });
         if (object == null)
             return;
 

@@ -3,7 +3,7 @@ package rscvanilla.bot.api.action;
 import rscvanilla.bot.api.BaseAction;
 import rscvanilla.bot.api.models.OpCodeOut;
 import rscvanilla.bot.api.models.Position;
-import rscvanilla.bot.api.wrappers.RSObject;
+import rscvanilla.bot.api.wrappers.RSGroundObject;
 import rscvanilla.bot.api.wrappers.WrappedObject;
 import rscvanilla.bot.mc.MudClientHooker;
 
@@ -12,13 +12,13 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ObjectAction extends BaseAction {
+public class GroundObjectAction extends BaseAction {
 
     private final WalkAction walkAction;
 
     @Inject
-    public ObjectAction(MudClientHooker hooks,
-                        WalkAction walkAction
+    public GroundObjectAction(MudClientHooker hooks,
+                              WalkAction walkAction
     ) {
         super(hooks);
         this.walkAction = walkAction;
@@ -74,7 +74,7 @@ public class ObjectAction extends BaseAction {
     }
 
 
-    private void atObjectWalkTo(RSObject object, OpCodeOut opCode) {
+    private void atObjectWalkTo(RSGroundObject object, OpCodeOut opCode) {
         var localPosition = object.getLocalPosition();
         var globalPosition = object.getGlobalPosition();
 
@@ -88,12 +88,12 @@ public class ObjectAction extends BaseAction {
                 .send();
     }
 
-    RSObject getNearestObject(Integer[] tupleParams) {
+    RSGroundObject getNearestObject(Integer[] tupleParams) {
         return getNearestObject(new Integer[][] { tupleParams });
     }
 
     // Accepts tuples (id, x, y), (id, null, null), (null, x, y)
-    private RSObject getNearestObject(Integer[][] listOfTupleParams) {
+    private RSGroundObject getNearestObject(Integer[][] listOfTupleParams) {
         var objectStream = hooker.getObjectList()
                 .stream()
                 .filter(Objects::nonNull)
@@ -110,6 +110,6 @@ public class ObjectAction extends BaseAction {
         if (objectList.isEmpty())
             return null;
 
-        return (RSObject) hooker.getUser().getNearest(objectList);
+        return (RSGroundObject) hooker.getUser().getNearest(objectList);
     }
 }
