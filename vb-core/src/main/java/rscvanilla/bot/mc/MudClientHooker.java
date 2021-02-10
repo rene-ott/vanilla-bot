@@ -56,12 +56,12 @@ public class MudClientHooker {
     public FieldHook<Integer> userFatigueStat;
     public FieldHook<Boolean> isSleeping;
     public FieldHook<int[]> inventoryItemSlotsCounts;
-    public FieldHook<k> player;
     public FieldHook<String> userName;
     private FieldHook<f> gameMode;
     public FieldHook<Integer> autoLoginTimeOut;
     public FieldHook<Boolean> isOptionsMenuVisible;
     public FieldHook<Boolean> isBankVisible;
+
     private FieldHook<Integer> selectedItemInventoryIndex;
     private FieldHook<Integer> selectedSpell;
     private FieldHook<int[]> inventoryEquippedItemSlots;

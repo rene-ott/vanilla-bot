@@ -30,7 +30,7 @@ public class RSUser extends WrappedObject<k> implements Positionable {
 
     @DependsOnExternal
     private int getBubbleTimeout() {
-        return hooker.player.getValue().mE;
+        return hooker.user.getValue().mE;
     }
 
     @Override
