@@ -4,7 +4,6 @@ import rscvanilla.bot.api.models.wrappers.RSPlayerCharacter;
 import rscvanilla.bot.mc.MudClientHooker;
 
 import javax.inject.Inject;
-import java.util.Objects;
 
 public class PlayerAction extends BaseAction {
 
@@ -19,7 +18,6 @@ public class PlayerAction extends BaseAction {
 
         var players = allPlayers
                 .stream()
-                .filter(Objects::nonNull)
                 .filter(it -> !it.getName().equalsIgnoreCase(userName))
                 .filter(it -> it.isDistanceLessThanEqual(hooker.getUser(), distance))
                 .map(RSPlayerCharacter::getName).toArray(String[]::new);

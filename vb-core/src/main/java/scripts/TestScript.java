@@ -21,9 +21,7 @@ public class TestScript extends RunnableScript {
         getLocalPosition();
         waitFor(3000);
 
-
-
-
+        getPlayerNamesInDistance(10);
     }
 
     @Override

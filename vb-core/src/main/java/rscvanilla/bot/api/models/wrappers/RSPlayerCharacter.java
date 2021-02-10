@@ -13,5 +13,10 @@ public class RSPlayerCharacter extends RSEntity<com.rsc.e.k> {
     @DependsOnExternal
     public String getName() { return object.na; }
 
+    @DependsOnExternal
+    public int getBubbleTimeout() { return object.mE; }
+
+    public boolean isBusy() { return getBubbleTimeout() - 60 > 0; }
+
     public Position getLocalPosition() { return getDynamicLocalPosition(); }
 }

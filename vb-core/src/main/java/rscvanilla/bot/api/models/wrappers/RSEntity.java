@@ -1,19 +1,19 @@
 package rscvanilla.bot.api.models.wrappers;
 
-import com.rsc.e.d;
 import rscvanilla.bot.api.models.contracts.GloballyPositionable;
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.api.utils.PositionConverter;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mc.MudClientHooker;
 
-public abstract class RSEntity<T extends d> extends WrappedObject<T> implements GloballyPositionable {
+public abstract class RSEntity<T extends com.rsc.e.d> extends WrappedObject<T> implements GloballyPositionable {
 
     protected RSEntity(T object, MudClientHooker hooker) {
         super(object, hooker);
     }
 
     @DependsOnExternal
+    // Players have id set as 0
     public int getId() { return object.at(); }
 
     @DependsOnExternal
