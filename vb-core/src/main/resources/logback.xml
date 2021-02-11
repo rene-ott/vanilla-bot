@@ -1,30 +1,71 @@
-<configuration debug="false">
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOGS" value="./output/logs" />
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}][%level][%thread][%logger{10}]: %msg%n</pattern>
+        <filter class="rscvanilla.bot.infrastructure.logger.filters.MultiLevelFilter">
+            <levels>INFO|DEBUG</levels>
+        </filter>
+
+        <encoder class="rscvanilla.bot.infrastructure.logger.patterns.MultiLayoutPattern">
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss}][%highlight(%level)][%blue(%thread)][%yellow(%logger{10})]: %msg%n%throwable</Pattern>
+
+            <rule>
+                <logger>SimpleLogger</logger>
+                <pattern>%msg%n</pattern>
+            </rule>
         </encoder>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+    <appender name="RollingFileWarn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/app-warn.txt</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>WARN</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
         </filter>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log\logfile.%d{yyyy-MM-dd}.txt</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <fileNamePattern>${LOGS}/app.%d{yyyy-MM-dd}-warn.%i.txt</fileNamePattern>
+            <maxHistory>14</maxHistory>
+
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
-        <encoder>
-            <pattern>[%d{dd-MM-yyyy HH:mm:ss.SSS}][%level][%thread][%logger{10}][%file:%line]: %msg%n</pattern>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss}][%level][%t][%logger{10}]: %msg%n%throwable</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="RollingFileInfoDebug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/app-info-debug.txt</file>
+
+        <filter class="rscvanilla.bot.infrastructure.logger.filters.MultiLevelFilter">
+            <levels>INFO|DEBUG</levels>
+        </filter>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/app.%d{yyyy-MM-dd}-info-debug.%i.txt</fileNamePattern>
+            <maxHistory>14</maxHistory>
+
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <encoder class="rscvanilla.bot.infrastructure.logger.patterns.MultiLayoutPattern">
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss}][%level][%t][%logger{10}]: %msg%n%throwable</Pattern>
+            <rule>
+                <logger>SimpleLogger</logger>
+                <pattern>%msg%n</pattern>
+            </rule>
         </encoder>
     </appender>
 
     <root level="DEBUG">
-        <appender-ref ref="FILE" />
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="RollingFileWarn" />
+        <appender-ref ref="RollingFileInfoDebug" />
     </root>
 
 </configuration>

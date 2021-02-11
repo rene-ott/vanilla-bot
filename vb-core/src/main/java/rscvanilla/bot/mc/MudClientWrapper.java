@@ -5,9 +5,7 @@ import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.api.models.wrappers.*;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
-import rscvanilla.bot.mc.helpers.MudClientWrapperTool;
-import rscvanilla.bot.mc.proxies.FieldWrapper;
-import rscvanilla.bot.mc.proxies.MethodWrapper;
+import rscvanilla.bot.infrastructure.logger.AppLoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
@@ -23,7 +21,11 @@ import java.util.List;
 
 public class MudClientWrapper {
 
+    public static final String FIELD_USER_NAME = "userName";
+    public static final String FIELD_USER_PASSWORD = "userPassword";
+
     private static final Logger logger = LoggerFactory.getLogger(MudClientWrapper.class);
+    private static final Logger simpleLogger = AppLoggerFactory.getSimpleLogger();
 
     private FieldWrapper<com.rsc.d> mudClient;
 
@@ -63,13 +65,13 @@ public class MudClientWrapper {
     @SuppressWarnings("unused") private FieldWrapper<String> userPassword;
     @SuppressWarnings("unused") private FieldWrapper<Integer> optionsCount;
 
-    private MethodWrapper<MethodWrapper.None> walkToArea;
+    private MethodWrapper<MethodWrapper.Unit> walkToArea;
     private MethodWrapper<Boolean> sendWalkToGroundItem;
-    private MethodWrapper<MethodWrapper.None> sendChatMessage;
-    private MethodWrapper<MethodWrapper.None> walkToObject;
-    private MethodWrapper<MethodWrapper.None> login;
-    private MethodWrapper<MethodWrapper.None> logout;
-    private MethodWrapper<MethodWrapper.None> walkToWall;
+    private MethodWrapper<MethodWrapper.Unit> sendChatMessage;
+    private MethodWrapper<MethodWrapper.Unit> walkToObject;
+    private MethodWrapper<MethodWrapper.Unit> login;
+    private MethodWrapper<MethodWrapper.Unit> logout;
+    private MethodWrapper<MethodWrapper.Unit> walkToWall;
 
     public FieldWrapper<MudClientCaptchaInterceptor> captchaInterceptor;
     public FieldWrapper<MudClientGameMessageInterceptor> gameMessageInterceptor;
@@ -97,7 +99,9 @@ public class MudClientWrapper {
         try {
             logger.debug("Initializing [MudClientWrapper] mudclient field:");
 
-            mudClient = MudClientWrapperTool.initField(gameApplet, logger, "mudClient", appletClassFields.mudClient, com.rsc.d.class);
+            mudClient = MudClientWrapperTool.initField(gameApplet, simpleLogger, "mudClient", appletClassFields.mudClient, com.rsc.d.class);
+
+            simpleLogger.debug("");
         } catch (BotException e) {
             throw new BotException("Failed to initialize [MudClientWrapper] mudclient field!", e);
         }
@@ -111,6 +115,7 @@ public class MudClientWrapper {
             gameMessageInterceptor = initInterceptor("gameMessageInterceptor", MudClientGameMessageInterceptor.MC_FIELD_NAME);
             gameSettingsInterceptor = initInterceptor("gameSettingsInterceptor", MudClientGameSettingsInterceptor.MC_FIELD_NAME);
 
+            simpleLogger.debug("");
         } catch (BotException e) {
             throw new BotException("Failed to initialize [MudClientWrapper] interceptor fields!", e);
         }
@@ -177,6 +182,7 @@ public class MudClientWrapper {
             wallObjectListIndex = initField("wallObjectListIndex", classFields.wallObjectListIndex, Integer.class);
             user = initField("user", classFields.user, com.rsc.e.k.class);
 
+            simpleLogger.debug("");
         } catch (BotException e) {
             throw new BotException("Failed to initialize [MudClientWrapper] fields!", e);
         }
@@ -194,6 +200,7 @@ public class MudClientWrapper {
             login = initMethod("login", classMethods.login, boolean.class);
             logout = initMethod("logout", classMethods.logout);
 
+            simpleLogger.debug("");
         } catch (BotException e) {
             throw new BotException("Failed to initialize [MudClientWrapper] methods!", e);
         }
@@ -234,15 +241,15 @@ public class MudClientWrapper {
         return MudClientWrapperTool.newWrappedEntityList(internalArray.getValue(), internalArrayLength.getValue(), clazz, this);
     }
 
-    private <T> FieldWrapper<T> initField(String hookName, String hookValue, Class<?> hookType) {
-        return MudClientWrapperTool.initField(mudClient, logger, hookName, hookValue, hookType);
+    private <T> FieldWrapper<T> initField(String wrapperFieldName, String mcFieldName, Class<?> mcFieldExpectedReturnType) {
+        return MudClientWrapperTool.initField(mudClient.getValue(), simpleLogger, wrapperFieldName, mcFieldName, mcFieldExpectedReturnType);
     }
 
-    private <T> MethodWrapper<T> initMethod(String hookName, String hookValue, Class<?>...params) {
-        return MudClientWrapperTool.initMethod(mudClient, logger, hookName, hookValue, params);
+    private <T> MethodWrapper<T> initMethod(String wrapperMethodName, String mcMethodName, Class<?>...mcMethodExpectedParamTypes) {
+        return MudClientWrapperTool.initMethod(mudClient.getValue(), simpleLogger, wrapperMethodName, mcMethodName, mcMethodExpectedParamTypes);
     }
 
-    private <T> FieldWrapper<T> initInterceptor(String hookName, String hookValue) {
-        return MudClientWrapperTool.initField(mudClient, logger, hookName, hookValue, null);
+    private <T> FieldWrapper<T> initInterceptor(String wrapperFieldName, String mcFieldName) {
+        return MudClientWrapperTool.initField(mudClient.getValue(), simpleLogger, wrapperFieldName, mcFieldName, null);
     }
 }

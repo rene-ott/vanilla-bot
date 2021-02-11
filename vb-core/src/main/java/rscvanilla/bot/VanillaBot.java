@@ -34,13 +34,13 @@ public class VanillaBot implements Bot, ScriptEngineListener {
     @Inject
     public VanillaBot(BotFrame botFrame,
                       GameApplet gameApplet,
-                      MudClientWrapper hooker,
+                      MudClientWrapper mudClientWrapper,
                       ScriptEngine scriptEngine,
                       ScriptDirectoryContentChangeWatcher scriptsDirectoryWatcher,
                       EventBus eventBus, ConfigService configService) {
         this.botFrame = botFrame;
         this.gameApplet = gameApplet;
-        this.hooker = hooker;
+        this.hooker = mudClientWrapper;
         this.scriptEngine = scriptEngine;
         this.scriptsDirectoryWatcher = scriptsDirectoryWatcher;
 

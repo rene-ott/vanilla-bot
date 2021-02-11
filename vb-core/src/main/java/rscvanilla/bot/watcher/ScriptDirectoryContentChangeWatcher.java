@@ -94,7 +94,7 @@ public class ScriptDirectoryContentChangeWatcher {
             return null;
         }
 
-        return StringUtils.left(hash, 10);
+        return StringUtils.left(hash, 10) + "...";
     }
 
     private byte[][] getArrayOfFileHashBytes() {

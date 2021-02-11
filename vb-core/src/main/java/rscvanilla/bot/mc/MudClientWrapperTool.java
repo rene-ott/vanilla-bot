@@ -1,4 +1,4 @@
-package rscvanilla.bot.mc.helpers;
+package rscvanilla.bot.mc;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import rscvanilla.bot.api.models.wrappers.RSEntityWrapper;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.mc.MudClientWrapper;
-import rscvanilla.bot.mc.proxies.FieldWrapper;
-import rscvanilla.bot.mc.proxies.MethodWrapper;
+import rscvanilla.bot.mc.FieldWrapper;
+import rscvanilla.bot.mc.MethodWrapper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -19,13 +19,19 @@ import java.util.stream.IntStream;
 
 public class MudClientWrapperTool {
 
-    public static <T, T2> MethodWrapper<T> initMethod(T2 objectWithMethods, Logger logger, String hookName, String hookValue, Class<?>... methodParamTypes) {
-        var method = MethodUtils.getMatchingMethod(objectWithMethods.getClass(), hookValue, methodParamTypes);
+    public static <T, T2> MethodWrapper<T> initMethod(
+        T2 objectWithMethod,
+        Logger logger,
+        String methodDisplayName,
+        String internalObjectMethodName,
+        Class<?>... internalObjectMethodExpectedParamTypes
+    ) {
+        var method = MethodUtils.getMatchingMethod(objectWithMethod.getClass(), internalObjectMethodName, internalObjectMethodExpectedParamTypes);
         if (method != null) {
-            logger.debug(hookName + " => " + getMethodSignature(method));
-            return new MethodWrapper<>(objectWithMethods, method);
+            logger.debug(" - {} => {}", methodDisplayName, getMethodSignature(method));
+            return new MethodWrapper<>(objectWithMethod, method, methodDisplayName);
         } else {
-            throw new BotException("Can't init method hook: " + hookName + "=>" + getExpectedMethodSignature(hookValue, methodParamTypes));
+            throw BotException.of("Can't init method: %s => %s", methodDisplayName, getExpectedMethodSignature(internalObjectMethodName, internalObjectMethodExpectedParamTypes));
         }
     }
 
@@ -46,25 +52,31 @@ public class MudClientWrapperTool {
         return returnType + " " + methodName + "(" + joinedParameters + ");";
     }
 
-    private static String getExpectedMethodSignature(String methodName, Class<?>... params) {
-        var paramList = new ArrayList<String>();
+    private static String getExpectedMethodSignature(String methodName, Class<?>... methodArgumentTypes) {
+        var argumentList = new ArrayList<String>();
 
-        IntStream.range(1, params.length + 1).forEach(i -> {
-            var paramName = "param" + i;
-            var typeName = params[i-1].getSimpleName();
-            paramList.add(typeName + " " + paramName);
+        IntStream.range(1, methodArgumentTypes.length + 1).forEach(i -> {
+            var argumentVariableName = "arg" + i;
+            var returnType = methodArgumentTypes[i - 1].getSimpleName();
+            argumentList.add(String.format("%s %s", returnType, argumentVariableName));
         });
 
-        return methodName + "(" + String.join(",", paramList) + ")";
+        return String.format("%s(%s)",methodName, String.join(",", argumentList));
     }
 
-    public static <T> FieldWrapper<T> initField(Object objectWithField, Logger logger, String hookName, String hookValue, Class<?> hookValueType) {
-        var field = FieldUtils.getField(objectWithField.getClass(), hookValue, true);
+    public static <T> FieldWrapper<T> initField(
+        Object objectWithField,
+        Logger logger,
+        String fieldDisplayName,
+        String objectClassFieldName,
+        Class<?> objectClassFieldReturnType
+    ) {
+        var field = FieldUtils.getField(objectWithField.getClass(), objectClassFieldName, true);
         if (field != null) {
-            logger.debug(hookName + " => " + field.getType().getCanonicalName() + " " + hookValue);
-            return new FieldWrapper<>(objectWithField, field, hookValueType, hookName);
+            logger.debug(" - {} => {} {};", fieldDisplayName, field.getType().getCanonicalName(), objectClassFieldName);
+            return new FieldWrapper<>(objectWithField, field, objectClassFieldReturnType, fieldDisplayName);
         } else {
-            throw new BotException("Can't init field hook: " + hookName + " => " + hookValue);
+            throw BotException.of("Can't init field: %s => %s", fieldDisplayName, objectClassFieldName);
         }
     }
 
@@ -93,7 +105,7 @@ public class MudClientWrapperTool {
 
             return constructor.newInstance(internalObject, mudClientWrapper);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            throw new BotException("Indexed list creation failed", e);
+            throw BotException.of("Indexed list creation failed", e);
         }
     }
 }
