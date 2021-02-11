@@ -2,7 +2,7 @@ package rscvanilla.bot.script.template;
 
 import rscvanilla.bot.api.actions.*;
 import rscvanilla.bot.api.models.Position;
-import rscvanilla.bot.api.models.wrappers.RSUser;
+import rscvanilla.bot.api.models.wrappers.RSLocalPlayerCharacter;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.mc.MudClientHooker;
 import rscvanilla.bot.script.ScriptDependencyContext;
@@ -24,7 +24,7 @@ public abstract class Script {
     private final MessageAction messageAction;
     private final WallObjectAction wallObjectAction;
 
-    private final RSUser user;
+    private final RSLocalPlayerCharacter user;
 
     private final MudClientHooker hooker;
 

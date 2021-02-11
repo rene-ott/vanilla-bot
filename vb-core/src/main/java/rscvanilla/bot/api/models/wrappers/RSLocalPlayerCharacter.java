@@ -1,12 +1,18 @@
 package rscvanilla.bot.api.models.wrappers;
 
 import rscvanilla.bot.api.enums.OpCodeOut;
+import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.mc.MudClientHooker;
 
-public class RSUser extends RSPlayerCharacter {
+public class RSLocalPlayerCharacter extends RSPlayerCharacter {
 
-    public RSUser(com.rsc.e.k object, MudClientHooker hooker) {
+    public RSLocalPlayerCharacter(com.rsc.e.k object, MudClientHooker hooker) {
         super(object, hooker);
+    }
+
+    @Override
+    public Position getLocalPosition() {
+        return new Position(hooker.userTileX.getValue(), hooker.userTileY.getValue());
     }
 
     public int getFatigue() { return hooker.userFatigueStat.getValue() * 100 / 750; }

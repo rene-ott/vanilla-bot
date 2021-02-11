@@ -11,7 +11,7 @@ public class RSWallObject extends RSEntity<com.rsc.e.m> {
     }
 
     @DependsOnExternal
-    public int getDirection() { return object.cl(); }
+    public int getDirection() { return internalObject.cl(); }
 
     public Position getLocalPosition() { return getStaticLocalPosition(); }
 }

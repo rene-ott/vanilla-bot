@@ -216,7 +216,7 @@ public class MudClientHooker {
         return MudClientHookerUtil.newIndexedList(this.wallObjectList.getValue(), this.wallObjectListIndex.getValue(), RSWallObject.class, this);
     }
 
-    public RSUser getUser() { return new RSUser(user.getValue(), this); }
+    public RSLocalPlayerCharacter getUser() { return new RSLocalPlayerCharacter(user.getValue(), this); }
     public Position getMidRegionBase() { return new Position(midRegionBaseX.getValue(), midRegionBaseZ.getValue()); }
 
     public void walkToArea(int startX, int startY, int x1, int y1, int x2, int y2, boolean reachBorder, boolean walkToEntity) { walkToArea.invokeAction(startX, startY, x1, y1, x2, y2, reachBorder, walkToEntity); }

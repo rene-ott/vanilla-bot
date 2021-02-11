@@ -11,24 +11,23 @@ public abstract class RSCharacter<T extends com.rsc.e.i> extends RSEntity<T> {
     }
 
     @DependsOnExternal
-    public int getBubbleTimeout() { return object.mE; }
+    public int getBubbleTimeout() { return internalObject.mE; }
 
     @DependsOnExternal
-    public int getCurrentHealthLevel() { return object.mN; }
+    public int getCurrentHealthLevel() { return internalObject.mN; }
 
     @DependsOnExternal
-    public int getHealthLevel() { return object.mO; }
+    public int getHealthLevel() { return internalObject.mO; }
 
     @DependsOnExternal
-    protected Direction getDirection() { return Direction.of(object.cl()); }
+    protected Direction getDirection() { return Direction.of(internalObject.cl()); }
 
     @DependsOnExternal
-    public int getCombatLevel() { return object.mQ; }
+    public int getCombatLevel() { return internalObject.mQ; }
 
-    public boolean isInCombat() {
-        return getDirection() == Direction.COMBAT1 || getDirection() == Direction.COMBAT2;
-    }
+    public boolean isInCombat() { return getDirection() == Direction.COMBAT1 || getDirection() == Direction.COMBAT2; }
 
     public boolean isBusy() { return getBubbleTimeout() - 60 > 0; }
-    public Position getLocalPosition() { return getDynamicLocalPosition(); }
+
+    public abstract Position getLocalPosition();
 }

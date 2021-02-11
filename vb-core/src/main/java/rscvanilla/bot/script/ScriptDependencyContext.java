@@ -1,7 +1,7 @@
 package rscvanilla.bot.script;
 
 import rscvanilla.bot.api.actions.*;
-import rscvanilla.bot.api.models.wrappers.RSUser;
+import rscvanilla.bot.api.models.wrappers.RSLocalPlayerCharacter;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.mc.MudClientHooker;
 
@@ -59,7 +59,7 @@ public class ScriptDependencyContext {
 
     public MudClientHooker getHooker() { return hooker; }
 
-    public RSUser getUser() { return hooker.getUser(); }
+    public RSLocalPlayerCharacter getUser() { return hooker.getUser(); }
 
     public Printer getPrinter() { return printer; }
     public MessageAction getMessageAction() { return messageAction; }

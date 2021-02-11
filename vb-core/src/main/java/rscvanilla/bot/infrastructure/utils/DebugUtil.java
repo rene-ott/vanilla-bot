@@ -1,8 +1,8 @@
 package rscvanilla.bot.infrastructure.utils;
 
-import rscvanilla.bot.api.models.wrappers.WrappedObject;
 import org.apache.commons.lang3.builder.MultilineRecursiveToStringStyle;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import rscvanilla.bot.api.models.wrappers.RSEntity;
 
 public class DebugUtil {
     public static void printRecursively(Object obj) {
@@ -31,7 +31,7 @@ public class DebugUtil {
         StackTraceElement[] stElements = Thread.currentThread().getStackTrace();
         for (int i=1; i<stElements.length; i++) {
             StackTraceElement ste = stElements[i];
-            if (!ste.getClassName().equals(DebugUtil.class.getName()) && ste.getClassName().indexOf("java.lang.Thread")!=0 && !ste.getClassName().equals(WrappedObject.class.getName())) {
+            if (!ste.getClassName().equals(DebugUtil.class.getName()) && ste.getClassName().indexOf("java.lang.Thread")!=0 && !ste.getClassName().equals(RSEntity.class.getName())) {
                 return ste.getClassName();
             }
         }

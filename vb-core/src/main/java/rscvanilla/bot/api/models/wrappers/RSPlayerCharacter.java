@@ -1,5 +1,6 @@
 package rscvanilla.bot.api.models.wrappers;
 
+import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mc.MudClientHooker;
 
@@ -9,6 +10,9 @@ public class RSPlayerCharacter extends RSCharacter<com.rsc.e.k> {
         super(object, hooker);
     }
 
+    @Override
+    public Position getLocalPosition() { return getDynamicLocalPosition(); }
+
     @DependsOnExternal
-    public String getName() { return object.na; }
+    public String getName() { return internalObject.na; }
 }
