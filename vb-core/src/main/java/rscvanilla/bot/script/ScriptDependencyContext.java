@@ -10,8 +10,8 @@ import javax.inject.Inject;
 public class ScriptDependencyContext {
 
     private final GroundItemAction groundItemAction;
-    private final NpcAction npcAction;
-    private final PlayerAction playerAction;
+    private final NonPlayerCharacterAction nonPlayerCharacterAction;
+    private final PlayerCharacterAction playerCharacterAction;
     private final WalkAction walkAction;
     private final InventoryItemAction inventoryItemAction;
     private final GroundObjectAction groundObjectAction;
@@ -28,8 +28,8 @@ public class ScriptDependencyContext {
 
     @Inject
     public ScriptDependencyContext(GroundItemAction groundItemAction,
-                                   NpcAction npcAction,
-                                   PlayerAction playerAction,
+                                   NonPlayerCharacterAction nonPlayerCharacterAction,
+                                   PlayerCharacterAction playerCharacterAction,
                                    WalkAction walkAction,
                                    InventoryItemAction inventoryItemAction,
                                    GroundObjectAction groundObjectAction,
@@ -42,8 +42,8 @@ public class ScriptDependencyContext {
                                    WallObjectAction wallObjectAction
     ) {
         this.groundItemAction = groundItemAction;
-        this.npcAction = npcAction;
-        this.playerAction = playerAction;
+        this.nonPlayerCharacterAction = nonPlayerCharacterAction;
+        this.playerCharacterAction = playerCharacterAction;
         this.walkAction = walkAction;
         this.inventoryItemAction = inventoryItemAction;
         this.groundObjectAction = groundObjectAction;
@@ -69,8 +69,8 @@ public class ScriptDependencyContext {
     public BankAction getOptionsAction() { return bankAction; }
     public GroundObjectAction getObjectAction() { return groundObjectAction; }
     public GroundItemAction getGroundItemAction() { return groundItemAction; }
-    public NpcAction getNpcAction() { return npcAction; }
-    public PlayerAction getPlayerAction() { return playerAction; }
+    public NonPlayerCharacterAction getNpcAction() { return nonPlayerCharacterAction; }
+    public PlayerCharacterAction getPlayerAction() { return playerCharacterAction; }
     public WalkAction getWalkAction() { return walkAction; }
     public InventoryItemAction getInventoryItemAction() { return inventoryItemAction; }
     public WallObjectAction getWallAction() { return wallObjectAction; }

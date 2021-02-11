@@ -9,19 +9,19 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class NpcAction extends BaseAction {
+public class NonPlayerCharacterAction extends BaseAction {
 
     private final WalkAction walkAction;
-    private final PlayerAction playerAction;
+    private final PlayerCharacterAction playerCharacterAction;
 
     @Inject
-    public NpcAction(MudClientHooker hooks,
-                     WalkAction walkAction,
-                     PlayerAction playerAction
+    public NonPlayerCharacterAction(MudClientHooker hooks,
+                                    WalkAction walkAction,
+                                    PlayerCharacterAction playerCharacterAction
     ) {
         super(hooks);
         this.walkAction = walkAction;
-        this.playerAction = playerAction;
+        this.playerCharacterAction = playerCharacterAction;
     }
 
     public boolean isNpcNear(int...ids) {

@@ -80,7 +80,7 @@ public class BotModule extends AbstractModule {
 
         bind(WallObjectAction.class).in(Singleton.class);
         bind(GroundObjectAction.class).in(Singleton.class);
-        bind(NpcAction.class).in(Singleton.class);
+        bind(NonPlayerCharacterAction.class).in(Singleton.class);
         bind(GroundItemAction.class).in(Singleton.class);
         bind(InventoryItemAction.class).in(Singleton.class);
         bind(WalkAction.class).in(Singleton.class);

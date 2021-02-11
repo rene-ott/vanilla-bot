@@ -11,8 +11,8 @@ public abstract class Script {
 
     private final Printer printer;
 
-    private final PlayerAction playerAction;
-    private final NpcAction npcAction;
+    private final PlayerCharacterAction playerCharacterAction;
+    private final NonPlayerCharacterAction nonPlayerCharacterAction;
     private final WalkAction walkAction;
     private final GroundItemAction groundItemAction;
     private final InventoryItemAction inventoryItemAction;
@@ -32,8 +32,8 @@ public abstract class Script {
 
         printer = dependencyContext.getPrinter();
 
-        playerAction = dependencyContext.getPlayerAction();
-        npcAction = dependencyContext.getNpcAction();
+        playerCharacterAction = dependencyContext.getPlayerAction();
+        nonPlayerCharacterAction = dependencyContext.getNpcAction();
         walkAction = dependencyContext.getWalkAction();
         groundItemAction = dependencyContext.getGroundItemAction();
         inventoryItemAction = dependencyContext.getInventoryItemAction();
@@ -54,7 +54,6 @@ public abstract class Script {
 
     /** USER **/
     protected Position getPosition() { return user.getGlobalPosition(); }
-    protected Position getLocalPosition() { return user.getLocalPosition(); }
     protected boolean isInCombat() { return user.isInCombat(); }
     protected int getCombatStyle() { return user.getCombatStyle(); }
     protected void setCombatStyle(int style) { user.setCombatStyle(style); }
@@ -67,7 +66,7 @@ public abstract class Script {
     public void print(String message, Object...args) { printer.printAsScript(String.format(message, args));}
 
     /** PLAYER ACTION **/
-    public String[] getPlayerNamesInDistance(int distance) { return playerAction.getPlayerNamesInDistance(distance); }
+    public String[] getPlayerNamesInDistance(int distance) { return playerCharacterAction.getPlayerNamesInDistance(distance); }
 
     /** MESSAGE ACTION **/
     public void sendChatMessage(String s) { messageAction.sendChatMessage(s); }
@@ -97,12 +96,12 @@ public abstract class Script {
     protected void useItemOnItem(int firstItemId, int secondItemId) { inventoryItemAction.useItemOnItem(firstItemId, secondItemId); }
 
     /** NPC ACTION **/
-    protected void pickpocketNpc(int...ids) { npcAction.pickpocketNpcById(ids); }
-    protected void attackNpc(int...ids) { npcAction.attackNpcById(ids); }
-    protected boolean isNpcNear(int...ids) { return npcAction.isNpcNear(ids); }
-    protected void talkToNpc(int...ids) { npcAction.talkToNpc(ids); }
-    protected void castOnNpc(int spellId, int...ids) { npcAction.castOnNpc(spellId, ids); }
-    public boolean isNpcInDistance(int id, int distance) { return npcAction.isNpcInDistance(id, distance); }
+    protected void pickpocketNpc(int...ids) { nonPlayerCharacterAction.pickpocketNpcById(ids); }
+    protected void attackNpc(int...ids) { nonPlayerCharacterAction.attackNpcById(ids); }
+    protected boolean isNpcNear(int...ids) { return nonPlayerCharacterAction.isNpcNear(ids); }
+    protected void talkToNpc(int...ids) { nonPlayerCharacterAction.talkToNpc(ids); }
+    protected void castOnNpc(int spellId, int...ids) { nonPlayerCharacterAction.castOnNpc(spellId, ids); }
+    public boolean isNpcInDistance(int id, int distance) { return nonPlayerCharacterAction.isNpcInDistance(id, distance); }
 
     /** GROUND ITEM ACTION **/
     protected void takeItemFromGround(int...ids) { groundItemAction.takeItemFromGround(ids); }

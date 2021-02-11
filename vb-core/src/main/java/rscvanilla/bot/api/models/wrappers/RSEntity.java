@@ -12,8 +12,8 @@ public abstract class RSEntity<T extends com.rsc.e.d> extends WrappedObject<T> i
         super(object, hooker);
     }
 
-    @DependsOnExternal
     // Players have id set as 0
+    @DependsOnExternal
     public int getId() { return object.at(); }
 
     @DependsOnExternal
@@ -35,5 +35,4 @@ public abstract class RSEntity<T extends com.rsc.e.d> extends WrappedObject<T> i
     }
 
     public abstract Position getLocalPosition();
-
 }
