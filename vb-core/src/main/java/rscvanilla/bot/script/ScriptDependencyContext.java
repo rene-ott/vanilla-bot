@@ -1,9 +1,9 @@
 package rscvanilla.bot.script;
 
-import rscvanilla.bot.api.actions.*;
-import rscvanilla.bot.api.models.wrappers.RSLocalPlayerCharacter;
+import rscvanilla.bot.mudclient.actions.*;
+import rscvanilla.bot.mudclient.models.wrappers.RSLocalPlayerCharacter;
 import rscvanilla.bot.infrastructure.printer.Printer;
-import rscvanilla.bot.mc.MudClientWrapper;
+import rscvanilla.bot.mudclient.MudClientWrapper;
 
 import javax.inject.Inject;
 

@@ -1,10 +1,10 @@
-package rscvanilla.bot.api.models.wrappers;
+package rscvanilla.bot.mudclient.models.wrappers;
 
-import rscvanilla.bot.api.models.contracts.GloballyPositionable;
-import rscvanilla.bot.api.models.Position;
-import rscvanilla.bot.api.utils.PositionConverter;
+import rscvanilla.bot.mudclient.models.contracts.GloballyPositionable;
+import rscvanilla.bot.mudclient.models.Position;
+import rscvanilla.bot.mudclient.utils.PositionConverter;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
-import rscvanilla.bot.mc.MudClientWrapper;
+import rscvanilla.bot.mudclient.MudClientWrapper;
 
 public abstract class RSEntityWrapper<T extends com.rsc.e.d> implements GloballyPositionable {
 

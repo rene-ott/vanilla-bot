@@ -1,6 +1,6 @@
-package rscvanilla.bot.api.models.contracts;
+package rscvanilla.bot.mudclient.models.contracts;
 
-import rscvanilla.bot.api.models.Position;
+import rscvanilla.bot.mudclient.models.Position;
 
 import java.util.List;
 

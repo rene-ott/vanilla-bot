@@ -1,4 +1,4 @@
-package rscvanilla.bot.mc.interceptors.captcha;
+package rscvanilla.bot.mudclient.interceptors.captcha;
 
 import javax.inject.Inject;
 import java.awt.*;

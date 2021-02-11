@@ -1,4 +1,4 @@
-package rscvanilla.bot.mc.interceptors.captcha;
+package rscvanilla.bot.mudclient.interceptors.captcha;
 
 import java.awt.image.BufferedImage;
 

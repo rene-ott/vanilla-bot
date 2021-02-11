@@ -1,4 +1,4 @@
-package rscvanilla.bot.mc.interceptors.ingamemessage;
+package rscvanilla.bot.mudclient.interceptors.ingamemessage;
 
 import com.google.common.eventbus.EventBus;
 import org.apache.commons.lang3.StringUtils;

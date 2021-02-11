@@ -1,7 +1,7 @@
-package rscvanilla.bot.mc.interceptors.gamesettings;
+package rscvanilla.bot.mudclient.interceptors.gamesettings;
 
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
-import rscvanilla.bot.mc.MudClientWrapper;
+import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
 
 import javax.inject.Inject;

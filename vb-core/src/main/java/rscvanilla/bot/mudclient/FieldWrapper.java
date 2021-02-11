@@ -1,9 +1,8 @@
-package rscvanilla.bot.mc;
+package rscvanilla.bot.mudclient;
 
 import rscvanilla.bot.infrastructure.BotException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
-import rscvanilla.bot.mc.MudClientWrapper;
 
 import java.lang.reflect.Field;
 

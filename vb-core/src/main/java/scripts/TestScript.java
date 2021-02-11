@@ -1,6 +1,5 @@
 package scripts;
 
-import rscvanilla.bot.infrastructure.utils.DebugUtil;
 import rscvanilla.bot.script.ScriptDependencyContext;
 import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
 import rscvanilla.bot.script.template.RunnableScript;

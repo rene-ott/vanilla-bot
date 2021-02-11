@@ -1,4 +1,4 @@
-package rscvanilla.bot.api.models.wrappers;
+package rscvanilla.bot.mudclient.models.wrappers;
 
 import java.util.Arrays;
 

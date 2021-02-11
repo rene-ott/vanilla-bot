@@ -1,8 +1,8 @@
-package rscvanilla.bot.api.models.wrappers;
+package rscvanilla.bot.mudclient.models.wrappers;
 
 import com.rsc.e.e;
-import rscvanilla.bot.api.models.Position;
-import rscvanilla.bot.mc.MudClientWrapper;
+import rscvanilla.bot.mudclient.models.Position;
+import rscvanilla.bot.mudclient.MudClientWrapper;
 
 public class RSGroundObject extends RSEntityWrapper<e> {
 

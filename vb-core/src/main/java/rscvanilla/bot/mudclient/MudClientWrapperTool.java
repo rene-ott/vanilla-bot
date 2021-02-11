@@ -1,13 +1,10 @@
-package rscvanilla.bot.mc;
+package rscvanilla.bot.mudclient;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.slf4j.Logger;
-import rscvanilla.bot.api.models.wrappers.RSEntityWrapper;
+import rscvanilla.bot.mudclient.models.wrappers.RSEntityWrapper;
 import rscvanilla.bot.infrastructure.BotException;
-import rscvanilla.bot.mc.MudClientWrapper;
-import rscvanilla.bot.mc.FieldWrapper;
-import rscvanilla.bot.mc.MethodWrapper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

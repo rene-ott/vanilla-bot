@@ -1,7 +1,7 @@
-package rscvanilla.bot.mc;
+package rscvanilla.bot.mudclient;
 
 import rscvanilla.bot.Main;
-import rscvanilla.bot.api.enums.OpCodeOut;
+import rscvanilla.bot.mudclient.enums.OpCodeOut;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

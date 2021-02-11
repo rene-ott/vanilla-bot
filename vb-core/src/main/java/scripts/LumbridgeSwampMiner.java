@@ -1,6 +1,6 @@
 package scripts;
 
-import rscvanilla.bot.api.models.Position;
+import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.script.ScriptDependencyContext;
 import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
 import rscvanilla.bot.script.template.RunnableScript;

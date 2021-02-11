@@ -1,4 +1,4 @@
-package rscvanilla.bot.mc.interceptors.captcha;
+package rscvanilla.bot.mudclient.interceptors.captcha;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

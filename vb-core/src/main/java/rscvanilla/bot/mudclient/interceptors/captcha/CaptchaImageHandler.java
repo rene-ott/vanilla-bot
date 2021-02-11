@@ -1,9 +1,9 @@
-package rscvanilla.bot.mc.interceptors.captcha;
+package rscvanilla.bot.mudclient.interceptors.captcha;
 
-import rscvanilla.bot.api.enums.OpCodeIn;
-import rscvanilla.bot.api.enums.OpCodeOut;
+import rscvanilla.bot.mudclient.enums.OpCodeIn;
+import rscvanilla.bot.mudclient.enums.OpCodeOut;
 import rscvanilla.bot.infrastructure.printer.Printer;
-import rscvanilla.bot.mc.MudClientWrapper;
+import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
 
 import javax.imageio.ImageIO;

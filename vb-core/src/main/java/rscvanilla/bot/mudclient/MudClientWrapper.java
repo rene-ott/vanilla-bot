@@ -1,8 +1,8 @@
-package rscvanilla.bot.mc;
+package rscvanilla.bot.mudclient;
 
 import rscvanilla.bot.GameApplet;
-import rscvanilla.bot.api.models.Position;
-import rscvanilla.bot.api.models.wrappers.*;
+import rscvanilla.bot.mudclient.models.Position;
+import rscvanilla.bot.mudclient.models.wrappers.*;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.infrastructure.logger.AppLoggerFactory;

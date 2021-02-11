@@ -1,6 +1,6 @@
-package rscvanilla.bot.api.utils;
+package rscvanilla.bot.mudclient.utils;
 
-import rscvanilla.bot.api.models.Position;
+import rscvanilla.bot.mudclient.models.Position;
 
 public class PositionConverter {
     public static Position toLocalPosition(Position globalPosition, Position midRegionBase) {

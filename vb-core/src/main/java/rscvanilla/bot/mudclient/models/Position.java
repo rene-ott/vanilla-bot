@@ -1,4 +1,4 @@
-package rscvanilla.bot.api.models;
+package rscvanilla.bot.mudclient.models;
 
 import java.util.Objects;
 

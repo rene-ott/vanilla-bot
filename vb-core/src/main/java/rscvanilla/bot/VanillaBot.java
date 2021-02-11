@@ -8,7 +8,7 @@ import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.gui.events.ScriptAntiBanParamsChangedEvent;
 import rscvanilla.bot.gui.events.ScriptSelectedEvent;
 import rscvanilla.bot.gui.events.ScriptStartButtonClickedEvent;
-import rscvanilla.bot.mc.MudClientWrapper;
+import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.bot.script.engine.ScriptEngine;
 import rscvanilla.bot.script.engine.ScriptEngineListener;
 import rscvanilla.bot.script.events.ScriptListLoadedEvent;

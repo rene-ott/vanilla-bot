@@ -1,4 +1,4 @@
-package rscvanilla.bot.api.enums;
+package rscvanilla.bot.mudclient.enums;
 
 public enum OpCodeOut {
     COMBAT_STYLE(29),

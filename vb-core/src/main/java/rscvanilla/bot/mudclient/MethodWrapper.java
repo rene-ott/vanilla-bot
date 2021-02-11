@@ -1,4 +1,4 @@
-package rscvanilla.bot.mc;
+package rscvanilla.bot.mudclient;
 
 import rscvanilla.bot.infrastructure.BotException;
 

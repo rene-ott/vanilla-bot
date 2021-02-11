@@ -1,7 +1,7 @@
-package rscvanilla.bot.api.actions;
+package rscvanilla.bot.mudclient.actions;
 
-import rscvanilla.bot.api.enums.OpCodeOut;
-import rscvanilla.bot.mc.MudClientWrapper;
+import rscvanilla.bot.mudclient.enums.OpCodeOut;
+import rscvanilla.bot.mudclient.MudClientWrapper;
 
 import javax.inject.Inject;
 

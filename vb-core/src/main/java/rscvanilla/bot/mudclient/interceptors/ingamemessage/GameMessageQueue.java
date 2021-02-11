@@ -1,4 +1,4 @@
-package rscvanilla.bot.mc.interceptors.ingamemessage;
+package rscvanilla.bot.mudclient.interceptors.ingamemessage;
 
 import rscvanilla.bot.events.messages.GameMessageEvent;
 

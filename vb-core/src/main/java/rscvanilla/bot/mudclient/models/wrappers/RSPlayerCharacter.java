@@ -1,8 +1,8 @@
-package rscvanilla.bot.api.models.wrappers;
+package rscvanilla.bot.mudclient.models.wrappers;
 
-import rscvanilla.bot.api.models.Position;
+import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
-import rscvanilla.bot.mc.MudClientWrapper;
+import rscvanilla.bot.mudclient.MudClientWrapper;
 
 public class RSPlayerCharacter extends RSCharacter<com.rsc.e.k> {
 

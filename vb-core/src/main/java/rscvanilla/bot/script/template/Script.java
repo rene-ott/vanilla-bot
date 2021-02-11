@@ -1,10 +1,10 @@
 package rscvanilla.bot.script.template;
 
-import rscvanilla.bot.api.actions.*;
-import rscvanilla.bot.api.models.Position;
-import rscvanilla.bot.api.models.wrappers.RSLocalPlayerCharacter;
+import rscvanilla.bot.mudclient.actions.*;
+import rscvanilla.bot.mudclient.models.Position;
+import rscvanilla.bot.mudclient.models.wrappers.RSLocalPlayerCharacter;
 import rscvanilla.bot.infrastructure.printer.Printer;
-import rscvanilla.bot.mc.MudClientWrapper;
+import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.bot.script.ScriptDependencyContext;
 
 public abstract class Script {

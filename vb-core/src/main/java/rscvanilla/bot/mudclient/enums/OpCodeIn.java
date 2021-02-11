@@ -1,4 +1,4 @@
-package rscvanilla.bot.api.enums;
+package rscvanilla.bot.mudclient.enums;
 
 public enum OpCodeIn {
     FALL_ASLEEP(117),
