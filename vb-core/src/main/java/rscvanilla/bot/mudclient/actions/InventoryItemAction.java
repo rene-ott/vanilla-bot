@@ -31,7 +31,7 @@ public class InventoryItemAction extends BaseAction {
         if (itemIndex == -1)
             return;
 
-        hooker.getPacketBuilder()
+        mudClientWrapper.getPacketBuilder()
                 .setOpCode(OpCodeOut.USE_ITEM)
                 .putShort(itemIndex)
                 .send();
@@ -44,7 +44,7 @@ public class InventoryItemAction extends BaseAction {
             return;
         }
 
-        hooker.getPacketBuilder()
+        mudClientWrapper.getPacketBuilder()
                 .setOpCode(OpCodeOut.DROP_ITEM)
                 .putShort(itemIndex)
                 .putInt(1)
@@ -70,7 +70,7 @@ public class InventoryItemAction extends BaseAction {
         if (secondItemIndex == -1)
             return;
 
-        hooker.getPacketBuilder()
+        mudClientWrapper.getPacketBuilder()
                 .setOpCode(OpCodeOut.USE_ITEM_ON_ITEM)
                 .putShort(firstItemIndex)
                 .putShort(secondItemIndex)
@@ -97,7 +97,7 @@ public class InventoryItemAction extends BaseAction {
 
         var globalPos = object.getGlobalPosition();
 
-        hooker.getPacketBuilder()
+        mudClientWrapper.getPacketBuilder()
                 .setOpCode(OpCodeOut.USE_ITEM_ON_OBJECT)
                 .putShort(globalPos.getX())
                 .putShort(globalPos.getY())
@@ -125,25 +125,25 @@ public class InventoryItemAction extends BaseAction {
     public int getInventoryItemCount(int id) {
         var itemCount = 0;
         for (var itemIndex : getInventoryItemIndexesById(id)) {
-            itemCount += hooker.inventoryItemSlotsCounts.getValue()[itemIndex];
+            itemCount += mudClientWrapper.inventoryItemSlotsCounts.getValue()[itemIndex];
         }
 
         return itemCount;
     }
 
     public boolean isInventoryFull() {
-        return hooker.inventoryItemListIndex.getValue() == 30;
+        return mudClientWrapper.inventoryItemListIndex.getValue() == 30;
     }
 
     private List<Integer> getInventoryItemIndexesById(int id) {
         var indices = new ArrayList<Integer>();
 
-        var itemCountInInventory = hooker.inventoryItemListIndex.getValue();
+        var itemCountInInventory = mudClientWrapper.inventoryItemListIndex.getValue();
         if (itemCountInInventory == 0) {
             return indices;
         }
 
-        var inventoryItems = hooker.inventoryItemList.getValue();
+        var inventoryItems = mudClientWrapper.inventoryItemList.getValue();
         var copyOfInventoryItems = Arrays.copyOf(inventoryItems, itemCountInInventory);
 
         IntStream.range(0, copyOfInventoryItems.length).forEach(index -> {

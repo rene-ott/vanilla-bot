@@ -12,5 +12,5 @@ public class MessageAction extends BaseAction {
     }
 
 
-    public void sendChatMessage(String s) { hooker.sendChatMessage(s); }
+    public void sendChatMessage(String s) { mudClientWrapper.sendChatMessage(s); }
 }

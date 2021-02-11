@@ -33,10 +33,10 @@ public class PositionAction extends BaseAction {
 
 
     public boolean isPositionInDistance(Position tileToPos, int distance) {
-        return hooker.getUser().getGlobalPosition().distanceTo(tileToPos) <= distance;
+        return mudClientWrapper.getUser().getGlobalPosition().distanceTo(tileToPos) <= distance;
     }
 
     public boolean isPositionInDistance(int x, int y, int distance) {
-        return hooker.getUser().getGlobalPosition().distanceTo(new Position(x, y)) <= distance;
+        return mudClientWrapper.getUser().getGlobalPosition().distanceTo(new Position(x, y)) <= distance;
     }
 }

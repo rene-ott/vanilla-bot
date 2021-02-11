@@ -153,7 +153,7 @@ public class LumbridgeSwampMiner extends RunnableScript {
     }
 
     private void bankOres() {
-        if (isBankScreenVisible()) {
+        if (isBankWindowVisible()) {
             depositOresAndGems();
             waitFor(300);
             return;

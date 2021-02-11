@@ -38,7 +38,7 @@ public class WallObjectAction extends BaseAction {
         // TODO: Figure out what the dir parameter is
         walkAction.walkToWallObject(localPosition.getX(), localPosition.getY(), object.getDirection());
 
-        hooker.getPacketBuilder()
+        mudClientWrapper.getPacketBuilder()
                 .setOpCode(OpCodeOut.WALL_COMMAND1)
                 .putShort(globalPosition.getX())
                 .putShort(globalPosition.getY())
@@ -54,7 +54,7 @@ public class WallObjectAction extends BaseAction {
     }
 
     private RSWallObject getWallObject(int id, int x, int y) {
-        var matchedWallObjects = hooker.getWallObjectList()
+        var matchedWallObjects = mudClientWrapper.getWallObjectList()
                 .stream()
                 .filter(Objects::nonNull)
                 .filter(it -> id == it.getId() && it.getGlobalPosition().getX() == x && it.getGlobalPosition().getY() == y)
@@ -63,6 +63,6 @@ public class WallObjectAction extends BaseAction {
         if (matchedWallObjects.isEmpty())
             return null;
 
-        return (RSWallObject) hooker.getUser().getNearest(matchedWallObjects);
+        return (RSWallObject) mudClientWrapper.getUser().getNearest(matchedWallObjects);
     }
 }

@@ -3,9 +3,9 @@ package rscvanilla.bot.mudclient.actions;
 import rscvanilla.bot.mudclient.MudClientWrapper;
 
 public abstract class BaseAction {
-    protected MudClientWrapper hooker;
+    protected MudClientWrapper mudClientWrapper;
 
-    public BaseAction(MudClientWrapper hooker) {
-        this.hooker = hooker;
+    public BaseAction(MudClientWrapper mudClientWrapper) {
+        this.mudClientWrapper = mudClientWrapper;
     }
 }

@@ -121,12 +121,6 @@ public abstract class Script {
     public void answerOption(int pos) { optionsAction.answerOption(pos); }
     public boolean isOptionsMenuVisible() { return optionsAction.isOptionsMenuVisible(); }
 
-    /** BANK ACTION */
-    public void deposit(int id, int amount) { bankAction.deposit(id, amount); }
-    public void depositAll(int id) { bankAction.depositAll(id); }
-    public void depositAll(int...ids) { bankAction.depositAll(ids); }
-    public boolean isBankScreenVisible() { return bankAction.isBankScreenVisible(); }
-
     /**  POSITION ACTION **/
     protected boolean isPositionInDistance(Position tileToPos, int distance) { return positionAction.isPositionInDistance(tileToPos, distance); }
     protected boolean isPositionInDistance(int tilePosX, int tilePosY, int distance) { return positionAction.isPositionInDistance(tilePosX, tilePosY, distance); }
@@ -139,5 +133,32 @@ public abstract class Script {
     /** MESSAGE LISTENERS **/
     protected abstract void onChatMessageReceived(String sender, String message);
     protected abstract void onGameMessageReceived(String message);
+
+    /**
+     * Deposits exact amount of inventory items.
+     * If inventory item count is less than amount or bank window is not visible then returns
+     *
+     * @param id the id of inventory item
+     * @param amount the exact amount of inventory items to bank
+     * @since 1.0
+     */
+    public void deposit(int id, int amount) { bankAction.deposit(id, amount); }
+
+    /**
+     * Deposits all specified inventory items to bank.
+     * If there's no item with id in inventory or bank window is not visible then returns
+     *
+     * @param ids the list of inventory items to bank
+     * @since 1.0
+     */
+    public void depositAll(int...ids) { bankAction.depositAll(ids); }
+
+    /**
+     * Detects if bank window is opened.
+     *
+     * @return returns true if bank window is opened otherwise false
+     * @since 1.0
+     */
+    public boolean isBankWindowVisible() { return bankAction.isBankWindowVisible(); }
 }
 

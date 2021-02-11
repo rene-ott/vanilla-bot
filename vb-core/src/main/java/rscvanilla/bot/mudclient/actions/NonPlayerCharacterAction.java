@@ -45,7 +45,7 @@ public class NonPlayerCharacterAction extends BaseAction {
         if (nearestNpc == null)
             return false;
 
-        return hooker.getUser().getGlobalPosition().distanceTo(nearestNpc.getGlobalPosition()) <= distance;
+        return mudClientWrapper.getUser().getGlobalPosition().distanceTo(nearestNpc.getGlobalPosition()) <= distance;
     }
 
     public void castOnNpc(int spellId, int...ids) {
@@ -53,7 +53,7 @@ public class NonPlayerCharacterAction extends BaseAction {
         if (npc == null)
             return;
 
-        hooker.getPacketBuilder()
+        mudClientWrapper.getPacketBuilder()
                 .setOpCode(OpCodeOut.NPC_CAST_SPELL)
                 .putShort(spellId)
                 .putShort(npc.getServerIndex())
@@ -67,14 +67,14 @@ public class NonPlayerCharacterAction extends BaseAction {
 
         walkAction.walkToAction(npc.getGlobalPosition());
 
-        hooker.getPacketBuilder()
+        mudClientWrapper.getPacketBuilder()
                 .setOpCode(opCodeOut)
                 .putShort(npc.getServerIndex())
                 .send();
     }
 
     private RSNonPlayerCharacter getNearestNpcById(int...ids) {
-        var matchedNpcs = hooker.getNpcList()
+        var matchedNpcs = mudClientWrapper.getNpcList()
                 .stream()
                 .filter(Objects::nonNull)
                 .filter(it -> Arrays.stream(ids).anyMatch(id -> id == it.getId()))
@@ -83,6 +83,6 @@ public class NonPlayerCharacterAction extends BaseAction {
         if (matchedNpcs.isEmpty())
             return null;
 
-        return (RSNonPlayerCharacter) hooker.getUser().getNearest(matchedNpcs);
+        return (RSNonPlayerCharacter) mudClientWrapper.getUser().getNearest(matchedNpcs);
     }
 }

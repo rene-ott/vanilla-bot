@@ -13,13 +13,13 @@ public class OptionsAction extends BaseAction {
     }
 
     public void answerOption(int pos) {
-        hooker.getPacketBuilder()
+        mudClientWrapper.getPacketBuilder()
                 .setOpCode(OpCodeOut.ANSWER)
                 .putByte(pos)
                 .send();
     }
 
     public boolean isOptionsMenuVisible() {
-        return hooker.isOptionsMenuVisible.getValue();
+        return mudClientWrapper.isOptionsMenuVisible.getValue();
     }
 }

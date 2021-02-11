@@ -14,13 +14,13 @@ public class PlayerCharacterAction extends BaseAction {
     }
 
     public String[] getPlayerNamesInDistance(int distance) {
-        var allPlayers = hooker.getPlayerList();
-        var userName = hooker.getUser().getName();
+        var allPlayers = mudClientWrapper.getPlayerList();
+        var userName = mudClientWrapper.getUser().getName();
 
         var players = allPlayers
                 .stream()
                 .filter(it -> !it.getName().equalsIgnoreCase(userName))
-                .filter(it -> it.isDistanceLessThanEqual(hooker.getUser(), distance))
+                .filter(it -> it.isDistanceLessThanEqual(mudClientWrapper.getUser(), distance))
                 .collect(Collectors.toList());
 
         return players.stream().map(RSPlayerCharacter::getName).toArray(String[]::new);

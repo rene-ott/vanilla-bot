@@ -33,12 +33,12 @@ public class GroundItemAction extends BaseAction {
 
         var itemLocalPositionX = groundItem.getLocalPosition().getX();
         var itemLocalPositionY = groundItem.getLocalPosition().getY();
-        var playerLocalPosition = hooker.getUser().getLocalPosition();
+        var playerLocalPosition = mudClientWrapper.getUser().getLocalPosition();
 
         walkAction.walkToGroundItem(itemLocalPositionX, itemLocalPositionY, true);
         if (playerLocalPosition.getX() == itemLocalPositionX && playerLocalPosition.getY() == itemLocalPositionY) {
 
-            hooker.getPacketBuilder()
+            mudClientWrapper.getPacketBuilder()
                     .setOpCode(OpCodeOut.TAKE_ITEM_FROM_GROUND)
                     .putShort(groundItem.getGlobalPosition().getX())
                     .putShort(groundItem.getGlobalPosition().getY())
@@ -49,7 +49,7 @@ public class GroundItemAction extends BaseAction {
 
     private RSGroundItem getGroundItemById(int...ids) {
 
-        var groundItems = hooker.getGroundItemList()
+        var groundItems = mudClientWrapper.getGroundItemList()
                 .stream()
                 .filter(Objects::nonNull)
                 .filter(it -> Arrays.stream(ids).anyMatch(id -> id == it.getId()))
@@ -58,6 +58,6 @@ public class GroundItemAction extends BaseAction {
         if (groundItems.isEmpty())
             return null;
 
-        return (RSGroundItem) hooker.getUser().getNearest(groundItems);
+        return (RSGroundItem) mudClientWrapper.getUser().getNearest(groundItems);
     }
 }

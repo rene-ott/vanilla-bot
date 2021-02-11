@@ -11,17 +11,17 @@ public class LoginAction extends BaseAction {
         super(hooker);
     }
 
-    public boolean isInGame() { return hooker.isInGame(); }
-    public boolean isOnLoginScreen() { return hooker.isOnLoginScreen(); }
+    public boolean isInGame() { return mudClientWrapper.isInGame(); }
+    public boolean isOnLoginScreen() { return mudClientWrapper.isOnLoginScreen(); }
 
     public void login() {
-        hooker.autoLoginTimeOut.setValue(1);
-        hooker.login();
+        mudClientWrapper.autoLoginTimeOut.setValue(1);
+        mudClientWrapper.login();
     }
 
     public void setLoginTimeOut() {
 
     }
 
-    public void logout() { hooker.logout(); }
+    public void logout() { mudClientWrapper.logout(); }
 }

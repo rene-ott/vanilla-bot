@@ -79,7 +79,7 @@ public class GroundObjectAction extends BaseAction {
         // TODO: Figure out what the dir parameter is
         walkAction.walkToObject(localPosition.getX(), localPosition.getY(), 0, object.getId());
 
-        hooker.getPacketBuilder()
+        mudClientWrapper.getPacketBuilder()
                 .setOpCode(opCode)
                 .putShort(globalPosition.getX())
                 .putShort(globalPosition.getY())
@@ -92,7 +92,7 @@ public class GroundObjectAction extends BaseAction {
 
     // Accepts tuples (id, x, y), (id, null, null), (null, x, y)
     private RSGroundObject getNearestObject(Integer[][] listOfTupleParams) {
-        var objectStream = hooker.getObjectList()
+        var objectStream = mudClientWrapper.getObjectList()
                 .stream()
                 .filter(Objects::nonNull)
                 .filter(it -> Arrays.stream(listOfTupleParams)
@@ -107,6 +107,6 @@ public class GroundObjectAction extends BaseAction {
         if (objectList.isEmpty())
             return null;
 
-        return (RSGroundObject) hooker.getUser().getNearest(objectList);
+        return (RSGroundObject) mudClientWrapper.getUser().getNearest(objectList);
     }
 }

@@ -159,7 +159,7 @@ public class CatherbyFisherCooker extends RunnableScript {
     }
 
     private void bankFish() {
-        if (isBankScreenVisible()) {
+        if (isBankWindowVisible()) {
             depositFish();
             waitFor(300);
             return;
