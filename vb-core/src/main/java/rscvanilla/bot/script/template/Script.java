@@ -4,7 +4,7 @@ import rscvanilla.bot.api.actions.*;
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.api.models.wrappers.RSLocalPlayerCharacter;
 import rscvanilla.bot.infrastructure.printer.Printer;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 import rscvanilla.bot.script.ScriptDependencyContext;
 
 public abstract class Script {
@@ -26,7 +26,7 @@ public abstract class Script {
 
     private final RSLocalPlayerCharacter user;
 
-    private final MudClientHooker hooker;
+    private final MudClientWrapper hooker;
 
     public Script(ScriptDependencyContext dependencyContext) {
 
@@ -50,7 +50,7 @@ public abstract class Script {
     }
 
     /** FOR DEV **/
-    protected MudClientHooker getHooker() { return hooker; }
+    protected MudClientWrapper getHooker() { return hooker; }
 
     /** USER **/
     protected Position getPosition() { return user.getGlobalPosition(); }

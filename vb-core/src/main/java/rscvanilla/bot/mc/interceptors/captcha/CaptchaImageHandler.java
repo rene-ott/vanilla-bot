@@ -3,7 +3,7 @@ package rscvanilla.bot.mc.interceptors.captcha;
 import rscvanilla.bot.api.enums.OpCodeIn;
 import rscvanilla.bot.api.enums.OpCodeOut;
 import rscvanilla.bot.infrastructure.printer.Printer;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
 
 import javax.imageio.ImageIO;
@@ -20,12 +20,12 @@ public class CaptchaImageHandler implements MudClientCaptchaInterceptor {
 
     private String detectedWord;
 
-    private final MudClientHooker hooks;
+    private final MudClientWrapper hooks;
     private final CaptchaImageRecognizer captchaImageRecognizer;
     private final Printer printer;
 
     @Inject
-    public CaptchaImageHandler(Printer printer, MudClientHooker hooks, CaptchaImageRecognizer captchaImageRecognizer) {
+    public CaptchaImageHandler(Printer printer, MudClientWrapper hooks, CaptchaImageRecognizer captchaImageRecognizer) {
         this.printer = printer;
         this.hooks = hooks;
         this.captchaImageRecognizer = captchaImageRecognizer;

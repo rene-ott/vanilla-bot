@@ -3,14 +3,14 @@ package rscvanilla.bot.mc.proxies;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class MethodHook<T> {
+public class MethodWrapper<T> {
 
     public static class None { }
 
     private Object object;
     private Method method;
 
-    public MethodHook(Object object, Method method) {
+    public MethodWrapper(Object object, Method method) {
         this.object = object;
         this.method = method;
         this.method.setAccessible(true);

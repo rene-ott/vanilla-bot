@@ -3,7 +3,7 @@ package rscvanilla.bot.script;
 import rscvanilla.bot.api.actions.*;
 import rscvanilla.bot.api.models.wrappers.RSLocalPlayerCharacter;
 import rscvanilla.bot.infrastructure.printer.Printer;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
 import javax.inject.Inject;
 
@@ -22,7 +22,7 @@ public class ScriptDependencyContext {
     private final MessageAction messageAction;
     private final WallObjectAction wallObjectAction;
 
-    private final MudClientHooker hooker;
+    private final MudClientWrapper hooker;
 
     private final Printer printer;
 
@@ -38,7 +38,7 @@ public class ScriptDependencyContext {
                                    PositionAction positionAction, Printer printer,
                                    LoginAction loginAction,
                                    MessageAction messageAction,
-                                   MudClientHooker hooker,
+                                   MudClientWrapper hooker,
                                    WallObjectAction wallObjectAction
     ) {
         this.groundItemAction = groundItemAction;
@@ -57,7 +57,7 @@ public class ScriptDependencyContext {
         this.printer = printer;
     }
 
-    public MudClientHooker getHooker() { return hooker; }
+    public MudClientWrapper getHooker() { return hooker; }
 
     public RSLocalPlayerCharacter getUser() { return hooker.getUser(); }
 

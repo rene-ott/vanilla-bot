@@ -1,11 +1,11 @@
 package rscvanilla.bot.api.actions;
 
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
 public abstract class BaseAction {
-    protected MudClientHooker hooker;
+    protected MudClientWrapper hooker;
 
-    public BaseAction(MudClientHooker hooker) {
+    public BaseAction(MudClientWrapper hooker) {
         this.hooker = hooker;
     }
 }

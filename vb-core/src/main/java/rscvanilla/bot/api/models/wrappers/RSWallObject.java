@@ -1,12 +1,13 @@
 package rscvanilla.bot.api.models.wrappers;
 
+import com.rsc.e.m;
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
-public class RSWallObject extends RSEntity<com.rsc.e.m> {
+public class RSWallObject extends RSEntityWrapper<m> {
 
-    public RSWallObject(com.rsc.e.m object, MudClientHooker hooker) {
+    public RSWallObject(com.rsc.e.m object, MudClientWrapper hooker) {
         super(object, hooker);
     }
 

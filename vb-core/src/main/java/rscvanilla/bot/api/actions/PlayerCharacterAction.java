@@ -1,7 +1,7 @@
 package rscvanilla.bot.api.actions;
 
 import rscvanilla.bot.api.models.wrappers.RSPlayerCharacter;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
 import javax.inject.Inject;
 import java.util.stream.Collectors;
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class PlayerCharacterAction extends BaseAction {
 
     @Inject
-    public PlayerCharacterAction(MudClientHooker hooker) {
+    public PlayerCharacterAction(MudClientWrapper hooker) {
         super(hooker);
     }
 

@@ -2,7 +2,7 @@ package rscvanilla.bot.api.actions;
 
 import rscvanilla.bot.api.enums.OpCodeOut;
 import rscvanilla.bot.api.models.wrappers.RSNonPlayerCharacter;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
 import javax.inject.Inject;
 import java.util.Arrays;
@@ -15,7 +15,7 @@ public class NonPlayerCharacterAction extends BaseAction {
     private final PlayerCharacterAction playerCharacterAction;
 
     @Inject
-    public NonPlayerCharacterAction(MudClientHooker hooks,
+    public NonPlayerCharacterAction(MudClientWrapper hooks,
                                     WalkAction walkAction,
                                     PlayerCharacterAction playerCharacterAction
     ) {

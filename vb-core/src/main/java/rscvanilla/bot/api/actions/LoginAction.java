@@ -1,13 +1,13 @@
 package rscvanilla.bot.api.actions;
 
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
 import javax.inject.Inject;
 
 public class LoginAction extends BaseAction {
 
     @Inject
-    public LoginAction(MudClientHooker hooker) {
+    public LoginAction(MudClientWrapper hooker) {
         super(hooker);
     }
 

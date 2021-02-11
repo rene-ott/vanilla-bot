@@ -4,14 +4,14 @@ import rscvanilla.bot.api.models.contracts.GloballyPositionable;
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.api.utils.PositionConverter;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
-public abstract class RSEntity<T extends com.rsc.e.d> implements GloballyPositionable {
+public abstract class RSEntityWrapper<T extends com.rsc.e.d> implements GloballyPositionable {
 
     protected T internalObject;
-    protected MudClientHooker hooker;
+    protected MudClientWrapper hooker;
 
-    protected RSEntity(T internalObject, MudClientHooker hooker) {
+    protected RSEntityWrapper(T internalObject, MudClientWrapper hooker) {
         this.internalObject = internalObject;
         this.hooker = hooker;
     }

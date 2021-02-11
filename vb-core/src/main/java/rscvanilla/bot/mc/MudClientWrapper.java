@@ -1,6 +1,7 @@
 package rscvanilla.bot.mc;
 
 import com.rsc.d;
+import com.rsc.e.e;
 import com.rsc.e.j;
 import com.rsc.e.k;
 import com.rsc.e.m;
@@ -12,8 +13,8 @@ import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mc.helpers.HookLoader;
 import rscvanilla.bot.mc.helpers.MudClientHookerUtil;
-import rscvanilla.bot.mc.proxies.FieldHook;
-import rscvanilla.bot.mc.proxies.MethodHook;
+import rscvanilla.bot.mc.proxies.FieldWrapper;
+import rscvanilla.bot.mc.proxies.MethodWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
@@ -27,67 +28,68 @@ import rscvanilla.hook.model.classes.mudclient.MudClientClassMethods;
 import javax.inject.Inject;
 import java.util.List;
 
-public class MudClientHooker {
+public class MudClientWrapper {
 
-    private static final Logger logger = LoggerFactory.getLogger(MudClientHooker.class);
+    private static final Logger logger = LoggerFactory.getLogger(MudClientWrapper.class);
 
     private final d mudClient;
+
     private final MudClientClassFields classFields;
     private final MudClientClassMethods classMethods;
     private final AppletClassFields appletClassFields;
 
-    private FieldHook<j[]> npcList;
-    private FieldHook<Integer> npcListIndex;
-    private FieldHook<com.rsc.e.f[]> groundItemList;
-    private FieldHook<Integer> groundItemListIndex;
-    private FieldHook<Integer> objectListIndex;
-    private FieldHook<com.rsc.e.e[]> objectList;
-    private FieldHook<k[]> playerList;
-    private FieldHook<Integer> playerListIndex;
-    public FieldHook<int[]> inventoryItemList;
-    public FieldHook<Integer> inventoryItemListIndex;
+    private FieldWrapper<j[]> npcList;
+    private FieldWrapper<Integer> npcListIndex;
+    private FieldWrapper<com.rsc.e.f[]> groundItemList;
+    private FieldWrapper<Integer> groundItemListIndex;
+    private FieldWrapper<Integer> objectListIndex;
+    private FieldWrapper<e[]> objectList;
+    private FieldWrapper<k[]> playerList;
+    private FieldWrapper<Integer> playerListIndex;
+    public FieldWrapper<int[]> inventoryItemList;
+    public FieldWrapper<Integer> inventoryItemListIndex;
 
-    public FieldHook<Integer> combatStyle;
-    public FieldHook<Integer> userTileX;
-    public FieldHook<Integer> userTileY;
-    public FieldHook<Integer> midRegionBaseX;
-    public FieldHook<Integer> midRegionBaseZ;
-    public FieldHook<Integer> fatigueSleeping;
-    public FieldHook<Integer> userFatigueStat;
-    public FieldHook<Boolean> isSleeping;
-    public FieldHook<int[]> inventoryItemSlotsCounts;
-    public FieldHook<String> userName;
-    private FieldHook<f> gameMode;
-    public FieldHook<Integer> autoLoginTimeOut;
-    public FieldHook<Boolean> isOptionsMenuVisible;
-    public FieldHook<Boolean> isBankVisible;
+    public FieldWrapper<Integer> combatStyle;
+    public FieldWrapper<Integer> userTileX;
+    public FieldWrapper<Integer> userTileY;
+    public FieldWrapper<Integer> midRegionBaseX;
+    public FieldWrapper<Integer> midRegionBaseZ;
+    public FieldWrapper<Integer> fatigueSleeping;
+    public FieldWrapper<Integer> userFatigueStat;
+    public FieldWrapper<Boolean> isSleeping;
+    public FieldWrapper<int[]> inventoryItemSlotsCounts;
+    public FieldWrapper<String> userName;
+    private FieldWrapper<f> gameMode;
+    public FieldWrapper<Integer> autoLoginTimeOut;
+    public FieldWrapper<Boolean> isOptionsMenuVisible;
+    public FieldWrapper<Boolean> isBankVisible;
 
-    private FieldHook<Integer> selectedItemInventoryIndex;
-    private FieldHook<Integer> selectedSpell;
-    private FieldHook<int[]> inventoryEquippedItemSlots;
-    private FieldHook<String> userPassword;
-    private FieldHook<Integer> optionsCount;
+    private FieldWrapper<Integer> selectedItemInventoryIndex;
+    private FieldWrapper<Integer> selectedSpell;
+    private FieldWrapper<int[]> inventoryEquippedItemSlots;
+    private FieldWrapper<String> userPassword;
+    private FieldWrapper<Integer> optionsCount;
 
-    private MethodHook<MethodHook.None> walkToArea;
-    private MethodHook<Boolean> sendWalkToGroundItem;
-    private MethodHook<MethodHook.None> sendChatMessage;
-    private MethodHook<MethodHook.None> walkToObject;
-    private MethodHook<MethodHook.None> login;
-    private MethodHook<MethodHook.None> logout;
-    private MethodHook<MethodHook.None> walkToWall;
+    private MethodWrapper<MethodWrapper.None> walkToArea;
+    private MethodWrapper<Boolean> sendWalkToGroundItem;
+    private MethodWrapper<MethodWrapper.None> sendChatMessage;
+    private MethodWrapper<MethodWrapper.None> walkToObject;
+    private MethodWrapper<MethodWrapper.None> login;
+    private MethodWrapper<MethodWrapper.None> logout;
+    private MethodWrapper<MethodWrapper.None> walkToWall;
 
-    public FieldHook<MudClientCaptchaInterceptor> captchaInterceptor;
-    public FieldHook<MudClientGameMessageInterceptor> gameMessageInterceptor;
-    public FieldHook<MudClientGameSettingsInterceptor> gameSettingsInterceptor;
+    public FieldWrapper<MudClientCaptchaInterceptor> captchaInterceptor;
+    public FieldWrapper<MudClientGameMessageInterceptor> gameMessageInterceptor;
+    public FieldWrapper<MudClientGameSettingsInterceptor> gameSettingsInterceptor;
 
     private final MudClientPacketBuilder packetBuilder;
 
-    public FieldHook<m[]> wallObjectList;
-    public FieldHook<Integer> wallObjectListIndex;
-    public FieldHook<k> user;
+    public FieldWrapper<m[]> wallObjectList;
+    public FieldWrapper<Integer> wallObjectListIndex;
+    public FieldWrapper<k> user;
 
     @Inject
-    public MudClientHooker(GameApplet gameApplet, Hooks hooks) {
+    public MudClientWrapper(GameApplet gameApplet, Hooks hooks) {
         classFields = hooks.mudClient.fields;
         classMethods = hooks.mudClient.methods;
         appletClassFields = hooks.applet.fields;
@@ -110,6 +112,7 @@ public class MudClientHooker {
     private void loadInjectedInterceptors() {
         try {
             logger.debug("Loading interceptor hooks:");
+
             captchaInterceptor = loadInjectedListener("captchaInterceptor", MudClientCaptchaInterceptor.MC_FIELD_NAME);
             gameMessageInterceptor = loadInjectedListener("gameMessageInterceptor", MudClientGameMessageInterceptor.MC_FIELD_NAME);
             gameSettingsInterceptor = loadInjectedListener("gameSettingsInterceptor", MudClientGameSettingsInterceptor.MC_FIELD_NAME);
@@ -140,6 +143,7 @@ public class MudClientHooker {
     public void loadHooks() {
         try {
             logger.debug("Loading field hooks:");
+
             npcList = loadFieldHook("npcList", classFields.npcList, j[].class);
             groundItemList = loadFieldHook("groundItemList", classFields.groundItemList, com.rsc.e.f[].class);
             combatStyle = loadFieldHook("combatStyle", classFields.combatStyle, Integer.class);
@@ -234,15 +238,15 @@ public class MudClientHooker {
     @DependsOnExternal
     public boolean isOnLoginScreen() { return gameMode.getValue() == f.rQ; }
 
-    public <T> FieldHook<T> loadFieldHook(String hookName, String hookValue, Class<?> hookType) {
+    public <T> FieldWrapper<T> loadFieldHook(String hookName, String hookValue, Class<?> hookType) {
         return HookLoader.loadFieldHook(mudClient, logger, hookName, hookValue, hookType);
     }
 
-    public <T> MethodHook<T> loadMethodHook(String hookName, String hookValue, Class<?>...params) {
+    public <T> MethodWrapper<T> loadMethodHook(String hookName, String hookValue, Class<?>...params) {
         return HookLoader.loadMethodHook(mudClient, logger, hookName, hookValue, params);
     }
 
-    public <T> FieldHook<T> loadInjectedListener(String hookName, String hookValue) {
+    public <T> FieldWrapper<T> loadInjectedListener(String hookName, String hookValue) {
         return HookLoader.loadFieldHook(mudClient, logger, hookName, hookValue, null);
     }
 }

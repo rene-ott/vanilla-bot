@@ -2,11 +2,11 @@ package rscvanilla.bot.api.models.wrappers;
 
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
-public abstract class RSCharacter<T extends com.rsc.e.i> extends RSEntity<T> {
+public abstract class RSCharacter<T extends com.rsc.e.i> extends RSEntityWrapper<T> {
 
-    public RSCharacter(T object, MudClientHooker hooker) {
+    public RSCharacter(T object, MudClientWrapper hooker) {
         super(object, hooker);
     }
 

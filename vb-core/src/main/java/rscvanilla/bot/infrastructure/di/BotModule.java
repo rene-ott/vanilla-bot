@@ -19,7 +19,7 @@ import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.annotations.ScriptsDirectoryPath;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.infrastructure.printer.TabPrinter;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 import rscvanilla.bot.mc.interceptors.captcha.CaptchaDataLoader;
 import rscvanilla.bot.mc.interceptors.captcha.CaptchaImageHandler;
 import rscvanilla.bot.mc.interceptors.captcha.CaptchaImageRecognizer;
@@ -57,7 +57,7 @@ public class BotModule extends AbstractModule {
         bindEventBus();
         bind(GameApplet.class).to(VanillaGameApplet.class).in(Singleton.class);
         bind(Bot.class).to(VanillaBot.class).in(Singleton.class);
-        bind(MudClientHooker.class).in(Singleton.class);
+        bind(MudClientWrapper.class).in(Singleton.class);
         bind(BotFrame.class).in(Singleton.class);
         bind(Printer.class).to(TabPrinter.class).in(Singleton.class);
 

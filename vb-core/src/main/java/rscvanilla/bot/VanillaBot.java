@@ -8,7 +8,7 @@ import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.gui.events.ScriptAntiBanParamsChangedEvent;
 import rscvanilla.bot.gui.events.ScriptSelectedEvent;
 import rscvanilla.bot.gui.events.ScriptStartButtonClickedEvent;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 import rscvanilla.bot.script.engine.ScriptEngine;
 import rscvanilla.bot.script.engine.ScriptEngineListener;
 import rscvanilla.bot.script.events.ScriptListLoadedEvent;
@@ -25,7 +25,7 @@ public class VanillaBot implements Bot, ScriptEngineListener {
 
     private final BotFrame botFrame;
     private final GameApplet gameApplet;
-    private final MudClientHooker hooker;
+    private final MudClientWrapper hooker;
     private final ScriptEngine scriptEngine;
     private final EventBus eventBus;
     private final ScriptDirectoryContentChangeWatcher scriptsDirectoryWatcher;
@@ -34,7 +34,7 @@ public class VanillaBot implements Bot, ScriptEngineListener {
     @Inject
     public VanillaBot(BotFrame botFrame,
                       GameApplet gameApplet,
-                      MudClientHooker hooker,
+                      MudClientWrapper hooker,
                       ScriptEngine scriptEngine,
                       ScriptDirectoryContentChangeWatcher scriptsDirectoryWatcher,
                       EventBus eventBus, ConfigService configService) {

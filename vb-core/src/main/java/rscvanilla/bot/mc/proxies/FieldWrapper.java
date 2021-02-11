@@ -7,7 +7,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 
 import java.lang.reflect.Field;
 
-public class FieldHook<T> {
+public class FieldWrapper<T> {
     private final Object objectWithField;
     private final Field field;
     private final String hookName;
@@ -16,7 +16,7 @@ public class FieldHook<T> {
     private final String fieldName;
     private final String hookValueTypeName;
 
-    public FieldHook(Object objectWithField, Field field, Class<?> hookValueType, String hookName) {
+    public FieldWrapper(Object objectWithField, Field field, Class<?> hookValueType, String hookName) {
         this.objectWithField = objectWithField;
         this.field = field;
         this.hookName = hookName;

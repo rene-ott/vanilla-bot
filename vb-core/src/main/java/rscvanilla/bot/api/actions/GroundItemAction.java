@@ -2,7 +2,7 @@ package rscvanilla.bot.api.actions;
 
 import rscvanilla.bot.api.enums.OpCodeOut;
 import rscvanilla.bot.api.models.wrappers.RSGroundItem;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
 import javax.inject.Inject;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ public class GroundItemAction extends BaseAction {
     private WalkAction walkAction;
 
     @Inject
-    public GroundItemAction(MudClientHooker hooks,
+    public GroundItemAction(MudClientWrapper hooks,
                             WalkAction walkAction
     ) {
         super(hooks);

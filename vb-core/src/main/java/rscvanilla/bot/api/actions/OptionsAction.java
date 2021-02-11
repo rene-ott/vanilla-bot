@@ -1,14 +1,14 @@
 package rscvanilla.bot.api.actions;
 
 import rscvanilla.bot.api.enums.OpCodeOut;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
 import javax.inject.Inject;
 
 public class OptionsAction extends BaseAction {
 
     @Inject
-    public OptionsAction(MudClientHooker hooker) {
+    public OptionsAction(MudClientWrapper hooker) {
         super(hooker);
     }
 

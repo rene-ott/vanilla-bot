@@ -3,7 +3,7 @@ package rscvanilla.bot.api.actions;
 import rscvanilla.bot.api.enums.OpCodeOut;
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.api.models.wrappers.RSWallObject;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
 import javax.inject.Inject;
 import java.util.Objects;
@@ -14,7 +14,7 @@ public class WallObjectAction extends BaseAction {
     private final WalkAction walkAction;
 
     @Inject
-    public WallObjectAction(MudClientHooker hooker, WalkAction walkAction) {
+    public WallObjectAction(MudClientWrapper hooker, WalkAction walkAction) {
         super(hooker);
         this.walkAction = walkAction;
     }

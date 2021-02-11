@@ -1,11 +1,11 @@
 package rscvanilla.bot.api.models.wrappers;
 
 import rscvanilla.bot.api.models.Position;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
 public class RSNonPlayerCharacter extends RSCharacter<com.rsc.e.j> {
 
-    public RSNonPlayerCharacter(com.rsc.e.j object, MudClientHooker hooker) {
+    public RSNonPlayerCharacter(com.rsc.e.j object, MudClientWrapper hooker) {
         super(object, hooker);
     }
 

@@ -2,14 +2,14 @@ package rscvanilla.bot.api.actions;
 
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.api.utils.PositionConverter;
-import rscvanilla.bot.mc.MudClientHooker;
+import rscvanilla.bot.mc.MudClientWrapper;
 
 import javax.inject.Inject;
 
 public class WalkAction extends BaseAction {
 
     @Inject
-    public WalkAction(MudClientHooker hooks) {
+    public WalkAction(MudClientWrapper hooks) {
         super(hooks);
     }
 

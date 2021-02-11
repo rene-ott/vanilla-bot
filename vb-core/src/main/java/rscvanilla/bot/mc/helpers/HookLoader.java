@@ -1,8 +1,8 @@
 package rscvanilla.bot.mc.helpers;
 
 import rscvanilla.bot.infrastructure.BotException;
-import rscvanilla.bot.mc.proxies.FieldHook;
-import rscvanilla.bot.mc.proxies.MethodHook;
+import rscvanilla.bot.mc.proxies.FieldWrapper;
+import rscvanilla.bot.mc.proxies.MethodWrapper;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.slf4j.Logger;
@@ -15,11 +15,11 @@ import java.util.stream.IntStream;
 
 public class HookLoader {
 
-    public static <T, T2> MethodHook<T> loadMethodHook(T2 objectWithMethods, Logger logger, String hookName, String hookValue, Class<?>... methodParamTypes) {
+    public static <T, T2> MethodWrapper<T> loadMethodHook(T2 objectWithMethods, Logger logger, String hookName, String hookValue, Class<?>... methodParamTypes) {
         var method = MethodUtils.getMatchingMethod(objectWithMethods.getClass(), hookValue, methodParamTypes);
         if (method != null) {
             logger.debug(hookName + " => " + getMethodSignature(method));
-            return new MethodHook<>(objectWithMethods, method);
+            return new MethodWrapper<>(objectWithMethods, method);
         } else {
             throw new BotException("Can't init method hook: " + hookName + "=>" + getExpectedMethodSignature(hookValue, methodParamTypes));
         }
@@ -54,11 +54,11 @@ public class HookLoader {
         return methodName + "(" + String.join(",", paramList) + ")";
     }
 
-    public static <T> FieldHook<T> loadFieldHook(Object objectWithField, Logger logger, String hookName, String hookValue, Class<?> hookValueType) {
+    public static <T> FieldWrapper<T> loadFieldHook(Object objectWithField, Logger logger, String hookName, String hookValue, Class<?> hookValueType) {
         var field = FieldUtils.getField(objectWithField.getClass(), hookValue, true);
         if (field != null) {
             logger.debug(hookName + " => " + field.getType().getCanonicalName() + " " + hookValue);
-            return new FieldHook<>(objectWithField, field, hookValueType, hookName);
+            return new FieldWrapper<>(objectWithField, field, hookValueType, hookName);
         } else {
             throw new BotException("Can't init field hook: " + hookName + " => " + hookValue);
         }
