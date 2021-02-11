@@ -13,16 +13,16 @@ public class MudClientPacketBuilder {
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
-    private final com.rsc.d mudClient;
+    private final MudClientWrapper mudClientWrapper;
 
-    public MudClientPacketBuilder(com.rsc.d mudClient) {
-        this.mudClient = mudClient;
+    public MudClientPacketBuilder(MudClientWrapper mudClientWrapper) {
+        this.mudClientWrapper = mudClientWrapper;
     }
 
     @DependsOnExternal(mightKeep = true, times = 1)
     public MudClientPacketBuilder setOpCode(OpCodeOut opCodeOut) {
         try {
-            mudClient.n().aO(opCodeOut.id());
+            mudClientWrapper.getRawMudClient().n().aO(opCodeOut.id());
         } catch (Exception e) {
             logger.warn("MudClientPacketBuilder.setOpCode failed", e);
         }
@@ -33,7 +33,7 @@ public class MudClientPacketBuilder {
     @DependsOnExternal(mightKeep = true, times = 1)
     public MudClientPacketBuilder putString(String param) {
         try {
-            mudClient.n().q(param);
+            mudClientWrapper.getRawMudClient().n().q(param);
         } catch (Exception e) {
             logger.warn("MudClientPacketBuilder.putString failed", e);
         }
@@ -44,7 +44,7 @@ public class MudClientPacketBuilder {
     @DependsOnExternal(mightKeep = true, times = 1)
     public MudClientPacketBuilder putShort(int param) {
         try {
-            mudClient.n().aL(param);
+            mudClientWrapper.getRawMudClient().n().aL(param);
         } catch (Exception e) {
             logger.warn("MudClientPacketBuilder.putShort failed", e);
         }
@@ -54,7 +54,7 @@ public class MudClientPacketBuilder {
     @DependsOnExternal(mightKeep = true, times = 1)
     public MudClientPacketBuilder putByte(int param) {
         try {
-            mudClient.n().aK(param);
+            mudClientWrapper.getRawMudClient().n().aK(param);
         } catch (Exception e) {
             logger.warn("MudClientPacketBuilder.putByte failed", e);
         }
@@ -65,7 +65,7 @@ public class MudClientPacketBuilder {
     @DependsOnExternal(mightKeep = true, times = 1)
     public MudClientPacketBuilder putInt(int param) {
         try {
-            mudClient.n().aN(param);
+            mudClientWrapper.getRawMudClient().n().aN(param);
         } catch (Exception e) {
             logger.warn("MudClientPacketBuilder.putInt failed", e);
         }
@@ -77,7 +77,7 @@ public class MudClientPacketBuilder {
     @DependsOnExternal
     public void send() {
         try {
-            mudClient.n().dX();
+            mudClientWrapper.getRawMudClient().n().dX();
 
         } catch (Exception e) {
             logger.warn("MudClientPacketBuilder.sendFailed failed", e);

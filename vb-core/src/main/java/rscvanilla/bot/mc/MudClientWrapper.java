@@ -1,18 +1,11 @@
 package rscvanilla.bot.mc;
 
-import com.rsc.d;
-import com.rsc.e.e;
-import com.rsc.e.j;
-import com.rsc.e.k;
-import com.rsc.e.m;
-import com.rsc.f;
 import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.api.models.Position;
 import rscvanilla.bot.api.models.wrappers.*;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
-import rscvanilla.bot.mc.helpers.HookLoader;
-import rscvanilla.bot.mc.helpers.MudClientHookerUtil;
+import rscvanilla.bot.mc.helpers.MudClientWrapperTool;
 import rscvanilla.bot.mc.proxies.FieldWrapper;
 import rscvanilla.bot.mc.proxies.MethodWrapper;
 import org.slf4j.Logger;
@@ -32,19 +25,19 @@ public class MudClientWrapper {
 
     private static final Logger logger = LoggerFactory.getLogger(MudClientWrapper.class);
 
-    private final d mudClient;
+    private FieldWrapper<com.rsc.d> mudClient;
 
     private final MudClientClassFields classFields;
     private final MudClientClassMethods classMethods;
     private final AppletClassFields appletClassFields;
 
-    private FieldWrapper<j[]> npcList;
+    private FieldWrapper<com.rsc.e.j[]> npcList;
     private FieldWrapper<Integer> npcListIndex;
     private FieldWrapper<com.rsc.e.f[]> groundItemList;
     private FieldWrapper<Integer> groundItemListIndex;
     private FieldWrapper<Integer> objectListIndex;
-    private FieldWrapper<e[]> objectList;
-    private FieldWrapper<k[]> playerList;
+    private FieldWrapper<com.rsc.e.e[]> objectList;
+    private FieldWrapper<com.rsc.e.k[]> playerList;
     private FieldWrapper<Integer> playerListIndex;
     public FieldWrapper<int[]> inventoryItemList;
     public FieldWrapper<Integer> inventoryItemListIndex;
@@ -59,16 +52,16 @@ public class MudClientWrapper {
     public FieldWrapper<Boolean> isSleeping;
     public FieldWrapper<int[]> inventoryItemSlotsCounts;
     public FieldWrapper<String> userName;
-    private FieldWrapper<f> gameMode;
+    private FieldWrapper<com.rsc.f> gameMode;
     public FieldWrapper<Integer> autoLoginTimeOut;
     public FieldWrapper<Boolean> isOptionsMenuVisible;
     public FieldWrapper<Boolean> isBankVisible;
 
-    private FieldWrapper<Integer> selectedItemInventoryIndex;
-    private FieldWrapper<Integer> selectedSpell;
-    private FieldWrapper<int[]> inventoryEquippedItemSlots;
-    private FieldWrapper<String> userPassword;
-    private FieldWrapper<Integer> optionsCount;
+    @SuppressWarnings("unused") private FieldWrapper<Integer> selectedItemInventoryIndex;
+    @SuppressWarnings("unused") private FieldWrapper<Integer> selectedSpell;
+    @SuppressWarnings("unused") private FieldWrapper<int[]> inventoryEquippedItemSlots;
+    @SuppressWarnings("unused") private FieldWrapper<String> userPassword;
+    @SuppressWarnings("unused") private FieldWrapper<Integer> optionsCount;
 
     private MethodWrapper<MethodWrapper.None> walkToArea;
     private MethodWrapper<Boolean> sendWalkToGroundItem;
@@ -84,9 +77,9 @@ public class MudClientWrapper {
 
     private final MudClientPacketBuilder packetBuilder;
 
-    public FieldWrapper<m[]> wallObjectList;
+    public FieldWrapper<com.rsc.e.m[]> wallObjectList;
     public FieldWrapper<Integer> wallObjectListIndex;
-    public FieldWrapper<k> user;
+    public FieldWrapper<com.rsc.e.k> user;
 
     @Inject
     public MudClientWrapper(GameApplet gameApplet, Hooks hooks) {
@@ -94,34 +87,36 @@ public class MudClientWrapper {
         classMethods = hooks.mudClient.methods;
         appletClassFields = hooks.applet.fields;
 
-        mudClient = getReferenceToMudClient(gameApplet);
-        packetBuilder = new MudClientPacketBuilder(mudClient);
+        initMudClientField(gameApplet);
+        packetBuilder = new MudClientPacketBuilder(this);
 
-        loadInjectedInterceptors();
+        initializeInjectedInterceptors();
     }
 
-    private d getReferenceToMudClient(GameApplet gameApplet) {
+    private void initMudClientField(GameApplet gameApplet) {
         try {
-            logger.debug("Loading mudclient hook:");
-            return (d) HookLoader.loadFieldHook(gameApplet, logger, "mudClient", appletClassFields.mudClient, d.class).getValue();
+            logger.debug("Initializing [MudClientWrapper] mudclient field:");
+
+            mudClient = MudClientWrapperTool.initField(gameApplet, logger, "mudClient", appletClassFields.mudClient, com.rsc.d.class);
         } catch (BotException e) {
-            throw new BotException("FAILED TO HOOK MC!", e);
+            throw new BotException("Failed to initialize [MudClientWrapper] mudclient field!", e);
         }
     }
 
-    private void loadInjectedInterceptors() {
+    private void initializeInjectedInterceptors() {
         try {
-            logger.debug("Loading interceptor hooks:");
+            logger.debug("Initializing [MudClientWrapper] interceptor fields:");
 
-            captchaInterceptor = loadInjectedListener("captchaInterceptor", MudClientCaptchaInterceptor.MC_FIELD_NAME);
-            gameMessageInterceptor = loadInjectedListener("gameMessageInterceptor", MudClientGameMessageInterceptor.MC_FIELD_NAME);
-            gameSettingsInterceptor = loadInjectedListener("gameSettingsInterceptor", MudClientGameSettingsInterceptor.MC_FIELD_NAME);
+            captchaInterceptor = initInterceptor("captchaInterceptor", MudClientCaptchaInterceptor.MC_FIELD_NAME);
+            gameMessageInterceptor = initInterceptor("gameMessageInterceptor", MudClientGameMessageInterceptor.MC_FIELD_NAME);
+            gameSettingsInterceptor = initInterceptor("gameSettingsInterceptor", MudClientGameSettingsInterceptor.MC_FIELD_NAME);
 
         } catch (BotException e) {
-            throw new BotException("FAILED TO HOOK MC INTERCEPTOR!", e);
+            throw new BotException("Failed to initialize [MudClientWrapper] interceptor fields!", e);
         }
     }
 
+    // Interceptors are injected after interceptor fields are initialized and before lateInitClassMembers are initialized
     @Inject
     @SuppressWarnings("unused") // Injected by Guice
     public void setCaptchaInterceptor(MudClientCaptchaInterceptor interceptor) {
@@ -140,85 +135,81 @@ public class MudClientWrapper {
         gameSettingsInterceptor.setValue(interceptor);
     }
 
-    public void loadHooks() {
+    public void lateInitClassMembers() {
+        initFields();
+        initMethods();
+    }
+
+    private void initFields() {
         try {
-            logger.debug("Loading field hooks:");
+            logger.debug("Initializing [MudClientWrapper] fields:");
 
-            npcList = loadFieldHook("npcList", classFields.npcList, j[].class);
-            groundItemList = loadFieldHook("groundItemList", classFields.groundItemList, com.rsc.e.f[].class);
-            combatStyle = loadFieldHook("combatStyle", classFields.combatStyle, Integer.class);
-            userTileX = loadFieldHook("userTileX", classFields.playerPositionX, Integer.class);
-            userTileY = loadFieldHook("userTileY", classFields.playerPositionY, Integer.class);
-            selectedItemInventoryIndex = loadFieldHook("selectedItemInventoryIndex", classFields.selectedInventoryItemIndex, Integer.class);
-            selectedSpell = loadFieldHook("selectedSpell", classFields.selectedSpell, Integer.class);
-            midRegionBaseX = loadFieldHook("midRegionBaseX", classFields.mid_region_base_x, Integer.class);
-            midRegionBaseZ = loadFieldHook("midRegionBaseZ", classFields.mid_region_base_y, Integer.class);
-            fatigueSleeping = loadFieldHook("fatigueSleeping", classFields.fatigueSleeping, Integer.class);
-            userFatigueStat = loadFieldHook("userFatigueStat", classFields.fatigueStat, Integer.class);
-            isSleeping = loadFieldHook("isSleeping", classFields.isSleeping, Boolean.class);
-            groundItemListIndex = loadFieldHook("groundItemListIndex", classFields.groundItemListIndex, Integer.class);
-            inventoryItemList = loadFieldHook("inventoryItemList", classFields.inventoryItemList, int[].class);
-            inventoryItemListIndex = loadFieldHook("inventoryItemListIndex", classFields.inventoryItemListIndex, Integer.class);
-            inventoryEquippedItemSlots = loadFieldHook("inventoryEquippedItemSlots", classFields.inventoryEquippedItemSlots, int[].class);
-            inventoryItemSlotsCounts = loadFieldHook("inventoryItemSlotsCounts", classFields.inventoryItemSlotsCounts, int[].class);
-            npcListIndex = loadFieldHook("npcListIndex", classFields.npcListIndex, Integer.class);
-            objectList = loadFieldHook("objectList", classFields.groundObjectList, com.rsc.e.e[].class);
-            objectListIndex = loadFieldHook("objectListIndex", classFields.groundObjectListIndex, Integer.class);
-            playerList = loadFieldHook("playerList", classFields.playerList, k[].class);
-            playerListIndex = loadFieldHook("playerListIndex", classFields.playerListIndex, Integer.class);
-            userName = loadFieldHook("userName", classFields.userName, String.class);
-            userPassword = loadFieldHook("userPassword", classFields.userPassword, String.class);
-            gameMode = loadFieldHook("gameMode", classFields.gameMode, f.class);
-            autoLoginTimeOut = loadFieldHook("autoLoginTimeOut", classFields.autoLoginTimeout, Integer.class);
-            isOptionsMenuVisible = loadFieldHook("isOptionsMenuVisible", classFields.isOptionsMenuVisible, Boolean.class);
-            optionsCount = loadFieldHook("optionsCount", classFields.optionsCount, Integer.class);
-            isBankVisible = loadFieldHook("isBankVisible", classFields.isBankVisible, Boolean.class);
-            wallObjectList = loadFieldHook("wallObjectList", classFields.wallObjectList, m[].class);
-            wallObjectListIndex = loadFieldHook("wallObjectListIndex", classFields.wallObjectListIndex, Integer.class);
-            user = loadFieldHook("user", classFields.user, k.class);
-
-            logger.debug("Loading method hooks:");
-            walkToArea = loadMethodHook("walkToArea", classMethods.walkToArea, int.class, int.class, int.class, int.class,int.class,int.class, boolean.class, boolean.class);
-            sendWalkToGroundItem = loadMethodHook("sendWalkToGroundItem", classMethods.sendWalkToGroundItem, int.class, int.class, int.class, int.class, int.class, int.class, boolean.class);
-            sendChatMessage = loadMethodHook("sendChatMessage", classMethods.sendChatMessage, String.class);
-            walkToObject = loadMethodHook("walkToObject", classMethods.walkToObject, int.class, int.class, int.class, int.class);
-            walkToWall = loadMethodHook("walkToWall", classMethods.walkToWall, int.class, int.class, int.class);
-            login = loadMethodHook("login", classMethods.login, boolean.class);
-            logout = loadMethodHook("logout", classMethods.logout);
+            npcList = initField("npcList", classFields.npcList, com.rsc.e.j[].class);
+            groundItemList = initField("groundItemList", classFields.groundItemList, com.rsc.e.f[].class);
+            combatStyle = initField("combatStyle", classFields.combatStyle, Integer.class);
+            userTileX = initField("userTileX", classFields.playerPositionX, Integer.class);
+            userTileY = initField("userTileY", classFields.playerPositionY, Integer.class);
+            selectedItemInventoryIndex = initField("selectedItemInventoryIndex", classFields.selectedInventoryItemIndex, Integer.class);
+            selectedSpell = initField("selectedSpell", classFields.selectedSpell, Integer.class);
+            midRegionBaseX = initField("midRegionBaseX", classFields.mid_region_base_x, Integer.class);
+            midRegionBaseZ = initField("midRegionBaseZ", classFields.mid_region_base_y, Integer.class);
+            fatigueSleeping = initField("fatigueSleeping", classFields.fatigueSleeping, Integer.class);
+            userFatigueStat = initField("userFatigueStat", classFields.fatigueStat, Integer.class);
+            isSleeping = initField("isSleeping", classFields.isSleeping, Boolean.class);
+            groundItemListIndex = initField("groundItemListIndex", classFields.groundItemListIndex, Integer.class);
+            inventoryItemList = initField("inventoryItemList", classFields.inventoryItemList, int[].class);
+            inventoryItemListIndex = initField("inventoryItemListIndex", classFields.inventoryItemListIndex, Integer.class);
+            inventoryEquippedItemSlots = initField("inventoryEquippedItemSlots", classFields.inventoryEquippedItemSlots, int[].class);
+            inventoryItemSlotsCounts = initField("inventoryItemSlotsCounts", classFields.inventoryItemSlotsCounts, int[].class);
+            npcListIndex = initField("npcListIndex", classFields.npcListIndex, Integer.class);
+            objectList = initField("objectList", classFields.groundObjectList, com.rsc.e.e[].class);
+            objectListIndex = initField("objectListIndex", classFields.groundObjectListIndex, Integer.class);
+            playerList = initField("playerList", classFields.playerList, com.rsc.e.k[].class);
+            playerListIndex = initField("playerListIndex", classFields.playerListIndex, Integer.class);
+            userName = initField("userName", classFields.userName, String.class);
+            userPassword = initField("userPassword", classFields.userPassword, String.class);
+            gameMode = initField("gameMode", classFields.gameMode, com.rsc.f.class);
+            autoLoginTimeOut = initField("autoLoginTimeOut", classFields.autoLoginTimeout, Integer.class);
+            isOptionsMenuVisible = initField("isOptionsMenuVisible", classFields.isOptionsMenuVisible, Boolean.class);
+            optionsCount = initField("optionsCount", classFields.optionsCount, Integer.class);
+            isBankVisible = initField("isBankVisible", classFields.isBankVisible, Boolean.class);
+            wallObjectList = initField("wallObjectList", classFields.wallObjectList, com.rsc.e.m[].class);
+            wallObjectListIndex = initField("wallObjectListIndex", classFields.wallObjectListIndex, Integer.class);
+            user = initField("user", classFields.user, com.rsc.e.k.class);
 
         } catch (BotException e) {
-            throw new BotException("FAILED TO HOOK MC MEMBER!", e);
+            throw new BotException("Failed to initialize [MudClientWrapper] fields!", e);
         }
     }
 
-    public MudClientPacketBuilder getPacketBuilder() {
-        return packetBuilder;
+    private void initMethods() {
+        try {
+            logger.debug("Initializing [MudClientWrapper] methods:");
+
+            walkToArea = initMethod("walkToArea", classMethods.walkToArea, int.class, int.class, int.class, int.class,int.class,int.class, boolean.class, boolean.class);
+            sendWalkToGroundItem = initMethod("sendWalkToGroundItem", classMethods.sendWalkToGroundItem, int.class, int.class, int.class, int.class, int.class, int.class, boolean.class);
+            sendChatMessage = initMethod("sendChatMessage", classMethods.sendChatMessage, String.class);
+            walkToObject = initMethod("walkToObject", classMethods.walkToObject, int.class, int.class, int.class, int.class);
+            walkToWall = initMethod("walkToWall", classMethods.walkToWall, int.class, int.class, int.class);
+            login = initMethod("login", classMethods.login, boolean.class);
+            logout = initMethod("logout", classMethods.logout);
+
+        } catch (BotException e) {
+            throw new BotException("Failed to initialize [MudClientWrapper] methods!", e);
+        }
     }
 
+    public MudClientPacketBuilder getPacketBuilder() { return packetBuilder; }
+
+    // Accessing to MudClient should be done through this wrapper class.
     @Deprecated()
-    public d getRawMudClient() {
-        return mudClient;
-    }
+    public com.rsc.d getRawMudClient() { return mudClient.getValue(); }
 
-    public List<RSNonPlayerCharacter> getNpcList() {
-        return MudClientHookerUtil.newIndexedList(this.npcList.getValue(), this.npcListIndex.getValue(), RSNonPlayerCharacter.class, this);
-    }
-
-    public List<RSGroundItem> getGroundItemList() {
-        return MudClientHookerUtil.newIndexedList(this.groundItemList.getValue(), this.groundItemListIndex.getValue(), RSGroundItem.class, this);
-    }
-
-    public List<RSGroundObject> getObjectList() {
-        return MudClientHookerUtil.newIndexedList(this.objectList.getValue(), this.objectListIndex.getValue(), RSGroundObject.class, this);
-    }
-
-    public List<RSPlayerCharacter> getPlayerList() {
-        return MudClientHookerUtil.newIndexedList(this.playerList.getValue(), this.playerListIndex.getValue(), RSPlayerCharacter.class, this);
-    }
-
-    public List<RSWallObject> getWallObjectList() {
-        return MudClientHookerUtil.newIndexedList(this.wallObjectList.getValue(), this.wallObjectListIndex.getValue(), RSWallObject.class, this);
-    }
+    public List<RSNonPlayerCharacter> getNpcList() { return newWrappedEntityList(this.npcList, this.npcListIndex, RSNonPlayerCharacter.class); }
+    public List<RSGroundItem> getGroundItemList() { return newWrappedEntityList(this.groundItemList, this.groundItemListIndex, RSGroundItem.class); }
+    public List<RSGroundObject> getObjectList() { return newWrappedEntityList(this.objectList, this.objectListIndex, RSGroundObject.class); }
+    public List<RSPlayerCharacter> getPlayerList() { return newWrappedEntityList(this.playerList, this.playerListIndex, RSPlayerCharacter.class); }
+    public List<RSWallObject> getWallObjectList() { return newWrappedEntityList(this.wallObjectList, this.wallObjectListIndex, RSWallObject.class); }
 
     public RSLocalPlayerCharacter getUser() { return new RSLocalPlayerCharacter(user.getValue(), this); }
     public Position getMidRegionBase() { return new Position(midRegionBaseX.getValue(), midRegionBaseZ.getValue()); }
@@ -233,20 +224,25 @@ public class MudClientWrapper {
     public void logout() { logout.invokeAction(); }
 
     @DependsOnExternal
-    public boolean isInGame() { return gameMode.getValue() == f.rR; }
+    public boolean isInGame() { return gameMode.getValue() == com.rsc.f.rR; }
 
     @DependsOnExternal
-    public boolean isOnLoginScreen() { return gameMode.getValue() == f.rQ; }
+    public boolean isOnLoginScreen() { return gameMode.getValue() == com.rsc.f.rQ; }
 
-    public <T> FieldWrapper<T> loadFieldHook(String hookName, String hookValue, Class<?> hookType) {
-        return HookLoader.loadFieldHook(mudClient, logger, hookName, hookValue, hookType);
+    private <TWrappedEntity extends RSEntityWrapper<TInternalObject>, TInternalObject extends com.rsc.e.d> List<TWrappedEntity> newWrappedEntityList(
+        FieldWrapper<TInternalObject[]> internalArray, FieldWrapper<Integer> internalArrayLength, Class<TWrappedEntity> clazz) {
+        return MudClientWrapperTool.newWrappedEntityList(internalArray.getValue(), internalArrayLength.getValue(), clazz, this);
     }
 
-    public <T> MethodWrapper<T> loadMethodHook(String hookName, String hookValue, Class<?>...params) {
-        return HookLoader.loadMethodHook(mudClient, logger, hookName, hookValue, params);
+    private <T> FieldWrapper<T> initField(String hookName, String hookValue, Class<?> hookType) {
+        return MudClientWrapperTool.initField(mudClient, logger, hookName, hookValue, hookType);
     }
 
-    public <T> FieldWrapper<T> loadInjectedListener(String hookName, String hookValue) {
-        return HookLoader.loadFieldHook(mudClient, logger, hookName, hookValue, null);
+    private <T> MethodWrapper<T> initMethod(String hookName, String hookValue, Class<?>...params) {
+        return MudClientWrapperTool.initMethod(mudClient, logger, hookName, hookValue, params);
+    }
+
+    private <T> FieldWrapper<T> initInterceptor(String hookName, String hookValue) {
+        return MudClientWrapperTool.initField(mudClient, logger, hookName, hookValue, null);
     }
 }

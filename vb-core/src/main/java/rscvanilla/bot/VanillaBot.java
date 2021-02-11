@@ -53,7 +53,7 @@ public class VanillaBot implements Bot, ScriptEngineListener {
     @Override
     public void load() {
         configService.configure();
-        hooker.loadHooks();
+        hooker.lateInitClassMembers();
         gameApplet.execute();
         botFrame.open();
         scriptsDirectoryWatcher.start();
