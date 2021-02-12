@@ -1,6 +1,6 @@
 rootProject.name = 'vanilla-bot'
-include 'vb-hook-model'
-include 'vb-hook-updater'
+include 'vb-cjci-model'
+include 'vb-cjci-updater'
 include 'vb-core'
 include 'vb-core-instrumentation'
 include 'vb-core-interceptor-contract'
