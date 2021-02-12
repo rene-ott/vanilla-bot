@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class ClientJarClassInfoFileReader {
 
-    private static final String CJCI_FILE_NAME = "hooks.yaml";
+    private static final String CJCI_FILE_NAME = "cjci.yaml";
 
     public static ClientJarClassInfo readHooksFile() throws IOException {
         try (var is = getTemplateInputStream()) {

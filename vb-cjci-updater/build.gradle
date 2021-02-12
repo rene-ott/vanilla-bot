@@ -26,7 +26,6 @@ dependencies {
     implementation "org.slf4j:slf4j-api:1.7.30"
     implementation "org.reflections:reflections:0.9.12"
     implementation project(':vb-cjci-model')
-
 }
 
 test {
@@ -35,13 +34,12 @@ test {
 
 def buildDir = project.buildDir
 
-mainClassName = "rscvanilla.hook.updater.Main"
+mainClassName = "rscvanilla.cjci.updater.Main"
 
 def distDir = "${buildDir}/dist"
 def libsDir = "${buildDir}/libs"
-
-def archiveName = "hook-updater"
-def versionedDirName = "hook-updater-${project.version}"
+def archiveName = "cjci-updater"
+def versionedDirName = "cjci-updater-${project.version}"
 def inputJarsDirName = "input"
 
 shadowJar {
@@ -89,7 +87,7 @@ task createRunInputScripts(type: CreateStartScripts) {
         delete unixScript
         windowsScript.text = "@echo off\n" +
                 "mode con:cols=120 lines=40\n" +
-                "java -jar hook-updater.jar -o %cd%/input/old.jar -n %cd%/input/new.jar\n" +
+                "java -jar cjci-updater.jar -o %cd%/input/old.jar -n %cd%/input/new.jar\n" +
                 "@echo on\n" +
                 "pause"
     }

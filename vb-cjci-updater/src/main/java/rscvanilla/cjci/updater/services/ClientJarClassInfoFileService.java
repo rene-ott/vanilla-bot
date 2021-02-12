@@ -18,8 +18,8 @@ public class ClientJarClassInfoFileService {
 
     private static final Logger logger = LoggerFactory.getLogger(ClientJarClassInfoFileService.class);
 
-    private final static String CJCI_FILE_NAME = "hooks.yaml";
-    private final static String CJCI_TEMPLATE_FILE_NAME = "template.yaml";
+    private final static String CJCI_FILE_NAME = "cjci.yaml";
+    private final static String CJCI_TEMPLATE_FILE_NAME = "cjci_template.yaml";
 
     private final ClientJarClassInfoSerializer serializer;
     private final OutputDirectoryService outputDirectoryService;

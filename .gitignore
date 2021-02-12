@@ -1,7 +1,7 @@
-#Gradle
+# Root #
 .gradle/
+.idea/
+
+# Common #
 build/
 out/
-
-# IntelliJ IDEA
-.idea/
