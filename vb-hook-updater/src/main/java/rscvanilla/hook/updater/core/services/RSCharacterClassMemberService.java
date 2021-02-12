@@ -3,7 +3,6 @@ package rscvanilla.hook.updater.core.services;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hook.updater.core.searcher.classes.NullClassInterceptorSearcher;
 import rscvanilla.hook.updater.core.searcher.classes.NullClassMethodSearcher;
-import rscvanilla.hook.updater.core.searcher.classes.applet.AppletClassFieldSearcher;
 import rscvanilla.hook.updater.core.searcher.classes.rscharacter.RSCharacterClassFieldSearcher;
 import rscvanilla.hook.updater.infrastructure.AppParameters;
 import rscvanilla.hook.updater.services.ConsoleService;

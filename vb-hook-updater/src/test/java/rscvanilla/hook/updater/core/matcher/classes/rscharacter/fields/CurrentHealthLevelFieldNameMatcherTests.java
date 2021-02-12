@@ -27,7 +27,7 @@ public class CurrentHealthLevelFieldNameMatcherTests extends BaseTests {
                 .toString();
 
         var result = matcher.match(mudClient);
-        assertThat(result.getMemberName(), equalTo("mi"));
+        assertThat(result.getMemberName(), equalTo("mH"));
         assertThat(result.getMatch(), equalTo(match));
     }
 }

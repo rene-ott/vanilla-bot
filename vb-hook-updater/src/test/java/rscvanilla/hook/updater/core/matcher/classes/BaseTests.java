@@ -20,5 +20,7 @@ public class BaseTests {
 
     protected String readClassMudClient() { return readResource("com.rsc.d.java"); }
     protected String readClassApplet() { return readResource("com.rsc.applet.b.java"); }
+    protected String readClassRSEntity() { { return readResource("com.rsc.e.d.java"); } }
     protected String readClassRSCharacter() { { return readResource("com.rsc.e.i.java"); } }
+
 }

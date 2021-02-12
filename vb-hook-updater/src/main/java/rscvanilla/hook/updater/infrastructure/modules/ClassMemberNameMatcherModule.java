@@ -9,6 +9,7 @@ import rscvanilla.hook.updater.core.matcher.classes.mudclient.MudClientClassFiel
 import rscvanilla.hook.updater.core.matcher.classes.mudclient.MudClientClassInterceptorNameMatcher;
 import rscvanilla.hook.updater.core.matcher.classes.mudclient.MudClientClassMethodNameMatcher;
 import rscvanilla.hook.updater.core.matcher.classes.rscharacter.RSCharacterClassFieldNameMatcher;
+import rscvanilla.hook.updater.core.matcher.classes.rsentity.RSEntityClassFieldNameMatcher;
 
 public class ClassMemberNameMatcherModule extends AbstractModule {
 
@@ -20,6 +21,7 @@ public class ClassMemberNameMatcherModule extends AbstractModule {
 
         configureSubTypesOf(AppletClassFieldNameMatcher.class);
         configureSubTypesOf(RSCharacterClassFieldNameMatcher.class);
+        configureSubTypesOf(RSEntityClassFieldNameMatcher.class);
     }
 
     private <T> void configureSubTypesOf(Class<T> clazz) {

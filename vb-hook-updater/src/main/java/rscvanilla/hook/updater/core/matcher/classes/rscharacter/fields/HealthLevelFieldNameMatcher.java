@@ -11,10 +11,10 @@ public class HealthLevelFieldNameMatcher extends ClassMemberNameBaseMatcher impl
 
     public HealthLevelFieldNameMatcher() {
         pattern = Pattern.compile(
-            "(?<pre>public class i extends d \\{\\R" +
-            " {3}public int [a-zA-Z]{2};\\R" +
+            "(?<pre> {3}public com\\.rsc\\.a\\.a\\.a\\[] [a-zA-Z]{2} = new com\\.rsc\\.a\\.a\\.a\\[12];\\R" +
+            " {3}public int [a-zA-Z]{2} = 0;\\R" +
             " {3}public int )(?<fieldName>[a-zA-Z]{2})(?<post> = 0;\\R" +
-            " {3}public int [a-zA-Z]{2} = 0;)",
+            " {3}public int [a-zA-Z]{2} = 0;\\R)",
             Pattern.MULTILINE
         );
     }
