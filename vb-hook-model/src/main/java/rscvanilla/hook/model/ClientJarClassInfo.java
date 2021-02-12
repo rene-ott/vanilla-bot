@@ -7,7 +7,7 @@ import rscvanilla.hook.model.classes.rsentity.RSEntityClass;
 import rscvanilla.hook.model.classes.rsplayercharacter.RSPlayerCharacterClass;
 import rscvanilla.hook.model.classes.rswallobject.RSWallObjectClass;
 
-public class Hooks {
+public class ClientJarClassInfo {
     public AppletClass applet = new AppletClass();
     public MudClientClass mudClient = new MudClientClass();
     public RSCharacterClass rsCharacter = new RSCharacterClass();

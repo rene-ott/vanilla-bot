@@ -9,20 +9,20 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 
 import java.io.IOException;
 
-public class HooksFileSerializer {
+public class ClientJarClassInfoSerializer {
 
     private final ObjectMapper mapper;
 
-    public HooksFileSerializer() {
+    public ClientJarClassInfoSerializer() {
         mapper = createObjectMapper();
     }
 
-    public Hooks deserialize(String value) throws IOException {
-        return mapper.readValue(value, Hooks.class);
+    public ClientJarClassInfo deserialize(String value) throws IOException {
+        return mapper.readValue(value, ClientJarClassInfo.class);
     }
 
-    public String serialize(Hooks hooks) throws IOException {
-        return mapper.writeValueAsString(hooks);
+    public String serialize(ClientJarClassInfo clientJarClassInfo) throws IOException {
+        return mapper.writeValueAsString(clientJarClassInfo);
     }
 
     private ObjectMapper createObjectMapper() {

@@ -5,7 +5,7 @@ import javassist.CtClass;
 import javassist.CtField;
 import javassist.NotFoundException;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
-import rscvanilla.hook.model.Hooks;
+import rscvanilla.hook.model.ClientJarClassInfo;
 import rscvanilla.hook.model.classes.mudclient.MudClientClassInterceptors;
 
 import javax.inject.Inject;
@@ -19,8 +19,8 @@ public class AddGameCaptchaInterceptorTransformation {
     private final String methodName;
 
     @Inject
-    public AddGameCaptchaInterceptorTransformation(Hooks hooks) {
-        this.interceptors = hooks.mudClient.interceptors;
+    public AddGameCaptchaInterceptorTransformation(ClientJarClassInfo clientJarClassInfo) {
+        this.interceptors = clientJarClassInfo.mudClient.interceptors;
 
         fieldTypeName = MudClientCaptchaInterceptor.class.getCanonicalName();
         fieldName = MudClientCaptchaInterceptor.MC_FIELD_NAME;

@@ -7,9 +7,7 @@ import org.slf4j.LoggerFactory;
 import rscvanilla.hook.updater.infrastructure.AppParameters;
 import rscvanilla.hook.updater.infrastructure.modules.MainModule;
 import rscvanilla.hook.updater.infrastructure.modules.ClassMemberNameMatcherModule;
-import rscvanilla.hook.updater.services.HooksFileGenerator;
-
-import java.io.File;
+import rscvanilla.hook.updater.services.ClientJarClassInfoFileGenerator;
 
 public class Main {
 
@@ -41,6 +39,6 @@ public class Main {
                 new ClassMemberNameMatcherModule()
         );
 
-        injector.getInstance(HooksFileGenerator.class).generateHooksFile();
+        injector.getInstance(ClientJarClassInfoFileGenerator.class).generateFile();
     }
 }

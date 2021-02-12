@@ -3,7 +3,7 @@ package rscvanilla.instrumentation.transformers;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.NotFoundException;
-import rscvanilla.hook.model.Hooks;
+import rscvanilla.hook.model.ClientJarClassInfo;
 import rscvanilla.hook.model.classes.mudclient.MudClientClass;
 import rscvanilla.instrumentation.transformations.AddGameCaptchaInterceptorTransformation;
 import rscvanilla.instrumentation.transformations.AddGameMessageInterceptorTransformation;
@@ -27,12 +27,12 @@ public class MudClientTransformer implements ClassFileTransformer {
     private final RemoveLoginScreenTransformation loginScreenTransformation;
 
     @Inject
-    public MudClientTransformer(Hooks hooks,
+    public MudClientTransformer(ClientJarClassInfo clientJarClassInfo,
                                 AddGameMessageInterceptorTransformation gameMessageInterceptorTransformation,
                                 AddGameCaptchaInterceptorTransformation gameCaptchaInterceptorTransformation,
                                 AddGameSettingsInterceptorTransformation gameSettingsInterceptorTransformation,
                                 RemoveLoginScreenTransformation loginScreenTransformation) {
-        this.mudClientClass = hooks.mudClient;
+        this.mudClientClass = clientJarClassInfo.mudClient;
         this.gameMessageInterceptorTransformation = gameMessageInterceptorTransformation;
         this.gameCaptchaInterceptorTransformation = gameCaptchaInterceptorTransformation;
         this.gameSettingsInterceptorTransformation = gameSettingsInterceptorTransformation;

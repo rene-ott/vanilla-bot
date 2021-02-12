@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
 import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
-import rscvanilla.hook.model.Hooks;
+import rscvanilla.hook.model.ClientJarClassInfo;
 import rscvanilla.hook.model.classes.applet.AppletClassFields;
 import rscvanilla.hook.model.classes.mudclient.MudClientClassFields;
 import rscvanilla.hook.model.classes.mudclient.MudClientClassMethods;
@@ -29,7 +29,7 @@ public class MudClientWrapper {
 
     private FieldWrapper<com.rsc.d> mudClient;
 
-    private Hooks hooks;
+    private ClientJarClassInfo clientJarClassInfo;
 
     private final MudClientClassFields classFields;
     private final MudClientClassMethods classMethods;
@@ -86,11 +86,11 @@ public class MudClientWrapper {
     public FieldWrapper<com.rsc.e.k> user;
 
     @Inject
-    public MudClientWrapper(GameApplet gameApplet, Hooks hooks) {
-        this.hooks = hooks;
-        classFields = hooks.mudClient.fields;
-        classMethods = hooks.mudClient.methods;
-        appletClassFields = hooks.applet.fields;
+    public MudClientWrapper(GameApplet gameApplet, ClientJarClassInfo clientJarClassInfo) {
+        this.clientJarClassInfo = clientJarClassInfo;
+        classFields = clientJarClassInfo.mudClient.fields;
+        classMethods = clientJarClassInfo.mudClient.methods;
+        appletClassFields = clientJarClassInfo.applet.fields;
 
         initMudClientField(gameApplet);
         packetBuilder = new MudClientPacketBuilder(this);
@@ -210,7 +210,7 @@ public class MudClientWrapper {
     }
 
     public MudClientPacketBuilder getPacketBuilder() { return packetBuilder; }
-    public Hooks getHooks() { return hooks; }
+    public ClientJarClassInfo getHooks() { return clientJarClassInfo; }
 
     // Accessing to MudClient should be done through this wrapper class.
     @Deprecated()

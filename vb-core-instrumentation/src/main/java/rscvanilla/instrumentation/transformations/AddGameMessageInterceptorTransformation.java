@@ -2,7 +2,7 @@ package rscvanilla.instrumentation.transformations;
 
 import javassist.*;
 import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
-import rscvanilla.hook.model.Hooks;
+import rscvanilla.hook.model.ClientJarClassInfo;
 import rscvanilla.hook.model.classes.mudclient.MudClientClassInterceptors;
 
 import javax.inject.Inject;
@@ -16,8 +16,8 @@ public class AddGameMessageInterceptorTransformation {
     private final String methodName;
 
     @Inject
-    public AddGameMessageInterceptorTransformation(Hooks hooks) {
-        this.interceptors = hooks.mudClient.interceptors;
+    public AddGameMessageInterceptorTransformation(ClientJarClassInfo clientJarClassInfo) {
+        this.interceptors = clientJarClassInfo.mudClient.interceptors;
 
         fieldTypeName = MudClientGameMessageInterceptor.class.getCanonicalName();
         fieldName = MudClientGameMessageInterceptor.MC_FIELD_NAME;

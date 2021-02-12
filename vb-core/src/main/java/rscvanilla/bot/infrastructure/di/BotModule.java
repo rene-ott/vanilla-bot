@@ -35,8 +35,8 @@ import rscvanilla.bot.watcher.ScriptDirectoryContentChangeWatcher;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
 import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
-import rscvanilla.hook.model.Hooks;
-import rscvanilla.hook.model.HooksFileReader;
+import rscvanilla.hook.model.ClientJarClassInfo;
+import rscvanilla.hook.model.ClientJarClassInfoFileReader;
 
 import javax.inject.Singleton;
 import java.io.IOException;
@@ -92,8 +92,8 @@ public class BotModule extends AbstractModule {
 
     private void bindHooksFile() {
         try {
-            var fileReader = HooksFileReader.readHooksFile();
-            bind(Hooks.class).toInstance(fileReader);
+            var fileReader = ClientJarClassInfoFileReader.readHooksFile();
+            bind(ClientJarClassInfo.class).toInstance(fileReader);
         } catch (IOException e) {
             throw new BotException("Reading hooks file failed", e);
         }

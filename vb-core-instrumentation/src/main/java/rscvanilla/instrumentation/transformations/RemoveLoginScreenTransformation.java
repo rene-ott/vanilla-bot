@@ -3,7 +3,7 @@ package rscvanilla.instrumentation.transformations;
 import javassist.CannotCompileException;
 import javassist.CtClass;
 import javassist.NotFoundException;
-import rscvanilla.hook.model.Hooks;
+import rscvanilla.hook.model.ClientJarClassInfo;
 import rscvanilla.hook.model.classes.mudclient.MudClientClass;
 
 import javax.inject.Inject;
@@ -13,8 +13,8 @@ public class RemoveLoginScreenTransformation {
     private final MudClientClass mudClientClass;
 
     @Inject
-    public RemoveLoginScreenTransformation(Hooks hooks) {
-        this.mudClientClass = hooks.mudClient;
+    public RemoveLoginScreenTransformation(ClientJarClassInfo clientJarClassInfo) {
+        this.mudClientClass = clientJarClassInfo.mudClient;
     }
 
     public void implement(CtClass ctClass) throws NotFoundException, CannotCompileException {

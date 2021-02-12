@@ -1,8 +1,8 @@
 package rscvanilla.instrumentation.infrastructure;
 
 import com.google.inject.AbstractModule;
-import rscvanilla.hook.model.Hooks;
-import rscvanilla.hook.model.HooksFileReader;
+import rscvanilla.hook.model.ClientJarClassInfo;
+import rscvanilla.hook.model.ClientJarClassInfoFileReader;
 import rscvanilla.instrumentation.BotInstrumentation;
 import rscvanilla.instrumentation.transformations.AddGameCaptchaInterceptorTransformation;
 import rscvanilla.instrumentation.transformations.AddGameMessageInterceptorTransformation;
@@ -34,13 +34,13 @@ public class BotInstrumentationModule extends AbstractModule {
         bind(AddGameMessageInterceptorTransformation.class).asEagerSingleton();
         bind(RemoveLoginScreenTransformation.class).asEagerSingleton();
 
-        bind(Hooks.class).toInstance(getHooksFile());
+        bind(ClientJarClassInfo.class).toInstance(getHooksFile());
     }
 
     //TODO Handle exceptions
-    private Hooks getHooksFile() {
+    private ClientJarClassInfo getHooksFile() {
         try {
-            return HooksFileReader.readHooksFile();
+            return ClientJarClassInfoFileReader.readHooksFile();
         } catch (IOException e) {
             return null;
         }

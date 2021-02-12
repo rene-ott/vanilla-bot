@@ -5,19 +5,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
-public class HooksFileReader {
+public class ClientJarClassInfoFileReader {
 
-    private static final String HOOKS_FILE_NAME = "hooks.yaml";
+    private static final String CJCI_FILE_NAME = "hooks.yaml";
 
-    public static Hooks readHooksFile() throws IOException {
+    public static ClientJarClassInfo readHooksFile() throws IOException {
         try (var is = getTemplateInputStream()) {
             var fileContent = getStringFromInputStream(is);
-            return new HooksFileSerializer().deserialize(fileContent);
+            return new ClientJarClassInfoSerializer().deserialize(fileContent);
         }
     }
 
     private static InputStream getTemplateInputStream() {
-        return HooksFileReader.class.getClassLoader().getResourceAsStream(HOOKS_FILE_NAME);
+        return ClientJarClassInfoFileReader.class.getClassLoader().getResourceAsStream(CJCI_FILE_NAME);
     }
 
     private static String getStringFromInputStream(InputStream inputStream) {

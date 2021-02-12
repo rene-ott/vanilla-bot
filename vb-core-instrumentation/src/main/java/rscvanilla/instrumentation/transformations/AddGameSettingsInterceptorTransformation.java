@@ -5,7 +5,7 @@ import javassist.CtClass;
 import javassist.CtField;
 import javassist.NotFoundException;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
-import rscvanilla.hook.model.Hooks;
+import rscvanilla.hook.model.ClientJarClassInfo;
 import rscvanilla.hook.model.classes.mudclient.MudClientClassInterceptors;
 
 import javax.inject.Inject;
@@ -19,8 +19,8 @@ public class AddGameSettingsInterceptorTransformation {
     private final String methodName;
 
     @Inject
-    public AddGameSettingsInterceptorTransformation(Hooks hooks) {
-        this.interceptors = hooks.mudClient.interceptors;
+    public AddGameSettingsInterceptorTransformation(ClientJarClassInfo clientJarClassInfo) {
+        this.interceptors = clientJarClassInfo.mudClient.interceptors;
 
         fieldTypeName = MudClientGameSettingsInterceptor.class.getCanonicalName();
         fieldName = MudClientGameSettingsInterceptor.MC_FIELD_NAME;

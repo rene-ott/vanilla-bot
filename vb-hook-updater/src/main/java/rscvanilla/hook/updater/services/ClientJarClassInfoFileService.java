@@ -4,8 +4,8 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.hook.updater.infrastructure.AppException;
-import rscvanilla.hook.model.HooksFileSerializer;
-import rscvanilla.hook.model.Hooks;
+import rscvanilla.hook.model.ClientJarClassInfoSerializer;
+import rscvanilla.hook.model.ClientJarClassInfo;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -14,25 +14,25 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class HooksFileService {
+public class ClientJarClassInfoFileService {
 
-    private static final Logger logger = LoggerFactory.getLogger(HooksFileService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ClientJarClassInfoFileService.class);
 
-    private final static String HOOKS_FILE_NAME = "hooks.yaml";
-    private final static String TEMPLATE_FILE_NAME = "template.yaml";
+    private final static String CJCI_FILE_NAME = "hooks.yaml";
+    private final static String CJCI_TEMPLATE_FILE_NAME = "template.yaml";
 
-    private final HooksFileSerializer serializer;
+    private final ClientJarClassInfoSerializer serializer;
     private final OutputDirectoryService outputDirectoryService;
 
     @Inject
-    public HooksFileService(HooksFileSerializer serializer,
-                            OutputDirectoryService outputDirectoryService
+    public ClientJarClassInfoFileService(ClientJarClassInfoSerializer serializer,
+                                         OutputDirectoryService outputDirectoryService
     ) {
         this.outputDirectoryService = outputDirectoryService;
         this.serializer = serializer;
     }
 
-    public Hooks readTemplateFile() {
+    public ClientJarClassInfo readTemplateFile() {
         try {
             var templateString = IOUtils.toString(getTemplateInputStream(), StandardCharsets.UTF_8.name());
             var serializedTemplateFile = serializer.deserialize(templateString);
@@ -46,15 +46,15 @@ public class HooksFileService {
     }
 
     private InputStream getTemplateInputStream() {
-        return getClass().getClassLoader().getResourceAsStream(TEMPLATE_FILE_NAME);
+        return getClass().getClassLoader().getResourceAsStream(CJCI_TEMPLATE_FILE_NAME);
     }
 
-    public void saveHooksFile(Hooks hooks) {
+    public void saveClientJarClassInfo(ClientJarClassInfo clientJarClassInfo) {
 
         try {
-            var value = serializer.serialize(hooks);
+            var value = serializer.serialize(clientJarClassInfo);
 
-            Files.writeString(Path.of(outputDirectoryService.getRootDirPath(), HOOKS_FILE_NAME), value);
+            Files.writeString(Path.of(outputDirectoryService.getRootDirPath(), CJCI_FILE_NAME), value);
             logger.info("Saved hooks file to [{}]", outputDirectoryService.getRootDirPath());
             logger.info("Saved hooks file with content:\n{}", value);
         } catch (IOException e) {
