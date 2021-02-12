@@ -33,6 +33,8 @@ public class HooksFileSerializer {
     }
 
     private YAMLFactory createYamlFactory() {
-        return new YAMLFactory().configure(YAMLGenerator.Feature.MINIMIZE_QUOTES, true);
+        return new YAMLFactory()
+            .configure(YAMLGenerator.Feature.MINIMIZE_QUOTES, true)
+            .configure(YAMLGenerator.Feature.WRITE_DOC_START_MARKER, false);
     }
 }
