@@ -10,7 +10,7 @@ import rscvanilla.hook.model.contracts.WithClassMembers;
 public class RSCharacterClassFields implements WithClassMembers {
     @YamlClassMemberKey("bubble_timeout") public String bubbleTimeout;
     @YamlClassMemberKey("current_health_level") public String currentHealthLevel;
-    @YamlClassMemberKey("healthLevel") public String healthLevel;
+    @YamlClassMemberKey("health_level") public String healthLevel;
     @YamlClassMemberKey("direction") public String direction;
     @YamlClassMemberKey("combat_level") public String combatLevel;
 }
