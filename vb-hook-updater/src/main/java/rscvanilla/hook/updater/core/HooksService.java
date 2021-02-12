@@ -3,6 +3,7 @@ package rscvanilla.hook.updater.core;
 import rscvanilla.hook.updater.core.services.AppletClassMemberService;
 import rscvanilla.hook.updater.core.services.MudClientClassMemberService;
 import rscvanilla.hook.model.Hooks;
+import rscvanilla.hook.updater.core.services.RSCharacterClassMemberService;
 
 import javax.inject.Inject;
 
@@ -10,16 +11,20 @@ public class HooksService {
 
     private final MudClientClassMemberService mudClientClassMemberService;
     private final AppletClassMemberService appletClassMemberService;
+    private final RSCharacterClassMemberService rsCharacterClassMemberService;
 
     @Inject
     public HooksService(MudClientClassMemberService mudClientClassMemberService,
-                        AppletClassMemberService appletClassMemberService) {
+                        AppletClassMemberService appletClassMemberService,
+                        RSCharacterClassMemberService rsCharacterClassMemberService) {
         this.mudClientClassMemberService = mudClientClassMemberService;
         this.appletClassMemberService = appletClassMemberService;
+        this.rsCharacterClassMemberService = rsCharacterClassMemberService;
     }
 
     public void setClassValuesTo(Hooks hooks) {
         mudClientClassMemberService.setValuesToClassMembers(hooks.mudClient);
         appletClassMemberService.setValuesToClassMembers(hooks.applet);
+        rsCharacterClassMemberService.setValuesToClassMembers(hooks.rsCharacter);
     }
 }

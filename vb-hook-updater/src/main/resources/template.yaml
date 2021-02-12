@@ -3,6 +3,7 @@ applet:
   qualified_name: com.rsc.applet.b
   fields:
     mud_client:
+
 mud_client:
   qualified_name: com.rsc.d
   fields:
@@ -53,3 +54,32 @@ mud_client:
     game_captcha:
     game_message:
     game_settings:
+
+rs_character:
+  qualified_name: com.rsc.e.i
+  fields:
+    bubble_timeout:
+    current_health_level:
+    health_level:
+    direction:
+    combat_level:
+
+rs_entity:
+  qualified_name: com.rsc.e.d
+  fields:
+    id:
+    pixel_x:
+    pixel_y:
+    server_index:
+    local_position_x:
+    local_position_y:
+
+rs_player_character:
+  qualified_name: com.rsc.e.k
+  fields:
+    name:
+
+rs_wall_object:
+  qualified_name: com.rsc.e.m
+  fields:
+    name:
