@@ -82,4 +82,4 @@ rs_player_character:
 rs_wall_object:
   qualified_name: com.rsc.e.m
   fields:
-    name:
+    direction:

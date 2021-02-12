@@ -1,10 +1,7 @@
 package rscvanilla.hook.updater.core;
 
-import rscvanilla.hook.updater.core.services.AppletClassMemberService;
-import rscvanilla.hook.updater.core.services.MudClientClassMemberService;
+import rscvanilla.hook.updater.core.services.*;
 import rscvanilla.hook.model.Hooks;
-import rscvanilla.hook.updater.core.services.RSCharacterClassMemberService;
-import rscvanilla.hook.updater.core.services.RSEntityClassMemberService;
 
 import javax.inject.Inject;
 
@@ -14,16 +11,22 @@ public class HooksService {
     private final AppletClassMemberService appletClassMemberService;
     private final RSCharacterClassMemberService rsCharacterClassMemberService;
     private final RSEntityClassMemberService rsEntityClassMemberService;
+    private final RSWallObjectClassMemberService rsWallObjectClassMemberService;
+    private final RSPlayerCharacterClassMemberService rsPlayerCharacterClassMemberService;
 
     @Inject
     public HooksService(MudClientClassMemberService mudClientClassMemberService,
                         AppletClassMemberService appletClassMemberService,
                         RSCharacterClassMemberService rsCharacterClassMemberService,
-                        RSEntityClassMemberService rsEntityClassMemberService) {
+                        RSEntityClassMemberService rsEntityClassMemberService,
+                        RSWallObjectClassMemberService rsWallObjectClassMemberService,
+                        RSPlayerCharacterClassMemberService rsPlayerCharacterClassMemberService) {
         this.mudClientClassMemberService = mudClientClassMemberService;
         this.appletClassMemberService = appletClassMemberService;
         this.rsCharacterClassMemberService = rsCharacterClassMemberService;
         this.rsEntityClassMemberService = rsEntityClassMemberService;
+        this.rsWallObjectClassMemberService = rsWallObjectClassMemberService;
+        this.rsPlayerCharacterClassMemberService = rsPlayerCharacterClassMemberService;
     }
 
     public void setClassValuesTo(Hooks hooks) {
@@ -31,5 +34,7 @@ public class HooksService {
         appletClassMemberService.setValuesToClassMembers(hooks.applet);
         rsCharacterClassMemberService.setValuesToClassMembers(hooks.rsCharacter);
         rsEntityClassMemberService.setValuesToClassMembers(hooks.rsEntity);
+        rsPlayerCharacterClassMemberService.setValuesToClassMembers(hooks.rsPlayerCharacter);
+        rsWallObjectClassMemberService.setValuesToClassMembers(hooks.rsWallObject);
     }
 }

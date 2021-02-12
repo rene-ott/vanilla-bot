@@ -10,6 +10,8 @@ import rscvanilla.hook.updater.core.matcher.classes.mudclient.MudClientClassInte
 import rscvanilla.hook.updater.core.matcher.classes.mudclient.MudClientClassMethodNameMatcher;
 import rscvanilla.hook.updater.core.matcher.classes.rscharacter.RSCharacterClassFieldNameMatcher;
 import rscvanilla.hook.updater.core.matcher.classes.rsentity.RSEntityClassFieldNameMatcher;
+import rscvanilla.hook.updater.core.matcher.classes.rsplayercharacter.RSPlayerCharacterClassFieldNameMatcher;
+import rscvanilla.hook.updater.core.matcher.classes.rswallobject.RSWallObjectClassFieldNameMatcher;
 
 public class ClassMemberNameMatcherModule extends AbstractModule {
 
@@ -20,8 +22,11 @@ public class ClassMemberNameMatcherModule extends AbstractModule {
         configureSubTypesOf(MudClientClassInterceptorNameMatcher.class);
 
         configureSubTypesOf(AppletClassFieldNameMatcher.class);
+
         configureSubTypesOf(RSCharacterClassFieldNameMatcher.class);
         configureSubTypesOf(RSEntityClassFieldNameMatcher.class);
+        configureSubTypesOf(RSWallObjectClassFieldNameMatcher.class);
+        configureSubTypesOf(RSPlayerCharacterClassFieldNameMatcher.class);
     }
 
     private <T> void configureSubTypesOf(Class<T> clazz) {

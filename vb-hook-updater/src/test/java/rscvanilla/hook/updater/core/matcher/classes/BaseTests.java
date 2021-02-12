@@ -22,5 +22,7 @@ public class BaseTests {
     protected String readClassApplet() { return readResource("com.rsc.applet.b.java"); }
     protected String readClassRSEntity() { { return readResource("com.rsc.e.d.java"); } }
     protected String readClassRSCharacter() { { return readResource("com.rsc.e.i.java"); } }
+    protected String readClassRSPlayerCharacter() { { return readResource("com.rsc.e.k.java"); } }
+    protected String readClassRSWallObject() { { return readResource("com.rsc.e.m.java"); } }
 
 }
