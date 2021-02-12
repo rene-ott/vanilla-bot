@@ -6,8 +6,8 @@ import rscvanilla.bot.mudclient.MudClientWrapper;
 
 public class RSWallObject extends RSEntityWrapper<com.rsc.e.m> {
 
-    public RSWallObject(com.rsc.e.m internalObject, MudClientWrapper hooker) {
-        super(internalObject, hooker);
+    public RSWallObject(com.rsc.e.m internalObject, MudClientWrapper mudClientWrapper) {
+        super(internalObject, mudClientWrapper);
     }
 
     @DependsOnExternal

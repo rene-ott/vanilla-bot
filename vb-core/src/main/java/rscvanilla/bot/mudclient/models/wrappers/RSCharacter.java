@@ -6,8 +6,8 @@ import rscvanilla.bot.mudclient.MudClientWrapper;
 
 public abstract class RSCharacter<T extends com.rsc.e.i> extends RSEntityWrapper<T> {
 
-    public RSCharacter(T object, MudClientWrapper hooker) {
-        super(object, hooker);
+    public RSCharacter(T internalObject, MudClientWrapper mudClientWrapper) {
+        super(internalObject, mudClientWrapper);
     }
 
     @DependsOnExternal public int getBubbleTimeout() { return this.<Integer>getField("getBubbleTimeout", "mE", Integer.class).getValue(); }

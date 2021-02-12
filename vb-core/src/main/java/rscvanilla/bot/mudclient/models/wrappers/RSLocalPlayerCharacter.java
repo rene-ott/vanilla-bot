@@ -6,8 +6,8 @@ import rscvanilla.bot.mudclient.MudClientWrapper;
 
 public class RSLocalPlayerCharacter extends RSPlayerCharacter {
 
-    public RSLocalPlayerCharacter(com.rsc.e.k object, MudClientWrapper hooker) {
-        super(object, hooker);
+    public RSLocalPlayerCharacter(com.rsc.e.k internalObject, MudClientWrapper mudClientWrapper) {
+        super(internalObject, mudClientWrapper);
     }
 
     @Override

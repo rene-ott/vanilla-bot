@@ -1,13 +1,12 @@
 package rscvanilla.bot.mudclient.models.wrappers;
 
-import com.rsc.e.e;
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.MudClientWrapper;
 
-public class RSGroundObject extends RSEntityWrapper<e> {
+public class RSGroundObject extends RSEntityWrapper<com.rsc.e.e> {
 
-    public RSGroundObject(com.rsc.e.e object, MudClientWrapper hooks) {
-        super(object, hooks);
+    public RSGroundObject(com.rsc.e.e internalObject, MudClientWrapper mudClientWrapper) {
+        super(internalObject, mudClientWrapper);
     }
 
     public Position getLocalPosition() { return getStaticLocalPosition(); }
