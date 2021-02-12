@@ -10,20 +10,11 @@ public abstract class RSCharacter<T extends com.rsc.e.i> extends RSEntityWrapper
         super(object, hooker);
     }
 
-    @DependsOnExternal
-    public int getBubbleTimeout() { return internalObject.mE; }
-
-    @DependsOnExternal
-    public int getCurrentHealthLevel() { return internalObject.mN; }
-
-    @DependsOnExternal
-    public int getHealthLevel() { return internalObject.mO; }
-
-    @DependsOnExternal
-    protected Direction getDirection() { return Direction.of(internalObject.cl()); }
-
-    @DependsOnExternal
-    public int getCombatLevel() { return internalObject.mQ; }
+    @DependsOnExternal public int getBubbleTimeout() { return this.<Integer>getField("getBubbleTimeout", "mE", Integer.class).getValue(); }
+    @DependsOnExternal public int getCurrentHealthLevel() { return this.<Integer>getField("getCurrentHealthLevel", "mN", Integer.class).getValue(); }
+    @DependsOnExternal public int getHealthLevel() { return this.<Integer>getField("getHealthLevel", "mO", Integer.class).getValue(); }
+    @DependsOnExternal protected Direction getDirection() { return Direction.of(this.<Integer>getField("getDirection", "mF", Integer.class).getValue()); }
+    @DependsOnExternal public int getCombatLevel() { return this.<Integer>getField("getCombatLevel", "mQ", Integer.class).getValue(); }
 
     public boolean isInCombat() { return getDirection() == Direction.COMBAT1 || getDirection() == Direction.COMBAT2; }
 

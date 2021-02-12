@@ -14,21 +14,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class MudClientWrapperTool {
+public class WrapperTool {
 
-    public static <T, T2> MethodWrapper<T> initMethod(
-        T2 objectWithMethod,
+    public static <T, T2> MethodWrapper<T> loadMethod(
+        T2 internalObject,
         Logger logger,
         String methodDisplayName,
-        String internalObjectMethodName,
-        Class<?>... internalObjectMethodExpectedParamTypes
+        String methodName,
+        Class<?>... methodParamTypes
     ) {
-        var method = MethodUtils.getMatchingMethod(objectWithMethod.getClass(), internalObjectMethodName, internalObjectMethodExpectedParamTypes);
+        var method = MethodUtils.getMatchingMethod(internalObject.getClass(), methodName, methodParamTypes);
         if (method != null) {
-            logger.debug(" - {} => {}", methodDisplayName, getMethodSignature(method));
-            return new MethodWrapper<>(objectWithMethod, method, methodDisplayName);
+            if (logger != null) {
+                logger.debug(" - {} => {}", methodDisplayName, getMethodSignature(method));
+            }
+
+            return new MethodWrapper<>(internalObject, method, methodDisplayName);
         } else {
-            throw BotException.of("Can't init method: %s => %s", methodDisplayName, getExpectedMethodSignature(internalObjectMethodName, internalObjectMethodExpectedParamTypes));
+            throw BotException.of("Can't init method: %s => %s", methodDisplayName, getExpectedMethodSignature(methodName, methodParamTypes));
         }
     }
 
@@ -61,19 +64,21 @@ public class MudClientWrapperTool {
         return String.format("%s(%s)",methodName, String.join(",", argumentList));
     }
 
-    public static <T> FieldWrapper<T> initField(
-        Object objectWithField,
+    public static <T> FieldWrapper<T> loadField(
+        Object internalObject,
         Logger logger,
         String fieldDisplayName,
-        String objectClassFieldName,
-        Class<?> objectClassFieldReturnType
+        String fieldName,
+        Class<?> fieldReturnType
     ) {
-        var field = FieldUtils.getField(objectWithField.getClass(), objectClassFieldName, true);
+        var field = FieldUtils.getField(internalObject.getClass(), fieldName, true);
         if (field != null) {
-            logger.debug(" - {} => {} {};", fieldDisplayName, field.getType().getCanonicalName(), objectClassFieldName);
-            return new FieldWrapper<>(objectWithField, field, objectClassFieldReturnType, fieldDisplayName);
+            if (logger != null) {
+                logger.debug(" - {} => {} {};", fieldDisplayName, field.getType().getCanonicalName(), fieldName);
+            }
+            return new FieldWrapper<T>(internalObject, field, fieldReturnType, fieldDisplayName);
         } else {
-            throw BotException.of("Can't init field: %s => %s", fieldDisplayName, objectClassFieldName);
+            throw BotException.of("Can't init field: %s => %s", fieldDisplayName, fieldName);
         }
     }
 

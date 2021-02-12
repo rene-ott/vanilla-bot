@@ -29,6 +29,8 @@ public class MudClientWrapper {
 
     private FieldWrapper<com.rsc.d> mudClient;
 
+    private Hooks hooks;
+
     private final MudClientClassFields classFields;
     private final MudClientClassMethods classMethods;
     private final AppletClassFields appletClassFields;
@@ -85,6 +87,7 @@ public class MudClientWrapper {
 
     @Inject
     public MudClientWrapper(GameApplet gameApplet, Hooks hooks) {
+        this.hooks = hooks;
         classFields = hooks.mudClient.fields;
         classMethods = hooks.mudClient.methods;
         appletClassFields = hooks.applet.fields;
@@ -99,7 +102,7 @@ public class MudClientWrapper {
         try {
             logger.debug("Initializing [MudClientWrapper] mudclient field:");
 
-            mudClient = MudClientWrapperTool.initField(gameApplet, simpleLogger, "mudClient", appletClassFields.mudClient, com.rsc.d.class);
+            mudClient = WrapperTool.loadField(gameApplet, simpleLogger, "mudClient", appletClassFields.mudClient, com.rsc.d.class);
 
             simpleLogger.debug("");
         } catch (BotException e) {
@@ -207,6 +210,7 @@ public class MudClientWrapper {
     }
 
     public MudClientPacketBuilder getPacketBuilder() { return packetBuilder; }
+    public Hooks getHooks() { return hooks; }
 
     // Accessing to MudClient should be done through this wrapper class.
     @Deprecated()
@@ -238,18 +242,18 @@ public class MudClientWrapper {
 
     private <TWrappedEntity extends RSEntityWrapper<TInternalObject>, TInternalObject extends com.rsc.e.d> List<TWrappedEntity> newWrappedEntityList(
         FieldWrapper<TInternalObject[]> internalArray, FieldWrapper<Integer> internalArrayLength, Class<TWrappedEntity> clazz) {
-        return MudClientWrapperTool.newWrappedEntityList(internalArray.getValue(), internalArrayLength.getValue(), clazz, this);
+        return WrapperTool.newWrappedEntityList(internalArray.getValue(), internalArrayLength.getValue(), clazz, this);
     }
 
     private <T> FieldWrapper<T> initField(String wrapperFieldName, String mcFieldName, Class<?> mcFieldExpectedReturnType) {
-        return MudClientWrapperTool.initField(mudClient.getValue(), simpleLogger, wrapperFieldName, mcFieldName, mcFieldExpectedReturnType);
+        return WrapperTool.loadField(mudClient.getValue(), simpleLogger, wrapperFieldName, mcFieldName, mcFieldExpectedReturnType);
     }
 
     private <T> MethodWrapper<T> initMethod(String wrapperMethodName, String mcMethodName, Class<?>...mcMethodExpectedParamTypes) {
-        return MudClientWrapperTool.initMethod(mudClient.getValue(), simpleLogger, wrapperMethodName, mcMethodName, mcMethodExpectedParamTypes);
+        return WrapperTool.loadMethod(mudClient.getValue(), simpleLogger, wrapperMethodName, mcMethodName, mcMethodExpectedParamTypes);
     }
 
     private <T> FieldWrapper<T> initInterceptor(String wrapperFieldName, String mcFieldName) {
-        return MudClientWrapperTool.initField(mudClient.getValue(), simpleLogger, wrapperFieldName, mcFieldName, null);
+        return WrapperTool.loadField(mudClient.getValue(), simpleLogger, wrapperFieldName, mcFieldName, null);
     }
 }

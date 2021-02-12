@@ -13,6 +13,5 @@ public class RSPlayerCharacter extends RSCharacter<com.rsc.e.k> {
     @Override
     public Position getLocalPosition() { return getDynamicLocalPosition(); }
 
-    @DependsOnExternal
-    public String getName() { return internalObject.na; }
+    @DependsOnExternal public String getName() { return this.<String>getField("getName", "na", String.class).getValue(); }
 }

@@ -12,7 +12,7 @@ public class RSWallObject extends RSEntityWrapper<m> {
     }
 
     @DependsOnExternal
-    public int getDirection() { return internalObject.cl(); }
+    public int getDirection() { return this.<Integer>getField("getDirection", "mf", Integer.class).getValue(); }
 
     public Position getLocalPosition() { return getStaticLocalPosition(); }
 }

@@ -46,7 +46,7 @@ public abstract class Script {
         wallObjectAction = dependencyContext.getWallAction();
         user = dependencyContext.getUser();
 
-        hooker = dependencyContext.getHooker();
+        hooker = dependencyContext.getMudClientWrapper();
     }
 
     /** FOR DEV **/

@@ -22,7 +22,7 @@ public class ScriptDependencyContext {
     private final MessageAction messageAction;
     private final WallObjectAction wallObjectAction;
 
-    private final MudClientWrapper hooker;
+    private final MudClientWrapper mudClientWrapper;
 
     private final Printer printer;
 
@@ -38,7 +38,7 @@ public class ScriptDependencyContext {
                                    PositionAction positionAction, Printer printer,
                                    LoginAction loginAction,
                                    MessageAction messageAction,
-                                   MudClientWrapper hooker,
+                                   MudClientWrapper mudClientWrapper,
                                    WallObjectAction wallObjectAction
     ) {
         this.groundItemAction = groundItemAction;
@@ -53,13 +53,13 @@ public class ScriptDependencyContext {
         this.loginAction = loginAction;
         this.messageAction = messageAction;
         this.wallObjectAction = wallObjectAction;
-        this.hooker = hooker;
+        this.mudClientWrapper = mudClientWrapper;
         this.printer = printer;
     }
 
-    public MudClientWrapper getHooker() { return hooker; }
+    public MudClientWrapper getMudClientWrapper() { return mudClientWrapper; }
 
-    public RSLocalPlayerCharacter getUser() { return hooker.getUser(); }
+    public RSLocalPlayerCharacter getUser() { return mudClientWrapper.getUser(); }
 
     public Printer getPrinter() { return printer; }
     public MessageAction getMessageAction() { return messageAction; }
