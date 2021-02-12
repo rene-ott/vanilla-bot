@@ -35,8 +35,8 @@ import rscvanilla.bot.watcher.ScriptDirectoryContentChangeWatcher;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
 import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
-import rscvanilla.hook.model.ClientJarClassInfo;
-import rscvanilla.hook.model.ClientJarClassInfoFileReader;
+import rscvanilla.cjci.model.ClientJarClassInfo;
+import rscvanilla.cjci.model.ClientJarClassInfoFileReader;
 
 import javax.inject.Singleton;
 import java.io.IOException;

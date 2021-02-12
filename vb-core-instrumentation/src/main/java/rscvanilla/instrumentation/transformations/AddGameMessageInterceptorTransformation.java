@@ -2,8 +2,8 @@ package rscvanilla.instrumentation.transformations;
 
 import javassist.*;
 import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
-import rscvanilla.hook.model.ClientJarClassInfo;
-import rscvanilla.hook.model.classes.mudclient.MudClientClassInterceptors;
+import rscvanilla.cjci.model.ClientJarClassInfo;
+import rscvanilla.cjci.model.classes.mudclient.MudClientClassInterceptors;
 
 import javax.inject.Inject;
 

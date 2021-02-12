@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
 import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
-import rscvanilla.hook.model.ClientJarClassInfo;
-import rscvanilla.hook.model.classes.applet.AppletClassFields;
-import rscvanilla.hook.model.classes.mudclient.MudClientClassFields;
-import rscvanilla.hook.model.classes.mudclient.MudClientClassMethods;
+import rscvanilla.cjci.model.ClientJarClassInfo;
+import rscvanilla.cjci.model.classes.applet.AppletClassFields;
+import rscvanilla.cjci.model.classes.mudclient.MudClientClassFields;
+import rscvanilla.cjci.model.classes.mudclient.MudClientClassMethods;
 
 import javax.inject.Inject;
 import java.util.List;

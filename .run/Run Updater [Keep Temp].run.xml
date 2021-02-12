@@ -2,7 +2,7 @@
   <configuration default="false" name="Run Updater [Keep Temp]" type="Application" factoryName="Application">
     <option name="ALTERNATIVE_JRE_PATH" value="openjdk-15" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-    <option name="MAIN_CLASS_NAME" value="rscvanilla.hook.updater.Main" />
+    <option name="MAIN_CLASS_NAME" value="rscvanilla.cjci.updater.Main" />
     <module name="vanilla-bot.vb-hook-updater.main" />
     <option name="PROGRAM_PARAMETERS" value="-n $ProjectFileDir$\vb-hook-updater\input\new.jar -o $ProjectFileDir$\vb-hook-updater\input\old.jar -sv -st -sd" />
     <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />

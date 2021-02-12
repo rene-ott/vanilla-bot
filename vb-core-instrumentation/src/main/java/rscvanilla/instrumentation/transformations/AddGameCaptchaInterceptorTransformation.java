@@ -5,8 +5,8 @@ import javassist.CtClass;
 import javassist.CtField;
 import javassist.NotFoundException;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
-import rscvanilla.hook.model.ClientJarClassInfo;
-import rscvanilla.hook.model.classes.mudclient.MudClientClassInterceptors;
+import rscvanilla.cjci.model.ClientJarClassInfo;
+import rscvanilla.cjci.model.classes.mudclient.MudClientClassInterceptors;
 
 import javax.inject.Inject;
 

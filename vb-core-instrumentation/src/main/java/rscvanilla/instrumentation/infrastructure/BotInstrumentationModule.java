@@ -1,8 +1,8 @@
 package rscvanilla.instrumentation.infrastructure;
 
 import com.google.inject.AbstractModule;
-import rscvanilla.hook.model.ClientJarClassInfo;
-import rscvanilla.hook.model.ClientJarClassInfoFileReader;
+import rscvanilla.cjci.model.ClientJarClassInfo;
+import rscvanilla.cjci.model.ClientJarClassInfoFileReader;
 import rscvanilla.instrumentation.BotInstrumentation;
 import rscvanilla.instrumentation.transformations.AddGameCaptchaInterceptorTransformation;
 import rscvanilla.instrumentation.transformations.AddGameMessageInterceptorTransformation;

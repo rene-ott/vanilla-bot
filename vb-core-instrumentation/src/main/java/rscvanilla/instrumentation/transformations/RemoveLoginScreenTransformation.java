@@ -3,8 +3,8 @@ package rscvanilla.instrumentation.transformations;
 import javassist.CannotCompileException;
 import javassist.CtClass;
 import javassist.NotFoundException;
-import rscvanilla.hook.model.ClientJarClassInfo;
-import rscvanilla.hook.model.classes.mudclient.MudClientClass;
+import rscvanilla.cjci.model.ClientJarClassInfo;
+import rscvanilla.cjci.model.classes.mudclient.MudClientClass;
 
 import javax.inject.Inject;
 
