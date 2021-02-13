@@ -1,12 +1,12 @@
 package rscvanilla.bot.mudclient.models.wrappers;
 
-import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mudclient.FieldWrapper;
 import rscvanilla.bot.mudclient.WrapperTool;
 import rscvanilla.bot.mudclient.models.contracts.GloballyPositionable;
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.utils.PositionConverter;
 import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.cjci.model.classes.rsentity.RSEntityClassFields;
 
 public abstract class RSEntityWrapper<T extends com.rsc.e.d> implements GloballyPositionable {
 
@@ -19,12 +19,12 @@ public abstract class RSEntityWrapper<T extends com.rsc.e.d> implements Globally
     }
 
     // Players have id set as 0
-    @DependsOnExternal public int getId() { return this.<Integer>getField("getId", "bq", Integer.class).getValue(); }
-    @DependsOnExternal private int getPixelX() { return this.<Integer>getField("getPixelX", "mc", Integer.class).getValue(); }
-    @DependsOnExternal private int getPixelY() { return this.<Integer>getField("getPixelY", "md", Integer.class).getValue(); }
-    @DependsOnExternal public int getServerIndex() { return this.<Integer>getField("getServerIndex", "lZ", Integer.class).getValue(); }
-    @DependsOnExternal private int getLocalPositionX() { return this.<Integer>getField("getLocalPositionX", "ma", Integer.class).getValue(); }
-    @DependsOnExternal private int getLocalPositionY() { return this.<Integer>getField("getLocalPositionY", "mb", Integer.class).getValue(); }
+    public int getId() { return this.<Integer>getFieldValue("getId", getClassFields().id, Integer.class); }
+    private int getPixelX() { return this.<Integer>getFieldValue("getPixelX", getClassFields().pixelX, Integer.class); }
+    private int getPixelY() { return this.<Integer>getFieldValue("getPixelY", getClassFields().pixelY, Integer.class); }
+    public int getServerIndex() { return this.<Integer>getFieldValue("getServerIndex", getClassFields().serverIndex, Integer.class); }
+    private int getLocalPositionX() { return this.<Integer>getFieldValue("getLocalPositionX", getClassFields().localPositionX, Integer.class); }
+    private int getLocalPositionY() { return this.<Integer>getFieldValue("getLocalPositionY", getClassFields().localPositionY, Integer.class); }
 
     protected Position getStaticLocalPosition() { return new Position(getLocalPositionX(), getLocalPositionY()); }
     protected Position getDynamicLocalPosition() { return new Position((getPixelX() - 64) / 128, (getPixelY() - 64) / 128); }
@@ -36,7 +36,11 @@ public abstract class RSEntityWrapper<T extends com.rsc.e.d> implements Globally
 
     public abstract Position getLocalPosition();
 
-    protected <TField> FieldWrapper<TField> getField(String fieldDisplayName, String fieldName, Class<?> fieldReturnType) {
-        return WrapperTool.loadField(this, null, fieldDisplayName, fieldName, fieldReturnType);
+    protected <TField> TField getFieldValue(String fieldDisplayName, String fieldName, Class<?> fieldReturnType) {
+        return WrapperTool.<TField>loadField(this, null, fieldDisplayName, fieldName, fieldReturnType).getValue();
+    }
+
+    private RSEntityClassFields getClassFields() {
+        return mudClientWrapper.getClientJarClassInfo().rsEntity.fields;
     }
 }

@@ -31,7 +31,7 @@ public class CaptchaDataLoader {
             return new CaptchaImage(entry.getKey(), ImageIO.read(new ByteArrayInputStream(entry.getValue())));
 
         } catch (IOException e) {
-            throw new BotException(String.format("Failed to read captcha png bytes %s", entry.getKey()), e);
+            throw BotException.of("Failed to read captcha png bytes %s", entry.getKey(), e);
         }
     }
 
@@ -40,7 +40,7 @@ public class CaptchaDataLoader {
         try (var fileInputStream = CaptchaDataLoader.class.getResourceAsStream("/ocr.data"); var osTream = new ObjectInputStream(fileInputStream)) {
             return ((HashMap<String, byte[]>) osTream.readObject()).entrySet();
         } catch (IOException | ClassNotFoundException e) {
-            throw new BotException("Failed to load ocr.data", e);
+            throw BotException.of("Failed to load ocr.data", e);
         }
     }
 }

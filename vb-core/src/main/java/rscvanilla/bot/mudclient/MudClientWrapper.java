@@ -106,7 +106,7 @@ public class MudClientWrapper {
 
             simpleLogger.debug("");
         } catch (BotException e) {
-            throw new BotException("Failed to initialize [MudClientWrapper] mudclient field!", e);
+            throw BotException.of("Failed to initialize [MudClientWrapper] mudclient field!", e);
         }
     }
 
@@ -120,7 +120,7 @@ public class MudClientWrapper {
 
             simpleLogger.debug("");
         } catch (BotException e) {
-            throw new BotException("Failed to initialize [MudClientWrapper] interceptor fields!", e);
+            throw BotException.of("Failed to initialize [MudClientWrapper] interceptor fields!", e);
         }
     }
 
@@ -187,7 +187,7 @@ public class MudClientWrapper {
 
             simpleLogger.debug("");
         } catch (BotException e) {
-            throw new BotException("Failed to initialize [MudClientWrapper] fields!", e);
+            throw BotException.of("Failed to initialize [MudClientWrapper] fields!", e);
         }
     }
 
@@ -205,12 +205,12 @@ public class MudClientWrapper {
 
             simpleLogger.debug("");
         } catch (BotException e) {
-            throw new BotException("Failed to initialize [MudClientWrapper] methods!", e);
+            throw BotException.of("Failed to initialize [MudClientWrapper] methods!", e);
         }
     }
 
     public MudClientPacketBuilder getPacketBuilder() { return packetBuilder; }
-    public ClientJarClassInfo getHooks() { return clientJarClassInfo; }
+    public ClientJarClassInfo getClientJarClassInfo() { return clientJarClassInfo; }
 
     // Accessing to MudClient should be done through this wrapper class.
     @Deprecated()

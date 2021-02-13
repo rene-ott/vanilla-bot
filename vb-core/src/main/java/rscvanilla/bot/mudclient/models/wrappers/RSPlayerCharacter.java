@@ -1,8 +1,8 @@
 package rscvanilla.bot.mudclient.models.wrappers;
 
-import rscvanilla.bot.mudclient.models.Position;
-import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.models.Position;
+import rscvanilla.cjci.model.classes.rsplayercharacter.RSPlayerCharacterClassFields;
 
 public class RSPlayerCharacter extends RSCharacter<com.rsc.e.k> {
 
@@ -13,5 +13,9 @@ public class RSPlayerCharacter extends RSCharacter<com.rsc.e.k> {
     @Override
     public Position getLocalPosition() { return getDynamicLocalPosition(); }
 
-    @DependsOnExternal public String getName() { return this.<String>getField("getName", "na", String.class).getValue(); }
+    public String getName() { return getFieldValue("getName", getClassFields().name, String.class); }
+
+    private RSPlayerCharacterClassFields getClassFields() {
+        return mudClientWrapper.getClientJarClassInfo().rsPlayerCharacter.fields;
+    }
 }

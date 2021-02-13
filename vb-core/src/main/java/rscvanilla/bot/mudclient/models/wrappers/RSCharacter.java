@@ -1,8 +1,8 @@
 package rscvanilla.bot.mudclient.models.wrappers;
 
 import rscvanilla.bot.mudclient.models.Position;
-import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.cjci.model.classes.rscharacter.RSCharacterClassFields;
 
 public abstract class RSCharacter<T extends com.rsc.e.i> extends RSEntityWrapper<T> {
 
@@ -10,15 +10,19 @@ public abstract class RSCharacter<T extends com.rsc.e.i> extends RSEntityWrapper
         super(internalObject, mudClientWrapper);
     }
 
-    @DependsOnExternal public int getBubbleTimeout() { return this.<Integer>getField("getBubbleTimeout", "mE", Integer.class).getValue(); }
-    @DependsOnExternal public int getCurrentHealthLevel() { return this.<Integer>getField("getCurrentHealthLevel", "mN", Integer.class).getValue(); }
-    @DependsOnExternal public int getHealthLevel() { return this.<Integer>getField("getHealthLevel", "mO", Integer.class).getValue(); }
-    @DependsOnExternal protected Direction getDirection() { return Direction.of(this.<Integer>getField("getDirection", "mF", Integer.class).getValue()); }
-    @DependsOnExternal public int getCombatLevel() { return this.<Integer>getField("getCombatLevel", "mQ", Integer.class).getValue(); }
+    public int getBubbleTimeout() { return this.<Integer>getFieldValue("getBubbleTimeout", getClassFields().bubbleTimeout, Integer.class); }
+    public int getCurrentHealthLevel() { return this.<Integer>getFieldValue("getCurrentHealthLevel", getClassFields().currentHealthLevel, Integer.class); }
+    public int getHealthLevel() { return this.<Integer>getFieldValue("getHealthLevel", getClassFields().healthLevel, Integer.class); }
+    protected Direction getDirection() { return Direction.of(this.<Integer>getFieldValue("getDirection", getClassFields().direction, Integer.class)); }
+    public int getCombatLevel() { return this.<Integer>getFieldValue("getCombatLevel", getClassFields().combatLevel, Integer.class); }
 
     public boolean isInCombat() { return getDirection() == Direction.COMBAT1 || getDirection() == Direction.COMBAT2; }
 
     public boolean isBusy() { return getBubbleTimeout() - 60 > 0; }
 
     public abstract Position getLocalPosition();
+
+    private RSCharacterClassFields getClassFields() {
+        return mudClientWrapper.getClientJarClassInfo().rsCharacter.fields;
+    }
 }

@@ -3,7 +3,6 @@ include 'vb-cjci-model'
 include 'vb-cjci-updater'
 include 'vb-core'
 include 'vb-core-instrumentation'
-include 'vb-core-interceptor-contract'
 include 'vb-core-contracts'
 include 'vb-captcha-serializer'
 

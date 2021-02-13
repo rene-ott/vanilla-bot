@@ -59,7 +59,7 @@ public class ScriptEngine implements ScriptThreadExecutorListener {
 
             printer.printAsBot("Started script [%s].", script.getName());
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            throw new BotException("SCRIPT START FAILED!");
+            throw BotException.of("SCRIPT START FAILED!");
         }
 
         listener.onScriptStarted();

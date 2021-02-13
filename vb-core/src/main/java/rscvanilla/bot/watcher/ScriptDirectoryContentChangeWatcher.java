@@ -85,7 +85,7 @@ public class ScriptDirectoryContentChangeWatcher {
         try {
             return MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
-            throw new BotException(e);
+            throw BotException.of("Failed to get SHA-256 algorithm.", e);
         }
     }
 
@@ -109,7 +109,7 @@ public class ScriptDirectoryContentChangeWatcher {
             }
             return listOfFileHashBytes.toArray(new byte[0][]);
         } catch (IOException e) {
-            throw new BotException(e);
+            throw BotException.of("IO Exception", e);
         }
     }
 

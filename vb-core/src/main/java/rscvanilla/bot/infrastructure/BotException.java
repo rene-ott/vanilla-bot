@@ -4,21 +4,11 @@ import java.util.Arrays;
 
 public class BotException extends RuntimeException {
 
-    // Use Static factory method
-    @Deprecated
-    public BotException(Throwable e) {
-        super(e);
-    }
-
-    // Use Static factory method
-    @Deprecated
-    public BotException(String message, Throwable throwable) {
+    private BotException(String message, Throwable throwable) {
         super(message, throwable);
     }
 
-    // Use Static factory method
-    @Deprecated
-    public BotException(String message) {
+    private BotException(String message) {
         super(message);
     }
 

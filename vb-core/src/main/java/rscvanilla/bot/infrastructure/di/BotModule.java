@@ -93,7 +93,7 @@ public class BotModule extends AbstractModule {
             var fileReader = ClientJarClassInfoFileReader.readHooksFile();
             bind(ClientJarClassInfo.class).toInstance(fileReader);
         } catch (IOException e) {
-            throw new BotException("Reading hooks file failed", e);
+            throw BotException.of("Reading hooks file failed", e);
         }
     }
 
