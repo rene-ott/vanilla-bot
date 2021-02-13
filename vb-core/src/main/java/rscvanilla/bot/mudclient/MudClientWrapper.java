@@ -29,7 +29,7 @@ public class MudClientWrapper {
 
     private FieldWrapper<com.rsc.d> mudClient;
 
-    private ClientJarClassInfo clientJarClassInfo;
+    private final ClientJarClassInfo clientJarClassInfo;
 
     private final MudClientClassFields classFields;
     private final MudClientClassMethods classMethods;

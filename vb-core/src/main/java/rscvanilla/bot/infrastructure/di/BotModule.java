@@ -44,11 +44,9 @@ import java.io.IOException;
 public class BotModule extends AbstractModule {
 
     private final EventBus eventBus = new EventBus("Bot EventBus");
-    private final String captchaDirectoryPath;
     private final String scriptsDirectoryPath;
 
-    public BotModule(String captchaDirectoryPath, String scriptsDirectoryPath) {
-        this.captchaDirectoryPath = captchaDirectoryPath;
+    public BotModule(String scriptsDirectoryPath) {
         this.scriptsDirectoryPath = scriptsDirectoryPath;
     }
 
