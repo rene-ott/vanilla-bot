@@ -1,8 +1,22 @@
----
 applet:
   qualified_name: com.rsc.applet.b
   fields:
     mud_client:
+
+mud_client_base:
+  qualified_name: com.rsc.b
+  fields:
+    packet_builder:
+
+packet_builder:
+  qualified_name: com.rsc.f.e
+  methods:
+    set_op_code:
+    put_string:
+    put_short:
+    put_byte:
+    put_int:
+    send:
 
 mud_client:
   qualified_name: com.rsc.d
