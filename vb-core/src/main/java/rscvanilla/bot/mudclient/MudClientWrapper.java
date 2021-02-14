@@ -5,7 +5,6 @@ import rscvanilla.bot.infrastructure.utils.EnumUtil;
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.models.wrappers.*;
 import rscvanilla.bot.infrastructure.BotException;
-import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.infrastructure.logger.AppLoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,6 @@ import rscvanilla.cjci.model.classes.mudclient.MudClientClassFields;
 import rscvanilla.cjci.model.classes.mudclient.MudClientClassMethods;
 
 import javax.inject.Inject;
-import java.util.Arrays;
 import java.util.List;
 
 public class MudClientWrapper {
@@ -81,11 +79,13 @@ public class MudClientWrapper {
     public FieldWrapper<MudClientGameMessageInterceptor> gameMessageInterceptor;
     public FieldWrapper<MudClientGameSettingsInterceptor> gameSettingsInterceptor;
 
-    private final MudClientPacketBuilder packetBuilder;
+    private final PacketBuilderWrapper packetBuilderWrapper;
 
     public FieldWrapper<com.rsc.e.m[]> wallObjectList;
     public FieldWrapper<Integer> wallObjectListIndex;
     public FieldWrapper<com.rsc.e.k> user;
+
+    private FieldWrapper<Object> packetBuilder;
 
     @Inject
     public MudClientWrapper(GameApplet gameApplet, ClientJarClassInfo clientJarClassInfo) {
@@ -95,9 +95,11 @@ public class MudClientWrapper {
         appletClassFields = clientJarClassInfo.applet.fields;
 
         initMudClientField(gameApplet);
-        packetBuilder = new MudClientPacketBuilder(this);
-
+        initFields();
+        initMethods();
         initializeInjectedInterceptors();
+
+        packetBuilderWrapper = new PacketBuilderWrapper(packetBuilder.getValue());
     }
 
     private void initMudClientField(GameApplet gameApplet) {
@@ -146,8 +148,7 @@ public class MudClientWrapper {
     }
 
     public void lateInitClassMembers() {
-        initFields();
-        initMethods();
+
     }
 
     private void initFields() {
@@ -186,6 +187,7 @@ public class MudClientWrapper {
             wallObjectList = initField("wallObjectList", classFields.wallObjectList, com.rsc.e.m[].class);
             wallObjectListIndex = initField("wallObjectListIndex", classFields.wallObjectListIndex, Integer.class);
             user = initField("user", classFields.user, com.rsc.e.k.class);
+            packetBuilder = initField("packetBuilder", "T", Object.class);
 
             simpleLogger.debug("");
         } catch (BotException e) {
@@ -211,7 +213,7 @@ public class MudClientWrapper {
         }
     }
 
-    public MudClientPacketBuilder getPacketBuilder() { return packetBuilder; }
+    public PacketBuilderWrapper getPacketBuilder() { return packetBuilderWrapper; }
     public ClientJarClassInfo getClientJarClassInfo() { return clientJarClassInfo; }
 
     // Accessing to MudClient should be done through this wrapper class.

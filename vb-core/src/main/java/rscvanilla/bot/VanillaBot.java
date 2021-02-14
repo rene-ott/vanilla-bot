@@ -25,7 +25,7 @@ public class VanillaBot implements Bot, ScriptEngineListener {
 
     private final BotFrame botFrame;
     private final GameApplet gameApplet;
-    private final MudClientWrapper hooker;
+    private final MudClientWrapper mudClientWrapper;
     private final ScriptEngine scriptEngine;
     private final EventBus eventBus;
     private final ScriptDirectoryContentChangeWatcher scriptsDirectoryWatcher;
@@ -40,7 +40,7 @@ public class VanillaBot implements Bot, ScriptEngineListener {
                       EventBus eventBus, ConfigService configService) {
         this.botFrame = botFrame;
         this.gameApplet = gameApplet;
-        this.hooker = mudClientWrapper;
+        this.mudClientWrapper = mudClientWrapper;
         this.scriptEngine = scriptEngine;
         this.scriptsDirectoryWatcher = scriptsDirectoryWatcher;
 
@@ -53,7 +53,7 @@ public class VanillaBot implements Bot, ScriptEngineListener {
     @Override
     public void load() {
         configService.configure();
-        hooker.lateInitClassMembers();
+        mudClientWrapper.lateInitClassMembers();
         gameApplet.execute();
         botFrame.open();
         scriptsDirectoryWatcher.start();
