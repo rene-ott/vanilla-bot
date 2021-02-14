@@ -8,6 +8,7 @@ import rscvanilla.cjci.updater.core.matcher.classes.applet.AppletClassFieldNameM
 import rscvanilla.cjci.updater.core.matcher.classes.mudclient.MudClientClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.mudclient.MudClientClassInterceptorNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.mudclient.MudClientClassMethodNameMatcher;
+import rscvanilla.cjci.updater.core.matcher.classes.mudclientbase.MudClientBaseClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.rscharacter.RSCharacterClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.rsentity.RSEntityClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.rsplayercharacter.RSPlayerCharacterClassFieldNameMatcher;
@@ -27,6 +28,8 @@ public class ClassMemberNameMatcherModule extends AbstractModule {
         configureSubTypesOf(RSEntityClassFieldNameMatcher.class);
         configureSubTypesOf(RSWallObjectClassFieldNameMatcher.class);
         configureSubTypesOf(RSPlayerCharacterClassFieldNameMatcher.class);
+
+        configureSubTypesOf(MudClientBaseClassFieldNameMatcher.class);
     }
 
     private <T> void configureSubTypesOf(Class<T> clazz) {

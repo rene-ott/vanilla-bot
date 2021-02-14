@@ -5,7 +5,7 @@ applet:
 mud_client_base:
   qualified_name: com.rsc.b
   fields:
-    packet_builder: null
+    packet_builder: T
 
 packet_builder:
   qualified_name: com.rsc.f.e

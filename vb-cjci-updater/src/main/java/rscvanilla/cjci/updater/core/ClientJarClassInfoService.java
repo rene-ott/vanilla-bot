@@ -13,6 +13,7 @@ public class ClientJarClassInfoService {
     private final RSEntityClassMemberService rsEntityClassMemberService;
     private final RSWallObjectClassMemberService rsWallObjectClassMemberService;
     private final RSPlayerCharacterClassMemberService rsPlayerCharacterClassMemberService;
+    private final MudClientBaseClassMemberService mudClientBaseClassMemberService;
 
     @Inject
     public ClientJarClassInfoService(MudClientClassMemberService mudClientClassMemberService,
@@ -20,13 +21,14 @@ public class ClientJarClassInfoService {
                                      RSCharacterClassMemberService rsCharacterClassMemberService,
                                      RSEntityClassMemberService rsEntityClassMemberService,
                                      RSWallObjectClassMemberService rsWallObjectClassMemberService,
-                                     RSPlayerCharacterClassMemberService rsPlayerCharacterClassMemberService) {
+                                     RSPlayerCharacterClassMemberService rsPlayerCharacterClassMemberService, MudClientBaseClassMemberService mudClientBaseClassMemberService) {
         this.mudClientClassMemberService = mudClientClassMemberService;
         this.appletClassMemberService = appletClassMemberService;
         this.rsCharacterClassMemberService = rsCharacterClassMemberService;
         this.rsEntityClassMemberService = rsEntityClassMemberService;
         this.rsWallObjectClassMemberService = rsWallObjectClassMemberService;
         this.rsPlayerCharacterClassMemberService = rsPlayerCharacterClassMemberService;
+        this.mudClientBaseClassMemberService = mudClientBaseClassMemberService;
     }
 
     public void setClassValuesTo(ClientJarClassInfo clientJarClassInfo) {
@@ -36,5 +38,6 @@ public class ClientJarClassInfoService {
         rsEntityClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsEntity);
         rsPlayerCharacterClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsPlayerCharacter);
         rsWallObjectClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsWallObject);
+        mudClientBaseClassMemberService.setValuesToClassMembers(clientJarClassInfo.mudClientBase);
     }
 }
