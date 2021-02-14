@@ -1,6 +1,7 @@
 package rscvanilla.bot.mudclient;
 
 import rscvanilla.bot.GameApplet;
+import rscvanilla.bot.infrastructure.utils.EnumUtil;
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.models.wrappers.*;
 import rscvanilla.bot.infrastructure.BotException;
@@ -17,6 +18,7 @@ import rscvanilla.cjci.model.classes.mudclient.MudClientClassFields;
 import rscvanilla.cjci.model.classes.mudclient.MudClientClassMethods;
 
 import javax.inject.Inject;
+import java.util.Arrays;
 import java.util.List;
 
 public class MudClientWrapper {
@@ -234,11 +236,8 @@ public class MudClientWrapper {
     public void login() { login.invokeAction(false); }
     public void logout() { logout.invokeAction(); }
 
-    @DependsOnExternal
-    public boolean isInGame() { return gameMode.getValue() == com.rsc.f.rR; }
-
-    @DependsOnExternal
-    public boolean isOnLoginScreen() { return gameMode.getValue() == com.rsc.f.rQ; }
+    public boolean isInGame() { return gameMode.getValue() == EnumUtil.getEnumFromString(gameMode.getValue().getClass(), "GAME"); }
+    public boolean isOnLoginScreen() { return gameMode.getValue() == EnumUtil.getEnumFromString(gameMode.getValue().getClass(), "LOGIN"); }
 
     private <TWrappedEntity extends RSEntityWrapper<TInternalObject>, TInternalObject extends com.rsc.e.d> List<TWrappedEntity> newWrappedEntityList(
         FieldWrapper<TInternalObject[]> internalArray, FieldWrapper<Integer> internalArrayLength, Class<TWrappedEntity> clazz) {
