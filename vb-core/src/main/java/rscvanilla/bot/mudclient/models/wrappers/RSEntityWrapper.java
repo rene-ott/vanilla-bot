@@ -37,7 +37,7 @@ public abstract class RSEntityWrapper<T extends com.rsc.e.d> implements Globally
     public abstract Position getLocalPosition();
 
     protected <TField> TField getFieldValue(String fieldDisplayName, String fieldName, Class<?> fieldReturnType) {
-        return WrapperTool.<TField>loadField(this, null, fieldDisplayName, fieldName, fieldReturnType).getValue();
+        return WrapperTool.<TField>loadField(internalObject, null, fieldDisplayName, fieldName, fieldReturnType).getValue();
     }
 
     private RSEntityClassFields getClassFields() {

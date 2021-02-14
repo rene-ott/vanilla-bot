@@ -11,11 +11,9 @@ public class DirectionFieldNameMatcher extends ClassMemberNameBaseMatcher implem
 
     public DirectionFieldNameMatcher() {
         pattern = Pattern.compile(
-            "(?<pre>public class i extends d \\{\\R" +
-            " {3}public int [a-zA-Z]{2};\\R" +
-            " {3}public int [a-zA-Z]{2} = 0;\\R" +
-            " {3}public int )(?<fieldName>[a-zA-Z]{2})(?<post> = 0;\\R" +
-            " {3}public int [a-zA-Z]{2};)",
+            "(?<pre> {3}public int\\[] [a-zA-Z]{2} = new int\\[10];\\R" +
+            " {3}public int\\[] [a-zA-Z]{2} = new int\\[10];\\R" +
+            " {3}private int )(?<fieldName>[a-zA-Z]{2})(?<post> = 0;)",
             Pattern.MULTILINE
         );
     }

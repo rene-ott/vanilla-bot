@@ -21,15 +21,13 @@ public class DirectionFieldNameMatcherTests extends BaseTests {
         var mudClient = readClassRSCharacter();
 
         var match = new StringBuilder()
-            .append("public class i extends d {").append(lineSeparator)
-            .append("   public int mx;").append(lineSeparator)
-            .append("   public int my = 0;").append(lineSeparator)
-            .append("   public int ***mz*** = 0;").append(lineSeparator)
-            .append("   public int mA;")
+            .append("   public int[] mQ = new int[10];").append(lineSeparator)
+            .append("   public int[] mR = new int[10];").append(lineSeparator)
+            .append("   private int ***lZ*** = 0;")
             .toString();
 
         var result = matcher.match(mudClient);
-        assertThat(result.getMemberName(), equalTo("mz"));
+        assertThat(result.getMemberName(), equalTo("lZ"));
         assertThat(result.getMatch(), equalTo(match));
     }
 }

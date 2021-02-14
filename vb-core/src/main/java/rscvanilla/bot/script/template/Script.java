@@ -26,7 +26,7 @@ public abstract class Script {
 
     private final RSLocalPlayerCharacter user;
 
-    private final MudClientWrapper hooker;
+    private final MudClientWrapper mudClientWrapper;
 
     public Script(ScriptDependencyContext dependencyContext) {
 
@@ -46,11 +46,11 @@ public abstract class Script {
         wallObjectAction = dependencyContext.getWallAction();
         user = dependencyContext.getUser();
 
-        hooker = dependencyContext.getMudClientWrapper();
+        mudClientWrapper = dependencyContext.getMudClientWrapper();
     }
 
     /** FOR DEV **/
-    protected MudClientWrapper getHooker() { return hooker; }
+    protected MudClientWrapper getMudClientWrapper() { return mudClientWrapper; }
 
     /** USER **/
     protected Position getPosition() { return user.getGlobalPosition(); }

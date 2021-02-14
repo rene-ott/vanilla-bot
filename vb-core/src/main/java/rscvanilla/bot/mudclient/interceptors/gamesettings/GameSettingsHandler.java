@@ -2,6 +2,7 @@ package rscvanilla.bot.mudclient.interceptors.gamesettings;
 
 import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.enums.OpCodeIn;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
 
 import javax.inject.Inject;
@@ -9,18 +10,18 @@ import javax.inject.Inject;
 //TODO Separate settings class & move fields to mudclient
 public class GameSettingsHandler implements MudClientGameSettingsInterceptor {
 
-    private MudClientWrapper hooker;
+    private final MudClientWrapper mudClientWrapper;
 
     @Inject
-    public GameSettingsHandler(MudClientWrapper hooker) {
-        this.hooker = hooker;
+    public GameSettingsHandler(MudClientWrapper mudClientWrapper) {
+        this.mudClientWrapper = mudClientWrapper;
     }
 
     @Override
     @DependsOnExternal
     public boolean onGameSettingsInterception(Object type, int opCode) {
-        if (opCode == 240) {
-            var mudClient = this.hooker.getRawMudClient();
+        if (opCode == OpCodeIn.SETTINGS_CHANGED.id()) {
+            var mudClient = this.mudClientWrapper.getRawMudClient();
 
             mudClient.rI = false; //Camera Aut
 
