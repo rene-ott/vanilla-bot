@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
+import rscvanilla.cjci.model.utils.Strings;
 
 import java.io.IOException;
 
@@ -22,7 +23,7 @@ public class ClientJarClassInfoSerializer {
     }
 
     public String serialize(ClientJarClassInfo clientJarClassInfo) throws IOException {
-        return mapper.writeValueAsString(clientJarClassInfo);
+        return Strings.separateRootKeyBlocksByNewLine(mapper.writeValueAsString(clientJarClassInfo));
     }
 
     private ObjectMapper createObjectMapper() {
