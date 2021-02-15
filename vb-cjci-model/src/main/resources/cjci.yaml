@@ -2,25 +2,6 @@ applet:
   fields:
     mud_client: aE
 
-mud_client_base:
-  qualified_name: com.rsc.b
-  fields:
-    packet_builder: T
-
-packet_builder:
-  qualified_name: com.rsc.f.e
-  methods:
-    send: dX
-    set_op_code: aO
-
-packet_builder_base:
-  qualified_name: com.rsc.f.a
-  methods:
-    put_byte: aK
-    put_int: aN
-    put_short: aL
-    put_string: q
-
 mud_client:
   qualified_name: com.rsc.d
   fields:
@@ -71,6 +52,25 @@ mud_client:
     game_captcha: b
     game_message: a
     game_settings: b
+
+mud_client_base:
+  qualified_name: com.rsc.b
+  fields:
+    packet_builder: T
+
+packet_builder:
+  qualified_name: com.rsc.f.e
+  methods:
+    send: dX
+    set_op_code: aO
+
+packet_builder_base:
+  qualified_name: com.rsc.f.a
+  methods:
+    put_byte: aK
+    put_int: aN
+    put_short: aL
+    put_string: q
 
 rs_character:
   qualified_name: com.rsc.e.i

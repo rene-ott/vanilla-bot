@@ -1,5 +1,6 @@
 package rscvanilla.cjci.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import rscvanilla.cjci.model.classes.applet.AppletClass;
 import rscvanilla.cjci.model.classes.mudclient.MudClientClass;
 import rscvanilla.cjci.model.classes.mudclientbase.MudClientBaseClass;
@@ -10,6 +11,7 @@ import rscvanilla.cjci.model.classes.rsentity.RSEntityClass;
 import rscvanilla.cjci.model.classes.rsplayercharacter.RSPlayerCharacterClass;
 import rscvanilla.cjci.model.classes.rswallobject.RSWallObjectClass;
 
+@JsonPropertyOrder(alphabetic = true)
 public class ClientJarClassInfo {
     public AppletClass applet = new AppletClass();
     public MudClientBaseClass mudClientBase = new MudClientBaseClass();
