@@ -1,6 +1,5 @@
 package rscvanilla.bot.mudclient.interceptors.gamesettings;
 
-import rscvanilla.bot.infrastructure.annotations.DependsOnExternal;
 import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.bot.mudclient.enums.OpCodeIn;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
@@ -18,7 +17,6 @@ public class GameSettingsHandler implements MudClientGameSettingsInterceptor {
     }
 
     @Override
-    @DependsOnExternal
     public boolean onGameSettingsInterception(Object type, int opCode) {
         if (opCode == OpCodeIn.SETTINGS_CHANGED.id()) {
             var mudClient = this.mudClientWrapper.getRawMudClient();

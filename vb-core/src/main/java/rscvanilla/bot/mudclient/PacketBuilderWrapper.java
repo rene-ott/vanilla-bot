@@ -14,7 +14,7 @@ import rscvanilla.cjci.model.classes.packetbuilderbase.PacketBuilderBaseClassMet
 // This could be alleviated by adding synchronized keyword to packet sender methods
 public class PacketBuilderWrapper {
 
-    private static final Logger logger = LoggerFactory.getLogger(MudClientWrapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(PacketBuilderWrapper.class);
     private static final Logger simpleLogger = AppLoggerFactory.getSimpleLogger();
 
     private final Object internalPacketBuilder;

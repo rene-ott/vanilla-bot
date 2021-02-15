@@ -63,12 +63,7 @@ public class VarrockWestMiner extends RunnableScript {
             return;
         }
 
-        var newState = getScriptState();
-        if (newState != this.state) {
-            print("STATE: " + this.state + " -> " + newState);
-        }
-
-        this.state = newState;
+        this.state = getScriptState();
 
         switch (state) {
             case MINE -> mineRock();
