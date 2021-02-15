@@ -13,38 +13,3 @@ repositories {
 dependencies {
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.1'
 }
-
-def buildDir = project.buildDir
-
-def distDir = "${buildDir}/dist"
-def libsDir = "${buildDir}/libs"
-def archiveName = "hook-model"
-def versionedDirName = "hook-model-${project.version}"
-def versionedDir = "${distDir}/${versionedDirName}"
-
-shadowJar {
-    manifest {
-        archivesBaseName = archiveName
-        version(null)
-        classifier(null)
-    }
-}
-
-task createDistDir(type: Delete) {
-    dependsOn shadowJar
-
-    doLast {
-        delete distDir
-        mkdir versionedDir
-    }
-}
-
-task copyJarToDist(type: Copy) {
-    dependsOn createDistDir
-    from "${libsDir}/${archiveName}.jar" into "${versionedDir}"
-}
-
-task publishModel() {
-    dependsOn copyJarToDist
-    println "Publishing hook-model"
-}

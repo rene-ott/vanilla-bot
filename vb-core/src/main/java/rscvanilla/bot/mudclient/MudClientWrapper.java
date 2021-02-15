@@ -99,7 +99,7 @@ public class MudClientWrapper {
         initMethods();
         initializeInjectedInterceptors();
 
-        packetBuilderWrapper = new PacketBuilderWrapper(packetBuilder.getValue());
+        packetBuilderWrapper = new PacketBuilderWrapper(packetBuilder.getValue(), clientJarClassInfo);
     }
 
     private void initMudClientField(GameApplet gameApplet) {

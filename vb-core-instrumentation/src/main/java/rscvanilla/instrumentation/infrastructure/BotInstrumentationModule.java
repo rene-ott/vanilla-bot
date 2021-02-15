@@ -40,7 +40,7 @@ public class BotInstrumentationModule extends AbstractModule {
     //TODO Handle exceptions
     private ClientJarClassInfo getHooksFile() {
         try {
-            return ClientJarClassInfoFileReader.readHooksFile();
+            return ClientJarClassInfoFileReader.readFile();
         } catch (IOException e) {
             return null;
         }

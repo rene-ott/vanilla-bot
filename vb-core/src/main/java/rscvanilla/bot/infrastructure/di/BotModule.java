@@ -85,12 +85,12 @@ public class BotModule extends AbstractModule {
         bind(BankAction.class).in(Singleton.class);
         bind(ScriptDependencyContext.class).in(Singleton.class);
 
-        bindHooksFile();
+        bindCjciFile();
     }
 
-    private void bindHooksFile() {
+    private void bindCjciFile() {
         try {
-            var fileReader = ClientJarClassInfoFileReader.readHooksFile();
+            var fileReader = ClientJarClassInfoFileReader.readFile();
             bind(ClientJarClassInfo.class).toInstance(fileReader);
         } catch (IOException e) {
             throw BotException.of("Reading hooks file failed", e);

@@ -9,7 +9,7 @@ public class ClientJarClassInfoFileReader {
 
     private static final String CJCI_FILE_NAME = "cjci.yaml";
 
-    public static ClientJarClassInfo readHooksFile() throws IOException {
+    public static ClientJarClassInfo readFile() throws IOException {
         try (var is = getTemplateInputStream()) {
             var fileContent = getStringFromInputStream(is);
             return new ClientJarClassInfoSerializer().deserialize(fileContent);
