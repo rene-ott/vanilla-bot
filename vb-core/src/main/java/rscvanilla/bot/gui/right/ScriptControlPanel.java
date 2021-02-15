@@ -58,7 +58,7 @@ public class ScriptControlPanel extends JPanel implements ActionListener {
     public void handleStartButtonClick(String buttonText) {
         var isStart = buttonText.equals(GUIConstants.BTN_TEXT_START);
 
-        eventBus.post(new ScriptStartButtonClickedEvent(isStart));
         startScriptButton.setText(isStart ? GUIConstants.BTN_TEXT_STOP : GUIConstants.BTN_TEXT_START);
+        eventBus.post(new ScriptStartButtonClickedEvent(isStart));
     }
 }

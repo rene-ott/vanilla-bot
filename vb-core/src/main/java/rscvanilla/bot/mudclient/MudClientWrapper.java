@@ -1,5 +1,6 @@
 package rscvanilla.bot.mudclient;
 
+import com.google.common.base.Strings;
 import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.infrastructure.utils.EnumUtil;
 import rscvanilla.bot.mudclient.models.Position;
@@ -241,6 +242,9 @@ public class MudClientWrapper {
     public boolean isInGame() { return gameMode.getValue() == EnumUtil.getEnumFromString(gameMode.getValue().getClass(), "GAME"); }
     public boolean isOnLoginScreen() { return gameMode.getValue() == EnumUtil.getEnumFromString(gameMode.getValue().getClass(), "LOGIN"); }
 
+    public boolean isLoginUserOrPasswordMissing() {
+        return Strings.isNullOrEmpty(userName.getValue()) || Strings.isNullOrEmpty(userPassword.getValue());
+    }
     private <TWrappedEntity extends RSEntityWrapper<TInternalObject>, TInternalObject extends com.rsc.e.d> List<TWrappedEntity> newWrappedEntityList(
         FieldWrapper<TInternalObject[]> internalArray, FieldWrapper<Integer> internalArrayLength, Class<TWrappedEntity> clazz) {
         return WrapperTool.newWrappedEntityList(internalArray.getValue(), internalArrayLength.getValue(), clazz, this);

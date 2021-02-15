@@ -5,6 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.gui.GUIConstants;
 import rscvanilla.bot.script.events.ScriptListLoadedEvent;
+import rscvanilla.bot.script.events.ScriptStartFailedEvent;
 import rscvanilla.bot.script.events.ScriptStartedEvent;
 import rscvanilla.bot.script.events.ScriptStoppedEvent;
 
@@ -68,6 +69,12 @@ public class RightPanel extends JPanel {
         scriptControlPanel.getStartScriptButton().setText(GUIConstants.BTN_TEXT_START);
         scriptSelectionPanel.getScriptSelectionList().setEnabled(true);
         scriptAntiBanPanel.setElementsEnabled(true);
+    }
+
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void onScriptStartFailed(ScriptStartFailedEvent event) {
+        scriptControlPanel.getStartScriptButton().setText(GUIConstants.BTN_TEXT_START);
     }
 
     @Subscribe

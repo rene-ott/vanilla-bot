@@ -1,9 +1,9 @@
 package rscvanilla.bot.script.engine;
 
 import rscvanilla.bot.events.messages.GameMessageEvent;
-import rscvanilla.bot.events.messages.MessageEvent;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.printer.Printer;
+import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
 import rscvanilla.bot.script.engine.executor.ScriptThreadExecutor;
 import rscvanilla.bot.script.engine.executor.ScriptThreadExecutorListener;
@@ -26,8 +26,9 @@ public class ScriptEngine implements ScriptThreadExecutorListener {
     private final ScriptLoader scriptLoader;
     private final ScriptFactory scriptFactory;
     private final Printer printer;
+    private final MudClientWrapper mudClientWrapper;
 
-    private volatile Future scriptTask;
+    private volatile Future<?> scriptTask;
     private RunnableScript script;
 
     private ScriptAntiBanParams antiBanParams;
@@ -39,10 +40,12 @@ public class ScriptEngine implements ScriptThreadExecutorListener {
                         ScriptList scriptList,
                         ScriptThreadExecutor scriptExecutor,
                         ScriptFactory scriptFactory,
-                        Printer printer
-    ) {
+                        Printer printer,
+                        MudClientWrapper mudClientWrapper) {
+
         this.antiBanParams = new ScriptAntiBanParams();
 
+        this.mudClientWrapper = mudClientWrapper;
         this.scriptLoader = scriptLoader;
         this.scriptList = scriptList;
         this.scriptThreadExecutor = scriptExecutor;
@@ -54,6 +57,15 @@ public class ScriptEngine implements ScriptThreadExecutorListener {
 
     public void startScript() {
         try {
+            if (mudClientWrapper.isLoginUserOrPasswordMissing()) {
+                printer.printAsBot(
+                    "Script couldn't be started - login user or password is not set. " +
+                    "Set login information through game client (login first) or select pre-defined user with password from drop down menu."
+                );
+                listener.onScriptStartFailed();
+                return;
+            }
+
             script = scriptFactory.createScript(scriptList.getSelection(), antiBanParams);
             scriptTask = scriptThreadExecutor.submit(script);
 

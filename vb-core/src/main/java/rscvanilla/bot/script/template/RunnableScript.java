@@ -44,7 +44,7 @@ public abstract class RunnableScript extends Script implements Runnable, AntiBan
         state.start();
 
         if (antiBan.getParams().isEnabled()) {
-            logger.debug("AntiBan [ENABLED] with parameters: " + antiBan.getParams());
+            logger.trace("AntiBan [ENABLED] with parameters: " + antiBan.getParams());
             antiBanScheduler.scheduleWithFixedDelay(this::checkAntiBan, 1, 2 , TimeUnit.SECONDS);
         }
     }

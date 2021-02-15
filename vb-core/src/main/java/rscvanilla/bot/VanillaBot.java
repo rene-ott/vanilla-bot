@@ -12,6 +12,7 @@ import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.bot.script.engine.ScriptEngine;
 import rscvanilla.bot.script.engine.ScriptEngineListener;
 import rscvanilla.bot.script.events.ScriptListLoadedEvent;
+import rscvanilla.bot.script.events.ScriptStartFailedEvent;
 import rscvanilla.bot.script.events.ScriptStartedEvent;
 import rscvanilla.bot.script.events.ScriptStoppedEvent;
 import rscvanilla.bot.script.template.RunnableScript;
@@ -92,6 +93,11 @@ public class VanillaBot implements Bot, ScriptEngineListener {
     @SuppressWarnings("unused")
     public void onScriptAntiBanParamsChanged(ScriptAntiBanParamsChangedEvent event) {
         scriptEngine.updateAntiBanParams(event.getParams());
+    }
+
+    @Override
+    public void onScriptStartFailed() {
+        eventBus.post(new ScriptStartFailedEvent());
     }
 
     @Override
