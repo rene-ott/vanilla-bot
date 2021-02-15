@@ -12,11 +12,15 @@ packet_builder:
   qualified_name: com.rsc.f.e
   methods:
     set_op_code:
+    send:
+
+packet_builder_base:
+  qualified_name: com.rsc.f.a
+  methods:
     put_string:
     put_short:
     put_byte:
     put_int:
-    send:
 
 mud_client:
   qualified_name: com.rsc.d

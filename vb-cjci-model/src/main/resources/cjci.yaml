@@ -10,12 +10,16 @@ mud_client_base:
 packet_builder:
   qualified_name: com.rsc.f.e
   methods:
-    put_byte: null
-    put_int: null
-    put_short: null
-    put_string: null
-    send: null
-    set_op_code: null
+    send: dX
+    set_op_code: aO
+
+packet_builder_base:
+  qualified_name: com.rsc.f.a
+  methods:
+    put_byte: aK
+    put_int: aN
+    put_short: aL
+    put_string: q
 
 mud_client:
   qualified_name: com.rsc.d

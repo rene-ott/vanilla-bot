@@ -246,15 +246,15 @@ public class MudClientWrapper {
         return WrapperTool.newWrappedEntityList(internalArray.getValue(), internalArrayLength.getValue(), clazz, this);
     }
 
-    private <T> FieldWrapper<T> initField(String wrapperFieldName, String mcFieldName, Class<?> mcFieldExpectedReturnType) {
-        return WrapperTool.loadField(mudClient.getValue(), simpleLogger, wrapperFieldName, mcFieldName, mcFieldExpectedReturnType);
+    private <T> FieldWrapper<T> initField(String fieldDisplayName, String fieldName, Class<?> fieldType) {
+        return WrapperTool.loadField(mudClient.getValue(), simpleLogger, fieldDisplayName, fieldName, fieldType);
     }
 
-    private <T> MethodWrapper<T> initMethod(String wrapperMethodName, String mcMethodName, Class<?>...mcMethodExpectedParamTypes) {
-        return WrapperTool.loadMethod(mudClient.getValue(), simpleLogger, wrapperMethodName, mcMethodName, mcMethodExpectedParamTypes);
+    private <T> MethodWrapper<T> initMethod(String methodDisplayName, String methodName, Class<?>...mcMethodExpectedParamTypes) {
+        return WrapperTool.loadMethod(mudClient.getValue(), simpleLogger, methodDisplayName, methodName, mcMethodExpectedParamTypes);
     }
 
-    private <T> FieldWrapper<T> initInterceptor(String wrapperFieldName, String mcFieldName) {
-        return WrapperTool.loadField(mudClient.getValue(), simpleLogger, wrapperFieldName, mcFieldName, null);
+    private <T> FieldWrapper<T> initInterceptor(String interceptorDisplayName, String fieldName) {
+        return WrapperTool.loadField(mudClient.getValue(), simpleLogger, interceptorDisplayName, fieldName, null);
     }
 }

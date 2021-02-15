@@ -9,10 +9,6 @@ import rscvanilla.cjci.model.contracts.WithClassMembers;
 @YamlClassInfo("methods")
 public class PacketBuilderClassMethods implements WithClassMembers {
     @YamlClassMemberKey("set_op_code") public String setOpCode;
-    @YamlClassMemberKey("put_int") public String putInt;
-    @YamlClassMemberKey("put_string") public String putString;
-    @YamlClassMemberKey("put_short") public String putShort;
-    @YamlClassMemberKey("put_byte") public String putByte;
     @YamlClassMemberKey("send") public String send;
 }
 
