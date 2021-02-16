@@ -46,7 +46,6 @@ public class MudClientTransformer implements ClassFileTransformer {
         if (!className.equals(mudClientClass.qualifiedName.replace(".", "/"))) {
             return null;
         }
-        System.out.println(className);
 
         var cp = ClassPool.getDefault();
         try {

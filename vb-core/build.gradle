@@ -85,13 +85,14 @@ task copyLibToDist(type: Copy) {
     from "${projectDir}/lib" into "${versionedDir}/lib"
 }
 
-task copyConfigPropertiesToDist(type: Copy) {
+task copyConfigToDist(type: Copy) {
     dependsOn copyLibToDist
-    from "${projectDir}/config.properties" into "${versionedDir}"
+    from "${projectDir}/config" into "${versionedDir}/config"
+    exclude "appsettings.local.yaml"
 }
 
 task createRunInputScripts(type: CreateStartScripts) {
-    dependsOn copyConfigPropertiesToDist
+    dependsOn copyConfigToDist
 
     applicationName = "run"
     outputDir = file(versionedDir)

@@ -8,7 +8,7 @@
         </filter>
 
         <encoder class="rscvanilla.bot.infrastructure.logger.patterns.MultiLayoutPattern">
-            <Pattern>[%d{yyyy-MM-dd HH:mm:ss}][%highlight(%level)][%blue(%thread)][%yellow(%logger{10})]: %msg%n%throwable</Pattern>
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss}][%level][%t][%logger{10}]: %msg%n%throwable</Pattern>
 
             <rule>
                 <logger>SimpleLogger</logger>
@@ -23,13 +23,10 @@
             <level>WARN</level>
         </filter>
 
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${LOGS}/app.%d{yyyy-MM-dd}-warn.%i.txt</fileNamePattern>
             <maxHistory>14</maxHistory>
-
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>50MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxFileSize>50MB</maxFileSize>
         </rollingPolicy>
 
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -44,13 +41,10 @@
             <levels>INFO|DEBUG</levels>
         </filter>
 
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${LOGS}/app.%d{yyyy-MM-dd}-info-debug.%i.txt</fileNamePattern>
             <maxHistory>14</maxHistory>
-
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>50MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxFileSize>50MB</maxFileSize>
         </rollingPolicy>
 
         <encoder class="rscvanilla.bot.infrastructure.logger.patterns.MultiLayoutPattern">

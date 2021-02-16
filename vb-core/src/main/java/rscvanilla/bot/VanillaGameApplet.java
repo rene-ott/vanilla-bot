@@ -15,7 +15,9 @@ public class VanillaGameApplet extends b implements GameApplet {
 
     public String C() { return c.aa + File.separator; }
 
-    public void execute() { super.start(); }
+    public void execute() {
+        super.start();
+    }
 
     @SuppressWarnings("deprecation")
     public Applet getApplet() { return this; }

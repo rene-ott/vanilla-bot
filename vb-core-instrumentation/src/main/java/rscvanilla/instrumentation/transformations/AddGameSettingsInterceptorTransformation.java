@@ -28,8 +28,6 @@ public class AddGameSettingsInterceptorTransformation {
     }
 
     public void implement(CtClass ctClass) throws NotFoundException, CannotCompileException {
-        System.out.println("AddGameSettingsInterceptorTransformation");
-
         var ctField = CtField.make(String.format("%s %s = null;", fieldTypeName, fieldName), ctClass);
         ctField.setModifiers(9);
         ctClass.addField(ctField);
