@@ -14,11 +14,12 @@ public class Main {
 
     private static final String WORKING_DIRECTORY_PATH = System.getProperty("user.dir");
     private static final String SCRIPTS_DIRECTORY_PATH = WORKING_DIRECTORY_PATH + File.separator + "scripts";
+    private static final String CONFIG_DIRECTORY_PATH = WORKING_DIRECTORY_PATH + File.separator + "config";
 
     public static void main(String [] args) {
 
         try {
-            Guice.createInjector(new BotModule(SCRIPTS_DIRECTORY_PATH)).getInstance(VanillaBot.class).load();
+            Guice.createInjector(new BotModule(SCRIPTS_DIRECTORY_PATH, CONFIG_DIRECTORY_PATH)).getInstance(VanillaBot.class).load();
         } catch (BotException e) {
             logger.error("BOT FAILED:", e);
         }

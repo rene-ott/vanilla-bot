@@ -1,0 +1,10 @@
+global_proxy_address:
+
+users:
+ - username:
+   password: 
+   proxy_address:
+
+ - username:
+   password:
+   proxy_address:

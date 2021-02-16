@@ -2,13 +2,13 @@ package rscvanilla.bot;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import rscvanilla.bot.config.ConfigService;
+import rscvanilla.bot.config.AppSettingsService;
 import rscvanilla.bot.events.messages.GameMessageEvent;
 import rscvanilla.bot.gui.BotFrame;
+import rscvanilla.bot.gui.events.AppSettingsUserSelectedEvent;
 import rscvanilla.bot.gui.events.ScriptAntiBanParamsChangedEvent;
 import rscvanilla.bot.gui.events.ScriptSelectedEvent;
 import rscvanilla.bot.gui.events.ScriptStartButtonClickedEvent;
-import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.bot.script.engine.ScriptEngine;
 import rscvanilla.bot.script.engine.ScriptEngineListener;
 import rscvanilla.bot.script.events.ScriptListLoadedEvent;
@@ -26,37 +26,33 @@ public class VanillaBot implements Bot, ScriptEngineListener {
 
     private final BotFrame botFrame;
     private final GameApplet gameApplet;
-    private final MudClientWrapper mudClientWrapper;
     private final ScriptEngine scriptEngine;
     private final EventBus eventBus;
     private final ScriptDirectoryContentChangeWatcher scriptsDirectoryWatcher;
-    private final ConfigService configService;
+    private final AppSettingsService appSettingsService;
 
     @Inject
     public VanillaBot(BotFrame botFrame,
                       GameApplet gameApplet,
-                      MudClientWrapper mudClientWrapper,
                       ScriptEngine scriptEngine,
                       ScriptDirectoryContentChangeWatcher scriptsDirectoryWatcher,
-                      EventBus eventBus, ConfigService configService) {
+                      EventBus eventBus,
+                      AppSettingsService appSettingsService) {
         this.botFrame = botFrame;
         this.gameApplet = gameApplet;
-        this.mudClientWrapper = mudClientWrapper;
         this.scriptEngine = scriptEngine;
         this.scriptsDirectoryWatcher = scriptsDirectoryWatcher;
 
         this.eventBus = eventBus;
-        this.configService = configService;
+        this.appSettingsService = appSettingsService;
 
         this.scriptEngine.addScriptEngineListener(this);
     }
 
     @Override
     public void load() {
-        configService.configure();
-        mudClientWrapper.lateInitClassMembers();
         gameApplet.execute();
-        botFrame.open();
+        botFrame.open(appSettingsService.selectDefaultUser());
         scriptsDirectoryWatcher.start();
         scriptEngine.loadScripts();
     }
@@ -93,6 +89,12 @@ public class VanillaBot implements Bot, ScriptEngineListener {
     @SuppressWarnings("unused")
     public void onScriptAntiBanParamsChanged(ScriptAntiBanParamsChangedEvent event) {
         scriptEngine.updateAntiBanParams(event.getParams());
+    }
+
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void onAppSettingsUserSelected(AppSettingsUserSelectedEvent event) {
+        botFrame.setTitleUserInfo(appSettingsService.setUserSelected(event.getUser()));
     }
 
     @Override

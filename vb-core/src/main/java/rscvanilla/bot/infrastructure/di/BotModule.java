@@ -11,9 +11,8 @@ import rscvanilla.bot.Bot;
 import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.VanillaBot;
 import rscvanilla.bot.VanillaGameApplet;
+import rscvanilla.bot.config.*;
 import rscvanilla.bot.mudclient.actions.*;
-import rscvanilla.bot.config.ConfigProperties;
-import rscvanilla.bot.config.ConfigService;
 import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.annotations.ScriptsDirectoryPath;
@@ -45,9 +44,11 @@ public class BotModule extends AbstractModule {
 
     private final EventBus eventBus = new EventBus("Bot EventBus");
     private final String scriptsDirectoryPath;
+    private final String configDirectoryPath;
 
-    public BotModule(String scriptsDirectoryPath) {
+    public BotModule(String scriptsDirectoryPath, String configDirectoryPath) {
         this.scriptsDirectoryPath = scriptsDirectoryPath;
+        this.configDirectoryPath = configDirectoryPath;
     }
 
     @Override
@@ -62,8 +63,6 @@ public class BotModule extends AbstractModule {
         bind(MudClientCaptchaInterceptor.class).to(CaptchaImageHandler.class).in(Singleton.class);
         bind(CaptchaImageRecognizer.class).in(Singleton.class);
         bind(CaptchaDataLoader.class).in(Singleton.class);
-        bind(ConfigProperties.class).toInstance(new ConfigProperties());
-        bind(ConfigService.class).in(Singleton.class);
         bindConstant().annotatedWith(ScriptsDirectoryPath.class).to(scriptsDirectoryPath);
 
         bind(MudClientGameMessageInterceptor.class).to(GameMessageHandler.class).in(Singleton.class);
@@ -85,15 +84,23 @@ public class BotModule extends AbstractModule {
         bind(BankAction.class).in(Singleton.class);
         bind(ScriptDependencyContext.class).in(Singleton.class);
 
-        bindCjciFile();
+        bindAppSettings();
+        bindClientJarClassInfo();
     }
 
-    private void bindCjciFile() {
+    private void bindAppSettings() {
         try {
-            var fileReader = ClientJarClassInfoFileReader.readFile();
-            bind(ClientJarClassInfo.class).toInstance(fileReader);
+            bind(AppSettings.class).toInstance(AppSettingsFileReader.readFile(configDirectoryPath));
         } catch (IOException e) {
-            throw BotException.of("Reading hooks file failed", e);
+            throw BotException.of("Reading appsettings file failed.", e);
+        }
+    }
+
+    private void bindClientJarClassInfo() {
+        try {
+            bind(ClientJarClassInfo.class).toInstance(ClientJarClassInfoFileReader.readFile());
+        } catch (IOException e) {
+            throw BotException.of("Reading cjci file failed.", e);
         }
     }
 

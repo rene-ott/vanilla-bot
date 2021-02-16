@@ -1,7 +1,9 @@
 package rscvanilla.bot.gui;
 
+import com.google.common.base.Strings;
 import com.google.common.eventbus.EventBus;
 import rscvanilla.bot.GameApplet;
+import rscvanilla.bot.config.AppSettings;
 import rscvanilla.bot.gui.bottom.BottomPanel;
 import rscvanilla.bot.gui.right.RightPanel;
 
@@ -15,16 +17,19 @@ public class BotFrame extends JFrame {
     public static int HEIGHT = GUIConstants.CONTENT_PANE_HEIGHT + BottomPanel.HEIGHT;
 
     private EventBus eventBus;
+    private AppSettings appSettings;
 
-    private BottomPanel bottomPanel;
-    private RightPanel rightPanel;
+    private final BottomPanel bottomPanel;
+    private final RightPanel rightPanel;
 
     @Inject
     public BotFrame(GameApplet gameApplet,
-                    EventBus eventBus) {
-        super(GUIConstants.NAME + " " + GUIConstants.VERSION);
+                    EventBus eventBus,
+                    AppSettings appSettings) {
+        super(getDefaultTitle());
 
         this.eventBus = eventBus;
+        this.appSettings = appSettings;
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setDefaultCloseOperation(3);
@@ -37,7 +42,7 @@ public class BotFrame extends JFrame {
     }
 
     private RightPanel createRightPanel() {
-        var rightPanel = new RightPanel(eventBus);
+        var rightPanel = new RightPanel(eventBus, appSettings);
         add(rightPanel, BorderLayout.EAST);
         return rightPanel;
     }
@@ -48,9 +53,22 @@ public class BotFrame extends JFrame {
         return bottomPanel;
     }
 
-    public void open() {
+    public void open(String titleUserInfo) {
+        setTitleUserInfo(titleUserInfo);
         pack();
         setVisible(true);
         setLocationRelativeTo(null);
+    }
+
+    private static String getDefaultTitle() {
+        return GUIConstants.NAME + " " + GUIConstants.VERSION;
+    }
+
+    public void setTitleUserInfo(String titleUserInfo) {
+        if (Strings.isNullOrEmpty(titleUserInfo)) {
+            return;
+        }
+
+        setTitle(getDefaultTitle() + " - " + titleUserInfo);
     }
 }

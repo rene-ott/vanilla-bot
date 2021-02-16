@@ -2,6 +2,7 @@ package rscvanilla.bot.gui.right;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import rscvanilla.bot.config.AppSettings;
 import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.gui.GUIConstants;
 import rscvanilla.bot.script.events.ScriptListLoadedEvent;
@@ -19,15 +20,19 @@ public class RightPanel extends JPanel {
     private final ScriptControlPanel scriptControlPanel;
     private final ScriptSelectionPanel scriptSelectionPanel;
     private final ScriptAntiBanPanel scriptAntiBanPanel;
+    private final UserSelectionPanel userSelectionPanel;
 
     private final EventBus eventBus;
+    private final AppSettings appSettings;
 
-    public RightPanel(EventBus eventBus) {
+    public RightPanel(EventBus eventBus, AppSettings appSettings) {
         this.eventBus = eventBus;
+        this.appSettings = appSettings;
 
-        this.scriptControlPanel = createScriptControlPanel();
-        this.scriptSelectionPanel = createScriptSelectionPanel();
-        this.scriptAntiBanPanel = createAntiBanPanel();
+        scriptControlPanel = createScriptControlPanel();
+        scriptSelectionPanel = createScriptSelectionPanel();
+        scriptAntiBanPanel = createAntiBanPanel();
+        userSelectionPanel = createUserSelectionPanel();
 
         setPreferredSize(new Dimension(RightPanel.WIDTH, BotFrame.HEIGHT));
 
@@ -37,6 +42,13 @@ public class RightPanel extends JPanel {
     @Override
     public void setLayout(LayoutManager mgr) {
         super.setLayout(new BorderLayout());
+    }
+
+    private UserSelectionPanel createUserSelectionPanel() {
+        var panel = new UserSelectionPanel(eventBus, appSettings);
+        add(panel, BorderLayout.NORTH);
+
+        return panel;
     }
 
     private ScriptControlPanel createScriptControlPanel() {
@@ -69,6 +81,7 @@ public class RightPanel extends JPanel {
         scriptControlPanel.getStartScriptButton().setText(GUIConstants.BTN_TEXT_START);
         scriptSelectionPanel.getScriptSelectionList().setEnabled(true);
         scriptAntiBanPanel.setElementsEnabled(true);
+        userSelectionPanel.getUserComboBox().setEnabled(true);
     }
 
     @Subscribe
@@ -83,6 +96,7 @@ public class RightPanel extends JPanel {
         scriptControlPanel.getStartScriptButton().setText(GUIConstants.BTN_TEXT_STOP);
         scriptSelectionPanel.getScriptSelectionList().setEnabled(false);
         scriptAntiBanPanel.setElementsEnabled(false);
+        userSelectionPanel.getUserComboBox().setEnabled(false);
     }
 
     @Subscribe

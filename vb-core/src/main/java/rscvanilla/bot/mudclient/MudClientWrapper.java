@@ -65,8 +65,9 @@ public class MudClientWrapper {
     @SuppressWarnings("unused") private FieldWrapper<Integer> selectedItemInventoryIndex;
     @SuppressWarnings("unused") private FieldWrapper<Integer> selectedSpell;
     @SuppressWarnings("unused") private FieldWrapper<int[]> inventoryEquippedItemSlots;
-    @SuppressWarnings("unused") private FieldWrapper<String> userPassword;
     @SuppressWarnings("unused") private FieldWrapper<Integer> optionsCount;
+
+    public FieldWrapper<String> userPassword;
 
     private MethodWrapper<MethodWrapper.Unit> walkToArea;
     private MethodWrapper<Boolean> sendWalkToGroundItem;
@@ -146,10 +147,6 @@ public class MudClientWrapper {
     @SuppressWarnings("unused") // Injected by Guice
     public void setGameSettingsInterceptor(MudClientGameSettingsInterceptor interceptor) {
         gameSettingsInterceptor.setValue(interceptor);
-    }
-
-    public void lateInitClassMembers() {
-
     }
 
     private void initFields() {
