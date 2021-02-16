@@ -3,6 +3,7 @@ package rscvanilla.bot.mudclient;
 import com.google.common.base.Strings;
 import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.infrastructure.utils.EnumUtil;
+import rscvanilla.bot.mudclient.models.BankItem;
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.models.wrappers.*;
 import rscvanilla.bot.infrastructure.BotException;
@@ -18,7 +19,10 @@ import rscvanilla.cjci.model.classes.mudclient.MudClientClassFields;
 import rscvanilla.cjci.model.classes.mudclient.MudClientClassMethods;
 
 import javax.inject.Inject;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class MudClientWrapper {
 
@@ -62,10 +66,16 @@ public class MudClientWrapper {
     public FieldWrapper<Boolean> isOptionsMenuVisible;
     public FieldWrapper<Boolean> isBankVisible;
 
+    private FieldWrapper<int[]> bankItemIdList;
+    private FieldWrapper<int[]> bankItemCountList;
+
+    private FieldWrapper<String[]> optionsMenuText;
+    private FieldWrapper<Integer> optionsMenuCount;
+
     @SuppressWarnings("unused") private FieldWrapper<Integer> selectedItemInventoryIndex;
     @SuppressWarnings("unused") private FieldWrapper<Integer> selectedSpell;
     @SuppressWarnings("unused") private FieldWrapper<int[]> inventoryEquippedItemSlots;
-    @SuppressWarnings("unused") private FieldWrapper<Integer> optionsCount;
+    @SuppressWarnings("unused") private FieldWrapper<Integer> selectedBankItemIndex;
 
     public FieldWrapper<String> userPassword;
 
@@ -130,25 +140,6 @@ public class MudClientWrapper {
         }
     }
 
-    // Interceptors are injected after interceptor fields are initialized and before lateInitClassMembers are initialized
-    @Inject
-    @SuppressWarnings("unused") // Injected by Guice
-    public void setCaptchaInterceptor(MudClientCaptchaInterceptor interceptor) {
-        captchaInterceptor.setValue(interceptor);
-    }
-
-    @Inject
-    @SuppressWarnings("unused") // Injected by Guice
-    public void setGameMessageInterceptor(MudClientGameMessageInterceptor interceptor) {
-        gameMessageInterceptor.setValue(interceptor);
-    }
-
-    @Inject
-    @SuppressWarnings("unused") // Injected by Guice
-    public void setGameSettingsInterceptor(MudClientGameSettingsInterceptor interceptor) {
-        gameSettingsInterceptor.setValue(interceptor);
-    }
-
     private void initFields() {
         try {
             logger.debug("Initializing [MudClientWrapper] fields:");
@@ -180,11 +171,18 @@ public class MudClientWrapper {
             gameMode = initField("gameMode", classFields.gameMode, com.rsc.f.class);
             autoLoginTimeOut = initField("autoLoginTimeOut", classFields.autoLoginTimeout, Integer.class);
             isOptionsMenuVisible = initField("isOptionsMenuVisible", classFields.isOptionsMenuVisible, Boolean.class);
-            optionsCount = initField("optionsCount", classFields.optionsCount, Integer.class);
+            optionsMenuCount = initField("optionsCount", classFields.optionsCount, Integer.class);
             isBankVisible = initField("isBankVisible", classFields.isBankVisible, Boolean.class);
             wallObjectList = initField("wallObjectList", classFields.wallObjectList, com.rsc.e.m[].class);
             wallObjectListIndex = initField("wallObjectListIndex", classFields.wallObjectListIndex, Integer.class);
             user = initField("user", classFields.user, com.rsc.e.k.class);
+
+            // TODO
+            bankItemIdList = initField("bankItemIdList", "oS", int[].class);
+            bankItemCountList = initField("bankItemCountList", "oT", int[].class);
+            selectedBankItemIndex = initField("selectedBankItemIndex", "oX", Integer.class);
+            optionsMenuText = initField("optionsMenuText", "pO", String[].class);
+
             packetBuilder = initField("packetBuilder", "T", Object.class);
 
             simpleLogger.debug("");
@@ -211,6 +209,25 @@ public class MudClientWrapper {
         }
     }
 
+    // Interceptors are injected after interceptor fields are initialized and before lateInitClassMembers are initialized
+    @Inject
+    @SuppressWarnings("unused") // Injected by Guice
+    public void setCaptchaInterceptor(MudClientCaptchaInterceptor interceptor) {
+        captchaInterceptor.setValue(interceptor);
+    }
+
+    @Inject
+    @SuppressWarnings("unused") // Injected by Guice
+    public void setGameMessageInterceptor(MudClientGameMessageInterceptor interceptor) {
+        gameMessageInterceptor.setValue(interceptor);
+    }
+
+    @Inject
+    @SuppressWarnings("unused") // Injected by Guice
+    public void setGameSettingsInterceptor(MudClientGameSettingsInterceptor interceptor) {
+        gameSettingsInterceptor.setValue(interceptor);
+    }
+
     public PacketBuilderWrapper getPacketBuilder() { return packetBuilderWrapper; }
     public ClientJarClassInfo getClientJarClassInfo() { return clientJarClassInfo; }
 
@@ -223,6 +240,17 @@ public class MudClientWrapper {
     public List<RSGroundObject> getObjectList() { return newWrappedEntityList(this.objectList, this.objectListIndex, RSGroundObject.class); }
     public List<RSPlayerCharacter> getPlayerList() { return newWrappedEntityList(this.playerList, this.playerListIndex, RSPlayerCharacter.class); }
     public List<RSWallObject> getWallObjectList() { return newWrappedEntityList(this.wallObjectList, this.wallObjectListIndex, RSWallObject.class); }
+
+    public List<String> getOptionsMenuList() { return isOptionsMenuVisible.getValue()
+        ? Arrays.stream(optionsMenuText.getValue(), 0, optionsMenuCount.getValue()).collect(Collectors.toList())
+        : List.of(); }
+
+    public List<BankItem> getBankItemList() { return isBankVisible.getValue()
+        ? IntStream.range(0, (int) Arrays.stream(bankItemCountList.getValue()).filter(it -> it != 0).count())
+                    .mapToObj(it -> new BankItem(bankItemIdList.getValue()[it], bankItemCountList.getValue()[it]))
+                    .collect(Collectors.toList())
+        : List.of(); }
+
 
     public RSLocalPlayerCharacter getUser() { return new RSLocalPlayerCharacter(user.getValue(), this); }
     public Position getMidRegionBase() { return new Position(midRegionBaseX.getValue(), midRegionBaseZ.getValue()); }

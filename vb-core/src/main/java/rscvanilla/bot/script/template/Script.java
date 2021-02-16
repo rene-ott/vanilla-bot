@@ -119,6 +119,7 @@ public abstract class Script {
 
     /** OPTIONS ACTION */
     public void answerOption(int pos) { optionsAction.answerOption(pos); }
+    public int getAnswerOptionPosition(String answerTextPrefix) { return optionsAction.getAnswerOptionPosition(answerTextPrefix); }
     public boolean isOptionsMenuVisible() { return optionsAction.isOptionsMenuVisible(); }
 
     /**  POSITION ACTION **/
@@ -135,6 +136,26 @@ public abstract class Script {
     protected abstract void onGameMessageReceived(String message);
 
     /**
+     * Gets the amount of items with id in bank.
+     * Bank screen must be visible. Always do check with method isBankWindowVisible.
+     *
+     * @param id the id of bank item
+     * @return returns -1 if bank screen is not visible; 0 if there are no items.
+     * @since 1.0
+     */
+    protected int getBankItemCount(int id) { return bankAction.getBankItemCount(id); }
+
+    /**
+     * Withdraws exact amount of bank items from bank.
+     * If inventory item count is less than amount or bank window is not visible then returns
+     *
+     * @param id the id of bank item
+     * @param amount the exact amount of bank items to withdraw
+     * @since 1.0
+     */
+     protected void withdraw(int id, int amount) { bankAction.withdraw(id, amount); }
+
+    /**
      * Deposits exact amount of inventory items.
      * If inventory item count is less than amount or bank window is not visible then returns
      *
@@ -142,7 +163,7 @@ public abstract class Script {
      * @param amount the exact amount of inventory items to bank
      * @since 1.0
      */
-    public void deposit(int id, int amount) { bankAction.deposit(id, amount); }
+    protected void deposit(int id, int amount) { bankAction.deposit(id, amount); }
 
     /**
      * Deposits all specified inventory items to bank.
@@ -151,7 +172,7 @@ public abstract class Script {
      * @param ids the list of inventory items to bank
      * @since 1.0
      */
-    public void depositAll(int...ids) { bankAction.depositAll(ids); }
+    protected void depositAll(int...ids) { bankAction.depositAll(ids); }
 
     /**
      * Detects if bank window is opened.
@@ -159,6 +180,6 @@ public abstract class Script {
      * @return returns true if bank window is opened otherwise false
      * @since 1.0
      */
-    public boolean isBankWindowVisible() { return bankAction.isBankWindowVisible(); }
+    protected boolean isBankWindowVisible() { return bankAction.isBankWindowVisible(); }
 }
 
