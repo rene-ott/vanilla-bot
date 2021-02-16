@@ -2,7 +2,6 @@ package rscvanilla.bot.script.template;
 
 import rscvanilla.bot.mudclient.actions.*;
 import rscvanilla.bot.mudclient.models.Position;
-import rscvanilla.bot.mudclient.models.wrappers.RSLocalPlayerCharacter;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.bot.script.ScriptDependencyContext;
@@ -24,8 +23,6 @@ public abstract class Script {
     private final MessageAction messageAction;
     private final WallObjectAction wallObjectAction;
 
-    private final RSLocalPlayerCharacter user;
-
     private final MudClientWrapper mudClientWrapper;
 
     public Script(ScriptDependencyContext dependencyContext) {
@@ -44,7 +41,6 @@ public abstract class Script {
         loginAction = dependencyContext.getLoginAction();
         messageAction = dependencyContext.getMessageAction();
         wallObjectAction = dependencyContext.getWallAction();
-        user = dependencyContext.getUser();
 
         mudClientWrapper = dependencyContext.getMudClientWrapper();
     }
@@ -53,14 +49,14 @@ public abstract class Script {
     protected MudClientWrapper getMudClientWrapper() { return mudClientWrapper; }
 
     /** USER **/
-    protected Position getPosition() { return user.getGlobalPosition(); }
-    protected boolean isInCombat() { return user.isInCombat(); }
-    protected int getCombatStyle() { return user.getCombatStyle(); }
-    protected void setCombatStyle(int style) { user.setCombatStyle(style); }
-    protected int getFatigue() { return user.getFatigue(); }
-    protected boolean isSleeping() { return user.isSleeping(); }
-    protected boolean isBusy() { return user.isBusy(); }
-    protected String getUserName()  { return user.getName(); }
+    protected Position getPosition() { return mudClientWrapper.getUser().getGlobalPosition(); }
+    protected boolean isInCombat() { return mudClientWrapper.getUser().isInCombat(); }
+    protected int getCombatStyle() { return mudClientWrapper.getUser().getCombatStyle(); }
+    protected void setCombatStyle(int style) { mudClientWrapper.getUser().setCombatStyle(style); }
+    protected int getFatigue() { return mudClientWrapper.getUser().getFatigue(); }
+    protected boolean isSleeping() { return mudClientWrapper.getUser().isSleeping(); }
+    protected boolean isBusy() { return mudClientWrapper.getUser().isBusy(); }
+    protected String getUserName()  { return mudClientWrapper.getUser().getName(); }
 
     /** LOG **/
     public void print(String message, Object...args) { printer.printAsScript(String.format(message, args));}
