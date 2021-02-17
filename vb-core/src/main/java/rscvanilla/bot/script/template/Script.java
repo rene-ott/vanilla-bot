@@ -63,6 +63,7 @@ public abstract class Script {
 
     /** PLAYER ACTION **/
     public String[] getPlayerNamesInDistance(int distance) { return playerCharacterAction.getPlayerNamesInDistance(distance); }
+    public boolean isAnotherPlayerOnPos(Position pos) { return playerCharacterAction.isAnotherPlayerOnPos(pos); }
 
     /** MESSAGE ACTION **/
     public void sendChatMessage(String s) { messageAction.sendChatMessage(s); }
@@ -85,6 +86,7 @@ public abstract class Script {
     protected boolean isItemInInventory(int...ids) { return inventoryItemAction.isItemInInventory(ids); }
     protected boolean isItemInInventory(int id, int count) { return inventoryItemAction.isItemInInventory(id, count); }
     protected boolean isInventoryFull() { return inventoryItemAction.isInventoryFull(); }
+    protected int getInventoryItemCount(int id) { return inventoryItemAction.getInventoryItemCount(id); }
     protected void useItemOnObject(int itemId, int objectId) { inventoryItemAction.useItemOnObject(itemId, objectId);}
     protected void useItemOnObject(int objectId, int...itemIds) { inventoryItemAction.useItemOnObject(objectId, itemIds);}
 
@@ -102,6 +104,8 @@ public abstract class Script {
     /** GROUND ITEM ACTION **/
     protected void takeItemFromGround(int...ids) { groundItemAction.takeItemFromGround(ids); }
     protected boolean isItemOnGround(int...ids) { return groundItemAction.isItemOnGround(ids); }
+    protected int getGroundItemCountOnCurrentPos(int id) { return groundItemAction.getGroundItemCountOnCurrentPos(id); }
+    protected void takeGroundItemFromCurrentPos(int id) { groundItemAction.takeGroundItemFromCurrentPos(id); }
 
     /** OBJECT ACTION **/
     protected void atObject(int...ids) { groundObjectAction.atObject(ids); }
