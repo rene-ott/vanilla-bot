@@ -232,16 +232,6 @@ public class AlKharidSmelter extends RunnableScript {
                (hasSecondaryOre() && getBankItemCount(scriptParams.secondaryOre.id) < scriptParams.secondaryOre.count);
     }
 
-    private void depositBarsAndOres() {
-        depositAll(scriptParams.barId);
-        waitFor(100);
-        depositAll(scriptParams.primaryOre.id);
-        waitFor(100);
-        if (hasSecondaryOre()) {
-            depositAll(scriptParams.secondaryOre.id);
-        }
-    }
-
     @Override
     protected void onChatMessageReceived(String sender, String message) { }
 
