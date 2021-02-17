@@ -1,6 +1,7 @@
 package rscvanilla.bot.script.antiban;
 
-public interface AntiBannable {
+public interface ScriptWithAntiBan {
     void print(String message, Object...ags);
     String[] getPlayerNamesInDistance(int distance);
+    String[] getIgnoredPlayers();
 }

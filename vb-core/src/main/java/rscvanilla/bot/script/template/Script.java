@@ -57,12 +57,14 @@ public abstract class Script {
     protected boolean isSleeping() { return mudClientWrapper.getUser().isSleeping(); }
     protected boolean isBusy() { return mudClientWrapper.getUser().isBusy(); }
     protected String getUserName()  { return mudClientWrapper.getUser().getName(); }
+    public String[] getIgnoredPlayers() { return mudClientWrapper.getUser().getIgnoredPlayers(); }
 
     /** LOG **/
     public void print(String message, Object...args) { printer.printAsScript(String.format(message, args));}
 
     /** PLAYER ACTION **/
     public String[] getPlayerNamesInDistance(int distance) { return playerCharacterAction.getPlayerNamesInDistance(distance); }
+
     public boolean isAnotherPlayerOnPos(Position pos) { return playerCharacterAction.isAnotherPlayerOnPos(pos); }
 
     /** MESSAGE ACTION **/

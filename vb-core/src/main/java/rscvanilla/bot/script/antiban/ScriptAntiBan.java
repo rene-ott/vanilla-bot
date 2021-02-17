@@ -19,7 +19,7 @@ public class ScriptAntiBan {
     private static final long SECONDS_UNTIL_IGNORE_DETECTED_PLAYER = 10;
 
     private final ScriptAntiBanParams params;
-    private final AntiBannable antiBannable;
+    private final ScriptWithAntiBan scriptWithAntiBan;
     private final RunnableScriptState state;
 
     private long pauseStartTimeInMillis;
@@ -30,12 +30,12 @@ public class ScriptAntiBan {
     private volatile boolean isSoundPlaying;
 
     public ScriptAntiBan(ScriptAntiBanParams params,
-                         AntiBannable antiBannable,
+                         ScriptWithAntiBan scriptWithAntiBan,
                          RunnableScriptState state)
     {
 
         this.params = params;
-        this.antiBannable = antiBannable;
+        this.scriptWithAntiBan = scriptWithAntiBan;
         this.state = state;
     }
 
@@ -92,7 +92,13 @@ public class ScriptAntiBan {
     }
 
     public boolean isAnyNewPlayersDetected() {
-        var playersInDistance = antiBannable.getPlayerNamesInDistance(params.getInDistance());
+        var playersInDistance = scriptWithAntiBan.getPlayerNamesInDistance(params.getInDistance());
+        var ignoredPlayers = scriptWithAntiBan.getIgnoredPlayers();
+
+        playersInDistance = Arrays.stream(playersInDistance)
+            .filter(p -> !Arrays.asList(ignoredPlayers).contains(p))
+            .toArray(String[]::new);
+
         if (playersInDistance.length == 0)
             return false;
 
@@ -212,7 +218,7 @@ public class ScriptAntiBan {
     }
 
     private void writeLog(String msg) {
-        antiBannable.print(msg);
+        scriptWithAntiBan.print(msg);
         logger.debug(msg);
     }
 }

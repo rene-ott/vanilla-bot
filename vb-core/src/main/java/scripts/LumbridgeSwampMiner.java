@@ -60,7 +60,6 @@ public class LumbridgeSwampMiner extends RunnableScript {
         }
 
         var action = getAction();
-        System.out.println(action);
 
         switch (action) {
             case MINE -> mineRock();

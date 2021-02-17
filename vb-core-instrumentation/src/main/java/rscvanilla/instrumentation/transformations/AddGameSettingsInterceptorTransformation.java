@@ -33,8 +33,6 @@ public class AddGameSettingsInterceptorTransformation {
         ctClass.addField(ctField);
 
         var ctMethod = ctClass.getDeclaredMethods(interceptors.gameSettings)[1];
-        System.out.println(ctMethod.getName());
         ctMethod.insertBefore("{ if(" + fieldName +"." + methodName + "($1, $2)) return; }");
-
     }
 }

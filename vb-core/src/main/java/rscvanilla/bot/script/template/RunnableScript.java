@@ -4,7 +4,7 @@ import rscvanilla.bot.events.messages.GameMessageEvent;
 import rscvanilla.bot.infrastructure.utils.ExecutorUtil;
 import rscvanilla.bot.mudclient.interceptors.ingamemessage.GameMessageQueue;
 import rscvanilla.bot.script.ScriptDependencyContext;
-import rscvanilla.bot.script.antiban.AntiBannable;
+import rscvanilla.bot.script.antiban.ScriptWithAntiBan;
 import rscvanilla.bot.script.antiban.ScriptAntiBan;
 import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public abstract class RunnableScript extends Script implements Runnable, AntiBannable {
+public abstract class RunnableScript extends Script implements Runnable, ScriptWithAntiBan {
 
     private static final Logger logger = LoggerFactory.getLogger(RunnableScript.class);
 

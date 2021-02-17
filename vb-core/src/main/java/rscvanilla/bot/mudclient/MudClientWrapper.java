@@ -21,6 +21,7 @@ import rscvanilla.cjci.model.classes.mudclient.MudClientClassMethods;
 import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -71,6 +72,8 @@ public class MudClientWrapper {
 
     private FieldWrapper<String[]> optionsMenuText;
     private FieldWrapper<Integer> optionsMenuCount;
+
+    private FieldWrapper<String[]> ignoreList;
 
     @SuppressWarnings("unused") private FieldWrapper<Integer> selectedItemInventoryIndex;
     @SuppressWarnings("unused") private FieldWrapper<Integer> selectedSpell;
@@ -182,8 +185,8 @@ public class MudClientWrapper {
             bankItemCountList = initField("bankItemCountList", "oT", int[].class);
             selectedBankItemIndex = initField("selectedBankItemIndex", "oX", Integer.class);
             optionsMenuText = initField("optionsMenuText", "pO", String[].class);
-
             packetBuilder = initField("packetBuilder", "T", Object.class);
+            ignoreList = initField("ignoreList", "oa", String[].class);
 
             simpleLogger.debug("");
         } catch (BotException e) {
@@ -244,6 +247,8 @@ public class MudClientWrapper {
     public List<String> getOptionsMenuList() { return isOptionsMenuVisible.getValue()
         ? Arrays.stream(optionsMenuText.getValue(), 0, optionsMenuCount.getValue()).collect(Collectors.toList())
         : List.of(); }
+
+    public List<String> getIgnoreList() { return Arrays.stream(ignoreList.getValue()).filter(Objects::nonNull).collect(Collectors.toList());}
 
     public List<BankItem> getBankItemList() { return isBankVisible.getValue()
         ? IntStream.range(0, (int) Arrays.stream(bankItemCountList.getValue()).filter(it -> it != 0).count())
