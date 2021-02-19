@@ -13,10 +13,10 @@ public abstract class RSCharacter<T extends com.rsc.e.i> extends RSEntityWrapper
     public int getBubbleTimeout() { return this.<Integer>getFieldValue("getBubbleTimeout", getClassFields().bubbleTimeout, Integer.class); }
     public int getCurrentHealthLevel() { return this.<Integer>getFieldValue("getCurrentHealthLevel", getClassFields().currentHealthLevel, Integer.class); }
     public int getHealthLevel() { return this.<Integer>getFieldValue("getHealthLevel", getClassFields().healthLevel, Integer.class); }
-    protected Direction getDirection() { return Direction.of(this.<Integer>getFieldValue("getDirection", getClassFields().direction, Integer.class)); }
+    protected RSCharacterDirection getDirection() { return RSCharacterDirection.of(this.<Integer>getFieldValue("getDirection", getClassFields().direction, Integer.class)); }
     public int getCombatLevel() { return this.<Integer>getFieldValue("getCombatLevel", getClassFields().combatLevel, Integer.class); }
 
-    public boolean isInCombat() { return getDirection() == Direction.COMBAT1 || getDirection() == Direction.COMBAT2; }
+    public boolean isInCombat() { return getDirection() == RSCharacterDirection.COMBAT_A || getDirection() == RSCharacterDirection.COMBAT_B; }
 
     public boolean isBusy() { return getBubbleTimeout() - 60 > 0; }
 

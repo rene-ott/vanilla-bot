@@ -4,8 +4,6 @@ import rscvanilla.bot.mudclient.enums.OpCodeOut;
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.MudClientWrapper;
 
-import java.util.List;
-
 public class RSLocalPlayerCharacter extends RSPlayerCharacter {
 
     public RSLocalPlayerCharacter(com.rsc.e.k internalObject, MudClientWrapper mudClientWrapper) {
