@@ -4,15 +4,17 @@ import javassist.CannotCompileException;
 import javassist.CtClass;
 import javassist.CtField;
 import javassist.NotFoundException;
+import rscvanilla.cjci.model.classes.mudclient.MudClientClassMethods;
+import rscvanilla.cjci.model.classes.packetbuilderbase.PacketBuilderBaseClassFields;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
 import rscvanilla.cjci.model.ClientJarClassInfo;
-import rscvanilla.cjci.model.classes.mudclient.MudClientClassInterceptors;
 
 import javax.inject.Inject;
 
 public class AddGameCaptchaInterceptorTransformation {
 
-    private final MudClientClassInterceptors interceptors;
+    private final MudClientClassMethods classMethods;
+    private final PacketBuilderBaseClassFields classPacketBuilderBaseFields;
 
     private final String fieldTypeName;
     private final String fieldName;
@@ -20,7 +22,8 @@ public class AddGameCaptchaInterceptorTransformation {
 
     @Inject
     public AddGameCaptchaInterceptorTransformation(ClientJarClassInfo clientJarClassInfo) {
-        this.interceptors = clientJarClassInfo.mudClient.interceptors;
+        this.classMethods = clientJarClassInfo.mudClient.methods;
+        this.classPacketBuilderBaseFields = clientJarClassInfo.packetBuilderBase.fields;
 
         fieldTypeName = MudClientCaptchaInterceptor.class.getCanonicalName();
         fieldName = MudClientCaptchaInterceptor.MC_FIELD_NAME;
@@ -32,9 +35,8 @@ public class AddGameCaptchaInterceptorTransformation {
         ctField.setModifiers(9);
         ctClass.addField(ctField);
 
-        var ctMethod = ctClass.getDeclaredMethods(interceptors.gameCaptcha)[1];
+        var ctMethod = ctClass.getDeclaredMethods(classMethods.interceptedOpCodeInHandler)[1];
 
-        // TODO: replace constant rU with value from hooks file
-        ctMethod.insertBefore(String.format("{ %s.%s($1.rU, $2, $3); }", fieldName, methodName));
+        ctMethod.insertBefore(String.format("{ %s.%s($1.%s, $2, $3); }", fieldName, methodName, classPacketBuilderBaseFields.bufferedBytes));
     }
 }

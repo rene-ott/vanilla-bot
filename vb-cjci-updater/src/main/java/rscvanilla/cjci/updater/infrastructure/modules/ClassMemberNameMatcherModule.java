@@ -6,10 +6,10 @@ import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import rscvanilla.cjci.updater.core.matcher.classes.applet.AppletClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.mudclient.MudClientClassFieldNameMatcher;
-import rscvanilla.cjci.updater.core.matcher.classes.mudclient.MudClientClassInterceptorNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.mudclient.MudClientClassMethodNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.mudclientbase.MudClientBaseClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.packetbuilder.PacketBuilderClassMethodNameMatcher;
+import rscvanilla.cjci.updater.core.matcher.classes.packetbuilderbase.PacketBuilderBaseClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.packetbuilderbase.PacketBuilderBaseClassMethodNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.rscharacter.RSCharacterClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.rsentity.RSEntityClassFieldNameMatcher;
@@ -24,17 +24,20 @@ public class ClassMemberNameMatcherModule extends AbstractModule {
     protected void configure() {
         configureSubTypesOf(MudClientClassFieldNameMatcher.class);
         configureSubTypesOf(MudClientClassMethodNameMatcher.class);
-        configureSubTypesOf(MudClientClassInterceptorNameMatcher.class);
+
+        configureSubTypesOf(PacketBuilderBaseClassMethodNameMatcher.class);
+        configureSubTypesOf(PacketBuilderBaseClassFieldNameMatcher.class);
+
         configureSubTypesOf(AppletClassFieldNameMatcher.class);
         configureSubTypesOf(RSCharacterClassFieldNameMatcher.class);
         configureSubTypesOf(RSEntityClassFieldNameMatcher.class);
         configureSubTypesOf(RSWallObjectClassFieldNameMatcher.class);
         configureSubTypesOf(RSPlayerCharacterClassFieldNameMatcher.class);
         configureSubTypesOf(MudClientBaseClassFieldNameMatcher.class);
-        configureSubTypesOf(PacketBuilderClassMethodNameMatcher.class);
-        configureSubTypesOf(PacketBuilderBaseClassMethodNameMatcher.class);
-        configureSubTypesOf(RSNonPlayerCharacterClassMethodNameMatcher.class);
         configureSubTypesOf(RSNonPlayerCharacterInfoClassFieldNameMatcher.class);
+
+        configureSubTypesOf(PacketBuilderClassMethodNameMatcher.class);
+        configureSubTypesOf(RSNonPlayerCharacterClassMethodNameMatcher.class);
     }
 
     private <T> void configureSubTypesOf(Class<T> clazz) {

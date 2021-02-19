@@ -4,15 +4,15 @@ import javassist.CannotCompileException;
 import javassist.CtClass;
 import javassist.CtField;
 import javassist.NotFoundException;
+import rscvanilla.cjci.model.classes.mudclient.MudClientClassMethods;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
 import rscvanilla.cjci.model.ClientJarClassInfo;
-import rscvanilla.cjci.model.classes.mudclient.MudClientClassInterceptors;
 
 import javax.inject.Inject;
 
 public class AddGameSettingsInterceptorTransformation {
 
-    private final MudClientClassInterceptors interceptors;
+    private final MudClientClassMethods classMethods;
 
     private final String fieldTypeName;
     private final String fieldName;
@@ -20,7 +20,7 @@ public class AddGameSettingsInterceptorTransformation {
 
     @Inject
     public AddGameSettingsInterceptorTransformation(ClientJarClassInfo clientJarClassInfo) {
-        this.interceptors = clientJarClassInfo.mudClient.interceptors;
+        classMethods = clientJarClassInfo.mudClient.methods;
 
         fieldTypeName = MudClientGameSettingsInterceptor.class.getCanonicalName();
         fieldName = MudClientGameSettingsInterceptor.MC_FIELD_NAME;
@@ -32,7 +32,7 @@ public class AddGameSettingsInterceptorTransformation {
         ctField.setModifiers(9);
         ctClass.addField(ctField);
 
-        var ctMethod = ctClass.getDeclaredMethods(interceptors.gameSettings)[1];
+        var ctMethod = ctClass.getDeclaredMethods(classMethods.interceptedOpCodeInHandler)[1];
         ctMethod.insertBefore("{ if(" + fieldName +"." + methodName + "($1, $2)) return; }");
     }
 }

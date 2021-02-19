@@ -16,6 +16,8 @@ packet_builder:
 
 packet_builder_base:
   qualified_name: com.rsc.f.a
+  fields:
+    buffered_bytes:
   methods:
     put_string:
     put_short:
@@ -63,7 +65,6 @@ mud_client:
     bank_item_count_list:
     selected_bank_item_index:
     options_menu_text:
-    ignore_list:
   methods:
     login:
     logout:
@@ -73,10 +74,8 @@ mud_client:
     walk_to_area:
     walk_to_object:
     walk_to_wall:
-  interceptors:
-    game_captcha:
-    game_message:
-    game_settings:
+    intercepted_show_game_message:
+    intercepted_op_code_in_handler:
 
 rs_character:
   qualified_name: com.rsc.e.i

@@ -1,15 +1,15 @@
 package rscvanilla.instrumentation.transformations;
 
 import javassist.*;
+import rscvanilla.cjci.model.classes.mudclient.MudClientClassMethods;
 import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
 import rscvanilla.cjci.model.ClientJarClassInfo;
-import rscvanilla.cjci.model.classes.mudclient.MudClientClassInterceptors;
 
 import javax.inject.Inject;
 
 public class AddGameMessageInterceptorTransformation {
 
-    private final MudClientClassInterceptors interceptors;
+    private final MudClientClassMethods classMethods;
 
     private final String fieldTypeName;
     private final String fieldName;
@@ -17,7 +17,7 @@ public class AddGameMessageInterceptorTransformation {
 
     @Inject
     public AddGameMessageInterceptorTransformation(ClientJarClassInfo clientJarClassInfo) {
-        this.interceptors = clientJarClassInfo.mudClient.interceptors;
+        this.classMethods = clientJarClassInfo.mudClient.methods;
 
         fieldTypeName = MudClientGameMessageInterceptor.class.getCanonicalName();
         fieldName = MudClientGameMessageInterceptor.MC_FIELD_NAME;
@@ -30,7 +30,7 @@ public class AddGameMessageInterceptorTransformation {
         ctField.setModifiers(9);
         ctClass.addField(ctField);
 
-        var ctMethod = ctClass.getDeclaredMethods(interceptors.gameMessage)[8];
+        var ctMethod = ctClass.getDeclaredMethods(classMethods.interceptedShowGameMessage)[8];
         ctMethod.insertBefore("{" + fieldName + "."+ methodName + "($1, $2, $3, $4, $5, $6); }");
     }
 }

@@ -45,6 +45,8 @@ mud_client:
     wall_object_list: oJ
     wall_object_list_index: ro
   methods:
+    intercepted_op_code_in_handler: b
+    intercepted_show_game_message: a
     login: f
     logout: dz
     send_chat_message: "n"
@@ -53,10 +55,6 @@ mud_client:
     walk_to_area: c
     walk_to_object: x
     walk_to_wall: w
-  interceptors:
-    game_captcha: b
-    game_message: a
-    game_settings: b
 
 mud_client_base:
   qualified_name: com.rsc.b
@@ -76,6 +74,8 @@ packet_builder_base:
     put_int: aN
     put_short: aL
     put_string: q
+  fields:
+    buffered_bytes: rU
 
 rs_character:
   qualified_name: com.rsc.e.i
