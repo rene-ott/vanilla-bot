@@ -263,8 +263,12 @@ public class MudClientWrapper {
     public void walkToArea(int startX, int startY, int x1, int y1, int x2, int y2, boolean reachBorder, boolean walkToEntity) {
         try {
             walkToArea.invokeAction(startX, startY, x1, y1, x2, y2, reachBorder, walkToEntity);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            logger.warn("MudClient method walkToArea failed because of map change.");
+        } catch (BotException e) {
+            if (e.getCause() instanceof ArrayIndexOutOfBoundsException) {
+                logger.warn("MudClient method walkToArea failed because of map change.");
+            } else {
+                throw e;
+            }
         }
     }
     public boolean sendWalkToGroundItem(int startX, int startZ, int x1, int x2, int z1, int z2, boolean var4) { return sendWalkToGroundItem.invokeFunction(startX, startZ, x1, x2, z1, z2, var4); }

@@ -1,6 +1,5 @@
 package rscvanilla.bot.mudclient.models.wrappers;
 
-import rscvanilla.bot.mudclient.FieldWrapper;
 import rscvanilla.bot.mudclient.WrapperTool;
 import rscvanilla.bot.mudclient.models.contracts.GloballyPositionable;
 import rscvanilla.bot.mudclient.models.Position;
@@ -42,5 +41,10 @@ public abstract class RSEntityWrapper<T extends com.rsc.e.d> implements Globally
 
     private RSEntityClassFields getClassFields() {
         return mudClientWrapper.getClientJarClassInfo().rsEntity.fields;
+    }
+
+    @Deprecated
+    public T getInternalObject() {
+        return internalObject;
     }
 }
