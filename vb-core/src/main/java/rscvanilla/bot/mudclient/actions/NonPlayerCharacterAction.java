@@ -1,55 +1,43 @@
 package rscvanilla.bot.mudclient.actions;
 
+import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.bot.mudclient.enums.OpCodeOut;
 import rscvanilla.bot.mudclient.models.wrappers.RSNonPlayerCharacter;
-import rscvanilla.bot.mudclient.MudClientWrapper;
 
 import javax.inject.Inject;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class NonPlayerCharacterAction extends BaseAction {
 
     private final WalkAction walkAction;
-    private final PlayerCharacterAction playerCharacterAction;
 
     @Inject
     public NonPlayerCharacterAction(MudClientWrapper hooks,
-                                    WalkAction walkAction,
-                                    PlayerCharacterAction playerCharacterAction
+                                    WalkAction walkAction
     ) {
         super(hooks);
         this.walkAction = walkAction;
-        this.playerCharacterAction = playerCharacterAction;
     }
 
     public boolean isNpcNear(int...ids) {
-        return getNearestNpcById(ids) != null;
+        return getNearestNpcById(false, ids) != null;
     }
 
     public void attackNpcById(int...ids) {
-        atNpc(OpCodeOut.NPC_ATTACK1, ids);
+        atNpc(true, true, OpCodeOut.NPC_ATTACK1, ids);
     }
 
     public void pickpocketNpcById(int...ids) {
-        atNpc(OpCodeOut.NPC_COMMAND1, ids);
+        atNpc(false, true, OpCodeOut.NPC_COMMAND1, ids);
     }
 
     public void talkToNpc(int...ids) {
-        atNpc(OpCodeOut.NPC_TALK_TO, ids);
-    }
-
-    public boolean isNpcInDistance(int id, int distance) {
-        var nearestNpc = getNearestNpcById(id);
-        if (nearestNpc == null)
-            return false;
-
-        return mudClientWrapper.getUser().getGlobalPosition().distanceTo(nearestNpc.getGlobalPosition()) <= distance;
+        atNpc(false, true, OpCodeOut.NPC_TALK_TO, ids);
     }
 
     public void castOnNpc(int spellId, int...ids) {
-        var npc = getNearestNpcById(ids);
+        var npc = getNearestAttackableNpcById(false, ids);
         if (npc == null)
             return;
 
@@ -60,8 +48,11 @@ public class NonPlayerCharacterAction extends BaseAction {
                 .send();
     }
 
-    private void atNpc(OpCodeOut opCodeOut, int...ids) {
-        var npc = getNearestNpcById(ids);
+    private void atNpc(boolean mustBeAttackable, boolean mustNotBeInCombat, OpCodeOut opCodeOut, int...ids) {
+        var npc = mustBeAttackable
+            ? getNearestAttackableNpcById(mustNotBeInCombat)
+            : getNearestNpcById(mustNotBeInCombat, ids);
+
         if (npc == null)
             return;
 
@@ -73,12 +64,21 @@ public class NonPlayerCharacterAction extends BaseAction {
                 .send();
     }
 
-    private RSNonPlayerCharacter getNearestNpcById(int...ids) {
+    private RSNonPlayerCharacter getNearestAttackableNpcById(boolean mustNotBeInCombat, int...ids) {
+        return getNearestNpcById(true, mustNotBeInCombat, ids);
+    }
+
+    private RSNonPlayerCharacter getNearestNpcById(boolean mustNotBeInCombat, int...ids) {
+        return getNearestNpcById(false, mustNotBeInCombat, ids);
+    }
+
+    private RSNonPlayerCharacter getNearestNpcById(boolean mustBeAttackable, boolean mustNotBeInCombat, int...ids) {
         var matchedNpcs = mudClientWrapper.getNpcList()
-                .stream()
-                .filter(Objects::nonNull)
-                .filter(it -> Arrays.stream(ids).anyMatch(id -> id == it.getId()))
-                .collect(Collectors.toList());
+            .stream()
+            .filter(it -> (!mustBeAttackable || it.isAttackable()))
+            .filter(it -> (!mustNotBeInCombat || !it.isInCombat()))
+            .filter(it -> Arrays.stream(ids).anyMatch(id -> id == it.getId()))
+            .collect(Collectors.toList());
 
         if (matchedNpcs.isEmpty())
             return null;

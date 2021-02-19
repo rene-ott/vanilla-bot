@@ -101,7 +101,6 @@ public abstract class Script {
     protected boolean isNpcNear(int...ids) { return nonPlayerCharacterAction.isNpcNear(ids); }
     protected void talkToNpc(int...ids) { nonPlayerCharacterAction.talkToNpc(ids); }
     protected void castOnNpc(int spellId, int...ids) { nonPlayerCharacterAction.castOnNpc(spellId, ids); }
-    public boolean isNpcInDistance(int id, int distance) { return nonPlayerCharacterAction.isNpcInDistance(id, distance); }
 
     /** GROUND ITEM ACTION **/
     protected void takeItemFromGround(int...ids) { groundItemAction.takeItemFromGround(ids); }

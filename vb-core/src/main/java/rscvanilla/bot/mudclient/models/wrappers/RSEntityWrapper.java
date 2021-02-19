@@ -1,20 +1,15 @@
 package rscvanilla.bot.mudclient.models.wrappers;
 
-import rscvanilla.bot.mudclient.WrapperTool;
 import rscvanilla.bot.mudclient.models.contracts.GloballyPositionable;
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.utils.PositionConverter;
 import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.cjci.model.classes.rsentity.RSEntityClassFields;
 
-public abstract class RSEntityWrapper<T extends com.rsc.e.d> implements GloballyPositionable {
-
-    protected T internalObject;
-    protected MudClientWrapper mudClientWrapper;
+public abstract class RSEntityWrapper<T extends com.rsc.e.d> extends RSObjectWrapper<T> implements GloballyPositionable {
 
     protected RSEntityWrapper(T internalObject, MudClientWrapper mudClientWrapper) {
-        this.internalObject = internalObject;
-        this.mudClientWrapper = mudClientWrapper;
+        super(internalObject, mudClientWrapper);
     }
 
     // Players have id set as 0
@@ -35,16 +30,7 @@ public abstract class RSEntityWrapper<T extends com.rsc.e.d> implements Globally
 
     public abstract Position getLocalPosition();
 
-    protected <TField> TField getFieldValue(String fieldDisplayName, String fieldName, Class<?> fieldReturnType) {
-        return WrapperTool.<TField>loadField(internalObject, null, fieldDisplayName, fieldName, fieldReturnType).getValue();
-    }
-
     private RSEntityClassFields getClassFields() {
         return mudClientWrapper.getClientJarClassInfo().rsEntity.fields;
-    }
-
-    @Deprecated
-    public T getInternalObject() {
-        return internalObject;
     }
 }

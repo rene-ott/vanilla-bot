@@ -11,4 +11,10 @@ public class RSNonPlayerCharacter extends RSCharacter<com.rsc.e.j> {
 
     @Override
     public Position getLocalPosition() { return getDynamicLocalPosition(); }
+
+    private RSNonPlayerCharacterInfo getInfo() {
+        return new RSNonPlayerCharacterInfo(getMethod("getNonPlayerCharacterInfo", "cA").invokeFunction(), mudClientWrapper);
+    }
+
+    public boolean isAttackable() { return getInfo().isAttackable(); }
 }
