@@ -59,6 +59,11 @@ mud_client:
     user_password:
     wall_object_list:
     wall_object_list_index:
+    bank_item_id_list:
+    bank_item_count_list:
+    selected_bank_item_index:
+    options_menu_text:
+    ignore_list:
   methods:
     login:
     logout:
@@ -96,6 +101,16 @@ rs_player_character:
   qualified_name: com.rsc.e.k
   fields:
     name:
+
+rs_non_player_character:
+  qualified_name: com.rsc.e.j
+  methods:
+    get_info:
+
+rs_non_player_character_info:
+  qualified_name: com.rsc.a.a.g
+  fields:
+    is_attackable:
 
 rs_wall_object:
   qualified_name: com.rsc.e.m

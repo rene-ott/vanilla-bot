@@ -43,4 +43,9 @@ public class MudClientClassFields implements WithClassMembers {
     @YamlClassMemberKey("user_password") public String userPassword;
     @YamlClassMemberKey("wall_object_list") public String wallObjectList;
     @YamlClassMemberKey("wall_object_list_index") public String wallObjectListIndex;
+    @YamlClassMemberKey("bank_item_id_list") public String bankItemIdList;
+    @YamlClassMemberKey("bank_item_count_list") public String bankItemCountList;
+    @YamlClassMemberKey("selected_bank_item_index") public String selectedBankItemIndex;
+    @YamlClassMemberKey("options_menu_text") public String optionsMenuText;
+    @YamlClassMemberKey("ignore_list") public String ignoreList;
 }

@@ -6,6 +6,8 @@ mud_client:
   qualified_name: com.rsc.d
   fields:
     auto_login_timeout: pa
+    bank_item_count_list: oT
+    bank_item_id_list: oS
     combat_style: pg
     fatigue_sleeping: pw
     fatigue_stat: rj
@@ -14,6 +16,7 @@ mud_client:
     ground_item_list_index: py
     ground_object_list: oI
     ground_object_list_index: px
+    ignore_list: oa
     inventory_equipped_item_slots: nE
     inventory_item_list: nm
     inventory_item_list_index: pG
@@ -27,10 +30,12 @@ mud_client:
     npc_list: np
     npc_list_index: qz
     options_count: nG
+    options_menu_text: pO
     player_list: ns
     player_list_index: pI
     player_position_x: oy
     player_position_y: oz
+    selected_bank_item_index: oX
     selected_inventory_item_index: qT
     selected_spell: qU
     show_dialog_server_message: rc
@@ -90,6 +95,16 @@ rs_entity:
     pixel_x: mc
     pixel_y: md
     server_index: lZ
+
+rs_non_player_character:
+  qualified_name: com.rsc.e.j
+  methods:
+    get_info: cA
+
+rs_non_player_character_info:
+  qualified_name: com.rsc.a.a.g
+  fields:
+    is_attackable: bT
 
 rs_player_character:
   qualified_name: com.rsc.e.k

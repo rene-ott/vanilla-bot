@@ -10,6 +10,7 @@ import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.logger.AppLoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import rscvanilla.cjci.model.classes.mudclientbase.MudClientBaseClassFields;
 import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
 import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
 import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
@@ -40,6 +41,7 @@ public class MudClientWrapper {
     private final MudClientClassFields classFields;
     private final MudClientClassMethods classMethods;
     private final AppletClassFields appletClassFields;
+    private final MudClientBaseClassFields baseClassFields;
 
     private FieldWrapper<com.rsc.e.j[]> npcList;
     private FieldWrapper<Integer> npcListIndex;
@@ -108,6 +110,7 @@ public class MudClientWrapper {
         classFields = clientJarClassInfo.mudClient.fields;
         classMethods = clientJarClassInfo.mudClient.methods;
         appletClassFields = clientJarClassInfo.applet.fields;
+        baseClassFields = clientJarClassInfo.mudClientBase.fields;
 
         initMudClientField(gameApplet);
         initFields();
@@ -180,13 +183,13 @@ public class MudClientWrapper {
             wallObjectListIndex = initField("wallObjectListIndex", classFields.wallObjectListIndex, Integer.class);
             user = initField("user", classFields.user, com.rsc.e.k.class);
 
-            // TODO
-            bankItemIdList = initField("bankItemIdList", "oS", int[].class);
-            bankItemCountList = initField("bankItemCountList", "oT", int[].class);
-            selectedBankItemIndex = initField("selectedBankItemIndex", "oX", Integer.class);
-            optionsMenuText = initField("optionsMenuText", "pO", String[].class);
-            packetBuilder = initField("packetBuilder", "T", Object.class);
-            ignoreList = initField("ignoreList", "oa", String[].class);
+            bankItemIdList = initField("bankItemIdList", classFields.bankItemIdList, int[].class);
+            bankItemCountList = initField("bankItemCountList", classFields.bankItemCountList, int[].class);
+            selectedBankItemIndex = initField("selectedBankItemIndex", classFields.selectedBankItemIndex, Integer.class);
+            optionsMenuText = initField("optionsMenuText", classFields.optionsMenuText, String[].class);
+            ignoreList = initField("ignoreList", classFields.ignoreList, String[].class);
+
+            packetBuilder = initField("packetBuilder", baseClassFields.packetBuilder, Object.class);
 
             simpleLogger.debug("");
         } catch (BotException e) {

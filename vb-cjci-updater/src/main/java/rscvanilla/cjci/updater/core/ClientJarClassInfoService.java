@@ -16,6 +16,8 @@ public class ClientJarClassInfoService {
     private final MudClientBaseClassMemberService mudClientBaseClassMemberService;
     private final PacketBuilderClassMemberService packetBuilderClassMemberService;
     private final PacketBuilderBaseClassMemberService packetBuilderBaseClassMemberService;
+    private final RSNonPlayerCharacterClassMemberService rsNonPlayerCharacterClassMemberService;
+    private final RSNonPlayerCharacterInfoClassMemberService rsNonPlayerCharacterInfoClassMemberService;
 
     @Inject
     public ClientJarClassInfoService(MudClientClassMemberService mudClientClassMemberService,
@@ -26,7 +28,9 @@ public class ClientJarClassInfoService {
                                      RSPlayerCharacterClassMemberService rsPlayerCharacterClassMemberService,
                                      MudClientBaseClassMemberService mudClientBaseClassMemberService,
                                      PacketBuilderClassMemberService packetBuilderClassMemberService,
-                                     PacketBuilderBaseClassMemberService packetBuilderBaseClassMemberService
+                                     PacketBuilderBaseClassMemberService packetBuilderBaseClassMemberService,
+                                     RSNonPlayerCharacterClassMemberService rsNonPlayerCharacterClassMemberService,
+                                     RSNonPlayerCharacterInfoClassMemberService rsNonPlayerCharacterInfoClassMemberService
     ) {
         this.mudClientClassMemberService = mudClientClassMemberService;
         this.appletClassMemberService = appletClassMemberService;
@@ -37,6 +41,8 @@ public class ClientJarClassInfoService {
         this.mudClientBaseClassMemberService = mudClientBaseClassMemberService;
         this.packetBuilderClassMemberService = packetBuilderClassMemberService;
         this.packetBuilderBaseClassMemberService = packetBuilderBaseClassMemberService;
+        this.rsNonPlayerCharacterClassMemberService = rsNonPlayerCharacterClassMemberService;
+        this.rsNonPlayerCharacterInfoClassMemberService = rsNonPlayerCharacterInfoClassMemberService;
     }
 
     public void setClassValuesTo(ClientJarClassInfo clientJarClassInfo) {
@@ -49,5 +55,7 @@ public class ClientJarClassInfoService {
         mudClientBaseClassMemberService.setValuesToClassMembers(clientJarClassInfo.mudClientBase);
         packetBuilderClassMemberService.setValuesToClassMembers(clientJarClassInfo.packetBuilder);
         packetBuilderBaseClassMemberService.setValuesToClassMembers(clientJarClassInfo.packetBuilderBase);
+        rsNonPlayerCharacterClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsNonPlayerCharacter);
+        rsNonPlayerCharacterInfoClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsNonPlayerCharacterInfo);
     }
 }

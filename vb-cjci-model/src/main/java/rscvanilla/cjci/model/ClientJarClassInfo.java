@@ -8,6 +8,8 @@ import rscvanilla.cjci.model.classes.packetbuilder.PacketBuilderClass;
 import rscvanilla.cjci.model.classes.packetbuilderbase.PacketBuilderBaseClass;
 import rscvanilla.cjci.model.classes.rscharacter.RSCharacterClass;
 import rscvanilla.cjci.model.classes.rsentity.RSEntityClass;
+import rscvanilla.cjci.model.classes.rsnonplayercharacter.RSNonPlayerCharacterClass;
+import rscvanilla.cjci.model.classes.rsnonplayercharacterinfo.RSNonPlayerCharacterInfoClass;
 import rscvanilla.cjci.model.classes.rsplayercharacter.RSPlayerCharacterClass;
 import rscvanilla.cjci.model.classes.rswallobject.RSWallObjectClass;
 
@@ -22,4 +24,6 @@ public class ClientJarClassInfo {
     public RSEntityClass rsEntity = new RSEntityClass();
     public RSPlayerCharacterClass rsPlayerCharacter = new RSPlayerCharacterClass();
     public RSWallObjectClass rsWallObject = new RSWallObjectClass();
+    public RSNonPlayerCharacterClass rsNonPlayerCharacter = new RSNonPlayerCharacterClass();
+    public RSNonPlayerCharacterInfoClass rsNonPlayerCharacterInfo = new RSNonPlayerCharacterInfoClass();
 }

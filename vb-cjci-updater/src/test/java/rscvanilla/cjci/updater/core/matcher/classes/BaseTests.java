@@ -29,4 +29,7 @@ public class BaseTests {
     protected String readClassRSCharacter() { { return readResource("com.rsc.e.i.java"); } }
     protected String readClassRSPlayerCharacter() { { return readResource("com.rsc.e.k.java"); } }
     protected String readClassRSWallObject() { { return readResource("com.rsc.e.m.java"); } }
+    protected String readClassRSNonPlayerCharacter() { { return readResource("com.rsc.e.j.java"); } }
+    protected String readClassRSNonPlayerCharacterInfo() { { return readResource("com.rsc.a.a.g.java"); } }
+
 }
