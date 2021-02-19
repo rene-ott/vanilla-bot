@@ -56,7 +56,7 @@ public class AlKharidSmelter extends RunnableScript {
 
         var state = getAction();
         if (this.state != state) {
-            print("State %s -> %s", this.state, state);
+            // print("State %s -> %s", this.state, state);
             this.state = state;
         }
 
@@ -90,7 +90,7 @@ public class AlKharidSmelter extends RunnableScript {
             }
             waitFor(300);
         } else {
-            print("DONE");
+            // print("DONE");
         }
     }
 
@@ -302,14 +302,14 @@ public class AlKharidSmelter extends RunnableScript {
         }
 
         private void createButtons() {
-            createButton(BRONZE);
-            createButton(IRON);
-            createButton(SILVER);
-            createButton(STEEL);
-            createButton(GOLD);
-            createButton(MITHRIL);
-            createButton(ADAMANTITE);
-            createButton(RUNITE);
+            createButton(BRONZE, true);
+            createButton(IRON, false);
+            createButton(SILVER, false);
+            createButton(STEEL, true);
+            createButton(GOLD, false);
+            createButton(MITHRIL, true);
+            createButton(ADAMANTITE, false);
+            createButton(RUNITE, false);
         }
 
         private JPanel createPanel() {
@@ -319,8 +319,9 @@ public class AlKharidSmelter extends RunnableScript {
             return new JPanel(layout);
         }
 
-        private JButton createButton(String text) {
+        private JButton createButton(String text, boolean isEnabled) {
             var button = new JButton(text);
+            button.setEnabled(isEnabled);
             button.addActionListener(this);
             panel.add(button);
 
@@ -348,11 +349,11 @@ public class AlKharidSmelter extends RunnableScript {
             } else if (command.equals(SILVER)) {
                 throw new NotImplementedException();
             } else if (command.equals(STEEL)) {
-                throw new NotImplementedException();
+                scriptParams = new ScriptParams(171, new Ore(151, 9, 1), new Ore(155, 18, 2));
             } else if (command.equals(GOLD)) {
                 throw new NotImplementedException();
             } else if (command.equals(MITHRIL)) {
-                throw new NotImplementedException();
+                scriptParams = new ScriptParams(171,new Ore(153, 5, 1), new Ore(155, 20, 4));
             } else if (command.equals(ADAMANTITE)) {
                 throw new NotImplementedException();
             } else if (command.equals(RUNITE)) {

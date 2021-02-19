@@ -226,7 +226,7 @@ public class CatherbyFisherCooker extends RunnableScript {
     }
 
     private boolean isAtFishSpot() {
-        return isPositionInDistance(fishSpot[1], fishSpot[2] -1 , 0);
+        return isPositionInDistance(fishSpot[1], fishSpot[2] -1 , 2);
     }
 
     private boolean hasCookedFishInInventory() {

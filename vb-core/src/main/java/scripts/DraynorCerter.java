@@ -37,7 +37,7 @@ public class DraynorCerter extends RunnableScript {
         super.onStart();
 
         disableScriptLoop();
-        new GUI("Al-Kharid Smelter", Thread.currentThread()).init();
+        new GUI("Draynor Certer/Uncerter", Thread.currentThread()).init();
     }
 
     @Override
@@ -303,10 +303,10 @@ public class DraynorCerter extends RunnableScript {
         private JPanel createFishButtonPanel() {
             var panel = createPanel();
 
-            createButton(FISH_RAW_LOBSTER, panel);
-            createButton(FISH_LOBSTER, panel);
-            createButton(FISH_RAW_SWORDFISH, panel);
-            createButton(FISH_SWORDFISH, panel);
+            createButton(FISH_RAW_LOBSTER, panel, true);
+            createButton(FISH_LOBSTER, panel, true);
+            createButton(FISH_RAW_SWORDFISH, panel, false);
+            createButton(FISH_SWORDFISH, panel, false);
 
             return panel;
 
@@ -314,11 +314,11 @@ public class DraynorCerter extends RunnableScript {
         private JPanel createOreButtonPanel() {
             var panel = createPanel();
 
-            createButton(ORE_IRON, panel);
-            createButton(ORE_SILVER, panel);
-            createButton(ORE_COAL, panel);
-            createButton(ORE_GOLD, panel);
-            createButton(ORE_MITHRIL, panel);
+            createButton(ORE_IRON, panel, true);
+            createButton(ORE_SILVER, panel, false);
+            createButton(ORE_COAL, panel, true);
+            createButton(ORE_GOLD, panel, false);
+            createButton(ORE_MITHRIL, panel, true);
 
             return panel;
         }
@@ -326,11 +326,11 @@ public class DraynorCerter extends RunnableScript {
         private JPanel createBarButtonPanel() {
             var panel = createPanel();
 
-            createButton(BAR_IRON, panel);
-            createButton(BAR_SILVER, panel);
-            createButton(BAR_STEEL, panel);
-            createButton(BAR_GOLD, panel);
-            createButton(BAR_MITHRIL, panel);
+            createButton(BAR_IRON, panel, false);
+            createButton(BAR_SILVER, panel, false);
+            createButton(BAR_STEEL, panel, false);
+            createButton(BAR_GOLD, panel, false);
+            createButton(BAR_MITHRIL, panel, false);
 
             return panel;
 
@@ -343,8 +343,9 @@ public class DraynorCerter extends RunnableScript {
             return new JPanel(layout);
         }
 
-        private void createButton(String text, JPanel panel) {
+        private void createButton(String text, JPanel panel, boolean isEnabled) {
             var button = new JButton(text);
+            button.setEnabled(isEnabled);
             button.addActionListener(this);
             panel.add(button);
         }
