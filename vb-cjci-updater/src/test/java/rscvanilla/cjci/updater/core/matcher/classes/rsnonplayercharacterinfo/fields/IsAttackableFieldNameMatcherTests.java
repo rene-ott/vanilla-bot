@@ -1,9 +1,8 @@
-package rscvanilla.cjci.updater.core.matcher.rsnonplayercharacterinfo.fields;
+package rscvanilla.cjci.updater.core.matcher.classes.rsnonplayercharacterinfo.fields;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import rscvanilla.cjci.updater.core.matcher.classes.BaseTests;
-import rscvanilla.cjci.updater.core.matcher.classes.rsnonplayercharacterinfo.fields.IsAttackableFieldNameMatcher;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
