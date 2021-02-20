@@ -11,6 +11,7 @@ import javax.sound.sampled.LineEvent;
 import java.io.BufferedInputStream;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class ScriptAntiBan {
 
@@ -26,6 +27,7 @@ public class ScriptAntiBan {
     private long logoutStartTimeInMillis;
 
     private final HashMap<String, Long> detectedPlayers = new HashMap<>();
+    private final List<String> ignoredUsernames = new ArrayList<>();
 
     private volatile boolean isSoundPlaying;
 
@@ -37,6 +39,15 @@ public class ScriptAntiBan {
         this.params = params;
         this.scriptWithAntiBan = scriptWithAntiBan;
         this.state = state;
+    }
+
+    public void setIgnoredUsernames(List<String> usernames) {
+        if (usernames.size() > 0) {
+            scriptWithAntiBan.print("(AB) Ignoring usernames: %s", usernames);
+        }
+
+        ignoredUsernames.clear();
+        ignoredUsernames.addAll(usernames);
     }
 
     public ScriptAntiBanParams getParams() {
@@ -92,14 +103,19 @@ public class ScriptAntiBan {
     }
 
     public boolean isAnyNewPlayersDetected() {
-        var playersInDistance = scriptWithAntiBan.getPlayerNamesInDistance(params.getInDistance());
-        var ignoredPlayers = scriptWithAntiBan.getIgnoredPlayers();
+        var playersInDistance = Arrays.stream(scriptWithAntiBan.getPlayerNamesInDistance(params.getInDistance()))
+            .map(String::toLowerCase)
+            .collect(Collectors.toList());
 
-        playersInDistance = Arrays.stream(playersInDistance)
-            .filter(p -> !Arrays.asList(ignoredPlayers).contains(p))
-            .toArray(String[]::new);
+        var ignoredUsernames = this.ignoredUsernames.stream()
+            .map(String::toLowerCase)
+            .collect(Collectors.toList());
 
-        if (playersInDistance.length == 0)
+        playersInDistance = playersInDistance.stream()
+            .filter(p -> !ignoredUsernames.contains(p))
+            .collect(Collectors.toList());
+
+        if (playersInDistance.size() == 0)
             return false;
 
         var currentTimeInMillis = System.currentTimeMillis();

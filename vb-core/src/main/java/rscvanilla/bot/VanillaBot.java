@@ -5,10 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import rscvanilla.bot.config.AppSettingsService;
 import rscvanilla.bot.events.messages.GameMessageEvent;
 import rscvanilla.bot.gui.BotFrame;
-import rscvanilla.bot.gui.events.AppSettingsUserSelectedEvent;
-import rscvanilla.bot.gui.events.ScriptAntiBanParamsChangedEvent;
-import rscvanilla.bot.gui.events.ScriptSelectedEvent;
-import rscvanilla.bot.gui.events.ScriptStartButtonClickedEvent;
+import rscvanilla.bot.gui.events.*;
 import rscvanilla.bot.script.engine.ScriptEngine;
 import rscvanilla.bot.script.engine.ScriptEngineListener;
 import rscvanilla.bot.script.events.ScriptListLoadedEvent;
@@ -89,6 +86,12 @@ public class VanillaBot implements Bot, ScriptEngineListener {
     @SuppressWarnings("unused")
     public void onScriptAntiBanParamsChanged(ScriptAntiBanParamsChangedEvent event) {
         scriptEngine.updateAntiBanParams(event.getParams());
+    }
+
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void onScriptAntiBanIgnoredUsernamesChanged(ScriptAntiBanIgnoredUsernamesChangedEvent event) {
+        scriptEngine.updateAntiBanIgnoredUsernames(event.getUsernames());
     }
 
     @Subscribe

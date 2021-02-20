@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.concurrent.Future;
 
 public class ScriptEngine implements ScriptThreadExecutorListener {
@@ -167,5 +168,11 @@ public class ScriptEngine implements ScriptThreadExecutorListener {
 
     public void updateAntiBanParams(ScriptAntiBanParams antiBanParams) {
         this.antiBanParams = antiBanParams;
+    }
+
+    public void updateAntiBanIgnoredUsernames(List<String> ignoredUsernames) {
+        if (this.script != null) {
+            this.script.updateAntiBanIgnoredUsernames(ignoredUsernames);
+        }
     }
 }

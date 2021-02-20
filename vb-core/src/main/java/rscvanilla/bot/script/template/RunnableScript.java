@@ -10,6 +10,7 @@ import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +20,7 @@ public abstract class RunnableScript extends Script implements Runnable, ScriptW
 
     // These fields are created by AWT Thread
     private final GameMessageQueue gameMessageQueue;
+
     private final RunnableScriptState state;
     private final ScriptAntiBan antiBan;
     private final ScheduledExecutorService antiBanScheduler;
@@ -189,5 +191,9 @@ public abstract class RunnableScript extends Script implements Runnable, ScriptW
             case GAME -> onGameMessageReceived(event.getMessage());
             case CHAT -> onChatMessageReceived(event.getSender(), event.getMessage());
         }
+    }
+
+    public void updateAntiBanIgnoredUsernames(List<String> usernames) {
+        antiBan.setIgnoredUsernames(usernames);
     }
 }

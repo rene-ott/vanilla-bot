@@ -95,7 +95,10 @@ public class RightPanel extends JPanel {
     public void onScriptStarted(ScriptStartedEvent event) {
         scriptControlPanel.getStartScriptButton().setText(GUIConstants.BTN_TEXT_STOP);
         scriptSelectionPanel.getScriptSelectionList().setEnabled(false);
+
         scriptAntiBanPanel.setElementsEnabled(false);
+        scriptAntiBanPanel.getIgnoredPlayersDialogOpenButton().dispatchScriptAntiBanIgnoredUsers();
+
         userSelectionPanel.getUserComboBox().setEnabled(false);
     }
 

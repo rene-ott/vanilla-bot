@@ -3,6 +3,7 @@ package rscvanilla.bot.gui.right;
 import com.google.common.eventbus.EventBus;
 import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.gui.events.ScriptAntiBanParamsChangedEvent;
+import rscvanilla.bot.gui.right.ignoredplayers.IgnoredPlayersDialogOpenButton;
 import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
 
 import javax.swing.*;
@@ -19,7 +20,7 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
 
     public static int WIDTH = 175;
 
-    private final int gridRows = 6;
+    private final int gridRows = 7;
     private final int gridColumns = 2;
     private final JPanel[][] panelHolder = new JPanel[gridRows][gridColumns];
 
@@ -30,7 +31,9 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
     private final JSpinner distanceSpinner;
     private final JSpinner pauseMinutesSpinner;
 
-    private final JComboBox actionComboBox;
+    private final JComboBox<String> actionComboBox;
+
+    private final IgnoredPlayersDialogOpenButton ignoredPlayersDialogOpenButton;
 
     private final String ACTION_NOTHING = "-";
     private final String ACTION_PAUSE = "Pause";
@@ -42,6 +45,7 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
         this.eventBus = eventBus;
 
         initPanelHolder();
+        ignoredPlayersDialogOpenButton = new IgnoredPlayersDialogOpenButton(eventBus);
 
         panelHolder[0][0].add(new JLabel("Enable:"));
         panelHolder[0][1].add(enableCheckBox = createCheckBox(""));
@@ -60,6 +64,9 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
 
         panelHolder[5][0].add(new JLabel("Logout min:"));
         panelHolder[5][1].add(logoutMinutes = createSpinner(0, 5, 1));
+
+        panelHolder[6][0].add(new JLabel("Ignore user:"));
+        panelHolder[6][1].add(ignoredPlayersDialogOpenButton);
 
         setElementsEnabled(false, false);
         distanceSpinner.setValue(10);
@@ -203,5 +210,9 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
         }
 
         createAndDispatchParamsChangedEvent();
+    }
+
+    public IgnoredPlayersDialogOpenButton getIgnoredPlayersDialogOpenButton() {
+        return ignoredPlayersDialogOpenButton;
     }
 }

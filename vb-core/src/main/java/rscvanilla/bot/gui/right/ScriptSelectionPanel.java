@@ -51,6 +51,7 @@ public class ScriptSelectionPanel extends JPanel implements ListSelectionListene
         add(list, BorderLayout.CENTER);
 
         var scrollPane = new JScrollPane(list);
+
         add(scrollPane);
 
         return list;
