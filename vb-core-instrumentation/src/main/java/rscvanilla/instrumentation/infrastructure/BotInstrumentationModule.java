@@ -4,11 +4,9 @@ import com.google.inject.AbstractModule;
 import rscvanilla.cjci.model.ClientJarClassInfo;
 import rscvanilla.cjci.model.ClientJarClassInfoFileReader;
 import rscvanilla.instrumentation.BotInstrumentation;
-import rscvanilla.instrumentation.transformations.AddGameCaptchaInterceptorTransformation;
-import rscvanilla.instrumentation.transformations.AddGameMessageInterceptorTransformation;
-import rscvanilla.instrumentation.transformations.AddGameSettingsInterceptorTransformation;
-import rscvanilla.instrumentation.transformations.RemoveLoginScreenTransformation;
-import rscvanilla.instrumentation.transformers.MudClientTransformer;
+import rscvanilla.instrumentation.transformers.mudclient.MudClientTransformer;
+import rscvanilla.instrumentation.transformers.mudclient.transformations.*;
+import rscvanilla.instrumentation.transformers.mudclient.transformations.interceptors.*;
 
 import java.io.IOException;
 import java.lang.instrument.Instrumentation;
@@ -29,10 +27,12 @@ public class BotInstrumentationModule extends AbstractModule {
         bind(BotInstrumentation.class).asEagerSingleton();
         bind(MudClientTransformer.class).asEagerSingleton();
 
-        bind(AddGameCaptchaInterceptorTransformation.class).asEagerSingleton();
-        bind(AddGameSettingsInterceptorTransformation.class).asEagerSingleton();
-        bind(AddGameMessageInterceptorTransformation.class).asEagerSingleton();
-        bind(RemoveLoginScreenTransformation.class).asEagerSingleton();
+        bind(ShowLoginScreenMethodBodyReplaceTransformation.class).asEagerSingleton();
+        bind(HandleOpCodeInMethodAddInterceptorTransformer.class).asEagerSingleton();
+        bind(ShowGameMessageMethodAddInterceptorTransformer.class).asEagerSingleton();
+        bind(SendLoginMethodAddInterceptorTransformation.class).asEagerSingleton();
+        bind(ResetLoginScreenVariablesMethodAddInterceptorTransformation.class).asEagerSingleton();
+        bind(InitGameScreenVariablesMethodAddInterceptorTransformation.class).asEagerSingleton();
 
         bind(ClientJarClassInfo.class).toInstance(getHooksFile());
     }

@@ -3,6 +3,10 @@ package rscvanilla.bot.mudclient;
 import com.google.common.base.Strings;
 import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.infrastructure.utils.EnumUtil;
+import rscvanilla.bot.mudclient.handlers.InterceptionHandler;
+import rscvanilla.bot.mudclient.handlers.captcha.CaptchaHandler;
+import rscvanilla.bot.mudclient.handlers.gamesettings.GameSettingsHandler;
+import rscvanilla.bot.mudclient.handlers.logingui.LoginGUIHandler;
 import rscvanilla.bot.mudclient.models.BankItem;
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.models.wrappers.*;
@@ -11,15 +15,14 @@ import rscvanilla.bot.infrastructure.logger.AppLoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.cjci.model.classes.mudclientbase.MudClientBaseClassFields;
-import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
-import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
-import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
+import rscvanilla.contracts.interceptors.*;
 import rscvanilla.cjci.model.ClientJarClassInfo;
 import rscvanilla.cjci.model.classes.applet.AppletClassFields;
 import rscvanilla.cjci.model.classes.mudclient.MudClientClassFields;
 import rscvanilla.cjci.model.classes.mudclient.MudClientClassMethods;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -92,9 +95,11 @@ public class MudClientWrapper {
     private MethodWrapper<MethodWrapper.Unit> logout;
     private MethodWrapper<MethodWrapper.Unit> walkToWall;
 
-    public FieldWrapper<MudClientCaptchaInterceptor> captchaInterceptor;
-    public FieldWrapper<MudClientGameMessageInterceptor> gameMessageInterceptor;
-    public FieldWrapper<MudClientGameSettingsInterceptor> gameSettingsInterceptor;
+    public FieldWrapper<ArrayList> resetLoginScreenVariablesMethodInterceptors;
+    public FieldWrapper<ArrayList> sendLoginMethodInterceptors;
+    public FieldWrapper<ArrayList> initGameScreenVariablesMethodInterceptors;
+    public FieldWrapper<ArrayList> showGameMessageMethodInterceptors;
+    public FieldWrapper<ArrayList> handleOpCodeInMethodInterceptors;
 
     private final PacketBuilderWrapper packetBuilderWrapper;
 
@@ -136,9 +141,16 @@ public class MudClientWrapper {
         try {
             logger.debug("Initializing [MudClientWrapper] interceptor fields:");
 
-            captchaInterceptor = initInterceptor("captchaInterceptor", MudClientCaptchaInterceptor.MC_FIELD_NAME);
-            gameMessageInterceptor = initInterceptor("gameMessageInterceptor", MudClientGameMessageInterceptor.MC_FIELD_NAME);
-            gameSettingsInterceptor = initInterceptor("gameSettingsInterceptor", MudClientGameSettingsInterceptor.MC_FIELD_NAME);
+            //captchaInterceptor = initInterceptor("captchaInterceptor", MudClientCaptchaInterceptor.MC_FIELD_NAME);
+            //gameMessageInterceptor = initInterceptor("gameMessageInterceptor", MudClientGameMessageInterceptor.MC_FIELD_NAME);
+            //gameSettingsInterceptor = initInterceptor("gameSettingsInterceptor", MudClientGameSettingsInterceptor.MC_FIELD_NAME);
+            var d = getRawMudClient();
+
+            resetLoginScreenVariablesMethodInterceptors = initInterceptor("resetLoginScreenVariablesMethodInterceptors", MudClientResetLoginScreenVariablesMethodInterceptor.FIELD_NAME);
+            initGameScreenVariablesMethodInterceptors = initInterceptor("initGameScreenVariablesMethodInterceptors", MudClientInitGameScreenVariablesMethodInterceptor.FIELD_NAME);
+            sendLoginMethodInterceptors = initInterceptor("sendLoginMethodInterceptors", MudClientSendLoginMethodInterceptor.FIELD_NAME);
+            handleOpCodeInMethodInterceptors = initInterceptor("handleOpCodeInMethodInterceptors", MudClientHandleOpcodeInMethodInterceptor.FIELD_NAME);
+            showGameMessageMethodInterceptors = initInterceptor("showGameMessageMethodInterceptors", MudClientShowGameMessageMethodInterceptor.FIELD_NAME);
 
             simpleLogger.debug("");
         } catch (BotException e) {
@@ -215,24 +227,18 @@ public class MudClientWrapper {
         }
     }
 
-    // Interceptors are injected after interceptor fields are initialized and before lateInitClassMembers are initialized
+    // Handlers are injected after fields are initialized
     @Inject
     @SuppressWarnings("unused") // Injected by Guice
-    public void setCaptchaInterceptor(MudClientCaptchaInterceptor interceptor) {
-        captchaInterceptor.setValue(interceptor);
-    }
+    public void setLoginCredentialGUIHandler(LoginGUIHandler interceptionHandler) { subscribeToInterception(interceptionHandler); }
 
     @Inject
     @SuppressWarnings("unused") // Injected by Guice
-    public void setGameMessageInterceptor(MudClientGameMessageInterceptor interceptor) {
-        gameMessageInterceptor.setValue(interceptor);
-    }
+    public void setCaptchaHandler(CaptchaHandler interceptionHandler) { subscribeToInterception(interceptionHandler); }
 
     @Inject
     @SuppressWarnings("unused") // Injected by Guice
-    public void setGameSettingsInterceptor(MudClientGameSettingsInterceptor interceptor) {
-        gameSettingsInterceptor.setValue(interceptor);
-    }
+    public void setCaptchaHandler(GameSettingsHandler interceptionHandler) { subscribeToInterception(interceptionHandler); }
 
     public PacketBuilderWrapper getPacketBuilder() { return packetBuilderWrapper; }
     public ClientJarClassInfo getClientJarClassInfo() { return clientJarClassInfo; }
@@ -303,5 +309,28 @@ public class MudClientWrapper {
 
     private <T> FieldWrapper<T> initInterceptor(String interceptorDisplayName, String fieldName) {
         return WrapperTool.loadField(mudClient.getValue(), simpleLogger, interceptorDisplayName, fieldName, null);
+    }
+
+    @SuppressWarnings("unchecked") // ArrayList is injected with javassist, therefore there's no generic type
+    public void subscribeToInterception(InterceptionHandler interceptionHandler) {
+        if (interceptionHandler instanceof MudClientSendLoginMethodInterceptor) {
+            sendLoginMethodInterceptors.getValue().add(interceptionHandler);
+        }
+
+        if (interceptionHandler instanceof MudClientResetLoginScreenVariablesMethodInterceptor) {
+            resetLoginScreenVariablesMethodInterceptors.getValue().add(interceptionHandler);
+        }
+
+        if (interceptionHandler instanceof MudClientInitGameScreenVariablesMethodInterceptor) {
+            initGameScreenVariablesMethodInterceptors.getValue().add(interceptionHandler);
+        }
+
+        if (interceptionHandler instanceof MudClientShowGameMessageMethodInterceptor) {
+            showGameMessageMethodInterceptors.getValue().add(interceptionHandler);
+        }
+
+        if (interceptionHandler instanceof MudClientHandleOpcodeInMethodInterceptor) {
+            handleOpCodeInMethodInterceptors.getValue().add(interceptionHandler);
+        }
     }
 }

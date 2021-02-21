@@ -1,6 +1,6 @@
 package rscvanilla.instrumentation;
 
-import rscvanilla.instrumentation.transformers.MudClientTransformer;
+import rscvanilla.instrumentation.transformers.mudclient.MudClientTransformer;
 
 import javax.inject.Inject;
 import java.lang.instrument.Instrumentation;

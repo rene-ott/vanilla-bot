@@ -2,7 +2,7 @@ package rscvanilla.bot.script.template;
 
 import rscvanilla.bot.events.messages.GameMessageEvent;
 import rscvanilla.bot.infrastructure.utils.ExecutorUtil;
-import rscvanilla.bot.mudclient.interceptors.ingamemessage.GameMessageQueue;
+import rscvanilla.bot.mudclient.handlers.gamemessage.GameMessageQueue;
 import rscvanilla.bot.script.ScriptDependencyContext;
 import rscvanilla.bot.script.antiban.ScriptWithAntiBan;
 import rscvanilla.bot.script.antiban.ScriptAntiBan;

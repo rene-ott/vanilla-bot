@@ -13,6 +13,7 @@ repositories {
 dependencies {
     implementation "org.javassist:javassist:3.27.0-GA"
     implementation "com.google.inject:guice:5.0.0-BETA-1"
+    implementation "org.slf4j:slf4j-api:1.7.30"
     implementation project(':vb-cjci-model')
     implementation project(':vb-core-contracts')
 }

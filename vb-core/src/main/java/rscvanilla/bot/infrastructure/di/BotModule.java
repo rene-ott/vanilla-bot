@@ -11,19 +11,20 @@ import rscvanilla.bot.Bot;
 import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.VanillaBot;
 import rscvanilla.bot.VanillaGameApplet;
-import rscvanilla.bot.config.*;
-import rscvanilla.bot.mudclient.actions.*;
+import rscvanilla.bot.config.AppSettings;
+import rscvanilla.bot.config.AppSettingsFileReader;
 import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.annotations.ScriptsDirectoryPath;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.infrastructure.printer.TabPrinter;
 import rscvanilla.bot.mudclient.MudClientWrapper;
-import rscvanilla.bot.mudclient.interceptors.captcha.CaptchaDataLoader;
-import rscvanilla.bot.mudclient.interceptors.captcha.CaptchaImageHandler;
-import rscvanilla.bot.mudclient.interceptors.captcha.CaptchaImageRecognizer;
-import rscvanilla.bot.mudclient.interceptors.gamesettings.GameSettingsHandler;
-import rscvanilla.bot.mudclient.interceptors.ingamemessage.GameMessageHandler;
+import rscvanilla.bot.mudclient.actions.*;
+import rscvanilla.bot.mudclient.handlers.captcha.CaptchaDataLoader;
+import rscvanilla.bot.mudclient.handlers.captcha.CaptchaHandler;
+import rscvanilla.bot.mudclient.handlers.captcha.CaptchaImageRecognizer;
+import rscvanilla.bot.mudclient.handlers.gamesettings.GameSettingsHandler;
+import rscvanilla.bot.mudclient.handlers.logingui.LoginGUIHandler;
 import rscvanilla.bot.script.ScriptDependencyContext;
 import rscvanilla.bot.script.engine.ScriptEngine;
 import rscvanilla.bot.script.engine.ScriptFactory;
@@ -31,9 +32,6 @@ import rscvanilla.bot.script.engine.ScriptList;
 import rscvanilla.bot.script.engine.executor.ScriptThreadExecutor;
 import rscvanilla.bot.script.engine.loader.ScriptLoader;
 import rscvanilla.bot.watcher.ScriptDirectoryContentChangeWatcher;
-import rscvanilla.contracts.interceptors.MudClientCaptchaInterceptor;
-import rscvanilla.contracts.interceptors.MudClientGameSettingsInterceptor;
-import rscvanilla.contracts.interceptors.MudClientGameMessageInterceptor;
 import rscvanilla.cjci.model.ClientJarClassInfo;
 import rscvanilla.cjci.model.ClientJarClassInfoFileReader;
 
@@ -60,13 +58,13 @@ public class BotModule extends AbstractModule {
         bind(BotFrame.class).in(Singleton.class);
         bind(Printer.class).to(TabPrinter.class).in(Singleton.class);
 
-        bind(MudClientCaptchaInterceptor.class).to(CaptchaImageHandler.class).in(Singleton.class);
         bind(CaptchaImageRecognizer.class).in(Singleton.class);
         bind(CaptchaDataLoader.class).in(Singleton.class);
         bindConstant().annotatedWith(ScriptsDirectoryPath.class).to(scriptsDirectoryPath);
 
-        bind(MudClientGameMessageInterceptor.class).to(GameMessageHandler.class).in(Singleton.class);
-        bind(MudClientGameSettingsInterceptor.class).to(GameSettingsHandler.class).in(Singleton.class);
+        bind(LoginGUIHandler.class).in(Singleton.class);
+        bind(CaptchaHandler.class).in(Singleton.class);
+        bind(GameSettingsHandler.class).in(Singleton.class);
 
         bind(ScriptDirectoryContentChangeWatcher.class).in(Singleton.class);
         bind(ScriptEngine.class).in(Singleton.class);

@@ -18,17 +18,6 @@ public class TestScript extends RunnableScript {
     @Override
     protected void loop() {
         waitFor(3000);
-        if (isOptionsMenuVisible()) {
-            var position = getAnswerOptionPosition("I'd like to access my bank account please");
-            if (position >= 0) {
-                answerOption(position);
-            }
-        }
-        if (isBankWindowVisible()) {
-            if (getBankItemCount(202) >= 5) {
-                withdraw(202, 5);
-            }
-        }
     }
 
     @Override
