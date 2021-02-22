@@ -22,7 +22,7 @@ public class InitGameScreenVariablesMethodAddInterceptorTransformation extends B
 
     @Override
     protected CtMethod interceptedMethod(CtClass ctClass) throws NotFoundException {
-        return getMethodByParams(ctClass, "dx");
+        return getMethodByParams(ctClass, clientJarClassInfo.mudClient.methods.initGameScreenVariables);
     }
 
     @Override

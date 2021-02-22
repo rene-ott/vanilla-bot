@@ -75,9 +75,10 @@ mud_client:
     walk_to_area:
     walk_to_object:
     walk_to_wall:
-
     show_game_message:
     handle_op_code_in:
+    init_game_screen_variables:
+    reset_login_screen_variables:
 
 rs_character:
   qualified_name: com.rsc.e.i

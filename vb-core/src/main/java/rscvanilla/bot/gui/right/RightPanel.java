@@ -87,7 +87,6 @@ public class RightPanel extends JPanel {
     @Subscribe
     @SuppressWarnings("unused")
     public void onUserLogged(UserLoginActionEvent event) {
-        System.out.println(event.getAction());
         switch (event.getAction()) {
             case SENT_LOGGING_IN -> SwingUtilities.invokeLater(() -> userSelectionPanel.setSelectedUsername(event.getUsername()));
             case LOGGED_IN -> SwingUtilities.invokeLater(() -> userSelectionPanel.setEnabled(false));

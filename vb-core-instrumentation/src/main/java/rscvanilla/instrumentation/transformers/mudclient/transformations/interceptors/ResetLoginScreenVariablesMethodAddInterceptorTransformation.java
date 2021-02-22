@@ -22,7 +22,7 @@ public class ResetLoginScreenVariablesMethodAddInterceptorTransformation extends
 
     @Override
     protected CtMethod interceptedMethod(CtClass ctClass) throws NotFoundException {
-        return getMethodByParams(ctClass, "dt");
+        return getMethodByParams(ctClass, clientJarClassInfo.mudClient.methods.resetLoginScreenVariables);
     }
 
     @Override

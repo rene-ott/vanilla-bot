@@ -47,8 +47,10 @@ mud_client:
     wall_object_list_index: ro
   methods:
     handle_op_code_in: b
+    init_game_screen_variables: dx
     login: f
     logout: dz
+    reset_login_screen_variables: dt
     send_chat_message: "n"
     send_walk_to_ground_item: d
     show_game_message: a

@@ -22,7 +22,7 @@ public class SendLoginMethodAddInterceptorTransformation extends BaseMethodAddIn
 
     @Override
     protected CtMethod interceptedMethod(CtClass ctClass) throws NotFoundException {
-        return getMethodByParams(ctClass, "f", CtClass.booleanType);
+        return getMethodByParams(ctClass, clientJarClassInfo.mudClient.methods.login, CtClass.booleanType);
     }
 
     @Override
