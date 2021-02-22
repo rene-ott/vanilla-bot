@@ -50,7 +50,7 @@ public class NonPlayerCharacterAction extends BaseAction {
 
     private void atNpc(boolean mustBeAttackable, boolean mustNotBeInCombat, OpCodeOut opCodeOut, int...ids) {
         var npc = mustBeAttackable
-            ? getNearestAttackableNpcById(mustNotBeInCombat)
+            ? getNearestAttackableNpcById(mustNotBeInCombat, ids)
             : getNearestNpcById(mustNotBeInCombat, ids);
 
         if (npc == null)
@@ -73,6 +73,7 @@ public class NonPlayerCharacterAction extends BaseAction {
     }
 
     private RSNonPlayerCharacter getNearestNpcById(boolean mustBeAttackable, boolean mustNotBeInCombat, int...ids) {
+
         var matchedNpcs = mudClientWrapper.getNpcList()
             .stream()
             .filter(it -> (!mustBeAttackable || it.isAttackable()))
