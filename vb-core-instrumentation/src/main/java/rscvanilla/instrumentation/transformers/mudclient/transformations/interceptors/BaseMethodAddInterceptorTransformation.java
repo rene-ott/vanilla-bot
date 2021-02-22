@@ -17,9 +17,6 @@ public abstract class BaseMethodAddInterceptorTransformation {
     protected final String beforeMethodName;
     protected final String afterMethodName;
 
-    protected final String beforeMethodIdentifier;
-    protected final String afterMethodIdentifier;
-
     protected BaseMethodAddInterceptorTransformation(
         String interceptorFieldName,
         String beforeMethodName,
@@ -32,9 +29,6 @@ public abstract class BaseMethodAddInterceptorTransformation {
 
         this.beforeMethodName = beforeMethodName;
         this.afterMethodName = afterMethodName;
-
-        this.beforeMethodIdentifier = String.format("%s.%s", interceptorFieldName, beforeMethodName);
-        this.afterMethodIdentifier = String.format("%s.%s", interceptorFieldName, afterMethodName);
 
         this.clientJarClassInfo = clientJarClassInfo;
     }
@@ -59,8 +53,8 @@ public abstract class BaseMethodAddInterceptorTransformation {
 
         var afterCodeSrc = insertAfterMethod(ctClass);
         if (afterCodeSrc != null) {
-            simpleLogger.trace(" - After: [{}]", beforeCodeSrc);
-            ctMethod.insertBefore(beforeCodeSrc);
+            simpleLogger.trace(" - After: [{}]", afterCodeSrc);
+            ctMethod.insertAfter(afterCodeSrc);
         }
     }
 

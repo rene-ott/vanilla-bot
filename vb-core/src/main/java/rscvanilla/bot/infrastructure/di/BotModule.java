@@ -24,7 +24,9 @@ import rscvanilla.bot.mudclient.handlers.captcha.CaptchaDataLoader;
 import rscvanilla.bot.mudclient.handlers.captcha.CaptchaHandler;
 import rscvanilla.bot.mudclient.handlers.captcha.CaptchaImageRecognizer;
 import rscvanilla.bot.mudclient.handlers.gamesettings.GameSettingsHandler;
-import rscvanilla.bot.mudclient.handlers.logingui.LoginGUIHandler;
+import rscvanilla.bot.mudclient.handlers.userlogaction.UserCredentialManager;
+import rscvanilla.bot.mudclient.handlers.userlogaction.UserLoginActionHandler;
+import rscvanilla.bot.mudclient.handlers.userlogaction.UserProxyManager;
 import rscvanilla.bot.script.ScriptDependencyContext;
 import rscvanilla.bot.script.engine.ScriptEngine;
 import rscvanilla.bot.script.engine.ScriptFactory;
@@ -62,7 +64,10 @@ public class BotModule extends AbstractModule {
         bind(CaptchaDataLoader.class).in(Singleton.class);
         bindConstant().annotatedWith(ScriptsDirectoryPath.class).to(scriptsDirectoryPath);
 
-        bind(LoginGUIHandler.class).in(Singleton.class);
+        bind(UserLoginActionHandler.class).in(Singleton.class);
+        bind(UserCredentialManager.class).in(Singleton.class);
+        bind(UserProxyManager.class).in(Singleton.class);
+
         bind(CaptchaHandler.class).in(Singleton.class);
         bind(GameSettingsHandler.class).in(Singleton.class);
 

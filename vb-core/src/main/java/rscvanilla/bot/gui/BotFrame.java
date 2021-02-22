@@ -53,8 +53,7 @@ public class BotFrame extends JFrame {
         return bottomPanel;
     }
 
-    public void open(String titleUserInfo) {
-        setTitleUserInfo(titleUserInfo);
+    public void open() {
         pack();
         setVisible(true);
         setLocationRelativeTo(null);
@@ -62,13 +61,5 @@ public class BotFrame extends JFrame {
 
     private static String getDefaultTitle() {
         return GUIConstants.NAME + " " + GUIConstants.VERSION;
-    }
-
-    public void setTitleUserInfo(String titleUserInfo) {
-        if (Strings.isNullOrEmpty(titleUserInfo)) {
-            return;
-        }
-
-        setTitle(getDefaultTitle() + " - " + titleUserInfo);
     }
 }

@@ -3,6 +3,7 @@ package rscvanilla.bot.gui.right;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import rscvanilla.bot.config.AppSettings;
+import rscvanilla.bot.mudclient.handlers.userlogaction.events.UserLoginActionEvent;
 import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.gui.GUIConstants;
 import rscvanilla.bot.script.events.ScriptListLoadedEvent;
@@ -81,7 +82,17 @@ public class RightPanel extends JPanel {
         scriptControlPanel.getStartScriptButton().setText(GUIConstants.BTN_TEXT_START);
         scriptSelectionPanel.getScriptSelectionList().setEnabled(true);
         scriptAntiBanPanel.setElementsEnabled(true);
-        userSelectionPanel.getUserComboBox().setEnabled(true);
+    }
+
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void onUserLogged(UserLoginActionEvent event) {
+        System.out.println(event.getAction());
+        switch (event.getAction()) {
+            case SENT_LOGGING_IN -> SwingUtilities.invokeLater(() -> userSelectionPanel.setSelectedUsername(event.getUsername()));
+            case LOGGED_IN -> SwingUtilities.invokeLater(() -> userSelectionPanel.setEnabled(false));
+            case LOGGED_OUT -> SwingUtilities.invokeLater(() -> userSelectionPanel.setEnabled(true));
+        }
     }
 
     @Subscribe
@@ -98,8 +109,6 @@ public class RightPanel extends JPanel {
 
         scriptAntiBanPanel.setElementsEnabled(false);
         scriptAntiBanPanel.getIgnoredPlayersDialogOpenButton().dispatchScriptAntiBanIgnoredUsers();
-
-        userSelectionPanel.getUserComboBox().setEnabled(false);
     }
 
     @Subscribe

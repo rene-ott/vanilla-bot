@@ -2,7 +2,6 @@ package rscvanilla.bot;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import rscvanilla.bot.config.AppSettingsService;
 import rscvanilla.bot.events.messages.GameMessageEvent;
 import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.gui.events.*;
@@ -26,22 +25,19 @@ public class VanillaBot implements Bot, ScriptEngineListener {
     private final ScriptEngine scriptEngine;
     private final EventBus eventBus;
     private final ScriptDirectoryContentChangeWatcher scriptsDirectoryWatcher;
-    private final AppSettingsService appSettingsService;
 
     @Inject
     public VanillaBot(BotFrame botFrame,
                       GameApplet gameApplet,
                       ScriptEngine scriptEngine,
                       ScriptDirectoryContentChangeWatcher scriptsDirectoryWatcher,
-                      EventBus eventBus,
-                      AppSettingsService appSettingsService) {
+                      EventBus eventBus) {
         this.botFrame = botFrame;
         this.gameApplet = gameApplet;
         this.scriptEngine = scriptEngine;
         this.scriptsDirectoryWatcher = scriptsDirectoryWatcher;
 
         this.eventBus = eventBus;
-        this.appSettingsService = appSettingsService;
 
         this.scriptEngine.addScriptEngineListener(this);
     }
@@ -49,7 +45,7 @@ public class VanillaBot implements Bot, ScriptEngineListener {
     @Override
     public void load() {
         gameApplet.execute();
-        botFrame.open(appSettingsService.selectDefaultUser());
+        botFrame.open();
         scriptsDirectoryWatcher.start();
         scriptEngine.loadScripts();
     }
@@ -92,12 +88,6 @@ public class VanillaBot implements Bot, ScriptEngineListener {
     @SuppressWarnings("unused")
     public void onScriptAntiBanIgnoredUsernamesChanged(ScriptAntiBanIgnoredUsernamesChangedEvent event) {
         scriptEngine.updateAntiBanIgnoredUsernames(event.getUsernames());
-    }
-
-    @Subscribe
-    @SuppressWarnings("unused")
-    public void onAppSettingsUserSelected(AppSettingsUserSelectedEvent event) {
-        botFrame.setTitleUserInfo(appSettingsService.setUserSelected(event.getUser()));
     }
 
     @Override

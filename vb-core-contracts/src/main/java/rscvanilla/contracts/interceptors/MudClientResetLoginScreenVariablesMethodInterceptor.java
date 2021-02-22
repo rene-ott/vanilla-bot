@@ -5,6 +5,6 @@ public interface MudClientResetLoginScreenVariablesMethodInterceptor {
     String METHOD_BEFORE_NAME = "onBeforeResetLoginScreenVariables";
     String METHOD_AFTER_NAME = "onAfterResetLoginScreenVariables";
 
-    default void onBeforeResetLoginScreenVariables() {};
-    default void onAfterResetLoginScreenVariables() { };
+    default void onBeforeResetLoginScreenVariables() { }
+    default void onAfterResetLoginScreenVariables() { }
 }

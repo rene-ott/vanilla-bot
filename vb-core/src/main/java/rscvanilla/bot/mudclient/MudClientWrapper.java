@@ -6,7 +6,7 @@ import rscvanilla.bot.infrastructure.utils.EnumUtil;
 import rscvanilla.bot.mudclient.handlers.InterceptionHandler;
 import rscvanilla.bot.mudclient.handlers.captcha.CaptchaHandler;
 import rscvanilla.bot.mudclient.handlers.gamesettings.GameSettingsHandler;
-import rscvanilla.bot.mudclient.handlers.logingui.LoginGUIHandler;
+import rscvanilla.bot.mudclient.handlers.userlogaction.UserLoginActionHandler;
 import rscvanilla.bot.mudclient.models.BankItem;
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.models.wrappers.*;
@@ -141,11 +141,6 @@ public class MudClientWrapper {
         try {
             logger.debug("Initializing [MudClientWrapper] interceptor fields:");
 
-            //captchaInterceptor = initInterceptor("captchaInterceptor", MudClientCaptchaInterceptor.MC_FIELD_NAME);
-            //gameMessageInterceptor = initInterceptor("gameMessageInterceptor", MudClientGameMessageInterceptor.MC_FIELD_NAME);
-            //gameSettingsInterceptor = initInterceptor("gameSettingsInterceptor", MudClientGameSettingsInterceptor.MC_FIELD_NAME);
-            var d = getRawMudClient();
-
             resetLoginScreenVariablesMethodInterceptors = initInterceptor("resetLoginScreenVariablesMethodInterceptors", MudClientResetLoginScreenVariablesMethodInterceptor.FIELD_NAME);
             initGameScreenVariablesMethodInterceptors = initInterceptor("initGameScreenVariablesMethodInterceptors", MudClientInitGameScreenVariablesMethodInterceptor.FIELD_NAME);
             sendLoginMethodInterceptors = initInterceptor("sendLoginMethodInterceptors", MudClientSendLoginMethodInterceptor.FIELD_NAME);
@@ -230,7 +225,7 @@ public class MudClientWrapper {
     // Handlers are injected after fields are initialized
     @Inject
     @SuppressWarnings("unused") // Injected by Guice
-    public void setLoginCredentialGUIHandler(LoginGUIHandler interceptionHandler) { subscribeToInterception(interceptionHandler); }
+    public void setLoginCredentialGUIHandler(UserLoginActionHandler interceptionHandler) { subscribeToInterception(interceptionHandler); }
 
     @Inject
     @SuppressWarnings("unused") // Injected by Guice

@@ -1,10 +1,21 @@
-global_proxy_address:
+proxies:
+  - &p1
+    name:
+    address:
+  - &p2
+    name:
+    address:
 
 users:
- - username:
-   password: 
-   proxy_address:
+  - username:
+    password:
+    proxy:
 
- - username:
-   password:
-   proxy_address:
+  - username:
+    password:
+    proxy: *p1
+
+  - username:
+    password:
+    proxy: *p2
+

@@ -37,5 +37,13 @@ public class ResetLoginScreenVariablesMethodAddInterceptorTransformation extends
     }
 
     @Override
-    protected String insertAfterMethod(CtClass ctClass) { return null;}
+    protected String insertAfterMethod(CtClass ctClass) {
+        var code = new StringBuilder();
+
+        code.append("{");
+        code.append(wrapIntoWhileLoop(String.format("%s()", afterMethodName)));
+        code.append("}");
+
+        return code.toString();
+    }
 }
