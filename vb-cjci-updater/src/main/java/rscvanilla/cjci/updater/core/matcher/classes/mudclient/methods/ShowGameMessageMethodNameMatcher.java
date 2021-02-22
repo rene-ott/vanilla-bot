@@ -6,12 +6,12 @@ import rscvanilla.cjci.updater.core.matcher.classes.mudclient.MudClientClassMeth
 
 import java.util.regex.Pattern;
 
-@YamlClassMemberKey("intercepted_op_code_in_handler")
-public class InterceptedOpCodeInHandlerMethodNameMatcher extends ClassMemberNameBaseMatcher implements MudClientClassMethodNameMatcher {
+@YamlClassMemberKey("show_game_message")
+public class ShowGameMessageMethodNameMatcher extends ClassMemberNameBaseMatcher implements MudClientClassMethodNameMatcher {
 
-    public InterceptedOpCodeInHandlerMethodNameMatcher() {
+    public ShowGameMessageMethodNameMatcher() {
         pattern = Pattern.compile(
-            "(?<pre>private void )(?<fieldName>[a-zA-Z])(?<post>\\(com\\.rsc\\.f\\.a var1, int var2, int var3\\))",
+            "(?<pre>public final void )(?<fieldName>[a-zA-Z])(?<post>\\(h var1, String var2, String var3, String var4, String var5, int var6\\))",
             Pattern.MULTILINE
         );
     }

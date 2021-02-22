@@ -1,6 +1,5 @@
 package rscvanilla.instrumentation.transformers.mudclient.transformations.interceptors;
 
-import javassist.CannotCompileException;
 import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.NotFoundException;
@@ -23,7 +22,7 @@ public class ShowGameMessageMethodAddInterceptorTransformer extends BaseMethodAd
 
     @Override
     protected CtMethod interceptedMethod(CtClass ctClass) throws NotFoundException {
-        return getMethodByIndex(ctClass, clientJarClassInfo.mudClient.methods.interceptedShowGameMessage, 8);
+        return getMethodByIndex(ctClass, clientJarClassInfo.mudClient.methods.showGameMessage, 8);
     }
 
     @Override

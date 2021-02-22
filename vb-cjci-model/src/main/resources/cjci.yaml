@@ -46,12 +46,12 @@ mud_client:
     wall_object_list: oJ
     wall_object_list_index: ro
   methods:
-    intercepted_op_code_in_handler: b
-    intercepted_show_game_message: a
+    handle_op_code_in: b
     login: f
     logout: dz
     send_chat_message: "n"
     send_walk_to_ground_item: d
+    show_game_message: a
     show_login_screen: cU
     walk_to_area: c
     walk_to_object: x

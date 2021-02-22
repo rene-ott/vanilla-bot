@@ -17,8 +17,8 @@ public class MudClientClassMethods implements WithClassMembers {
     @YamlClassMemberKey("walk_to_object") public String walkToObject;
     @YamlClassMemberKey("walk_to_wall") public String walkToWall;
 
-    @YamlClassMemberKey("intercepted_show_game_message") public String interceptedShowGameMessage;
-    @YamlClassMemberKey("intercepted_op_code_in_handler") public String interceptedOpCodeInHandler;
+    @YamlClassMemberKey("show_game_message") public String showGameMessage;
+    @YamlClassMemberKey("handle_op_code_in") public String handleOpCodeIn;
 }
 
 

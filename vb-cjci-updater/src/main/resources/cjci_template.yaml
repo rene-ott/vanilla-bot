@@ -75,8 +75,9 @@ mud_client:
     walk_to_area:
     walk_to_object:
     walk_to_wall:
-    intercepted_show_game_message:
-    intercepted_op_code_in_handler:
+
+    show_game_message:
+    handle_op_code_in:
 
 rs_character:
   qualified_name: com.rsc.e.i

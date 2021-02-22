@@ -22,7 +22,7 @@ public class HandleOpCodeInMethodAddInterceptorTransformer extends BaseMethodAdd
 
     @Override
     protected CtMethod interceptedMethod(CtClass ctClass) throws NotFoundException {
-        return getMethodByIndex(ctClass, clientJarClassInfo.mudClient.methods.interceptedOpCodeInHandler, 1);
+        return getMethodByIndex(ctClass, clientJarClassInfo.mudClient.methods.handleOpCodeIn, 1);
     }
 
     @Override
