@@ -48,4 +48,5 @@ public class MudClientClassFields implements WithClassMembers {
     @YamlClassMemberKey("selected_bank_item_index") public String selectedBankItemIndex;
     @YamlClassMemberKey("options_menu_text") public String optionsMenuText;
     @YamlClassMemberKey("ignore_list") public String ignoreList;
+    @YamlClassMemberKey("is_admin") public String isAdmin;
 }

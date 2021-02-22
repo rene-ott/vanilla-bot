@@ -65,6 +65,7 @@ mud_client:
     bank_item_count_list:
     selected_bank_item_index:
     options_menu_text:
+    is_admin:
   methods:
     login:
     logout:

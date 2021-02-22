@@ -86,6 +86,7 @@ public class MudClientWrapper {
     @SuppressWarnings("unused") private FieldWrapper<Integer> selectedBankItemIndex;
 
     public FieldWrapper<String> userPassword;
+    public FieldWrapper<Boolean> isAdmin;
 
     private MethodWrapper<MethodWrapper.Unit> walkToArea;
     private MethodWrapper<Boolean> sendWalkToGroundItem;
@@ -189,12 +190,12 @@ public class MudClientWrapper {
             wallObjectList = initField("wallObjectList", classFields.wallObjectList, com.rsc.e.m[].class);
             wallObjectListIndex = initField("wallObjectListIndex", classFields.wallObjectListIndex, Integer.class);
             user = initField("user", classFields.user, com.rsc.e.k.class);
-
             bankItemIdList = initField("bankItemIdList", classFields.bankItemIdList, int[].class);
             bankItemCountList = initField("bankItemCountList", classFields.bankItemCountList, int[].class);
             selectedBankItemIndex = initField("selectedBankItemIndex", classFields.selectedBankItemIndex, Integer.class);
             optionsMenuText = initField("optionsMenuText", classFields.optionsMenuText, String[].class);
             ignoreList = initField("ignoreList", classFields.ignoreList, String[].class);
+            isAdmin = initField("isAdmin", classFields.isAdmin, Boolean.class);
 
             packetBuilder = initField("packetBuilder", baseClassFields.packetBuilder, Object.class);
 

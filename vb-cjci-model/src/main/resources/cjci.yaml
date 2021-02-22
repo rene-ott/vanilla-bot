@@ -21,6 +21,7 @@ mud_client:
     inventory_item_list: nm
     inventory_item_list_index: pG
     inventory_item_slots_counts: nn
+    is_admin: oq
     is_bank_visible: rb
     is_options_menu_visible: re
     is_sleeping: pH

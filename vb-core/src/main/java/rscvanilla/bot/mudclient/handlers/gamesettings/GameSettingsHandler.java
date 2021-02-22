@@ -23,7 +23,6 @@ public class GameSettingsHandler implements InterceptionHandler, MudClientHandle
             return;
         }
 
-        var mudClient = this.mudClientWrapper.getRawMudClient();
-        mudClient.oq = true; // Admin
+        this.mudClientWrapper.isAdmin.setValue(true);
     }
 }
