@@ -26,17 +26,16 @@ public class Main {
 
             main.run();
 
-            logger.info("Hooker ended.");
+            logger.info("CJCI updater ended.");
         } catch (Exception e) {
-            logger.error("Hooker failed: ", e);
+            logger.error("CJCI updater: ", e);
         }
     }
 
     public void run() {
-
         var injector = Guice.createInjector(
-                new MainModule(parameters),
-                new ClassMemberNameMatcherModule()
+            new MainModule(parameters),
+            new ClassMemberNameMatcherModule()
         );
 
         injector.getInstance(ClientJarClassInfoFileGenerator.class).generateFile();

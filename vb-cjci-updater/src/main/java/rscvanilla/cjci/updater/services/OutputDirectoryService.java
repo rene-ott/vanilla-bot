@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.cjci.updater.infrastructure.AppException;
+import rscvanilla.cjci.updater.infrastructure.annotations.WorkingDirPath;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -15,23 +16,24 @@ public class OutputDirectoryService {
 
     private static final Logger logger = LoggerFactory.getLogger(OutputDirectoryService.class);
 
+    private final static String OUTPUT_DIR_NAME = "output";
     private final static String TEMP_DIR_NAME = "temp";
     private final static String TEMP_OLD_DIR_NAME = "old";
     private final static String TEMP_NEW_DIR_NAME = "new";
 
-    private final String outputDirPath;
+    private final String workingDirPath;
 
     @Inject
-    public OutputDirectoryService(String outputDirPath) {
-        this.outputDirPath = outputDirPath;
+    public OutputDirectoryService(@WorkingDirPath  String workingDirPath) {
+        this.workingDirPath = workingDirPath;
     }
 
     public void createTempDir() {
-        createDir(Path.of(outputDirPath, TEMP_DIR_NAME));
+        createDir(Path.of(workingDirPath, OUTPUT_DIR_NAME, TEMP_DIR_NAME));
     }
 
     public void deleteTempDir() {
-        deleteDir(Path.of(outputDirPath, TEMP_DIR_NAME));
+        deleteDir(Path.of(workingDirPath, OUTPUT_DIR_NAME, TEMP_DIR_NAME));
     }
 
     public void createDir(Path path) {
@@ -60,14 +62,14 @@ public class OutputDirectoryService {
     }
 
     public String getRootDirPath() {
-        return outputDirPath;
+        return Path.of(workingDirPath, OUTPUT_DIR_NAME).toString();
     }
 
     public String getTempOldDirPath() {
-        return Path.of(outputDirPath, TEMP_DIR_NAME, TEMP_OLD_DIR_NAME).toString();
+        return Path.of(workingDirPath, OUTPUT_DIR_NAME, TEMP_DIR_NAME, TEMP_OLD_DIR_NAME).toString();
     }
 
     public String getTempNewDirPath() {
-        return Path.of(outputDirPath, TEMP_DIR_NAME, TEMP_NEW_DIR_NAME).toString();
+        return Path.of(workingDirPath, OUTPUT_DIR_NAME, TEMP_DIR_NAME, TEMP_NEW_DIR_NAME).toString();
     }
 }

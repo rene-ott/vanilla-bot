@@ -33,4 +33,9 @@ test {
 run {
     mainClassName = "rscvanilla.cjci.updater.Main"
     classpath += files { file("/libs/java-decompiler.jar") }
+    doLast {
+        copy {
+            from "${projectDir}/output/cjci.yaml" into "${project(":vb-cjci-model").projectDir}/src/main/resources"
+        }
+    }
 }

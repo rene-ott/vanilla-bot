@@ -55,10 +55,10 @@ public class ClientJarClassInfoFileService {
             var value = serializer.serialize(clientJarClassInfo);
 
             Files.writeString(Path.of(outputDirectoryService.getRootDirPath(), CJCI_FILE_NAME), value);
-            logger.info("Saved hooks file to [{}]", outputDirectoryService.getRootDirPath());
-            logger.info("Saved hooks file with content:\n{}", value);
+            logger.info("Saved CJCI file to [{}]", outputDirectoryService.getRootDirPath());
+            logger.info("Saved CJCI file with content:\n{}", value);
         } catch (IOException e) {
-            throw new AppException("Failed to save hooks file.", e);
+            throw new AppException("Failed to save CJCI file.", e);
         }
     }
 }
