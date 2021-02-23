@@ -2,14 +2,20 @@ package rscvanilla.bot.gui;
 
 import com.google.common.base.Strings;
 import com.google.common.eventbus.EventBus;
+import rscvanilla.bot.Bot;
 import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.config.AppSettings;
 import rscvanilla.bot.gui.bottom.BottomPanel;
 import rscvanilla.bot.gui.right.RightPanel;
+import rscvanilla.bot.infrastructure.BotException;
 
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class BotFrame extends JFrame {
 
@@ -39,6 +45,8 @@ public class BotFrame extends JFrame {
 
         this.bottomPanel = createBottomPanel();
         this.rightPanel = createRightPanel();
+
+        setIconImage(getIcon().getImage());
     }
 
     private RightPanel createRightPanel() {
@@ -61,5 +69,17 @@ public class BotFrame extends JFrame {
 
     private static String getDefaultTitle() {
         return GUIConstants.NAME + " " + GUIConstants.VERSION;
+    }
+
+    private static ImageIcon getIcon() {
+        var stream = BotFrame.class.getResourceAsStream("/icon.png");
+        ImageIcon icon;
+        try {
+            icon = new ImageIcon(ImageIO.read(stream));
+        } catch (IOException e) {
+            throw BotException.of("Failed to load bot icon");
+        }
+
+        return icon;
     }
 }
