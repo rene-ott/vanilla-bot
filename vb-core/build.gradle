@@ -1,10 +1,10 @@
 plugins {
-    id 'java'
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
+    id "java"
+    id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 
-group 'org.example'
-version 'pre-alpha'
+group "rscvanilla"
+version "alpha"
 
 repositories {
     mavenCentral()
@@ -20,12 +20,24 @@ dependencies {
     implementation "ch.qos.logback:logback-classic:1.2.3"
     implementation "ch.qos.logback:logback-core:1.2.3"
     implementation "org.slf4j:slf4j-api:1.7.30"
-    implementation project(':vb-cjci-model')
-    implementation project(':vb-core-contracts')
+    implementation project(":vb-cjci-model")
+    implementation project(":vb-core-contracts")
 }
 
 test {
     useJUnitPlatform()
+}
+
+def MAIN_CLASS = "rscvanilla.bot.Main"
+def JVM_ARG_AGENT_JAR = "-javaagent:./lib/agent.jar"
+def JVM_ARG_LOG_FILE = "-Dlogback.configurationFile=./config/logback.xml"
+
+compileJava.dependsOn(":vb-core-instrumentation:copyToLib")
+
+task runBot(type: JavaExec) {
+    main = MAIN_CLASS
+    classpath = sourceSets.main.runtimeClasspath + files { file("/lib/client.jar") }
+    jvmArgs = [JVM_ARG_AGENT_JAR, JVM_ARG_LOG_FILE]
 }
 
 task reloadScripts() {
@@ -42,20 +54,18 @@ task reloadScripts() {
     }
 }
 
-def buildDir = project.buildDir
-def distDir = "${buildDir}/dist"
-def libsDir = "${buildDir}/libs"
-def archiveName = "bot"
-def versionedDirName = "vanilla-bot-${project.version}"
-def versionedDir = "${distDir}/${versionedDirName}"
+def JAR_NAME = "bot"
+
+def BUILD_DIR_PATH = project.buildDir
+def BUILD_DIST_DIR_PATH = "${BUILD_DIR_PATH}/dist"
+def BUILD_LIBS_DIR_PATH = "${BUILD_DIR_PATH}/libs"
+def DIST_DIR_NAME = "vanilla-bot-${project.version}"
+def DIST_DIR_PATH = "${BUILD_DIST_DIR_PATH}/${DIST_DIR_NAME}"
 
 shadowJar {
     manifest {
-        attributes(
-                "Manifest-Version": 1.0,
-                "Main-Class": "rscvanilla.bot.Main"
-        )
-        archivesBaseName = archiveName
+        attributes("Manifest-Version": 1.0, "Main-Class": MAIN_CLASS)
+        archivesBaseName = JAR_NAME
         version(null)
         classifier(null)
     }
@@ -65,29 +75,29 @@ shadowJar {
 task createDistDir(type: Delete) {
     dependsOn shadowJar
     doLast {
-        delete distDir
-        mkdir versionedDir
+        delete BUILD_DIST_DIR_PATH
+        mkdir DIST_DIR_PATH
     }
 }
 
 task copyJarToDist(type: Copy) {
     dependsOn createDistDir
-    from "${libsDir}/${archiveName}.jar" into "${versionedDir}"
+    from "${BUILD_LIBS_DIR_PATH}/${JAR_NAME}.jar" into "${DIST_DIR_PATH}"
 }
 
 task copyScriptsToDist(type: Copy) {
     dependsOn copyJarToDist
-    from "${projectDir}/scripts" into "${versionedDir}/scripts"
+    from "${projectDir}/scripts" into "${DIST_DIR_PATH}/scripts"
 }
 
 task copyLibToDist(type: Copy) {
     dependsOn copyScriptsToDist
-    from "${projectDir}/lib" into "${versionedDir}/lib"
+    from "${projectDir}/lib" into "${DIST_DIR_PATH}/lib"
 }
 
 task copyConfigToDist(type: Copy) {
     dependsOn copyLibToDist
-    from "${projectDir}/config" into "${versionedDir}/config"
+    from "${projectDir}/config" into "${DIST_DIR_PATH}/config"
     exclude "appsettings.local.yaml"
 }
 
@@ -95,17 +105,24 @@ task createRunInputScripts(type: CreateStartScripts) {
     dependsOn copyConfigToDist
 
     applicationName = "run"
-    outputDir = file(versionedDir)
+    outputDir = file(DIST_DIR_PATH)
     doLast {
         delete unixScript
-        windowsScript.text = "@echo off\n" +
-                "java -javaagent:\"%cd%\\lib\\agent.jar\" -cp \"bot.jar;lib/*\" rscvanilla.bot.Main\n" +
+        windowsScript.text =
+                "@echo off\n" +
+                "java" +
+                " ${JVM_ARG_AGENT_JAR}" +
+                " -cp \"bot.jar;lib/*\"" +
+                " ${JVM_ARG_LOG_FILE}" +
+                " ${MAIN_CLASS}\n" +
                 "@echo on\n" +
                 "pause"
     }
 }
 
-task publishVanillaBot() {
+task publishBot() {
     dependsOn createRunInputScripts
-    println "Publishing Vanilla Bot"
+    doLast {
+        println "Publishing Vanilla Bot"
+    }
 }

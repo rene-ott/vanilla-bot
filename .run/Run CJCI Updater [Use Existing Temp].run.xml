@@ -1,21 +1,19 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run Tests" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="Run CJCI Updater [Use Existing Temp]" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$/vb-cjci-updater" />
       <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="--tests &quot;rscvanilla.hook.*&quot;" />
+      <option name="scriptParameters" value="run --args=&quot;-n ./input/new.jar -o ./input/old.jar -sv -st -sd&quot;" />
       <option name="taskDescriptions">
         <list />
       </option>
       <option name="taskNames">
-        <list>
-          <option value=":vb-hook-updater:test" />
-        </list>
+        <list />
       </option>
       <option name="vmOptions" value="" />
     </ExternalSystemSettings>
-    <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+    <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
     <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
     <DebugAllEnabled>false</DebugAllEnabled>
     <method v="2" />

@@ -1,17 +1,15 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Publish Updater" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="Run CJCI Updater" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$/vb-cjci-updater" />
       <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="" />
+      <option name="scriptParameters" value="run --args=&quot;-n ./input/new.jar -o ./input/old.jar -sv -st&quot;" />
       <option name="taskDescriptions">
         <list />
       </option>
       <option name="taskNames">
-        <list>
-          <option value="publish" />
-        </list>
+        <list />
       </option>
       <option name="vmOptions" value="" />
     </ExternalSystemSettings>

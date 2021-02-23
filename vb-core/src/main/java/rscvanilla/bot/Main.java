@@ -15,8 +15,6 @@ public class Main {
 
     public static void main(String [] args) {
         try {
-            System.setProperty("logback.configurationFile", CONFIG_DIRECTORY_PATH + File.separator + "logback.xml");
-
             Guice.createInjector(new BotModule(SCRIPTS_DIRECTORY_PATH, CONFIG_DIRECTORY_PATH))
                 .getInstance(VanillaBot.class)
                 .load();

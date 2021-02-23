@@ -1,11 +1,9 @@
 plugins {
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
-    id 'java'
     id "application"
 }
 
-group 'rscvanilla'
-version 'pre-alpha'
+group "rscvanilla"
+version "alpha"
 
 repositories {
     mavenCentral()
@@ -32,81 +30,7 @@ test {
     useJUnitPlatform()
 }
 
-def buildDir = project.buildDir
-
-mainClassName = "rscvanilla.cjci.updater.Main"
-
-def distDir = "${buildDir}/dist"
-def libsDir = "${buildDir}/libs"
-def archiveName = "cjci-updater"
-def versionedDirName = "cjci-updater-${project.version}"
-def inputJarsDirName = "input"
-
-shadowJar {
-    manifest {
-        attributes 'Class-Path': '/libs/java-decompiler.jar'
-        archivesBaseName = archiveName
-        version(null)
-        classifier(null)
-    }
+run {
+    mainClassName = "rscvanilla.cjci.updater.Main"
+    classpath += files { file("/libs/java-decompiler.jar") }
 }
-
-task cleanDistDir(type: Delete) {
-    dependsOn shadowJar
-
-    doLast {
-        delete distDir
-    }
-}
-
-task copyJarToDist(type: Copy) {
-    dependsOn cleanDistDir
-    from "${libsDir}/${archiveName}.jar" into "${distDir}"
-}
-
-task moveArtifactsToVersionedDir {
-    dependsOn copyJarToDist
-
-    doLast {
-        ant.move file: "${distDir}/${archiveName}.jar", todir: "${distDir}/${versionedDirName}"
-    }
-}
-
-task generateInputDir() {
-    dependsOn moveArtifactsToVersionedDir
-
-    mkdir "${distDir}/${versionedDirName}/${inputJarsDirName}"
-}
-
-task createRunInputScripts(type: CreateStartScripts) {
-    dependsOn generateInputDir
-
-    applicationName = "run-with-input"
-    outputDir = file("${distDir}/${versionedDirName}")
-    doLast {
-        delete unixScript
-        windowsScript.text = "@echo off\n" +
-                "mode con:cols=120 lines=40\n" +
-                "java -jar cjci-updater.jar -o %cd%/input/old.jar -n %cd%/input/new.jar\n" +
-                "@echo on\n" +
-                "pause"
-    }
-}
-
-task zipVersionedDir(type: Zip) {
-    dependsOn createRunInputScripts
-
-    archiveFileName = "${versionedDirName}.zip"
-    destinationDirectory = file(distDir)
-    from "${distDir}/${versionedDirName}"
-}
-
-task publish() {
-    dependsOn zipVersionedDir
-    doLast {
-        println "Publishing ${versionedDirName}."
-    }
-}
-
-
-
