@@ -5,6 +5,7 @@ import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.infrastructure.utils.EnumUtil;
 import rscvanilla.bot.mudclient.handlers.InterceptionHandler;
 import rscvanilla.bot.mudclient.handlers.captcha.CaptchaHandler;
+import rscvanilla.bot.mudclient.handlers.gamemessage.GameMessageHandler;
 import rscvanilla.bot.mudclient.handlers.gamesettings.GameSettingsHandler;
 import rscvanilla.bot.mudclient.handlers.userlogaction.UserLoginActionHandler;
 import rscvanilla.bot.mudclient.models.BankItem;
@@ -234,7 +235,11 @@ public class MudClientWrapper {
 
     @Inject
     @SuppressWarnings("unused") // Injected by Guice
-    public void setCaptchaHandler(GameSettingsHandler interceptionHandler) { subscribeToInterception(interceptionHandler); }
+    public void setGameSettingsHandler(GameSettingsHandler interceptionHandler) { subscribeToInterception(interceptionHandler); }
+
+    @Inject
+    @SuppressWarnings("unused") // Injected by Guice
+    public void setGameMessageHandler(GameMessageHandler interceptionHandler) { subscribeToInterception(interceptionHandler); }
 
     public PacketBuilderWrapper getPacketBuilder() { return packetBuilderWrapper; }
     public ClientJarClassInfo getClientJarClassInfo() { return clientJarClassInfo; }

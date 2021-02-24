@@ -13,6 +13,7 @@ public class VanillaGameApplet extends b implements GameApplet {
         init();
     }
 
+    //TODO: c.aa member name might change when the client.jar is updated
     public String C() { return c.aa + File.separator; }
 
     public void execute() {
