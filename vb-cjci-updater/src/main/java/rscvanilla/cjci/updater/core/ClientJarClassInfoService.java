@@ -18,6 +18,7 @@ public class ClientJarClassInfoService {
     private final PacketBuilderBaseClassMemberService packetBuilderBaseClassMemberService;
     private final RSNonPlayerCharacterClassMemberService rsNonPlayerCharacterClassMemberService;
     private final RSNonPlayerCharacterInfoClassMemberService rsNonPlayerCharacterInfoClassMemberService;
+    private final PanelClassMemberService panelClassMemberService;
 
     @Inject
     public ClientJarClassInfoService(MudClientClassMemberService mudClientClassMemberService,
@@ -30,8 +31,8 @@ public class ClientJarClassInfoService {
                                      PacketBuilderClassMemberService packetBuilderClassMemberService,
                                      PacketBuilderBaseClassMemberService packetBuilderBaseClassMemberService,
                                      RSNonPlayerCharacterClassMemberService rsNonPlayerCharacterClassMemberService,
-                                     RSNonPlayerCharacterInfoClassMemberService rsNonPlayerCharacterInfoClassMemberService
-    ) {
+                                     RSNonPlayerCharacterInfoClassMemberService rsNonPlayerCharacterInfoClassMemberService,
+                                     PanelClassMemberService panelClassMemberService) {
         this.mudClientClassMemberService = mudClientClassMemberService;
         this.appletClassMemberService = appletClassMemberService;
         this.rsCharacterClassMemberService = rsCharacterClassMemberService;
@@ -43,6 +44,7 @@ public class ClientJarClassInfoService {
         this.packetBuilderBaseClassMemberService = packetBuilderBaseClassMemberService;
         this.rsNonPlayerCharacterClassMemberService = rsNonPlayerCharacterClassMemberService;
         this.rsNonPlayerCharacterInfoClassMemberService = rsNonPlayerCharacterInfoClassMemberService;
+        this.panelClassMemberService = panelClassMemberService;
     }
 
     public void setClassValuesTo(ClientJarClassInfo clientJarClassInfo) {
@@ -57,5 +59,6 @@ public class ClientJarClassInfoService {
         packetBuilderBaseClassMemberService.setValuesToClassMembers(clientJarClassInfo.packetBuilderBase);
         rsNonPlayerCharacterClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsNonPlayerCharacter);
         rsNonPlayerCharacterInfoClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsNonPlayerCharacterInfo);
+        panelClassMemberService.setValuesToClassMembers(clientJarClassInfo.panel);
     }
 }

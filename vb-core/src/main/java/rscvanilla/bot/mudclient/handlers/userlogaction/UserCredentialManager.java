@@ -23,8 +23,7 @@ public class UserCredentialManager {
     public void setCredentials(String username, String password) {
         var previousUsername = getUsername();
 
-        mudClientWrapper.userName.setValue(username);
-        mudClientWrapper.userPassword.setValue(password);
+        mudClientWrapper.setUserCredentials(username, password);
 
         logger.debug("Set user from [{}] to [{}].", previousUsername, username);
     }
@@ -32,8 +31,7 @@ public class UserCredentialManager {
     public void clearCredentials() {
         var previousUsername = getUsername();
 
-        mudClientWrapper.userName.setValue(null);
-        mudClientWrapper.userPassword.setValue(null);
+        mudClientWrapper.setUserCredentials("", "");
 
         logger.debug("Set user from [{}] to [null] .", previousUsername);
     }
@@ -44,8 +42,7 @@ public class UserCredentialManager {
     }
 
     public void loadCredentialsFromCache() {
-        mudClientWrapper.userName.setValue(cachedUsername);
-        mudClientWrapper.userPassword.setValue(cachedPassword);
+        mudClientWrapper.setUserCredentials(cachedUsername, cachedPassword);
 
         clearCachedCredentials();
     }

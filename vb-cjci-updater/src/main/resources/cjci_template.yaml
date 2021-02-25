@@ -24,6 +24,11 @@ packet_builder_base:
     put_byte:
     put_int:
 
+panel:
+  qualified_name: com.rsc.c.e
+  methods:
+    set_text:
+
 mud_client:
   qualified_name: com.rsc.d
   fields:

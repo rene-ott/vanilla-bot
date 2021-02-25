@@ -55,7 +55,7 @@ public class FieldWrapper<T> {
                 }
             } else {
                 if (!ArrayUtils.contains(KNOWN_FIELDS_WITH_MISSING_VALUE, fieldDisplayName)) {
-                    throw BotException.of("Internal object field [%s] value for wrapper field [%s] is null", matchedFieldName, fieldDisplayName);
+                    //throw BotException.of("Internal object field [%s] value for wrapper field [%s] is null", matchedFieldName, fieldDisplayName);
                 }
             }
         } catch (IllegalAccessException e) {

@@ -80,6 +80,11 @@ packet_builder_base:
   fields:
     buffered_bytes: rU
 
+panel:
+  qualified_name: com.rsc.c.e
+  methods:
+    set_text: a
+
 rs_character:
   qualified_name: com.rsc.e.i
   fields:

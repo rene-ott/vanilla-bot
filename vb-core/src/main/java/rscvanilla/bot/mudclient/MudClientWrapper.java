@@ -111,6 +111,12 @@ public class MudClientWrapper {
 
     private FieldWrapper<Object> packetBuilder;
 
+    private FieldWrapper<Integer> userPasswordLoginPanelId;
+    private FieldWrapper<Integer> userUsernameLoginPanelId;
+    private FieldWrapper<Object> loginPanel;
+    private FieldWrapper<Integer> currentLoginPanel;
+
+
     @Inject
     public MudClientWrapper(GameApplet gameApplet, ClientJarClassInfo clientJarClassInfo) {
         this.clientJarClassInfo = clientJarClassInfo;
@@ -198,12 +204,24 @@ public class MudClientWrapper {
             ignoreList = initField("ignoreList", classFields.ignoreList, String[].class);
             isAdmin = initField("isAdmin", classFields.isAdmin, Boolean.class);
 
+            userPasswordLoginPanelId = initField("pj", "pj", Integer.class);
+            userUsernameLoginPanelId = initField("pm", "pm", Integer.class);
+            loginPanel = initField("loginPanel", "qG", Object.class);
+
             packetBuilder = initField("packetBuilder", baseClassFields.packetBuilder, Object.class);
 
             simpleLogger.debug("");
         } catch (BotException e) {
             throw BotException.of("Failed to initialize [MudClientWrapper] fields!", e);
         }
+    }
+
+    public void setUserCredentials(String username, String password) {
+        getLoginPanelWrapper().setText(userUsernameLoginPanelId.getValue(), username);
+        getLoginPanelWrapper().setText(userPasswordLoginPanelId.getValue(), password);
+
+        userName.setValue(username);
+        userPassword.setValue(password);
     }
 
     private void initMethods() {
@@ -243,6 +261,7 @@ public class MudClientWrapper {
 
     public PacketBuilderWrapper getPacketBuilder() { return packetBuilderWrapper; }
     public ClientJarClassInfo getClientJarClassInfo() { return clientJarClassInfo; }
+    private PanelWrapper getLoginPanelWrapper() { return new PanelWrapper(loginPanel.getValue(), clientJarClassInfo); }
 
     // Accessing to MudClient should be done through this wrapper class.
     @Deprecated()
@@ -295,6 +314,7 @@ public class MudClientWrapper {
     public boolean isLoginUserOrPasswordMissing() {
         return Strings.isNullOrEmpty(userName.getValue()) || Strings.isNullOrEmpty(userPassword.getValue());
     }
+
     private <TWrappedEntity extends RSEntityWrapper<TInternalObject>, TInternalObject extends com.rsc.e.d> List<TWrappedEntity> newWrappedEntityList(
         FieldWrapper<TInternalObject[]> internalArray, FieldWrapper<Integer> internalArrayLength, Class<TWrappedEntity> clazz) {
         return WrapperTool.newWrappedEntityList(internalArray.getValue(), internalArrayLength.getValue(), clazz, this);

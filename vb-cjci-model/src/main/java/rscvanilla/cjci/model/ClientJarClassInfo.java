@@ -6,6 +6,7 @@ import rscvanilla.cjci.model.classes.mudclient.MudClientClass;
 import rscvanilla.cjci.model.classes.mudclientbase.MudClientBaseClass;
 import rscvanilla.cjci.model.classes.packetbuilder.PacketBuilderClass;
 import rscvanilla.cjci.model.classes.packetbuilderbase.PacketBuilderBaseClass;
+import rscvanilla.cjci.model.classes.panel.PanelClass;
 import rscvanilla.cjci.model.classes.rscharacter.RSCharacterClass;
 import rscvanilla.cjci.model.classes.rsentity.RSEntityClass;
 import rscvanilla.cjci.model.classes.rsnonplayercharacter.RSNonPlayerCharacterClass;
@@ -26,4 +27,6 @@ public class ClientJarClassInfo {
     public RSWallObjectClass rsWallObject = new RSWallObjectClass();
     public RSNonPlayerCharacterClass rsNonPlayerCharacter = new RSNonPlayerCharacterClass();
     public RSNonPlayerCharacterInfoClass rsNonPlayerCharacterInfo = new RSNonPlayerCharacterInfoClass();
+    public PanelClass panel = new PanelClass();
+
 }

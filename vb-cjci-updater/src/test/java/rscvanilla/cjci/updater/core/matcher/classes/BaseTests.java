@@ -23,6 +23,7 @@ public class BaseTests {
 
     protected String readPacketBuilder() { { return readResource("com.rsc.f.e.java"); } }
     protected String readPacketBuilderBase() { { return readResource("com.rsc.f.a.java"); } }
+    protected String readPanelClass() { { return readResource("com.rsc.c.e.java"); } }
 
     protected String readClassApplet() { return readResource("com.rsc.applet.b.java"); }
     protected String readClassRSEntity() { { return readResource("com.rsc.e.d.java"); } }

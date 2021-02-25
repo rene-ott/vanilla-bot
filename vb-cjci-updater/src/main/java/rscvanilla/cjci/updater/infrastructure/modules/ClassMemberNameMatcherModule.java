@@ -11,6 +11,7 @@ import rscvanilla.cjci.updater.core.matcher.classes.mudclientbase.MudClientBaseC
 import rscvanilla.cjci.updater.core.matcher.classes.packetbuilder.PacketBuilderClassMethodNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.packetbuilderbase.PacketBuilderBaseClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.packetbuilderbase.PacketBuilderBaseClassMethodNameMatcher;
+import rscvanilla.cjci.updater.core.matcher.classes.panel.PanelClassMethodNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.rscharacter.RSCharacterClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.rsentity.RSEntityClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.rsnonplayercharacter.RSNonPlayerCharacterClassMethodNameMatcher;
@@ -38,6 +39,7 @@ public class ClassMemberNameMatcherModule extends AbstractModule {
 
         configureSubTypesOf(PacketBuilderClassMethodNameMatcher.class);
         configureSubTypesOf(RSNonPlayerCharacterClassMethodNameMatcher.class);
+        configureSubTypesOf(PanelClassMethodNameMatcher.class);
     }
 
     private <T> void configureSubTypesOf(Class<T> clazz) {
