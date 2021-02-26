@@ -5,7 +5,7 @@ import rscvanilla.bot.mudclient.enums.OpCodeIn;
 import rscvanilla.bot.mudclient.enums.OpCodeOut;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.mudclient.MudClientWrapper;
-import rscvanilla.bot.mudclient.handlers.InterceptionHandler;
+import rscvanilla.bot.mudclient.handlers.InterceptorHandler;
 import rscvanilla.cjci.model.ClientJarClassInfo;
 import rscvanilla.contracts.interceptors.MudClientHandleOpcodeInMethodInterceptor;
 
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 // TODO: There is race possible condition on fields int sleeping function by main, script and waitUntilRested thread.
 // TODO: Handle exceptions
 // TODO: Handle all cases like when sleeping but another sleep event might occur etc.
-public class CaptchaHandler implements InterceptionHandler, MudClientHandleOpcodeInMethodInterceptor {
+public class CaptchaHandler implements InterceptorHandler, MudClientHandleOpcodeInMethodInterceptor {
 
     private String detectedWord;
 

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import rscvanilla.bot.config.AppSettings;
 import rscvanilla.bot.gui.events.AppSettingsProxySelectedEvent;
 import rscvanilla.bot.gui.events.AppSettingsUserSelectedEvent;
-import rscvanilla.bot.mudclient.handlers.InterceptionHandler;
+import rscvanilla.bot.mudclient.handlers.InterceptorHandler;
 import rscvanilla.bot.mudclient.handlers.userlogaction.events.UserLoginActionEvent;
 import rscvanilla.contracts.interceptors.MudClientInitGameScreenVariablesMethodInterceptor;
 import rscvanilla.contracts.interceptors.MudClientResetLoginScreenVariablesMethodInterceptor;
@@ -15,7 +15,7 @@ import rscvanilla.contracts.interceptors.MudClientSendLoginMethodInterceptor;
 
 import javax.inject.Inject;
 
-public class UserLoginActionHandler implements InterceptionHandler,
+public class UserLoginActionHandler implements InterceptorHandler,
     MudClientSendLoginMethodInterceptor, MudClientInitGameScreenVariablesMethodInterceptor, MudClientResetLoginScreenVariablesMethodInterceptor  {
 
     private final Logger logger = LoggerFactory.getLogger(UserLoginActionHandler.class);

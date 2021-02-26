@@ -2,12 +2,12 @@ package rscvanilla.bot.mudclient.handlers.gamesettings;
 
 import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.bot.mudclient.enums.OpCodeIn;
-import rscvanilla.bot.mudclient.handlers.InterceptionHandler;
+import rscvanilla.bot.mudclient.handlers.InterceptorHandler;
 import rscvanilla.contracts.interceptors.MudClientHandleOpcodeInMethodInterceptor;
 
 import javax.inject.Inject;
 
-public class GameSettingsHandler implements InterceptionHandler, MudClientHandleOpcodeInMethodInterceptor {
+public class GameSettingsHandler implements InterceptorHandler, MudClientHandleOpcodeInMethodInterceptor {
 
     private final MudClientWrapper mudClientWrapper;
 

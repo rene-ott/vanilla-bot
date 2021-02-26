@@ -5,13 +5,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.bot.events.messages.GameMessageEvent;
-import rscvanilla.bot.mudclient.handlers.InterceptionHandler;
+import rscvanilla.bot.mudclient.handlers.InterceptorHandler;
 import rscvanilla.contracts.interceptors.MudClientShowGameMessageMethodInterceptor;
 
 import javax.inject.Inject;
 import java.util.Arrays;
 
-public class GameMessageHandler implements InterceptionHandler, MudClientShowGameMessageMethodInterceptor {
+public class GameMessageHandler implements InterceptorHandler, MudClientShowGameMessageMethodInterceptor {
 
     private static final Logger logger = LoggerFactory.getLogger(GameMessageHandler.class);
 
