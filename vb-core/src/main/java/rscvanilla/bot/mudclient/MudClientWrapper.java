@@ -113,8 +113,8 @@ public class MudClientWrapper {
     // Type argument is Object because java can't handle when in the package there's same named subpackage and class
     private FieldWrapper<Object> packetBuilder;
 
-    private FieldWrapper<Integer> userPasswordLoginPanelId;
-    private FieldWrapper<Integer> userUsernameLoginPanelId;
+    private FieldWrapper<Integer> loginPanelUserPasswordControlId;
+    private FieldWrapper<Integer> loginPanelUserUsernameControlId;
 
     // Type argument is Object because java can't handle when in the package there's same named subpackage and class
     private FieldWrapper<Object> loginPanel;
@@ -206,9 +206,9 @@ public class MudClientWrapper {
             ignoreList = initField("ignoreList", classFields.ignoreList, String[].class);
             isAdmin = initField("isAdmin", classFields.isAdmin, Boolean.class);
 
-            userPasswordLoginPanelId = initField("pj", "pj", Integer.class);
-            userUsernameLoginPanelId = initField("pm", "pm", Integer.class);
-            loginPanel = initField("loginPanel", "qG", Object.class);
+            loginPanelUserPasswordControlId = initField("loginPanelUserPasswordControlId", classFields.loginPanelUserPasswordControlId, Integer.class);
+            loginPanelUserUsernameControlId = initField("loginPanelUserUsernameControlId", classFields.loginPanelUserUsernameControlId, Integer.class);
+            loginPanel = initField("loginPanel", classFields.loginPanel, Object.class);
 
             packetBuilder = initField("packetBuilder", baseClassFields.packetBuilder, Object.class);
 
@@ -219,8 +219,8 @@ public class MudClientWrapper {
     }
 
     public void setUserCredentials(String username, String password) {
-        getLoginPanelWrapper().setText(userUsernameLoginPanelId.getValue(), username);
-        getLoginPanelWrapper().setText(userPasswordLoginPanelId.getValue(), password);
+        getLoginPanelWrapper().setText(loginPanelUserUsernameControlId.getValue(), username);
+        getLoginPanelWrapper().setText(loginPanelUserPasswordControlId.getValue(), password);
 
         userName.setValue(username);
         userPassword.setValue(password);

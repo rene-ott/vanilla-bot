@@ -71,6 +71,9 @@ mud_client:
     selected_bank_item_index:
     options_menu_text:
     is_admin:
+    login_panel:
+    login_panel_user_password_control_id:
+    login_panel_user_username_control_id:
   methods:
     login:
     logout:
