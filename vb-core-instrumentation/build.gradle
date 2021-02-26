@@ -25,7 +25,7 @@ shadowJar {
         )
         minimize()
         archivesBaseName = "agent"
-        version(null)
+        archiveVersion.set(null)
         classifier(null)
     }
 }
