@@ -271,6 +271,7 @@ public class AlKharidSmelter extends RunnableScript {
         }
     }
 
+    @SuppressWarnings("serial")
     private class GUI extends JFrame implements ActionListener {
 
         private final static String BRONZE = "Bronze";

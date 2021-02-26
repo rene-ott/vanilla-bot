@@ -192,6 +192,7 @@ public class VarrockWestMiner extends RunnableScript {
         }
     }
 
+    @SuppressWarnings("serial")
     private class GUI extends JFrame implements ActionListener {
 
         private final static String ACTION_COMMAND_IRON = "Iron";

@@ -6,6 +6,7 @@ import java.applet.Applet;
 import java.awt.*;
 import java.io.File;
 
+@SuppressWarnings("serial")
 public class VanillaGameApplet extends b implements GameApplet {
 
     public VanillaGameApplet() {

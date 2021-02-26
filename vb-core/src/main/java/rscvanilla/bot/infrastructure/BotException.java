@@ -2,6 +2,7 @@ package rscvanilla.bot.infrastructure;
 
 import java.util.Arrays;
 
+@SuppressWarnings("serial")
 public class BotException extends RuntimeException {
 
     private BotException(String message, Throwable throwable) {

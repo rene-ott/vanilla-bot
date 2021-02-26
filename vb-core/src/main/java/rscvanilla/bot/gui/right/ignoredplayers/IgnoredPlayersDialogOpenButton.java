@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class IgnoredPlayersDialogOpenButton extends JButton implements ActionListener, IgnoredPlayersSaveButtonClickedListener {
 
     private Logger logger = LoggerFactory.getLogger(IgnoredPlayersDialogOpenButton.class);

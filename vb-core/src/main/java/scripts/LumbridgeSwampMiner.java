@@ -198,6 +198,7 @@ public class LumbridgeSwampMiner extends RunnableScript {
         WALK_TO_MINE
     }
 
+    @SuppressWarnings("serial")
     private class GUI extends JFrame implements ItemListener, ActionListener {
 
         private final Thread scriptThread;

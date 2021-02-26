@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.stream.Stream;
 
+@SuppressWarnings("serial")
 public class UserSelectionPanel extends JPanel implements ActionListener {
 
     private int actionEventCount = 0;

@@ -280,6 +280,7 @@ public class CatherbyFisherCooker extends RunnableScript {
         WALK_TO_FISH_SPOT
     }
 
+    @SuppressWarnings("serial")
     private class GUI extends JFrame implements ActionListener {
 
         private final static String ACTION_COMMAND_SHRIMP = "Shrimp/Anchovies";

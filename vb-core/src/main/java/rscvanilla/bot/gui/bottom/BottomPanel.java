@@ -6,6 +6,7 @@ import rscvanilla.bot.gui.GUIConstants;
 import javax.swing.*;
 import java.awt.*;
 
+@SuppressWarnings("serial")
 public class BottomPanel extends JPanel {
 
     public static int HEIGHT = 175;

@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class IgnoredPlayersDialog extends JDialog implements ActionListener {
 
     private final IgnoredPlayersSaveButtonClickedListener saveButtonClickedListener;

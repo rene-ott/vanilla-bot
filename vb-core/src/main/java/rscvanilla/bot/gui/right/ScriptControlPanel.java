@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+@SuppressWarnings("serial")
 public class ScriptControlPanel extends JPanel implements ActionListener {
 
     private final JButton startScriptButton;

@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+@SuppressWarnings("serial")
 public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeListener, ActionListener {
 
     public static int WIDTH = 175;

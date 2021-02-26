@@ -12,6 +12,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class ScriptSelectionPanel extends JPanel implements ListSelectionListener {
 
     private final JList<Class<? extends RunnableScript>> scriptSelectionList;
@@ -99,8 +100,8 @@ public class ScriptSelectionPanel extends JPanel implements ListSelectionListene
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        var selectedValue = ((JList)e.getSource()).getSelectedValue();
+        var selectedValue = scriptSelectionList.getSelectedValue();
 
-        eventBus.post(new ScriptSelectedEvent((Class<? extends RunnableScript>) selectedValue));
+        eventBus.post(new ScriptSelectedEvent(selectedValue));
     }
 }

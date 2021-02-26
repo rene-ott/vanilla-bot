@@ -9,6 +9,7 @@ import rscvanilla.bot.events.messages.GameMessageType;
 
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class PrinterTabbedPane extends JTabbedPane {
 
     private final PrinterTabPanel botViewTab;

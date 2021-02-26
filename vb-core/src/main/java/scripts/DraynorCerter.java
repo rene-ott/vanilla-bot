@@ -230,6 +230,7 @@ public class DraynorCerter extends RunnableScript {
         }
     }
 
+    @SuppressWarnings("serial")
     private class GUI extends JFrame implements ActionListener {
 
         private final static String BAR_IRON = "Iron bar";

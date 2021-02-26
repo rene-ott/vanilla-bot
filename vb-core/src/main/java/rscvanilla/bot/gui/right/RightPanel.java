@@ -14,6 +14,7 @@ import rscvanilla.bot.script.events.ScriptStoppedEvent;
 import javax.swing.*;
 import java.awt.*;
 
+@SuppressWarnings("serial")
 public class RightPanel extends JPanel {
 
     public static int WIDTH = ScriptAntiBanPanel.WIDTH + ScriptSelectionPanel.WIDTH;
