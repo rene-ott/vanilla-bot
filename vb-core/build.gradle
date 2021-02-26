@@ -3,13 +3,6 @@ plugins {
     id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 
-group "rscvanilla"
-version "alpha"
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     shadow files("lib/client.jar")
     shadow files("lib/agent.jar")
@@ -21,10 +14,6 @@ dependencies {
     implementation "org.slf4j:slf4j-api:1.7.30"
     implementation project(":vb-cjci-model")
     implementation project(":vb-core-contracts")
-}
-
-test {
-    useJUnitPlatform()
 }
 
 def MAIN_CLASS = "rscvanilla.bot.Main"

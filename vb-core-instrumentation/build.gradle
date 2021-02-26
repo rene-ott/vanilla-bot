@@ -3,13 +3,6 @@ plugins {
     id "java-library"
 }
 
-group "rscvanilla"
-version "alpha"
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation "org.javassist:javassist:3.27.0-GA"
     implementation "com.google.inject:guice:5.0.0-BETA-1"

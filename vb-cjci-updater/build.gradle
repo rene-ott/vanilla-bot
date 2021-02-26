@@ -2,13 +2,6 @@ plugins {
     id "application"
 }
 
-group "rscvanilla"
-version "alpha"
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     testImplementation 'org.hamcrest:hamcrest:2.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'

@@ -2,12 +2,6 @@ plugins {
     id "java"
 }
 
-version "alpha"
-
-repositories {
-    mavenCentral()
-}
-
 task runCaptchaDataGenerator(type: JavaExec) {
     main = "rscvanilla.captcha.Main"
     classpath = sourceSets.main.runtimeClasspath
