@@ -1,8 +1,10 @@
 package rscvanilla.bot.mudclient.handlers.userlogaction;
 
+import com.google.common.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.handlers.userlogaction.events.UserUsernameChangedEvent;
 
 import javax.inject.Inject;
 
@@ -11,19 +13,22 @@ public class UserCredentialManager {
     private final Logger logger = LoggerFactory.getLogger(UserCredentialManager.class);
 
     private final MudClientWrapper mudClientWrapper;
+    private EventBus eventBus;
 
     private String cachedUsername;
     private String cachedPassword;
 
     @Inject
-    public UserCredentialManager(MudClientWrapper mudClientWrapper) {
+    public UserCredentialManager(MudClientWrapper mudClientWrapper, EventBus eventBus) {
         this.mudClientWrapper = mudClientWrapper;
+        this.eventBus = eventBus;
     }
 
     public void setCredentials(String username, String password) {
         var previousUsername = getUsername();
 
         mudClientWrapper.setUserCredentials(username, password);
+        eventBus.post(new UserUsernameChangedEvent(username));
 
         logger.debug("Set user from [{}] to [{}].", previousUsername, username);
     }
@@ -32,6 +37,7 @@ public class UserCredentialManager {
         var previousUsername = getUsername();
 
         mudClientWrapper.setUserCredentials("", "");
+        eventBus.post(new UserUsernameChangedEvent(null));
 
         logger.debug("Set user from [{}] to [null] .", previousUsername);
     }

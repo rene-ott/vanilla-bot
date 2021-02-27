@@ -19,6 +19,8 @@ public class BotFrame extends JFrame {
     public static int WIDTH = GUIConstants.CONTENT_PANE_WIDTH + RightPanel.WIDTH;
     public static int HEIGHT = GUIConstants.CONTENT_PANE_HEIGHT + BottomPanel.HEIGHT;
 
+    private final BotFrameTitle title = new BotFrameTitle();
+
     private EventBus eventBus;
     private AppSettings appSettings;
 
@@ -29,7 +31,7 @@ public class BotFrame extends JFrame {
     public BotFrame(GameApplet gameApplet,
                     EventBus eventBus,
                     AppSettings appSettings) {
-        super(getDefaultTitle());
+        super(BotFrameTitle.INIT);
 
         this.eventBus = eventBus;
         this.appSettings = appSettings;
@@ -64,8 +66,14 @@ public class BotFrame extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    private static String getDefaultTitle() {
-        return GUIConstants.NAME + " " + GUIConstants.VERSION;
+    public void updateTitleUsername(String username) {
+        title.setUsername(username);
+        setTitle(title.getTitle());
+    }
+
+    public void updateTitleProxy(String proxy) {
+        title.setProxy(proxy);
+        setTitle(title.getTitle());
     }
 
     private static ImageIcon getIcon() {

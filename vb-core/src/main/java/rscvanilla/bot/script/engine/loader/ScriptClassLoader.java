@@ -38,14 +38,14 @@ public class ScriptClassLoader extends ClassLoader {
 
             var loadedClass = loadClass(scriptName);
             if (!scriptName.contains("$")) {
-                scriptClassFiles.add(loadedClass);
+                scriptClassFiles.add((Class<? extends RunnableScript>) loadedClass);
             }
         }
 
         return scriptClassFiles;
     }
 
-    public Class loadClass(String name) {
+    public Class<?> loadClass(String name) {
 
         try {
             String url = "file:"+ scriptsDir + File.separator + name;

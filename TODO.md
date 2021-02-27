@@ -3,8 +3,6 @@
 ##Features
 
 ### Bot
-- If bot is loaded the first time and user selectes username from list then login controls should be also populated with selected values (username, password).
-- If username or proxy is changed then update bot frame title with format <username> <if has proxy then - [proxy] else empty>.
 - Interrupt (script) autologin if login and password are wrong.
 - Add antiban If player talks.
 - Add private chat tab.

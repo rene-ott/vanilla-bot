@@ -5,6 +5,8 @@ import com.google.common.eventbus.Subscribe;
 import rscvanilla.bot.events.messages.GameMessageEvent;
 import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.gui.events.*;
+import rscvanilla.bot.mudclient.handlers.userlogaction.events.UserProxyChangedEvent;
+import rscvanilla.bot.mudclient.handlers.userlogaction.events.UserUsernameChangedEvent;
 import rscvanilla.bot.script.engine.ScriptEngine;
 import rscvanilla.bot.script.engine.ScriptEngineListener;
 import rscvanilla.bot.script.events.ScriptListLoadedEvent;
@@ -88,6 +90,18 @@ public class VanillaBot implements Bot, ScriptEngineListener {
     @SuppressWarnings("unused")
     public void onScriptAntiBanIgnoredUsernamesChanged(ScriptAntiBanIgnoredUsernamesChangedEvent event) {
         scriptEngine.updateAntiBanIgnoredUsernames(event.getUsernames());
+    }
+
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void onUserUsernameChanged(UserUsernameChangedEvent event) {
+        botFrame.updateTitleUsername(event.getUsername());
+    }
+
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void onUserProxyChanged(UserProxyChangedEvent event) {
+        botFrame.updateTitleProxy(event.getProxyAddress());
     }
 
     @Override
