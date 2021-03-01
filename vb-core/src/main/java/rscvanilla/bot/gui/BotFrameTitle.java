@@ -4,7 +4,7 @@ public class BotFrameTitle {
 
     private static final String APP_NAME = "Vanilla Bot";
     private static final String APP_VERSION = "ALPHA";
-    public static final String INIT = APP_NAME + " " + APP_VERSION;
+    public static final String INIT = APP_NAME + " [" + APP_VERSION + "]";
 
     private String username;
     private String proxy;

@@ -53,9 +53,7 @@ def DIST_DIR_PATH = "${BUILD_DIST_DIR_PATH}/${DIST_DIR_NAME}"
 shadowJar {
     manifest {
         attributes("Manifest-Version": 1.0, "Main-Class": MAIN_CLASS)
-        archivesBaseName = JAR_NAME
-        archiveVersion.set(null)
-        classifier(null)
+        archiveFileName = "${JAR_NAME}.jar"
     }
     exclude("scripts")
 }
