@@ -54,6 +54,8 @@ public abstract class Script {
     protected int getCombatStyle() { return mudClientWrapper.getUser().getCombatStyle(); }
     protected void setCombatStyle(int style) { mudClientWrapper.getUser().setCombatStyle(style); }
     protected int getFatigue() { return mudClientWrapper.getUser().getFatigue(); }
+    protected int getCurrentHp() { return mudClientWrapper.getUser().getCurrentHealthLevel(); }
+    protected int getHp() { return mudClientWrapper.getUser().getHealthLevel(); }
     protected boolean isSleeping() { return mudClientWrapper.getUser().isSleeping(); }
     protected boolean isBusy() { return mudClientWrapper.getUser().isBusy(); }
     protected String getUserName()  { return mudClientWrapper.getUser().getName(); }
