@@ -13,40 +13,25 @@ import java.util.List;
 import java.util.stream.Stream;
 
 
-public class LumbridgeSwampMiner extends RunnableScript {
+public class ArdougneCoalMiner extends RunnableScript {
 
-    private static final int[] GEM_IDS = { 157, 158, 159, 160 };
-
-    private final List<Integer> rockIds = new ArrayList<>();
-    private final List<Integer> oreIds = new ArrayList<>();
-
-    private final static int COAL_ROCK_ID = 110;
     private final static int COAL_ORE_ID = 155;
 
-    private final static int MITHRIL_ROCK_ID = 106;
-    private final static int MITHRIL_ORE_ID = 153;
+    private static final int[] GEM_IDS = { 157, 158, 159, 160, COAL_ORE_ID };
 
-    private final static int ADAMANTITE_ROCK_ID = 108;
-    private final static int ADAMANTITE_ORE_ID = 154;
+    private final static int COAL_ROCK_ID = 110;
+    private final static int COAL_ROCK2_ID = 111;
 
-    private final static Position MINE = new Position(114, 701);
+    private final static Position MINE = new Position(520, 572);
 
-    private final static Position BANK_TOP_POS = new Position(223, 634);
-    private final static Position BANK_BOTTOM_POS = new Position(216, 638);
+    private final static Position BANK_TOP_POS = new Position(554, 616);
+    private final static Position BANK_BOTTOM_POS = new Position(551, 609);
 
     private final static int BANK_DOOR_ID = 64;
-    private final static Position BANK_DOOR_POS = new Position(219, 633);
+    private final static Position BANK_DOOR_POS = new Position(550, 612);
 
-    public LumbridgeSwampMiner(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
+    public ArdougneCoalMiner(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
         super(dependencyContext, argumentContext);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        disableScriptLoop();
-        new GUI("Lumbridge Swamp Miner", Thread.currentThread()).init();
     }
 
     @Override
@@ -102,27 +87,22 @@ public class LumbridgeSwampMiner extends RunnableScript {
     }
 
     private void walkToBank() {
-        walkTo(126, 693);
-        walkTo(140, 692);
-        walkTo(151, 684);
-        walkTo(164, 677);
-        walkTo(175, 668);
-        walkTo(185, 655);
-        walkTo(197, 650);
-        walkTo(211, 640);
-        walkTo(219, 633);
+        walkTo(524, 584);
+        walkTo(534, 597);
+        walkTo(546, 603);
+        walkTo(550, 612);
 
         if (isBankDoorClosed()) {
             print("W2M: Bank door is closed!");
             if (isAtBankDoor()) {
                 atObject(BANK_DOOR_ID, BANK_DOOR_POS);
             } else {
-                walkTo(219, 633);
+                walkTo(550, 612);
             }
             return;
         }
 
-        walkTo(220, 634);
+        walkTo(551, 613);
     }
 
     private boolean isBankDoorClosed() {
@@ -140,15 +120,9 @@ public class LumbridgeSwampMiner extends RunnableScript {
             return;
         }
 
-        walkTo(211, 640);
-        walkTo(197, 650);
-        walkTo(185, 655);
-        walkTo(175, 668);
-        walkTo(164, 677);
-        walkTo(151, 684);
-        walkTo(140, 692);
-        walkTo(126, 693);
-        walkTo(114, 701);
+        walkTo(547, 604);
+        walkTo(531, 596);
+        walkTo(522, 576);
     }
 
     private void bankOres() {
@@ -169,17 +143,11 @@ public class LumbridgeSwampMiner extends RunnableScript {
     }
 
     private void depositOresAndGems() {
-        var oreAndGemIds = Stream.concat(oreIds.stream(), Arrays.stream(GEM_IDS).boxed())
-                .mapToInt(x -> x)
-                .toArray();
-
-        depositAll(oreAndGemIds);
+        depositAll(GEM_IDS);
     }
 
     private boolean isInventoryEmpty() {
-        var oreIds = this.oreIds.stream().mapToInt(i->i).toArray();
-
-        return !isItemInInventory(oreIds);
+        return !isItemInInventory(COAL_ORE_ID);
     }
 
     private void mineRock() {
@@ -187,8 +155,7 @@ public class LumbridgeSwampMiner extends RunnableScript {
             return;
         }
 
-        var rocks = rockIds.stream().mapToInt(i -> i).toArray();
-        atObject(rocks);
+        atObject(COAL_ROCK_ID, COAL_ROCK2_ID);
     }
 
     private enum Action {
@@ -198,110 +165,6 @@ public class LumbridgeSwampMiner extends RunnableScript {
         WALK_TO_MINE
     }
 
-    @SuppressWarnings("serial")
-    private class GUI extends JFrame implements ItemListener, ActionListener {
-
-        private final Thread scriptThread;
-        private final JButton button;
-
-        private final static String COAL_SELECTION = "Coal";
-        private final static String MITHRIL_SELECTION = "Mithril";
-        private final static String ADAMANTITE_SELECTION = "Adamantite";
-
-        public GUI(String name, Thread scriptThread) {
-            super(name);
-
-            this.scriptThread = scriptThread;
-
-            var panel = createPanel();
-            add(panel);
-
-            panel.add(createCheckBox(COAL_SELECTION));
-            panel.add(createCheckBox(MITHRIL_SELECTION));
-            panel.add(createCheckBox(ADAMANTITE_SELECTION));
-            panel.add(button = createButton());
-
-            addWindowListener(stopScriptOnClose());
-            setResizable(false);
-        }
-
-        public void init() {
-            pack();
-            setVisible(true);
-            setLocationRelativeTo(null);
-        }
-
-        private WindowAdapter stopScriptOnClose() {
-            return new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    scriptThread.interrupt();
-                    super.windowClosing(e);
-                }
-            };
-        }
-
-        private JButton createButton() {
-            var button = new JButton("Start");
-            button.setEnabled(false);
-            button.addActionListener(this);
-
-            return button;
-        }
-
-        private JCheckBox createCheckBox(String name) {
-            var checkBox = new JCheckBox(name);
-            checkBox.addItemListener(this);
-
-            return checkBox;
-        }
-
-        private JPanel createPanel() {
-            var panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-            return panel;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            enableScriptLoop();
-            setVisible(false);
-        }
-
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-            var checkBox = (JCheckBox) e.getSource();
-            var isSelected = checkBox.isSelected();
-
-            var rockAndOre = getRockAndOre(checkBox.getText());
-            var rock = rockAndOre[0];
-            var ore = rockAndOre[1];
-
-            if (isSelected) {
-                rockIds.add(rock);
-                oreIds.add(ore);
-            } else {
-                rockIds.remove(Integer.valueOf(rock));
-                oreIds.remove(Integer.valueOf(ore));
-            }
-
-            button.setEnabled(!rockIds.isEmpty());
-        }
-
-        private int [] getRockAndOre(String selectedValue) {
-            if (selectedValue.equals(COAL_SELECTION))
-                return new int[] { COAL_ROCK_ID, COAL_ORE_ID};
-
-            if (selectedValue.equals(MITHRIL_SELECTION))
-                return new int[] { MITHRIL_ROCK_ID, MITHRIL_ORE_ID};
-
-            if (selectedValue.equals(ADAMANTITE_SELECTION))
-                return new int[] { ADAMANTITE_ROCK_ID, ADAMANTITE_ORE_ID};
-
-            throw new IllegalArgumentException("Invalid selectedValue: " + selectedValue);
-        }
-    }
 
     @Override
     protected void onChatMessageReceived(String sender, String message) { }

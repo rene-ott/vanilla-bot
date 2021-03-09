@@ -123,6 +123,7 @@ public abstract class Script {
     /** OPTIONS ACTION */
     public void answerOption(int pos) { optionsAction.answerOption(pos); }
     public int getAnswerOptionPosition(String answerTextPrefix) { return optionsAction.getAnswerOptionPosition(answerTextPrefix); }
+    public boolean hasAnswerOptionText(String answerTextPrefix) { return optionsAction.hasAnswerOptionText(answerTextPrefix); }
     public boolean isOptionsMenuVisible() { return optionsAction.isOptionsMenuVisible(); }
 
     /**  POSITION ACTION **/

@@ -35,4 +35,12 @@ public class OptionsAction extends BaseAction {
 
         return answerOptions.indexOf(answerOptions.get(0));
     }
+
+    public boolean hasAnswerOptionText(String answerTextPrefix) {
+        var answerOptions = mudClientWrapper.getOptionsMenuList()
+            .stream().map(String::toLowerCase).filter(it -> it.startsWith(answerTextPrefix.toLowerCase()))
+            .collect(Collectors.toList());
+
+        return answerOptions.size() == 1;
+    }
 }

@@ -39,8 +39,6 @@ public class DarkWizardTowerFighter extends RunnableScript {
 
         currentFloor = getCurrentFloor();
         previousFloor = -1;
-
-        enableScriptLoop();
     }
 
     @Override
@@ -51,11 +49,13 @@ public class DarkWizardTowerFighter extends RunnableScript {
             return;
         }
 
+        /*
         if ((getCurrentHp() / (double) getHp()) < 0.5) {
             useItem(scriptParams.food.id);
             waitFor(2000);
             return;
         }
+         */
 
         if (getFatigue() > 90) {
             useSleepingBag();
