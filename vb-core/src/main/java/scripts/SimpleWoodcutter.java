@@ -4,6 +4,8 @@ import rscvanilla.bot.script.ScriptDependencyContext;
 import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
 import rscvanilla.bot.script.template.RunnableScript;
 
+import javax.swing.*;
+
 public class SimpleWoodcutter extends RunnableScript {
 
     public SimpleWoodcutter(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
@@ -22,6 +24,17 @@ public class SimpleWoodcutter extends RunnableScript {
         if (getFatigue() > 90) {
             useSleepingBag();
             waitFor(1000);
+            return;
+        }
+
+        if (hasAnswerOptionText("Make arrow shafts")) {
+            answerOption(0);;
+            return;
+        }
+
+        if (isItemInInventory(14) && isItemInInventory(13)) {
+            useItemOnItem(14, 13);
+            waitFor(500);
             return;
         }
 

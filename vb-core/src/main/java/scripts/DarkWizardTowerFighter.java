@@ -39,6 +39,7 @@ public class DarkWizardTowerFighter extends RunnableScript {
 
         currentFloor = getCurrentFloor();
         previousFloor = -1;
+        disableScriptLoop();
     }
 
     @Override
