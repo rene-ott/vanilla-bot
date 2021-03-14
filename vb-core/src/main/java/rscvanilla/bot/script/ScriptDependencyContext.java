@@ -59,7 +59,7 @@ public class ScriptDependencyContext {
 
     public MudClientWrapper getMudClientWrapper() { return mudClientWrapper; }
 
-    public RSLocalPlayerCharacter getUser() { return mudClientWrapper.getUser(); }
+    public RSLocalPlayerCharacter getUser() { return mudClientWrapper.getLocalPlayer(); }
 
     public Printer getPrinter() { return printer; }
     public MessageAction getMessageAction() { return messageAction; }

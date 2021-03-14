@@ -84,6 +84,6 @@ public class NonPlayerCharacterAction extends BaseAction {
         if (matchedNpcs.isEmpty())
             return null;
 
-        return (RSNonPlayerCharacter) mudClientWrapper.getUser().getNearest(matchedNpcs);
+        return (RSNonPlayerCharacter) mudClientWrapper.getLocalPlayer().getNearest(matchedNpcs);
     }
 }

@@ -11,8 +11,8 @@ import java.util.stream.IntStream;
 
 public class InventoryItemAction extends BaseAction {
 
-    private WalkAction walkAction;
-    private GroundObjectAction groundObjectAction;
+    private final WalkAction walkAction;
+    private final GroundObjectAction groundObjectAction;
 
     @Inject
     public InventoryItemAction(MudClientWrapper hooks, WalkAction walkAction,
@@ -56,6 +56,7 @@ public class InventoryItemAction extends BaseAction {
         for (var itemId : itemIds) {
             var itemCount = getInventoryItemCount(itemId);
             for (var i = 0; i < itemCount; i++) {
+                try { Thread.sleep(200); } catch (InterruptedException ignored) { }
                 dropItem(itemId);
             }
         }
@@ -77,13 +78,13 @@ public class InventoryItemAction extends BaseAction {
                 .send();
     }
 
-    public void useItemOnObject(int objectId, int...itemIds) {
+    public void useItemOnGroundObject(int objectId, int...itemIds) {
         for (var itemId : itemIds) {
-            useItemOnObject(itemId, objectId);
+            useItemOnGroundObject(itemId, objectId);
         }
     }
 
-    public void useItemOnObject(int itemId, int objectId) {
+    public void useItemOnGroundObject(int itemId, int objectId) {
         var itemIndex = getFirstInventoryItemIndexById(itemId);
         if (itemIndex == -1)
             return;
@@ -106,9 +107,7 @@ public class InventoryItemAction extends BaseAction {
     }
 
     public boolean isItemInInventory(int...ids) {
-
-        for (var id : ids)
-        {
+        for (var id : ids) {
             var itemIndex = getFirstInventoryItemIndexById(id);
             if (itemIndex != -1) {
                 return true;

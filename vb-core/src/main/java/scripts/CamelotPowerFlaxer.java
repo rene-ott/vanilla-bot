@@ -70,65 +70,65 @@ public class CamelotPowerFlaxer extends RunnableScript {
     }
 
     private void walkToSpin() {
-        walkTo(503, 479);
-        walkTo(511, 466);
-        walkTo(521, 465);
+        walkToTile(503, 479);
+        walkToTile(511, 466);
+        walkToTile(521, 465);
 
         if (isInFrontOfSpinningHouse()) {
             if (isDoorClosed()) {
                 openDoor();
             } else {
-                walkTo(524, 463);
+                walkToTile(524, 463);
             }
         }
 
         if (isOnSpinningHouseFirstFloor()) {
             if (isInventoryFullOfFlax()) {
-                atObject(5, 525, 462);
+                atGroundObject(5, 525, 462);
             }
         }
     }
 
     private void walkToPick() {
         if (isOnSpinningHouseSecondFloor()) {
-            atObject(6, 525, 1406);
+            atGroundObject(6, 525, 1406);
             return;
         }
 
         if (isOnSpinningHouseFirstFloor()) {
-            if (isWallObjectNear(2, 522, 465)) {
+            if (isWallObjectReachable(2, 522, 465)) {
                 atWallObject(2, 522, 465);
                 return;
             }
         }
 
-        walkTo(511, 471);
-        walkTo(503, 483);
-        walkTo(490, 486);
+        walkToTile(511, 471);
+        walkToTile(503, 483);
+        walkToTile(490, 486);
     }
 
     private void spin() {
         if (isItemInInventory(FLAX_ID)) {
-            useItemOnObject(FLAX_ID, 121);
+            useInventoryItemOnGroundObject(FLAX_ID, 121);
         } else {
-            dropAll(676);
+            dropAllInventoryItems(676);
         }
     }
 
     private boolean isAtField() {
-        return isPositionInDistance(490, 486, 15);
+        return isPosInDistanceOfCurrentPos(490, 486, 15);
     }
 
     private boolean isOnSpinningHouseSecondFloor() {
-        return isPositionInRectangle(getPosition(), new Position(525, 1406), new Position(522, 1411));
+        return isCurrentPosInRectangle(new Position(525, 1406), new Position(522, 1411));
     }
 
     public void pickFlax() {
-        atObject(313, 489, 486);
+        atGroundObject(313, 489, 486);
     }
 
     private boolean isOnSpinningHouseFirstFloor() {
-        return isPositionInRectangle(getPosition(), new Position(525, 462), new Position(522, 467));
+        return isCurrentPosInRectangle(new Position(525, 462), new Position(522, 467));
     }
 
     private void openDoor() {
@@ -136,11 +136,11 @@ public class CamelotPowerFlaxer extends RunnableScript {
     }
 
     private boolean isDoorClosed() {
-        return isWallObjectNear(2, 522, 465);
+        return isWallObjectReachable(2, 522, 465);
     }
 
     public boolean isInFrontOfSpinningHouse() {
-        return isPositionInDistance(521, 465, 0);
+        return isPosInDistanceOfCurrentPos(521, 465, 0);
     }
 
     public boolean isInventoryFullOfFlax() {

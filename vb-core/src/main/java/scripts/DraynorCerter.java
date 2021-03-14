@@ -98,9 +98,9 @@ public class DraynorCerter extends RunnableScript {
         if (isInBank()) {
             if (isBankDoorClosed()) {
                 print("W2B: Bank door is closed!");
-                atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+                atGroundObject(BANK_DOOR_ID, BANK_DOOR_POS);
             } else {
-                walkTo(227, 631);
+                walkToTile(227, 631);
             }
         }
     }
@@ -112,18 +112,18 @@ public class DraynorCerter extends RunnableScript {
                     stopScript();
                     return;
                 }
-                depositAll(scriptParams.resourceId);
+                depositAllBankItems(scriptParams.resourceId);
                 waitFor(200);
-                withdraw(scriptParams.resourceId, 25);
+                withdrawBankItem(scriptParams.resourceId, 25);
             } else {
                 // TODO: If cert count in inv < 5 then stop
-                depositAll(scriptParams.resourceId);
+                depositAllBankItems(scriptParams.resourceId);
             }
             return;
         }
 
         if (isOptionsMenuVisible()) {
-            answerOption(0);
+            selectOptionsMenuAnswer(0);
             waitFor(1500);
             return;
         }
@@ -136,24 +136,24 @@ public class DraynorCerter extends RunnableScript {
         if (isBankDoorClosed()) {
             print("W2B: Bank door is closed!");
             if (isAtBankDoor()) {
-                atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+                atGroundObject(BANK_DOOR_ID, BANK_DOOR_POS);
             } else {
-                walkTo(219, 633);
+                walkToTile(219, 633);
             }
             return;
         }
 
-        walkTo(220, 635);
+        walkToTile(220, 635);
     }
 
     private void cert() {
         if (isOptionsMenuVisible()) {
             if (isFirstMenuVisible()) {
-                answerOption(scriptParams.firstMenu.answerPosition);
+                selectOptionsMenuAnswer(scriptParams.firstMenu.answerPosition);
             } else if (isSecondMenuVisible()) {
-                answerOption(scriptParams.secondMenu.answerPosition);
+                selectOptionsMenuAnswer(scriptParams.secondMenu.answerPosition);
             } else if (isThirdMenuVisible()) {
-                answerOption(scriptParams.thirdMenu.answerPosition);
+                selectOptionsMenuAnswer(scriptParams.thirdMenu.answerPosition);
             }
             waitFor(600);
             return;
@@ -164,26 +164,26 @@ public class DraynorCerter extends RunnableScript {
     }
 
     private boolean isAtBankDoor() {
-        return isPositionInDistance(new Position(219, 633), 0);
+        return isPosInDistanceOfCurrentPos(new Position(219, 633), 0);
     }
 
     private boolean isFirstMenuVisible() {
-        return getAnswerOptionPosition(scriptParams.firstMenu.menuText) != -1;
+        return isOptionsMenuAnswerTextVisible(scriptParams.firstMenu.menuText);
     }
 
     private boolean isSecondMenuVisible() {
-        return getAnswerOptionPosition(scriptParams.secondMenu.menuText) != -1;
+        return isOptionsMenuAnswerTextVisible(scriptParams.secondMenu.menuText);
     }
     private boolean isThirdMenuVisible() {
-        return getAnswerOptionPosition(scriptParams.thirdMenu.menuText) != -1;
+        return isOptionsMenuAnswerTextVisible(scriptParams.thirdMenu.menuText);
     }
 
     private boolean isInBank() {
-        return isPositionInRectangle(getPosition(), BANK_TOP_POS, BANK_BOTTOM_POS);
+        return isCurrentPosInRectangle(BANK_TOP_POS, BANK_BOTTOM_POS);
     }
 
     private boolean isBankDoorClosed() {
-        return isObjectNear(BANK_DOOR_ID, BANK_DOOR_POS);
+        return isGroundObjectReachable(BANK_DOOR_ID, BANK_DOOR_POS);
     }
 
     private enum Action {

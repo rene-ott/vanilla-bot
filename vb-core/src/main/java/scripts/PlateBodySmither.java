@@ -31,38 +31,38 @@ public class PlateBodySmither extends RunnableScript {
                 return;
             }
 
-            depositAll(117);
-            withdraw(169, 25);
+            depositAllBankItems(117);
+            withdrawBankItem(169, 25);
             waitFor(300);
             return;
         }
 
-        if (hasAnswerOptionText("Plate Mail Body (5 bars)")) {
-            answerOption(1);
+        if (isOptionsMenuAnswerTextVisible("Plate Mail Body (5 bars)")) {
+            selectOptionsMenuAnswer(1);
             waitFor(750);
             return;
         }
 
-        if (hasAnswerOptionText("Make Armour")) {
-            answerOption(1);
+        if (isOptionsMenuAnswerTextVisible("Make Armour")) {
+            selectOptionsMenuAnswer(1);
             waitFor(750);
             return;
         }
 
-        if (hasAnswerOptionText("Armour")) {
-            answerOption(2);
+        if (isOptionsMenuAnswerTextVisible("Armour")) {
+            selectOptionsMenuAnswer(2);
             waitFor(750);
             return;
         }
 
-        if (hasAnswerOptionText("I'd like to access")) {
-            answerOption(0);
+        if (isOptionsMenuAnswerTextVisible("I'd like to access")) {
+            selectOptionsMenuAnswer(0);
             waitFor(5000);
             return;
         }
 
         if (hasBarsInInventory()) {
-            useItemOnObject(169, 50);
+            useInventoryItemOnGroundObject(169, 50);
             waitFor(300);
             return;
         }

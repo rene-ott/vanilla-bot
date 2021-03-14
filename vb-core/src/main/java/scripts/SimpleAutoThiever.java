@@ -39,7 +39,7 @@ public class SimpleAutoThiever extends RunnableScript {
             }
             pickpocketNpc(npcId);
         } else {
-            walkTo(getPosition());
+            walkToTile(getCurrentPos());
         }
         waitFor(500);
     }

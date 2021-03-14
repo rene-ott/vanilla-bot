@@ -14,7 +14,7 @@ public class WalkAction extends BaseAction {
     }
 
     public void walkToPosition(Position tilePos) {
-        var playerLocalPosition = mudClientWrapper.getUser().getLocalPosition();
+        var playerLocalPosition = mudClientWrapper.getLocalPlayer().getLocalPosition();
         var destLocalPosition = PositionConverter.toLocalPosition(tilePos, mudClientWrapper.getMidRegionBase());
 
         var srcX = playerLocalPosition.getX();
@@ -27,7 +27,7 @@ public class WalkAction extends BaseAction {
     }
 
     public void walkToAction(Position tilePosition) {
-        var playerLocalPosition = mudClientWrapper.getUser().getLocalPosition();
+        var playerLocalPosition = mudClientWrapper.getLocalPlayer().getLocalPosition();
         var destLocalPosition = PositionConverter.toLocalPosition(tilePosition, mudClientWrapper.getMidRegionBase());
 
         walkToAction(playerLocalPosition.getX(), playerLocalPosition.getY(), destLocalPosition.getX(), destLocalPosition.getY(), false);
@@ -38,7 +38,7 @@ public class WalkAction extends BaseAction {
     }
 
     public void walkToGroundItem(int destX, int destZ, boolean var5) {
-        var playerLocalPosition = mudClientWrapper.getUser().getLocalPosition();
+        var playerLocalPosition = mudClientWrapper.getLocalPlayer().getLocalPosition();
         walkToGroundItem(playerLocalPosition.getX(), playerLocalPosition.getY(), destX, destZ, var5);
     }
 

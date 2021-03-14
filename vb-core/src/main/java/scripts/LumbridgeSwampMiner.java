@@ -94,61 +94,61 @@ public class LumbridgeSwampMiner extends RunnableScript {
     }
 
     private boolean isAtMine() {
-        return isPositionInDistance(MINE, 15);
+        return isPosInDistanceOfCurrentPos(MINE, 15);
     }
 
     private boolean isInBank() {
-        return isPositionInRectangle(getPosition(), BANK_TOP_POS, BANK_BOTTOM_POS);
+        return isCurrentPosInRectangle(BANK_TOP_POS, BANK_BOTTOM_POS);
     }
 
     private void walkToBank() {
-        walkTo(126, 693);
-        walkTo(140, 692);
-        walkTo(151, 684);
-        walkTo(164, 677);
-        walkTo(175, 668);
-        walkTo(185, 655);
-        walkTo(197, 650);
-        walkTo(211, 640);
-        walkTo(219, 633);
+        walkToTile(126, 693);
+        walkToTile(140, 692);
+        walkToTile(151, 684);
+        walkToTile(164, 677);
+        walkToTile(175, 668);
+        walkToTile(185, 655);
+        walkToTile(197, 650);
+        walkToTile(211, 640);
+        walkToTile(219, 633);
 
         if (isBankDoorClosed()) {
             print("W2M: Bank door is closed!");
             if (isAtBankDoor()) {
-                atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+                atGroundObject(BANK_DOOR_ID, BANK_DOOR_POS);
             } else {
-                walkTo(219, 633);
+                walkToTile(219, 633);
             }
             return;
         }
 
-        walkTo(220, 634);
+        walkToTile(220, 634);
     }
 
     private boolean isBankDoorClosed() {
-        return isObjectNear(BANK_DOOR_ID, BANK_DOOR_POS);
+        return isGroundObjectReachable(BANK_DOOR_ID, BANK_DOOR_POS);
     }
 
     private boolean isAtBankDoor() {
-        return isPositionInDistance(new Position(219, 633), 0);
+        return isPosInDistanceOfCurrentPos(new Position(219, 633), 0);
     }
 
     private void walkToMine() {
         if (isInBank() && isBankDoorClosed()) {
             print("W2B: Bank door is closed!");
-            atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+            atGroundObject(BANK_DOOR_ID, BANK_DOOR_POS);
             return;
         }
 
-        walkTo(211, 640);
-        walkTo(197, 650);
-        walkTo(185, 655);
-        walkTo(175, 668);
-        walkTo(164, 677);
-        walkTo(151, 684);
-        walkTo(140, 692);
-        walkTo(126, 693);
-        walkTo(114, 701);
+        walkToTile(211, 640);
+        walkToTile(197, 650);
+        walkToTile(185, 655);
+        walkToTile(175, 668);
+        walkToTile(164, 677);
+        walkToTile(151, 684);
+        walkToTile(140, 692);
+        walkToTile(126, 693);
+        walkToTile(114, 701);
     }
 
     private void bankOres() {
@@ -159,7 +159,7 @@ public class LumbridgeSwampMiner extends RunnableScript {
         }
 
         if (isOptionsMenuVisible()) {
-            answerOption(0);
+            selectOptionsMenuAnswer(0);
             waitFor(5000);
             return;
         }
@@ -173,7 +173,7 @@ public class LumbridgeSwampMiner extends RunnableScript {
                 .mapToInt(x -> x)
                 .toArray();
 
-        depositAll(oreAndGemIds);
+        depositAllBankItems(oreAndGemIds);
     }
 
     private boolean isInventoryEmpty() {
@@ -188,7 +188,7 @@ public class LumbridgeSwampMiner extends RunnableScript {
         }
 
         var rocks = rockIds.stream().mapToInt(i -> i).toArray();
-        atObject(rocks);
+        atGroundObject(rocks);
     }
 
     private enum Action {

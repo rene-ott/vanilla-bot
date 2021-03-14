@@ -107,6 +107,6 @@ public class GroundObjectAction extends BaseAction {
         if (objectList.isEmpty())
             return null;
 
-        return (RSGroundObject) mudClientWrapper.getUser().getNearest(objectList);
+        return (RSGroundObject) mudClientWrapper.getLocalPlayer().getNearest(objectList);
     }
 }

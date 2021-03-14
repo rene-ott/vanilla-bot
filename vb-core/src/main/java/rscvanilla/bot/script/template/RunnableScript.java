@@ -183,7 +183,7 @@ public abstract class RunnableScript extends Script implements Runnable, ScriptW
             return;
         }
         var type = event.getType();
-        if (event.getSender() != null && event.getSender().equals(getUserName())) {
+        if (event.getSender() != null && event.getSender().equals(getUsername())) {
             return;
         }
 

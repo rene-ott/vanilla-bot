@@ -11,6 +11,7 @@ public abstract class RSCharacter<T extends com.rsc.e.i> extends RSEntityWrapper
     }
 
     public int getBubbleTimeout() { return this.<Integer>getFieldValue("getBubbleTimeout", getClassFields().bubbleTimeout, Integer.class); }
+    // Current health level is visible only if in combat
     public int getCurrentHealthLevel() { return this.<Integer>getFieldValue("getCurrentHealthLevel", getClassFields().currentHealthLevel, Integer.class); }
     public int getHealthLevel() { return this.<Integer>getFieldValue("getHealthLevel", getClassFields().healthLevel, Integer.class); }
     protected RSCharacterDirection getDirection() { return RSCharacterDirection.of(this.<Integer>getFieldValue("getDirection", getClassFields().direction, Integer.class)); }

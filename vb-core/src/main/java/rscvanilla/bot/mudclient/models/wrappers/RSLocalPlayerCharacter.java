@@ -18,7 +18,6 @@ public class RSLocalPlayerCharacter extends RSPlayerCharacter {
     public int getFatigue() { return mudClientWrapper.userFatigueStat.getValue() * 100 / 750; }
     public int getCombatStyle() { return mudClientWrapper.combatStyle.getValue(); }
     public boolean isSleeping() { return mudClientWrapper.isSleeping.getValue(); }
-    public String[] getIgnoredPlayers() { return mudClientWrapper.getIgnoreList().toArray(new String[0]); }
 
     public void setCombatStyle(int value) {
         mudClientWrapper.combatStyle.setValue(value);

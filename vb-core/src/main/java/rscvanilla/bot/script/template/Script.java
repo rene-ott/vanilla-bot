@@ -49,17 +49,14 @@ public abstract class Script {
     protected MudClientWrapper getMudClientWrapper() { return mudClientWrapper; }
 
     /** USER **/
-    protected Position getPosition() { return mudClientWrapper.getUser().getGlobalPosition(); }
-    protected boolean isInCombat() { return mudClientWrapper.getUser().isInCombat(); }
-    protected int getCombatStyle() { return mudClientWrapper.getUser().getCombatStyle(); }
-    protected void setCombatStyle(int style) { mudClientWrapper.getUser().setCombatStyle(style); }
-    protected int getFatigue() { return mudClientWrapper.getUser().getFatigue(); }
-    protected int getCurrentHp() { return mudClientWrapper.getUser().getCurrentHealthLevel(); }
-    protected int getHp() { return mudClientWrapper.getUser().getHealthLevel(); }
-    protected boolean isSleeping() { return mudClientWrapper.getUser().isSleeping(); }
-    protected boolean isBusy() { return mudClientWrapper.getUser().isBusy(); }
-    protected String getUserName()  { return mudClientWrapper.getUser().getName(); }
-    public String[] getIgnoredPlayers() { return mudClientWrapper.getUser().getIgnoredPlayers(); }
+    protected Position getCurrentPos() { return mudClientWrapper.getLocalPlayer().getGlobalPosition(); }
+    protected boolean isInCombat() { return mudClientWrapper.getLocalPlayer().isInCombat(); }
+    protected int getCombatStyle() { return mudClientWrapper.getLocalPlayer().getCombatStyle(); }
+    protected void setCombatStyle(int style) { mudClientWrapper.getLocalPlayer().setCombatStyle(style); }
+    protected int getFatigue() { return mudClientWrapper.getLocalPlayer().getFatigue(); }
+    protected boolean isSleeping() { return mudClientWrapper.getLocalPlayer().isSleeping(); }
+    protected boolean isBusy() { return mudClientWrapper.getLocalPlayer().isBusy(); }
+    protected String getUsername()  { return mudClientWrapper.getLocalPlayer().getName(); }
 
     /** LOG **/
     public void print(String message, Object...args) { printer.printAsScript(String.format(message, args));}
@@ -72,12 +69,6 @@ public abstract class Script {
     /** MESSAGE ACTION **/
     public void sendChatMessage(String s) { messageAction.sendChatMessage(s); }
 
-    /** WALL OBJECT ACTION **/
-    public void atWallObject(int id, Position pos) { wallObjectAction.atWallObject(id, pos); }
-    public void atWallObject(int id, int x, int y) { wallObjectAction.atWallObject(id, x, y); }
-    protected boolean isWallObjectNear(int id, Position pos) { return wallObjectAction.isWallObjectNear(id, pos); }
-    protected boolean isWallObjectNear(int id, int x, int y) { return wallObjectAction.isWallObjectNear(id, x, y); }
-
     /** LOGIN ACTION **/
     public boolean isInGame() { return loginAction.isInGame(); }
     public boolean isOnLoginScreen() { return loginAction.isOnLoginScreen(); }
@@ -86,54 +77,62 @@ public abstract class Script {
 
     /** INVENTORY ITEM ACTION **/
     protected void useSleepingBag() { inventoryItemAction.useSleepingBag(); }
-    protected void useItem(int id) { inventoryItemAction.useItem(id); }
+
+    protected void useInventoryItem(int id) { inventoryItemAction.useItem(id); }
     protected boolean isItemInInventory(int...ids) { return inventoryItemAction.isItemInInventory(ids); }
     protected boolean isItemInInventory(int id, int count) { return inventoryItemAction.isItemInInventory(id, count); }
     protected boolean isInventoryFull() { return inventoryItemAction.isInventoryFull(); }
     protected int getInventoryItemCount(int id) { return inventoryItemAction.getInventoryItemCount(id); }
-    protected void useItemOnObject(int itemId, int objectId) { inventoryItemAction.useItemOnObject(itemId, objectId);}
-    protected void useItemOnObject(int objectId, int...itemIds) { inventoryItemAction.useItemOnObject(objectId, itemIds);}
+    protected void useInventoryItemOnGroundObject(int itemId, int objectId) { inventoryItemAction.useItemOnGroundObject(itemId, objectId); }
+    protected void useInventoryItemOnGroundObject(int objectId, int...itemIds) { inventoryItemAction.useItemOnGroundObject(objectId, itemIds); }
 
-    protected void dropAll(int...itemIds) { inventoryItemAction.dropAll(itemIds); }
-    protected void useItemOnItem(int firstItemId, int secondItemId) { inventoryItemAction.useItemOnItem(firstItemId, secondItemId); }
+    protected void dropAllInventoryItems(int...ids) { inventoryItemAction.dropAll(ids); }
+    protected void useInventoryItemOnInventoryItem(int firstItemId, int secondItemId) { inventoryItemAction.useItemOnItem(firstItemId, secondItemId); }
 
     /** NPC ACTION **/
     protected void pickpocketNpc(int...ids) { nonPlayerCharacterAction.pickpocketNpcById(ids); }
     protected void attackNpc(int...ids) { nonPlayerCharacterAction.attackNpcById(ids); }
-    protected boolean isNpcNear(int...ids) { return nonPlayerCharacterAction.isNpcNear(ids); }
     protected void talkToNpc(int...ids) { nonPlayerCharacterAction.talkToNpc(ids); }
     protected void castOnNpc(int spellId, int...ids) { nonPlayerCharacterAction.castOnNpc(spellId, ids); }
+    protected boolean isNpcReachable(int...ids) { return nonPlayerCharacterAction.isNpcNear(ids); }
 
     /** GROUND ITEM ACTION **/
-    protected void takeItemFromGround(int...ids) { groundItemAction.takeItemFromGround(ids); }
+    protected void takeGroundItem(int...ids) { groundItemAction.takeItemFromGround(ids); }
     protected boolean isItemOnGround(int...ids) { return groundItemAction.isItemOnGround(ids); }
+
     protected int getGroundItemCountOnCurrentPos(int id) { return groundItemAction.getGroundItemCountOnCurrentPos(id); }
     protected void takeGroundItemFromCurrentPos(int id) { groundItemAction.takeGroundItemFromCurrentPos(id); }
 
-    /** OBJECT ACTION **/
-    protected void atObject(int...ids) { groundObjectAction.atObject(ids); }
-    protected void atObject2(int...ids) { groundObjectAction.atObject2(ids); }
-    protected void atObject(int id, int x, int y) { groundObjectAction.atObject(id, x, y); }
-    protected void atObject(int id, Position pos) { groundObjectAction.atObject(id, pos); }
+    /** GROUND OBJECT ACTION **/
+    protected void atGroundObject(int...ids) { groundObjectAction.atObject(ids); }
+    protected void atGroundObject2(int...ids) { groundObjectAction.atObject2(ids); }
 
-    protected boolean isObjectNear(int x, int y) { return groundObjectAction.isObjectNear(x, y); }
-    protected boolean isObjectNear(int id, int x, int y) { return groundObjectAction.isObjectNear(id, x, y); }
-    protected boolean isObjectNear(int id, Position position) { return groundObjectAction.isObjectNear(id, position.getX(), position.getY()); }
+    protected void atGroundObject(int id, int x, int y) { groundObjectAction.atObject(id, x, y); }
+    protected void atGroundObject(int id, Position pos) { groundObjectAction.atObject(id, pos); }
+    
+    protected boolean isGroundObjectReachable(int id, int x, int y) { return groundObjectAction.isObjectNear(id, x, y); }
+    protected boolean isGroundObjectReachable(int id, Position position) { return groundObjectAction.isObjectNear(id, position.getX(), position.getY()); }
 
+    /** WALL OBJECT ACTION **/
+    public void atWallObject(int id, Position pos) { wallObjectAction.atWallObject(id, pos); }
+    public void atWallObject(int id, int x, int y) { wallObjectAction.atWallObject(id, x, y); }
+    
+    protected boolean isWallObjectReachable(int id, Position pos) { return wallObjectAction.isWallObjectNear(id, pos); }
+    protected boolean isWallObjectReachable(int id, int x, int y) { return wallObjectAction.isWallObjectNear(id, x, y); }
+    
     /** OPTIONS ACTION */
-    public void answerOption(int pos) { optionsAction.answerOption(pos); }
-    public int getAnswerOptionPosition(String answerTextPrefix) { return optionsAction.getAnswerOptionPosition(answerTextPrefix); }
-    public boolean hasAnswerOptionText(String answerTextPrefix) { return optionsAction.hasAnswerOptionText(answerTextPrefix); }
+    public void selectOptionsMenuAnswer(int pos) { optionsAction.answerOption(pos); }
+    public boolean isOptionsMenuAnswerTextVisible(String answerText) { return optionsAction.hasAnswerOptionText(answerText); }
     public boolean isOptionsMenuVisible() { return optionsAction.isOptionsMenuVisible(); }
 
     /**  POSITION ACTION **/
-    protected boolean isPositionInDistance(Position tileToPos, int distance) { return positionAction.isPositionInDistance(tileToPos, distance); }
-    protected boolean isPositionInDistance(int tilePosX, int tilePosY, int distance) { return positionAction.isPositionInDistance(tilePosX, tilePosY, distance); }
-    protected boolean isPositionInRectangle(Position tilePos, Position topTilePos, Position bottomTilePos) { return positionAction.isPositionInRectangle(tilePos, topTilePos, bottomTilePos); }
+    protected boolean isCurrentPosInRectangle(Position topPos, Position bottomPos) { return positionAction.isPositionInRectangle(getCurrentPos(), topPos, bottomPos); }
+    protected boolean isPosInDistanceOfCurrentPos(Position pos, int distance) { return positionAction.isPositionInDistance(pos, distance); }
+    protected boolean isPosInDistanceOfCurrentPos(int x, int y, int distance) { return positionAction.isPositionInDistance(x, y, distance); }
 
     /** WALK ACTION **/
-    protected void walkTo(int x, int y) { walkAction.walkToPosition(new Position(x, y));}
-    protected void walkTo(Position position) { walkAction.walkToPosition(position);}
+    protected void walkToTile(int x, int y) { walkAction.walkToPosition(new Position(x, y));}
+    protected void walkToTile(Position pos) { walkAction.walkToPosition(pos);}
 
     /** MESSAGE LISTENERS **/
     protected abstract void onChatMessageReceived(String sender, String message);
@@ -157,7 +156,7 @@ public abstract class Script {
      * @param amount the exact amount of bank items to withdraw
      * @since 1.0
      */
-     protected void withdraw(int id, int amount) { bankAction.withdraw(id, amount); }
+     protected void withdrawBankItem(int id, int amount) { bankAction.withdraw(id, amount); }
 
     /**
      * Deposits exact amount of inventory items.
@@ -167,7 +166,7 @@ public abstract class Script {
      * @param amount the exact amount of inventory items to bank
      * @since 1.0
      */
-    protected void deposit(int id, int amount) { bankAction.deposit(id, amount); }
+    protected void depositBankItem(int id, int amount) { bankAction.deposit(id, amount); }
 
     /**
      * Deposits all specified inventory items to bank.
@@ -176,7 +175,7 @@ public abstract class Script {
      * @param ids the list of inventory items to bank
      * @since 1.0
      */
-    protected void depositAll(int...ids) { bankAction.depositAll(ids); }
+    protected void depositAllBankItems(int...ids) { bankAction.depositAll(ids); }
 
     /**
      * Detects if bank window is opened.

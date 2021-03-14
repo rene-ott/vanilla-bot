@@ -42,20 +42,20 @@ public class ChickenKiller extends RunnableScript {
         }
 
         if (isItemOnGround(ITEM_FEATHERS_ID)) {
-            takeItemFromGround(ITEM_FEATHERS_ID);
+            takeGroundItem(ITEM_FEATHERS_ID);
             waitFor(300);
             return;
         }
 
         if (pickBones.equals("y")) {
             if (isItemOnGround(BONES)) {
-                takeItemFromGround(BONES);
+                takeGroundItem(BONES);
                 waitFor(300);
                 return;
             }
 
             if (isItemInInventory(BONES)) {
-                useItem(BONES);
+                useInventoryItem(BONES);
                 waitFor(300);
                 return;
             }

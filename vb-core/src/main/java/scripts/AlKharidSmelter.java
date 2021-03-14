@@ -95,42 +95,42 @@ public class AlKharidSmelter extends RunnableScript {
     }
 
     private void walkToBank() {
-        if (isPositionInDistance(85, 696, 2)) {
+        if (isPosInDistanceOfCurrentPos(85, 696, 2)) {
             if (isBankDoorClosed()) {
-                atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+                atGroundObject(BANK_DOOR_ID, BANK_DOOR_POS);
             } else {
-                walkTo(89, 695);
+                walkToTile(89, 695);
             }
         } else {
-            walkTo(85, 696);
+            walkToTile(85, 696);
         }
 
         waitFor(400);
     }
 
     private boolean isBankDoorClosed() {
-        return isObjectNear(BANK_DOOR_ID, BANK_DOOR_POS);
+        return isGroundObjectReachable(BANK_DOOR_ID, BANK_DOOR_POS);
     }
 
     private void bank() {
         if (isBankWindowVisible()) {
             if (haveBarsInInventory()) {
-                depositAll(scriptParams.barId);
+                depositAllBankItems(scriptParams.barId);
             } else if (haveRanOutOfOres()) {
                 stopScript("Ran out of bars");
             } else if (!hasExactPrimaryOreCountInInventoryForSmelting()) {
-                depositAll(scriptParams.primaryOre.id);
-                withdraw(scriptParams.primaryOre.id, scriptParams.primaryOre.count);
+                depositAllBankItems(scriptParams.primaryOre.id);
+                withdrawBankItem(scriptParams.primaryOre.id, scriptParams.primaryOre.count);
             } else if (hasSecondaryOre() && !hasExactSecondaryOreCountInInventoryForSmelting()) {
-                depositAll(scriptParams.secondaryOre.id);
-                withdraw(scriptParams.secondaryOre.id, scriptParams.secondaryOre.count);
+                depositAllBankItems(scriptParams.secondaryOre.id);
+                withdrawBankItem(scriptParams.secondaryOre.id, scriptParams.secondaryOre.count);
             }
             waitFor(700);
             return;
         }
 
         if (isOptionsMenuVisible()) {
-            answerOption(0);
+            selectOptionsMenuAnswer(0);
             waitFor(5000);
             return;
         }
@@ -141,15 +141,15 @@ public class AlKharidSmelter extends RunnableScript {
 
     private void walkToFurnace() {
         if (isInBank() & isBankDoorClosed()) {
-            atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+            atGroundObject(BANK_DOOR_ID, BANK_DOOR_POS);
             waitFor(400);
             return;
         }
         if (isAtFurnace() && isAnotherPlayerOnPos(FURNACE_IN_FRONT)) {
-            useItemOnObject(SLEEPING_BAG_ID, FURNACE_ID);
+            useInventoryItemOnGroundObject(SLEEPING_BAG_ID, FURNACE_ID);
             waitFor(1000);
         } else {
-            walkTo(FURNACE_IN_FRONT);
+            walkToTile(FURNACE_IN_FRONT);
         }
     }
 
@@ -179,10 +179,10 @@ public class AlKharidSmelter extends RunnableScript {
     }
 
     private void dropAllOres() {
-        dropAll(scriptParams.primaryOre.id);
+        dropAllInventoryItems(scriptParams.primaryOre.id);
         waitFor(200);
         if (hasSecondaryOre()) {
-            dropAll(scriptParams.secondaryOre.id);
+            dropAllInventoryItems(scriptParams.secondaryOre.id);
             waitFor(200);
         }
     }
@@ -198,7 +198,7 @@ public class AlKharidSmelter extends RunnableScript {
     private void takePrimaryOreFromGround() { takeGroundItemFromCurrentPos(scriptParams.primaryOre.id); }
     private void takeSecondaryOreFromGround() { takeGroundItemFromCurrentPos(scriptParams.secondaryOre.id); }
 
-    private void useOreOnFurnace() { useItemOnObject(scriptParams.primaryOre.id, FURNACE_ID); }
+    private void useOreOnFurnace() { useInventoryItemOnGroundObject(scriptParams.primaryOre.id, FURNACE_ID); }
 
     private boolean hasExactPrimaryOreCountInInventoryForBar() { return getInventoryPrimaryOreCount() == scriptParams.primaryOre.perBar; }
     private boolean hasExactSecondaryOreCountInInventoryForBar() { return getInventorySecondaryOreCount() == scriptParams.secondaryOre.perBar; }
@@ -223,9 +223,9 @@ public class AlKharidSmelter extends RunnableScript {
 
     private boolean haveBarsInInventory() { return isItemInInventory(scriptParams.barId); }
 
-    private boolean isInFrontOfFurnace() { return getPosition().equals(FURNACE_IN_FRONT); }
-    private boolean isAtFurnace() { return isPositionInRectangle(getPosition(), FURNACE_TOP_POS, FURNACE_BOTTOM_POS); }
-    private boolean isInBank() { return isPositionInRectangle(getPosition(), BANK_TOP_POS, BANK_BOTTOM_POS); }
+    private boolean isInFrontOfFurnace() { return getCurrentPos().equals(FURNACE_IN_FRONT); }
+    private boolean isAtFurnace() { return isCurrentPosInRectangle(FURNACE_TOP_POS, FURNACE_BOTTOM_POS); }
+    private boolean isInBank() { return isCurrentPosInRectangle(BANK_TOP_POS, BANK_BOTTOM_POS); }
 
     private boolean haveRanOutOfOres() {
         return getBankItemCount(scriptParams.primaryOre.id) < scriptParams.primaryOre.count ||

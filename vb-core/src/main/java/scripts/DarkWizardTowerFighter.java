@@ -79,18 +79,18 @@ public class DarkWizardTowerFighter extends RunnableScript {
 
         if (scriptParams.buryBones) {
             if (isItemInInventory(BONES)) {
-                useItem(BONES);
+                useInventoryItem(BONES);
                 return;
             }
 
             if (isItemOnGround(BONES)) {
-                takeItemFromGround(BONES);
+                takeGroundItem(BONES);
                 return;
             }
         }
 
         if (isItemOnGround(PICK_UP_ITEMS)) {
-            takeItemFromGround(PICK_UP_ITEMS);
+            takeGroundItem(PICK_UP_ITEMS);
             return;
         }
 
@@ -98,7 +98,7 @@ public class DarkWizardTowerFighter extends RunnableScript {
             setCombatStyle(scriptParams.fightMode.id);
         }
 
-        if (isNpcNear(WIZARDS)) {
+        if (isNpcReachable(WIZARDS)) {
             attackNpc(WIZARDS);
             return;
         }
@@ -109,22 +109,22 @@ public class DarkWizardTowerFighter extends RunnableScript {
 
         if (currentFloor == this.currentFloor) {
             var nextFloorLadder = getNextFloorLadder(this.currentFloor, this.previousFloor);
-            atObject(nextFloorLadder[0], nextFloorLadder[1], nextFloorLadder[2]);
+            atGroundObject(nextFloorLadder[0], nextFloorLadder[1], nextFloorLadder[2]);
         }
     }
 
     private int getCurrentFloor() {
         var currentFloor = -1;
 
-        if (isPositionInDistance(FIRST_TO_SECOND_LADDER[1], FIRST_TO_SECOND_LADDER[2] + 1, 10)) {
+        if (isPosInDistanceOfCurrentPos(FIRST_TO_SECOND_LADDER[1], FIRST_TO_SECOND_LADDER[2] + 1, 10)) {
             currentFloor = 1;
         }
 
-        if (isPositionInDistance(SECOND_TO_THIRD_LADDER[1], SECOND_TO_THIRD_LADDER[2] + 1, 10)) {
+        if (isPosInDistanceOfCurrentPos(SECOND_TO_THIRD_LADDER[1], SECOND_TO_THIRD_LADDER[2] + 1, 10)) {
             currentFloor = 2;
         }
 
-        if (isPositionInDistance(THIRD_TO_SECOND_LADDER[1], THIRD_TO_SECOND_LADDER[2] + 1, 10)) {
+        if (isPosInDistanceOfCurrentPos(THIRD_TO_SECOND_LADDER[1], THIRD_TO_SECOND_LADDER[2] + 1, 10)) {
             currentFloor = 3;
         }
 

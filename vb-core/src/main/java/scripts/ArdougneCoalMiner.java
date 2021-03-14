@@ -5,13 +5,6 @@ import rscvanilla.bot.script.ScriptDependencyContext;
 import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
 import rscvanilla.bot.script.template.RunnableScript;
 
-import javax.swing.*;
-import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
 
 public class ArdougneCoalMiner extends RunnableScript {
 
@@ -79,50 +72,50 @@ public class ArdougneCoalMiner extends RunnableScript {
     }
 
     private boolean isAtMine() {
-        return isPositionInDistance(MINE, 15);
+        return isPosInDistanceOfCurrentPos(MINE, 15);
     }
 
     private boolean isInBank() {
-        return isPositionInRectangle(getPosition(), BANK_TOP_POS, BANK_BOTTOM_POS);
+        return isCurrentPosInRectangle(BANK_TOP_POS, BANK_BOTTOM_POS);
     }
 
     private void walkToBank() {
-        walkTo(524, 584);
-        walkTo(534, 597);
-        walkTo(546, 603);
-        walkTo(550, 612);
+        walkToTile(524, 584);
+        walkToTile(534, 597);
+        walkToTile(546, 603);
+        walkToTile(550, 612);
 
         if (isBankDoorClosed()) {
             print("W2M: Bank door is closed!");
             if (isAtBankDoor()) {
-                atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+                atGroundObject(BANK_DOOR_ID, BANK_DOOR_POS);
             } else {
-                walkTo(550, 612);
+                walkToTile(550, 612);
             }
             return;
         }
 
-        walkTo(551, 613);
+        walkToTile(551, 613);
     }
 
     private boolean isBankDoorClosed() {
-        return isObjectNear(BANK_DOOR_ID, BANK_DOOR_POS);
+        return isGroundObjectReachable(BANK_DOOR_ID, BANK_DOOR_POS);
     }
 
     private boolean isAtBankDoor() {
-        return isPositionInDistance(new Position(219, 633), 0);
+        return isPosInDistanceOfCurrentPos(new Position(219, 633), 0);
     }
 
     private void walkToMine() {
         if (isInBank() && isBankDoorClosed()) {
             print("W2B: Bank door is closed!");
-            atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+            atGroundObject(BANK_DOOR_ID, BANK_DOOR_POS);
             return;
         }
 
-        walkTo(547, 604);
-        walkTo(531, 596);
-        walkTo(522, 576);
+        walkToTile(547, 604);
+        walkToTile(531, 596);
+        walkToTile(522, 576);
     }
 
     private void bankOres() {
@@ -133,7 +126,7 @@ public class ArdougneCoalMiner extends RunnableScript {
         }
 
         if (isOptionsMenuVisible()) {
-            answerOption(0);
+            selectOptionsMenuAnswer(0);
             waitFor(5000);
             return;
         }
@@ -143,7 +136,7 @@ public class ArdougneCoalMiner extends RunnableScript {
     }
 
     private void depositOresAndGems() {
-        depositAll(GEM_IDS);
+        depositAllBankItems(GEM_IDS);
     }
 
     private boolean isInventoryEmpty() {
@@ -155,7 +148,7 @@ public class ArdougneCoalMiner extends RunnableScript {
             return;
         }
 
-        atObject(COAL_ROCK_ID, COAL_ROCK2_ID);
+        atGroundObject(COAL_ROCK_ID, COAL_ROCK2_ID);
     }
 
     private enum Action {

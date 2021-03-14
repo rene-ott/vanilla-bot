@@ -141,21 +141,21 @@ public class CatherbyFisherCooker extends RunnableScript {
 
     private void catchFish() {
         if (isAtObject2) {
-            atObject2(fishSpot);
+            atGroundObject2(fishSpot);
 
         } else {
-            atObject(fishSpot);
+            atGroundObject(fishSpot);
         }
     }
 
     private void walkToFishSpot() {
         if (isInBank() && isBankDoorClosed()) {
             print("W2F: Bank door is closed!");
-            atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+            atGroundObject(BANK_DOOR_ID, BANK_DOOR_POS);
         }
 
-        walkTo(424, 495);
-        walkTo(fishSpot[1], fishSpot[2] -1);
+        walkToTile(424, 495);
+        walkToTile(fishSpot[1], fishSpot[2] -1);
     }
 
     private void bankFish() {
@@ -166,7 +166,7 @@ public class CatherbyFisherCooker extends RunnableScript {
         }
 
         if (isOptionsMenuVisible()) {
-            answerOption(0);
+            selectOptionsMenuAnswer(0);
             waitFor(5000);
             return;
         }
@@ -182,51 +182,51 @@ public class CatherbyFisherCooker extends RunnableScript {
                 atWallObject(RANGE_HOUSE_DOOR_ID, RANGE_HOUSE_DOOR_POS);
             }
         } else {
-            walkTo(420, 496);
-            walkTo(429, 496);
+            walkToTile(420, 496);
+            walkToTile(429, 496);
         }
 
         if (isAtBankDoor()) {
             if (isBankDoorClosed()) {
                 print("W2B: Bank door is closed!");
-                atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+                atGroundObject(BANK_DOOR_ID, BANK_DOOR_POS);
             } else {
-                walkTo(440, 495);
+                walkToTile(440, 495);
             }
         } else {
-            walkTo(BANK_DOOR_POS);
+            walkToTile(BANK_DOOR_POS);
         }
     }
 
     private void cookFish() {
         if (hasRawFishInInventory()) {
-            useItemOnObject(RANGE_ID, rawFish);
+            useInventoryItemOnGroundObject(RANGE_ID, rawFish);
         } else if (hasBurntFishInInventory()) {
-            dropAll(burntFish);
+            dropAllInventoryItems(burntFish);
         }
     }
 
     private void walkToRange() {
-        walkTo(420, 495);
-        walkTo(430, 492);
-        walkTo(435, 486);
+        walkToTile(420, 495);
+        walkToTile(430, 492);
+        walkToTile(435, 486);
 
         if (isAtRangeHouseDoor()) {
             if (isRangeHouseDoorClosed()) {
                 print("W2R: Range house door is closed!");
                 atWallObject(RANGE_HOUSE_DOOR_ID, RANGE_HOUSE_DOOR_POS);
             } else {
-                walkTo(435, 483);
+                walkToTile(435, 483);
             }
         }
     }
 
     private void depositFish() {
-        depositAll(IntStream.concat(Arrays.stream(rawFish), Arrays.stream(cookedFish)).toArray());
+        depositAllBankItems(IntStream.concat(Arrays.stream(rawFish), Arrays.stream(cookedFish)).toArray());
     }
 
     private boolean isAtFishSpot() {
-        return isPositionInDistance(fishSpot[1], fishSpot[2] -1 , 2);
+        return isPosInDistanceOfCurrentPos(fishSpot[1], fishSpot[2] -1 , 2);
     }
 
     private boolean hasCookedFishInInventory() {
@@ -242,27 +242,27 @@ public class CatherbyFisherCooker extends RunnableScript {
     }
 
     private boolean isInRangeHouse() {
-        return isPositionInRectangle(getPosition(), RANGE_HOUSE_TOP_POS, RANGE_HOUSE_BOTTOM_POS);
+        return isCurrentPosInRectangle(RANGE_HOUSE_TOP_POS, RANGE_HOUSE_BOTTOM_POS);
     }
 
     private boolean isInBank() {
-        return isPositionInRectangle(getPosition(), BANK_TOP_POS, BANK_BOTTOM_POS);
+        return isCurrentPosInRectangle(BANK_TOP_POS, BANK_BOTTOM_POS);
     }
 
     private boolean isBankDoorClosed() {
-        return isObjectNear(BANK_DOOR_ID, BANK_DOOR_POS);
+        return isGroundObjectReachable(BANK_DOOR_ID, BANK_DOOR_POS);
     }
 
     private boolean isRangeHouseDoorClosed() {
-        return isWallObjectNear(RANGE_HOUSE_DOOR_ID, RANGE_HOUSE_DOOR_POS);
+        return isWallObjectReachable(RANGE_HOUSE_DOOR_ID, RANGE_HOUSE_DOOR_POS);
     }
 
     private boolean isAtBankDoor() {
-        return isPositionInDistance(BANK_DOOR_POS, 0);
+        return isPosInDistanceOfCurrentPos(BANK_DOOR_POS, 0);
     }
 
     private boolean isAtRangeHouseDoor() {
-        return isPositionInDistance(RANGE_HOUSE_DOOR_POS, 0);
+        return isPosInDistanceOfCurrentPos(RANGE_HOUSE_DOOR_POS, 0);
     }
 
     @Override

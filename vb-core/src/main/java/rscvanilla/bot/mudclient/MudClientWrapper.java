@@ -288,7 +288,7 @@ public class MudClientWrapper {
         : List.of(); }
 
 
-    public RSLocalPlayerCharacter getUser() { return new RSLocalPlayerCharacter(user.getValue(), this); }
+    public RSLocalPlayerCharacter getLocalPlayer() { return new RSLocalPlayerCharacter(user.getValue(), this); }
     public Position getMidRegionBase() { return new Position(midRegionBaseX.getValue(), midRegionBaseZ.getValue()); }
 
     public void walkToArea(int startX, int startY, int x1, int y1, int x2, int y2, boolean reachBorder, boolean walkToEntity) {

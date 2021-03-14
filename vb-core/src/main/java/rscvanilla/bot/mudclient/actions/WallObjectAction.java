@@ -63,6 +63,6 @@ public class WallObjectAction extends BaseAction {
         if (matchedWallObjects.isEmpty())
             return null;
 
-        return (RSWallObject) mudClientWrapper.getUser().getNearest(matchedWallObjects);
+        return (RSWallObject) mudClientWrapper.getLocalPlayer().getNearest(matchedWallObjects);
     }
 }

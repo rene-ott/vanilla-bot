@@ -1,14 +1,12 @@
 package rscvanilla.bot.mudclient.actions;
 
 import rscvanilla.bot.mudclient.enums.OpCodeOut;
-import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.models.wrappers.RSGroundItem;
 import rscvanilla.bot.mudclient.MudClientWrapper;
 
 import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GroundItemAction extends BaseAction {
@@ -35,7 +33,7 @@ public class GroundItemAction extends BaseAction {
 
         var itemLocalPositionX = groundItem.getLocalPosition().getX();
         var itemLocalPositionY = groundItem.getLocalPosition().getY();
-        var playerLocalPosition = mudClientWrapper.getUser().getLocalPosition();
+        var playerLocalPosition = mudClientWrapper.getLocalPlayer().getLocalPosition();
 
         walkAction.walkToGroundItem(itemLocalPositionX, itemLocalPositionY, true);
         if (playerLocalPosition.getX() == itemLocalPositionX && playerLocalPosition.getY() == itemLocalPositionY) {
@@ -69,7 +67,7 @@ public class GroundItemAction extends BaseAction {
         return mudClientWrapper.getGroundItemList()
             .stream()
             .filter(it -> it.getId() == id &&
-                          it.getGlobalPosition().equals(mudClientWrapper.getUser().getGlobalPosition()))
+                          it.getGlobalPosition().equals(mudClientWrapper.getLocalPlayer().getGlobalPosition()))
             .collect(Collectors.toList());
     }
 
@@ -83,6 +81,6 @@ public class GroundItemAction extends BaseAction {
         if (groundItems.isEmpty())
             return null;
 
-        return (RSGroundItem) mudClientWrapper.getUser().getNearest(groundItems);
+        return (RSGroundItem) mudClientWrapper.getLocalPlayer().getNearest(groundItems);
     }
 }

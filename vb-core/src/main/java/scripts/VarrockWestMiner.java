@@ -75,32 +75,32 @@ public class VarrockWestMiner extends RunnableScript {
     }
 
     private void mineRock() {
-        if (isObjectNear(scriptParams.firstRock[0], scriptParams.firstRock[1], scriptParams.firstRock[2])) {
-            atObject(scriptParams.firstRock[0], scriptParams.firstRock[1], scriptParams.firstRock[2]);
-        } else if (isObjectNear(scriptParams.secondRock[0], scriptParams.secondRock[1], scriptParams.secondRock[2])) {
-            atObject(scriptParams.secondRock[0], scriptParams.secondRock[1], scriptParams.secondRock[2]);
+        if (isGroundObjectReachable(scriptParams.firstRock[0], scriptParams.firstRock[1], scriptParams.firstRock[2])) {
+            atGroundObject(scriptParams.firstRock[0], scriptParams.firstRock[1], scriptParams.firstRock[2]);
+        } else if (isGroundObjectReachable(scriptParams.secondRock[0], scriptParams.secondRock[1], scriptParams.secondRock[2])) {
+            atGroundObject(scriptParams.secondRock[0], scriptParams.secondRock[1], scriptParams.secondRock[2]);
         }
         waitFor(500);
     }
 
     private void walkToBank() {
-        walkTo(TO_MINE_3);
-        walkTo(TO_MINE_2);
-        walkTo(TO_MINE_1);
-        walkTo(TO_MINE_0);
-        if (!isInBank() && isPositionInDistance(BANK_DOOR_POS, 1) && isBankDoorClosed()) {
-            atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+        walkToTile(TO_MINE_3);
+        walkToTile(TO_MINE_2);
+        walkToTile(TO_MINE_1);
+        walkToTile(TO_MINE_0);
+        if (!isInBank() && isPosInDistanceOfCurrentPos(BANK_DOOR_POS, 1) && isBankDoorClosed()) {
+            atGroundObject(BANK_DOOR_ID, BANK_DOOR_POS);
         } else {
-            walkTo(BANK);
+            walkToTile(BANK);
         }
     }
 
     private boolean isInBank() {
-        return isPositionInRectangle(getPosition(), BANK_TOP_POS, BANK_BOTTOM_POS);
+        return isCurrentPosInRectangle(BANK_TOP_POS, BANK_BOTTOM_POS);
     }
 
     private boolean isBankDoorClosed() {
-        return isObjectNear(BANK_DOOR_ID, BANK_DOOR_POS);
+        return isGroundObjectReachable(BANK_DOOR_ID, BANK_DOOR_POS);
     }
 
     private void bankOres() {
@@ -111,7 +111,7 @@ public class VarrockWestMiner extends RunnableScript {
         }
 
         if (isOptionsMenuVisible()) {
-            answerOption(0);
+            selectOptionsMenuAnswer(0);
             waitFor(5000);
             return;
         }
@@ -121,20 +121,20 @@ public class VarrockWestMiner extends RunnableScript {
     }
 
     private void depositOresAndGems() {
-        depositAll(ArrayUtils.addAll(new int[] { scriptParams.oreId }, GEM_IDS));
+        depositAllBankItems(ArrayUtils.addAll(new int[] { scriptParams.oreId }, GEM_IDS));
     }
 
     private void walkToMine() {
         if (isInBank() && isBankDoorClosed()) {
-            atObject(BANK_DOOR_ID, BANK_DOOR_POS);
+            atGroundObject(BANK_DOOR_ID, BANK_DOOR_POS);
             return;
         }
 
-        walkTo(TO_MINE_1);
-        walkTo(TO_MINE_2);
-        walkTo(TO_MINE_3);
-        walkTo(MINE);
-        walkTo(scriptParams.standingPosition[0], scriptParams.standingPosition[1]);
+        walkToTile(TO_MINE_1);
+        walkToTile(TO_MINE_2);
+        walkToTile(TO_MINE_3);
+        walkToTile(MINE);
+        walkToTile(scriptParams.standingPosition[0], scriptParams.standingPosition[1]);
     }
 
     private boolean isInventoryEmpty() {
@@ -153,7 +153,7 @@ public class VarrockWestMiner extends RunnableScript {
             }
         } else {
             if (!isInventoryFull()) {
-                if (isPositionInDistance(MINE, 13)) {
+                if (isPosInDistanceOfCurrentPos(MINE, 13)) {
                     return State.MINE;
                 } else {
                     return State.WALK_TO_MINE;
