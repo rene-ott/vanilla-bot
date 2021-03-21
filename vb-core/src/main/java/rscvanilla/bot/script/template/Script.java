@@ -98,8 +98,10 @@ public abstract class Script {
 
     /** GROUND ITEM ACTION **/
     protected void takeGroundItem(int...ids) { groundItemAction.takeItemFromGround(ids); }
+    protected void takeGroundItemFromRectangleArea(Position topBos, Position bottomPos, int...ids) { groundItemAction.takeItemFromGroundInRectangle(topBos, bottomPos, ids); }
+
     protected boolean isItemOnGround(int...ids) { return groundItemAction.isItemOnGround(ids); }
-    protected boolean isItemOnGroundRectangle(Position topPos, Position bottomPos, int...ids) { return groundItemAction.isItemOnGround(ids); }
+    protected boolean isItemOnGroundInRectangleArea(Position topBos, Position bottomPos, int...ids) { return groundItemAction.isItemOnGroundInRectangle(topBos, bottomPos, ids); }
 
     protected int getGroundItemCountOnCurrentPos(int id) { return groundItemAction.getGroundItemCountOnCurrentPos(id); }
     protected void takeGroundItemFromCurrentPos(int id) { groundItemAction.takeGroundItemFromCurrentPos(id); }

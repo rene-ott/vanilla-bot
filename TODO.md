@@ -1,7 +1,9 @@
 # TODO
 
 ##Features
-
+ - Add add herb names to unid herbs
+ - Add methods getCurrentHp & getHp
+ - 
 ### Bot
 - Interrupt (script) autologin if login and password are wrong.
 - Add antiban If player talks.
@@ -21,6 +23,9 @@
 
 
 ## Bugs
+- Fix walkToTile after sector loading. 
+- When the bot is sleeping it sometimes tries to construct double packets.
+- Load game assets from local bot folder not from the global cache.
 - When the bot frame finishes loading it randomly creates horizontal and vertical scrollbar to script list element.
 - When current player is using sleeping bag then sometimes it refreshes word before it is detected.
 - Sometimes when user is automatically logging in the first time after bot is loaded getName throws exception.

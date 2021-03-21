@@ -33,14 +33,14 @@ public class EdgeHerbs extends RunnableScript {
     private final static int GATE_2_ID = 305;
     private final static Position GATE_2_POS = new Position(196, 3266);
 
-    private final static int[] ITEMS = new int[] {
+    private final static Position DRUID_AREA_TOP_POS = new Position(203, 3257);
+    private final static Position DRUID_AREA_BOTTOM_POS = new Position(219, 3241);
+
+    private final static int[] VALUABLE_ITEMS = new int[] {
             42, // Law rune
             33, // Air rune
-            35, // Mind rune
             40, // Nature rune
-            34, // Earth rune
             469, // Snape grass
-            10, // Coins
             165, // Guam,
             437, // Harralander
             438, // Ranarr weed
@@ -58,9 +58,12 @@ public class EdgeHerbs extends RunnableScript {
             1277 // Half dragon square
     };
 
-    private int combatStyle;
+    private static int UNID_MARRENTILL = 435;
+    private static int UNID_TARROMIN = 436;
+    private static int MARRENTILL = 445;
+    private static int TARROMIN = 446;
 
-    private State action;
+    private int combatStyle;
 
 
     public EdgeHerbs(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
@@ -70,7 +73,7 @@ public class EdgeHerbs extends RunnableScript {
     @Override
     protected void onStart() {
         super.onStart();
-        combatStyle = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Chicken Killer"), "Enter fight mode (0-3): "));
+        combatStyle = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Edge Druid Herbs"), "Enter fight mode (0-3): "));
     }
 
     @Override
@@ -78,9 +81,6 @@ public class EdgeHerbs extends RunnableScript {
         waitFor(500);
 
         var newState = getScriptState();
-        if (newState != this.action) {
-            print("STATE: " + this.action + " -> " + newState);
-        }
 
         if (getFatigue() > 90) {
             useSleepingBag();
@@ -88,9 +88,7 @@ public class EdgeHerbs extends RunnableScript {
             return;
         }
 
-        action = newState;
-
-        switch (action) {
+        switch (newState) {
             case KILL_DRUIDS -> killDruids();
             case WALK_TO_BANK -> walkToBank();
             case BANK -> bankItems();
@@ -100,9 +98,8 @@ public class EdgeHerbs extends RunnableScript {
     }
 
     private void bankItems() {
-        print("BANKING ITEMS");
         if (isBankWindowVisible()) {
-            depositAllBankItems(ITEMS);
+            depositAllBankItems(VALUABLE_ITEMS);
             waitFor(300);
             return;
         }
@@ -118,8 +115,6 @@ public class EdgeHerbs extends RunnableScript {
     }
 
     private void walkToBank() {
-        print("WALKING TO BANK");
-
         walkToTile(196, 3265);
         if (isInFrontOfGate2ToBank()) {
             atGroundObject(GATE_2_ID, GATE_2_POS);
@@ -163,8 +158,28 @@ public class EdgeHerbs extends RunnableScript {
             return;
         }
 
-        if (isItemOnGround(ITEMS)) {
-            takeGroundItem(ITEMS);
+        if (isItemInInventory(UNID_MARRENTILL)) {
+            useInventoryItem(UNID_MARRENTILL);
+            return;
+        }
+
+        if (isItemInInventory(MARRENTILL)) {
+            dropAllInventoryItems(MARRENTILL);
+            return;
+        }
+
+        if (isItemInInventory(UNID_TARROMIN)) {
+            useInventoryItem(UNID_TARROMIN);
+            return;
+        }
+
+        if (isItemInInventory(TARROMIN)) {
+            dropAllInventoryItems(TARROMIN);
+            return;
+        }
+
+        if (isItemOnGroundInRectangleArea(DRUID_AREA_TOP_POS, DRUID_AREA_BOTTOM_POS, VALUABLE_ITEMS)) {
+            takeGroundItemFromRectangleArea(DRUID_AREA_TOP_POS, DRUID_AREA_BOTTOM_POS, VALUABLE_ITEMS);
             return;
         }
 
@@ -280,7 +295,7 @@ public class EdgeHerbs extends RunnableScript {
     }
 
     private boolean isInventoryEmpty() {
-     return !isItemInInventory(ITEMS);
+     return !isItemInInventory(VALUABLE_ITEMS);
     }
 
     private boolean isInBank() {
