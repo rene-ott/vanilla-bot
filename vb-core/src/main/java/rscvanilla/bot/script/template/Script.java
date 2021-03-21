@@ -99,6 +99,7 @@ public abstract class Script {
     /** GROUND ITEM ACTION **/
     protected void takeGroundItem(int...ids) { groundItemAction.takeItemFromGround(ids); }
     protected boolean isItemOnGround(int...ids) { return groundItemAction.isItemOnGround(ids); }
+    protected boolean isItemOnGroundRectangle(Position topPos, Position bottomPos, int...ids) { return groundItemAction.isItemOnGround(ids); }
 
     protected int getGroundItemCountOnCurrentPos(int id) { return groundItemAction.getGroundItemCountOnCurrentPos(id); }
     protected void takeGroundItemFromCurrentPos(int id) { groundItemAction.takeGroundItemFromCurrentPos(id); }
