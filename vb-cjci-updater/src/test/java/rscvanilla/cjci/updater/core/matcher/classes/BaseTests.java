@@ -32,5 +32,6 @@ public class BaseTests {
     protected String readClassRSWallObject() { { return readResource("com.rsc.e.m.java"); } }
     protected String readClassRSNonPlayerCharacter() { { return readResource("com.rsc.e.j.java"); } }
     protected String readClassRSNonPlayerCharacterInfo() { { return readResource("com.rsc.a.a.g.java"); } }
+    protected String readClassGameElements() { { return readResource("com.rsc.a.a.java"); } }
 
 }

@@ -2,6 +2,11 @@ applet:
   fields:
     mud_client: aE
 
+game_elements:
+  qualified_name: com.rsc.a.a
+  fields:
+    items: aO
+
 mud_client:
   qualified_name: com.rsc.d
   fields:

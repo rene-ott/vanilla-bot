@@ -126,3 +126,8 @@ rs_wall_object:
   qualified_name: com.rsc.e.m
   fields:
     direction:
+
+game_elements:
+  qualified_name: com.rsc.a.a
+  fields:
+    items:

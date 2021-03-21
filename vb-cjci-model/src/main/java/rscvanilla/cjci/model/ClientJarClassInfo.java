@@ -2,6 +2,7 @@ package rscvanilla.cjci.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import rscvanilla.cjci.model.classes.applet.AppletClass;
+import rscvanilla.cjci.model.classes.gameelements.GameElementsClass;
 import rscvanilla.cjci.model.classes.mudclient.MudClientClass;
 import rscvanilla.cjci.model.classes.mudclientbase.MudClientBaseClass;
 import rscvanilla.cjci.model.classes.packetbuilder.PacketBuilderClass;
@@ -28,5 +29,5 @@ public class ClientJarClassInfo {
     public RSNonPlayerCharacterClass rsNonPlayerCharacter = new RSNonPlayerCharacterClass();
     public RSNonPlayerCharacterInfoClass rsNonPlayerCharacterInfo = new RSNonPlayerCharacterInfoClass();
     public PanelClass panel = new PanelClass();
-
+    public GameElementsClass gameElements = new GameElementsClass();
 }
