@@ -4,9 +4,9 @@ import rscvanilla.bot.script.ScriptDependencyContext;
 import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
 import rscvanilla.bot.script.template.RunnableScript;
 
-public class SimpleWoodcutter extends RunnableScript {
+public class HeadlessArrowMaker extends RunnableScript {
 
-    public SimpleWoodcutter(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
+    public HeadlessArrowMaker(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
         super(dependencyContext, argumentContext);
     }
 
@@ -27,6 +27,12 @@ public class SimpleWoodcutter extends RunnableScript {
 
         if (isOptionsMenuAnswerTextVisible("Make arrow shafts")) {
             selectOptionsMenuAnswer(0);
+            return;
+        }
+
+        if (isItemInInventory(381) && isItemInInventory(280)) {
+            useInventoryItemOnInventoryItem(381, 280);
+            waitFor(500);
             return;
         }
 
