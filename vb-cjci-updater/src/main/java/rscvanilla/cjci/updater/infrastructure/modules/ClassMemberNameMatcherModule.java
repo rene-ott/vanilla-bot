@@ -6,6 +6,7 @@ import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import rscvanilla.cjci.updater.core.matcher.classes.applet.AppletClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.gameelements.GameElementsClassFieldNameMatcher;
+import rscvanilla.cjci.updater.core.matcher.classes.modeldef.ModelDefClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.mudclient.MudClientClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.mudclient.MudClientClassMethodNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.mudclientbase.MudClientBaseClassFieldNameMatcher;
@@ -43,6 +44,7 @@ public class ClassMemberNameMatcherModule extends AbstractModule {
         configureSubTypesOf(PanelClassMethodNameMatcher.class);
 
         configureSubTypesOf(GameElementsClassFieldNameMatcher.class);
+        configureSubTypesOf(ModelDefClassFieldNameMatcher.class);
     }
 
     private <T> void configureSubTypesOf(Class<T> clazz) {

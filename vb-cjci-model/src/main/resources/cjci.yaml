@@ -7,6 +7,12 @@ game_elements:
   fields:
     items: aO
 
+model_def:
+  qualified_name: com.rsc.a.a.d
+  fields:
+    id: bp
+    name: aZ
+
 mud_client:
   qualified_name: com.rsc.d
   fields:
@@ -63,6 +69,7 @@ mud_client:
     send_walk_to_ground_item: d
     show_game_message: a
     show_login_screen: cU
+    start_game: f
     walk_to_area: c
     walk_to_object: x
     walk_to_wall: w

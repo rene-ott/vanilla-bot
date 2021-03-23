@@ -31,6 +31,7 @@ public class BotInstrumentationModule extends AbstractModule {
         bind(HandleOpCodeInMethodAddInterceptorTransformer.class).asEagerSingleton();
         bind(ShowGameMessageMethodAddInterceptorTransformer.class).asEagerSingleton();
         bind(SendLoginMethodAddInterceptorTransformation.class).asEagerSingleton();
+        bind(StartGameMethodAddInterceptorTransformer.class).asEagerSingleton();
         bind(ResetLoginScreenVariablesMethodAddInterceptorTransformation.class).asEagerSingleton();
         bind(InitGameScreenVariablesMethodAddInterceptorTransformation.class).asEagerSingleton();
 

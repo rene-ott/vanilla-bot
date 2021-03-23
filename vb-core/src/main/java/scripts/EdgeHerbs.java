@@ -183,6 +183,11 @@ public class EdgeHerbs extends RunnableScript {
             return;
         }
 
+        if (isItemOnGroundInRectangleArea(DRUID_AREA_TOP_POS, DRUID_AREA_BOTTOM_POS, UNID_TARROMIN, UNID_MARRENTILL)) {
+            takeGroundItemFromRectangleArea(DRUID_AREA_TOP_POS, DRUID_AREA_BOTTOM_POS, UNID_TARROMIN, UNID_MARRENTILL);
+            return;
+        }
+
         attackNpc(270);
     }
 

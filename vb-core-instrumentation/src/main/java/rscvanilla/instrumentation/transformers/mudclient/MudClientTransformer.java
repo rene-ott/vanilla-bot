@@ -22,6 +22,7 @@ public class MudClientTransformer implements ClassFileTransformer {
     private final SendLoginMethodAddInterceptorTransformation sendLoginMethodAddInterceptorTransformation;
     private final ShowGameMessageMethodAddInterceptorTransformer showGameMessageMethodAddInterceptorTransformer;
     private final HandleOpCodeInMethodAddInterceptorTransformer handleOpCodeInMethodAddInterceptorTransformer;
+    private final StartGameMethodAddInterceptorTransformer startGameMethodAddInterceptorTransformer;
 
     private final ShowLoginScreenMethodBodyReplaceTransformation loginScreenTransformation;
 
@@ -32,7 +33,7 @@ public class MudClientTransformer implements ClassFileTransformer {
                                 SendLoginMethodAddInterceptorTransformation sendLoginMethodAddInterceptorTransformation,
                                 ShowGameMessageMethodAddInterceptorTransformer showGameMessageMethodAddInterceptorTransformer,
                                 HandleOpCodeInMethodAddInterceptorTransformer handleOpCodeInMethodAddInterceptorTransformer,
-                                ShowLoginScreenMethodBodyReplaceTransformation loginScreenTransformation
+                                StartGameMethodAddInterceptorTransformer startGameMethodAddInterceptorTransformer, ShowLoginScreenMethodBodyReplaceTransformation loginScreenTransformation
     ) {
         this.mudClientClass = clientJarClassInfo.mudClient;
         this.resetLoginScreenVariablesMethodAddInterceptorTransformation = resetLoginScreenVariablesMethodAddInterceptorTransformation;
@@ -40,6 +41,7 @@ public class MudClientTransformer implements ClassFileTransformer {
         this.sendLoginMethodAddInterceptorTransformation = sendLoginMethodAddInterceptorTransformation;
         this.showGameMessageMethodAddInterceptorTransformer = showGameMessageMethodAddInterceptorTransformer;
         this.handleOpCodeInMethodAddInterceptorTransformer = handleOpCodeInMethodAddInterceptorTransformer;
+        this.startGameMethodAddInterceptorTransformer = startGameMethodAddInterceptorTransformer;
         this.loginScreenTransformation = loginScreenTransformation;
     }
 
@@ -65,6 +67,7 @@ public class MudClientTransformer implements ClassFileTransformer {
             showGameMessageMethodAddInterceptorTransformer.implement(ctClass);
             initGameScreenVariablesMethodAddInterceptorTransformation.implement(ctClass);
             sendLoginMethodAddInterceptorTransformation.implement(ctClass);
+            startGameMethodAddInterceptorTransformer.implement(ctClass);
 
             loginScreenTransformation.implement(ctClass);
 

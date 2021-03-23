@@ -87,6 +87,7 @@ mud_client:
     handle_op_code_in:
     init_game_screen_variables:
     reset_login_screen_variables:
+    start_game:
 
 rs_character:
   qualified_name: com.rsc.e.i
@@ -131,3 +132,9 @@ game_elements:
   qualified_name: com.rsc.a.a
   fields:
     items:
+
+model_def:
+  qualified_name: com.rsc.a.a.d
+  fields:
+    id:
+    name:

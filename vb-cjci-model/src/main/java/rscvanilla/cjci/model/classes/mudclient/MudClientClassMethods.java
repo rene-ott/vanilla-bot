@@ -22,6 +22,7 @@ public class MudClientClassMethods implements WithClassMembers {
 
     @YamlClassMemberKey("init_game_screen_variables") public String initGameScreenVariables;
     @YamlClassMemberKey("reset_login_screen_variables") public String resetLoginScreenVariables;
+    @YamlClassMemberKey("start_game") public String startGame;
 }
 
 

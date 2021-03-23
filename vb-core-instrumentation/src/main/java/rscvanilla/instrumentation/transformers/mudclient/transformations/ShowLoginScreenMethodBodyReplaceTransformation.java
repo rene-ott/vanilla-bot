@@ -8,7 +8,7 @@ import rscvanilla.cjci.model.classes.mudclient.MudClientClass;
 
 import javax.inject.Inject;
 
-public class ShowLoginScreenMethodBodyReplaceTransformation {
+public class ShowLoginScreenMethodBodyReplaceTransformation  {
 
     private final MudClientClass mudClientClass;
 

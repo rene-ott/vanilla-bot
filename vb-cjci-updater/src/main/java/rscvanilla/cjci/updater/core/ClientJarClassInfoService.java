@@ -20,6 +20,7 @@ public class ClientJarClassInfoService {
     private final RSNonPlayerCharacterInfoClassMemberService rsNonPlayerCharacterInfoClassMemberService;
     private final PanelClassMemberService panelClassMemberService;
     private final GameElementsClassMemberService gameElementsClassMemberService;
+    private final ModelDefClassMemberService modelDefClassMemberService;
 
     @Inject
     public ClientJarClassInfoService(MudClientClassMemberService mudClientClassMemberService,
@@ -33,7 +34,7 @@ public class ClientJarClassInfoService {
                                      PacketBuilderBaseClassMemberService packetBuilderBaseClassMemberService,
                                      RSNonPlayerCharacterClassMemberService rsNonPlayerCharacterClassMemberService,
                                      RSNonPlayerCharacterInfoClassMemberService rsNonPlayerCharacterInfoClassMemberService,
-                                     PanelClassMemberService panelClassMemberService, GameElementsClassMemberService gameElementsClassMemberService) {
+                                     PanelClassMemberService panelClassMemberService, GameElementsClassMemberService gameElementsClassMemberService, ModelDefClassMemberService modelDefClassMemberService) {
         this.mudClientClassMemberService = mudClientClassMemberService;
         this.appletClassMemberService = appletClassMemberService;
         this.rsCharacterClassMemberService = rsCharacterClassMemberService;
@@ -47,6 +48,7 @@ public class ClientJarClassInfoService {
         this.rsNonPlayerCharacterInfoClassMemberService = rsNonPlayerCharacterInfoClassMemberService;
         this.panelClassMemberService = panelClassMemberService;
         this.gameElementsClassMemberService = gameElementsClassMemberService;
+        this.modelDefClassMemberService = modelDefClassMemberService;
     }
 
     public void setClassValuesTo(ClientJarClassInfo clientJarClassInfo) {
@@ -63,5 +65,6 @@ public class ClientJarClassInfoService {
         rsNonPlayerCharacterInfoClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsNonPlayerCharacterInfo);
         panelClassMemberService.setValuesToClassMembers(clientJarClassInfo.panel);
         gameElementsClassMemberService.setValuesToClassMembers(clientJarClassInfo.gameElements);
+        modelDefClassMemberService.setValuesToClassMembers(clientJarClassInfo.modelDef);
     }
 }

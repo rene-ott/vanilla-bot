@@ -6,6 +6,7 @@ import rscvanilla.bot.infrastructure.utils.EnumUtil;
 import rscvanilla.bot.mudclient.handlers.InterceptorHandler;
 import rscvanilla.bot.mudclient.handlers.captcha.CaptchaHandler;
 import rscvanilla.bot.mudclient.handlers.gamemessage.GameMessageHandler;
+import rscvanilla.bot.mudclient.handlers.gamemodel.GameModelHandler;
 import rscvanilla.bot.mudclient.handlers.gamesettings.GameSettingsHandler;
 import rscvanilla.bot.mudclient.handlers.userlogaction.UserLoginActionHandler;
 import rscvanilla.bot.mudclient.models.BankItem;
@@ -103,6 +104,7 @@ public class MudClientWrapper {
     @SuppressWarnings("rawtypes") public FieldWrapper<ArrayList> initGameScreenVariablesMethodInterceptors;
     @SuppressWarnings("rawtypes") public FieldWrapper<ArrayList> showGameMessageMethodInterceptors;
     @SuppressWarnings("rawtypes") public FieldWrapper<ArrayList> handleOpCodeInMethodInterceptors;
+    @SuppressWarnings("rawtypes") public FieldWrapper<ArrayList> startGameMethodInterceptors;
 
     private final PacketBuilderWrapper packetBuilderWrapper;
 
@@ -156,6 +158,7 @@ public class MudClientWrapper {
             sendLoginMethodInterceptors = initInterceptor("sendLoginMethodInterceptors", MudClientSendLoginMethodInterceptor.FIELD_NAME);
             handleOpCodeInMethodInterceptors = initInterceptor("handleOpCodeInMethodInterceptors", MudClientHandleOpcodeInMethodInterceptor.FIELD_NAME);
             showGameMessageMethodInterceptors = initInterceptor("showGameMessageMethodInterceptors", MudClientShowGameMessageMethodInterceptor.FIELD_NAME);
+            startGameMethodInterceptors = initInterceptor("startGameMethodInterceptors", MudClientStartGameMethodInterceptor.FIELD_NAME);
 
             simpleLogger.debug("");
         } catch (BotException e) {
@@ -261,6 +264,11 @@ public class MudClientWrapper {
     @SuppressWarnings("unused") // Injected by DI
     public void setGameMessageHandler(GameMessageHandler interceptionHandler) { setInterceptorHandler(interceptionHandler); }
 
+    @Inject
+    @SuppressWarnings("unused") // Injected by DI
+    public void setGameModelHandler(GameModelHandler interceptionHandler) { setInterceptorHandler(interceptionHandler); }
+
+
     public PacketBuilderWrapper getPacketBuilder() { return packetBuilderWrapper; }
     public ClientJarClassInfo getClientJarClassInfo() { return clientJarClassInfo; }
     private PanelWrapper getLoginPanelWrapper() { return new PanelWrapper(loginPanel.getValue(), clientJarClassInfo); }
@@ -335,26 +343,21 @@ public class MudClientWrapper {
     }
 
     // ArrayLists are created on bytecode level with javassist, therefore there's no type argument
-    @SuppressWarnings("unchecked")
     public void setInterceptorHandler(InterceptorHandler interceptorHandler) {
-        if (interceptorHandler instanceof MudClientSendLoginMethodInterceptor) {
-            sendLoginMethodInterceptors.getValue().add(interceptorHandler);
-        }
+        addInterceptorHandler(interceptorHandler, sendLoginMethodInterceptors, MudClientSendLoginMethodInterceptor.class);
+        addInterceptorHandler(interceptorHandler, resetLoginScreenVariablesMethodInterceptors, MudClientResetLoginScreenVariablesMethodInterceptor.class);
+        addInterceptorHandler(interceptorHandler, initGameScreenVariablesMethodInterceptors, MudClientInitGameScreenVariablesMethodInterceptor.class);
+        addInterceptorHandler(interceptorHandler, showGameMessageMethodInterceptors, MudClientShowGameMessageMethodInterceptor.class);
+        addInterceptorHandler(interceptorHandler, handleOpCodeInMethodInterceptors, MudClientHandleOpcodeInMethodInterceptor.class);
+        addInterceptorHandler(interceptorHandler, startGameMethodInterceptors, MudClientStartGameMethodInterceptor.class);
+    }
 
-        if (interceptorHandler instanceof MudClientResetLoginScreenVariablesMethodInterceptor) {
-            resetLoginScreenVariablesMethodInterceptors.getValue().add(interceptorHandler);
-        }
-
-        if (interceptorHandler instanceof MudClientInitGameScreenVariablesMethodInterceptor) {
-            initGameScreenVariablesMethodInterceptors.getValue().add(interceptorHandler);
-        }
-
-        if (interceptorHandler instanceof MudClientShowGameMessageMethodInterceptor) {
-            showGameMessageMethodInterceptors.getValue().add(interceptorHandler);
-        }
-
-        if (interceptorHandler instanceof MudClientHandleOpcodeInMethodInterceptor) {
-            handleOpCodeInMethodInterceptors.getValue().add(interceptorHandler);
+    @SuppressWarnings("unchecked")
+    public void addInterceptorHandler(InterceptorHandler interceptorHandler,
+                                      @SuppressWarnings("rawtypes") FieldWrapper<ArrayList> interceptors,
+                                      Class<?> clazz) {
+        if (clazz.isInstance(interceptorHandler)) {
+            interceptors.getValue().add(interceptorHandler);
         }
     }
 }

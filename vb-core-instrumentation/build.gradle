@@ -11,15 +11,15 @@ dependencies {
     implementation project(":vb-core-contracts")
 }
 
+project.version = null
+
 shadowJar {
     manifest {
         attributes("Manifest-Version": 1.0,
                 "Premain-Class": "rscvanilla.instrumentation.PreMain"
         )
         minimize()
-        archivesBaseName = "agent"
-        archiveVersion.set(null)
-        classifier(null)
+        archiveFileName = "agent.jar"
     }
 }
 

@@ -17,6 +17,7 @@ public class BaseTests {
             return null;
         }
     }
+    protected String readModelDef() { return readResource("com.rsc.a.a.d.java"); }
 
     protected String readClassMudClient() { return readResource("com.rsc.d.java"); }
     protected String readClassMudClientBase() { { return readResource("com.rsc.b.java"); } }
