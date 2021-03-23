@@ -1,3 +1,4 @@
 scripts/*
 output/
 config/appsettings.local.yaml
+assets/.uid

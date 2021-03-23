@@ -81,8 +81,13 @@ task copyLibToDist(type: Copy) {
     from "${projectDir}/lib" into "${DIST_DIR_PATH}/lib"
 }
 
-task copyConfigToDist(type: Copy) {
+task copyAssetsToDist(type: Copy) {
     dependsOn copyLibToDist
+    from "${projectDir}/assets" into "${DIST_DIR_PATH}/assets"
+}
+
+task copyConfigToDist(type: Copy) {
+    dependsOn copyAssetsToDist
     from "${projectDir}/config" into "${DIST_DIR_PATH}/config"
     exclude "appsettings.local.yaml"
 }

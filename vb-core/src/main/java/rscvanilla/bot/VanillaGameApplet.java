@@ -1,7 +1,9 @@
 package rscvanilla.bot;
-import com.rsc.applet.b;
-import com.rsc.c;
 
+import com.rsc.applet.b;
+import rscvanilla.bot.infrastructure.annotations.AssetsDirectoryPath;
+
+import javax.inject.Inject;
 import java.applet.Applet;
 import java.awt.*;
 import java.io.File;
@@ -9,13 +11,17 @@ import java.io.File;
 @SuppressWarnings("serial")
 public class VanillaGameApplet extends b implements GameApplet {
 
-    public VanillaGameApplet() {
+    private final String assetsDirectoryPath;
+
+    @Inject
+    public VanillaGameApplet(@AssetsDirectoryPath String assetsDirectoryPath) {
+        this.assetsDirectoryPath = assetsDirectoryPath;
         setPreferredSize(new Dimension(512, 346));
         init();
     }
 
-    //TODO: c.aa member name might change when the client.jar is updated
-    public String C() { return c.aa + File.separator; }
+    // NB! This method name might change
+    public String C() { return assetsDirectoryPath + File.separator; }
 
     public void execute() {
         super.start();

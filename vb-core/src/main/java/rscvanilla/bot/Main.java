@@ -12,10 +12,11 @@ public class Main {
     private static final String WORKING_DIRECTORY_PATH = System.getProperty("user.dir");
     private static final String SCRIPTS_DIRECTORY_PATH = WORKING_DIRECTORY_PATH + File.separator + "scripts";
     private static final String CONFIG_DIRECTORY_PATH = WORKING_DIRECTORY_PATH + File.separator + "config";
+    private static final String ASSETS_DIRECTORY_PATH = WORKING_DIRECTORY_PATH + File.separator + "assets";
 
     public static void main(String [] args) {
         try {
-            Guice.createInjector(new BotModule(SCRIPTS_DIRECTORY_PATH, CONFIG_DIRECTORY_PATH))
+            Guice.createInjector(new BotModule(SCRIPTS_DIRECTORY_PATH, CONFIG_DIRECTORY_PATH, ASSETS_DIRECTORY_PATH))
                 .getInstance(VanillaBot.class)
                 .load();
 

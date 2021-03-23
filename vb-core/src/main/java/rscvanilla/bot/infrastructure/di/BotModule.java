@@ -15,6 +15,7 @@ import rscvanilla.bot.config.AppSettings;
 import rscvanilla.bot.config.AppSettingsFileReader;
 import rscvanilla.bot.gui.BotFrame;
 import rscvanilla.bot.infrastructure.BotException;
+import rscvanilla.bot.infrastructure.annotations.AssetsDirectoryPath;
 import rscvanilla.bot.infrastructure.annotations.ScriptsDirectoryPath;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.infrastructure.printer.TabPrinter;
@@ -45,10 +46,12 @@ public class BotModule extends AbstractModule {
     private final EventBus eventBus = new EventBus("Bot EventBus");
     private final String scriptsDirectoryPath;
     private final String configDirectoryPath;
+    private final String assertsDirectoryPath;
 
-    public BotModule(String scriptsDirectoryPath, String configDirectoryPath) {
+    public BotModule(String scriptsDirectoryPath, String configDirectoryPath, String assertsDirectoryPath) {
         this.scriptsDirectoryPath = scriptsDirectoryPath;
         this.configDirectoryPath = configDirectoryPath;
+        this.assertsDirectoryPath = assertsDirectoryPath;
     }
 
     @Override
@@ -63,6 +66,7 @@ public class BotModule extends AbstractModule {
         bind(CaptchaImageRecognizer.class).in(Singleton.class);
         bind(CaptchaDataLoader.class).in(Singleton.class);
         bindConstant().annotatedWith(ScriptsDirectoryPath.class).to(scriptsDirectoryPath);
+        bindConstant().annotatedWith(AssetsDirectoryPath.class).to(assertsDirectoryPath);
 
         bind(UserLoginActionHandler.class).in(Singleton.class);
         bind(UserCredentialManager.class).in(Singleton.class);
