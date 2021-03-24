@@ -4,12 +4,12 @@ import rscvanilla.bot.mudclient.MethodWrapper;
 import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.bot.mudclient.WrapperTool;
 
-public abstract class RSObjectWrapper<T> {
+public abstract class MudClientObjectWrapper<T> {
 
     protected T internalObject;
     protected MudClientWrapper mudClientWrapper;
 
-    public RSObjectWrapper(T internalObject, MudClientWrapper mudClientWrapper) {
+    public MudClientObjectWrapper(T internalObject, MudClientWrapper mudClientWrapper) {
         this.internalObject = internalObject;
         this.mudClientWrapper = mudClientWrapper;
     }

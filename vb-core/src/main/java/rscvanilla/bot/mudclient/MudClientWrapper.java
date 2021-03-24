@@ -73,6 +73,8 @@ public class MudClientWrapper {
     public FieldWrapper<Integer> autoLoginTimeOut;
     public FieldWrapper<Boolean> isOptionsMenuVisible;
     public FieldWrapper<Boolean> isBankVisible;
+    public FieldWrapper<Boolean> isShopVisible;
+
 
     private FieldWrapper<int[]> bankItemIdList;
     private FieldWrapper<int[]> bankItemCountList;
@@ -213,6 +215,8 @@ public class MudClientWrapper {
             loginPanelUserUsernameControlId = initField("loginPanelUserUsernameControlId", classFields.loginPanelUserUsernameControlId, Integer.class);
             loginPanel = initField("loginPanel", classFields.loginPanel, Object.class);
 
+            //isShopVisible = initField("isShopVisible", "", Boolean.class);
+
             packetBuilder = initField("packetBuilder", baseClassFields.packetBuilder, Object.class);
 
             simpleLogger.debug("");
@@ -267,7 +271,6 @@ public class MudClientWrapper {
     @Inject
     @SuppressWarnings("unused") // Injected by DI
     public void setGameModelHandler(GameModelHandler interceptionHandler) { setInterceptorHandler(interceptionHandler); }
-
 
     public PacketBuilderWrapper getPacketBuilder() { return packetBuilderWrapper; }
     public ClientJarClassInfo getClientJarClassInfo() { return clientJarClassInfo; }

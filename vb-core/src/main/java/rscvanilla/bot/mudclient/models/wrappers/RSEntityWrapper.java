@@ -6,7 +6,7 @@ import rscvanilla.bot.mudclient.utils.PositionConverter;
 import rscvanilla.bot.mudclient.MudClientWrapper;
 import rscvanilla.cjci.model.classes.rsentity.RSEntityClassFields;
 
-public abstract class RSEntityWrapper<T extends com.rsc.e.d> extends RSObjectWrapper<T> implements GloballyPositionable {
+public abstract class RSEntityWrapper<T extends com.rsc.e.d> extends MudClientObjectWrapper<T> implements GloballyPositionable {
 
     protected RSEntityWrapper(T internalObject, MudClientWrapper mudClientWrapper) {
         super(internalObject, mudClientWrapper);
