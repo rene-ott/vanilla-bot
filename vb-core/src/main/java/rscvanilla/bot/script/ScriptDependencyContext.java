@@ -21,6 +21,7 @@ public class ScriptDependencyContext {
     private final LoginAction loginAction;
     private final MessageAction messageAction;
     private final WallObjectAction wallObjectAction;
+    private final ShopAction shopAction;
 
     private final MudClientWrapper mudClientWrapper;
 
@@ -39,8 +40,8 @@ public class ScriptDependencyContext {
                                    LoginAction loginAction,
                                    MessageAction messageAction,
                                    MudClientWrapper mudClientWrapper,
-                                   WallObjectAction wallObjectAction
-    ) {
+                                   WallObjectAction wallObjectAction,
+                                   ShopAction shopAction) {
         this.groundItemAction = groundItemAction;
         this.nonPlayerCharacterAction = nonPlayerCharacterAction;
         this.playerCharacterAction = playerCharacterAction;
@@ -55,6 +56,7 @@ public class ScriptDependencyContext {
         this.wallObjectAction = wallObjectAction;
         this.mudClientWrapper = mudClientWrapper;
         this.printer = printer;
+        this.shopAction = shopAction;
     }
 
     public MudClientWrapper getMudClientWrapper() { return mudClientWrapper; }
@@ -74,4 +76,5 @@ public class ScriptDependencyContext {
     public WalkAction getWalkAction() { return walkAction; }
     public InventoryItemAction getInventoryItemAction() { return inventoryItemAction; }
     public WallObjectAction getWallAction() { return wallObjectAction; }
+    public ShopAction getShopAction() { return shopAction; }
 }

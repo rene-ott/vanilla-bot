@@ -22,6 +22,7 @@ public abstract class Script {
     private final LoginAction loginAction;
     private final MessageAction messageAction;
     private final WallObjectAction wallObjectAction;
+    private final ShopAction shopAction;
 
     private final MudClientWrapper mudClientWrapper;
 
@@ -41,8 +42,13 @@ public abstract class Script {
         loginAction = dependencyContext.getLoginAction();
         messageAction = dependencyContext.getMessageAction();
         wallObjectAction = dependencyContext.getWallAction();
+        shopAction = dependencyContext.getShopAction();
 
         mudClientWrapper = dependencyContext.getMudClientWrapper();
+    }
+
+    public void test() {
+        shopAction.testShop();
     }
 
     /** FOR DEV **/
@@ -65,6 +71,10 @@ public abstract class Script {
     public String[] getPlayerNamesInDistance(int distance) { return playerCharacterAction.getPlayerNamesInDistance(distance); }
 
     public boolean isAnotherPlayerOnPos(Position pos) { return playerCharacterAction.isAnotherPlayerOnPos(pos); }
+
+    public void buyShopItem(int id, int count) { shopAction.buyShopItem(id, count); }
+    public int getCurrentShopItemCount(int id) { return shopAction.getCurrentShopItemCount(id); }
+    public boolean isShopWindowVisible() { return shopAction.isShopVisible(); }
 
     /** MESSAGE ACTION **/
     public void sendChatMessage(String s) { messageAction.sendChatMessage(s); }

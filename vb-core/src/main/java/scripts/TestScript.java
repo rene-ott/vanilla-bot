@@ -17,12 +17,21 @@ public class TestScript extends RunnableScript {
 
     @Override
     protected void loop() {
+
+        if (isShopWindowVisible()) {
+            System.out.println("Window visible");
+
+            var shopItemCount = getCurrentShopItemCount(135);
+            if (shopItemCount > 0) {
+                System.out.println("Buy item");
+                buyShopItem(135, shopItemCount);
+            }
+        }
         waitFor(3000);
     }
 
     @Override
     public void onChatMessageReceived(String sender, String message) {
-        print(String.format("%s:%s", sender, message));
     }
 
     @Override

@@ -73,8 +73,8 @@ public class MudClientWrapper {
     public FieldWrapper<Integer> autoLoginTimeOut;
     public FieldWrapper<Boolean> isOptionsMenuVisible;
     public FieldWrapper<Boolean> isBankVisible;
-    public FieldWrapper<Boolean> isShopVisible;
 
+    public FieldWrapper<Object> shopInterface;
 
     private FieldWrapper<int[]> bankItemIdList;
     private FieldWrapper<int[]> bankItemCountList;
@@ -215,7 +215,7 @@ public class MudClientWrapper {
             loginPanelUserUsernameControlId = initField("loginPanelUserUsernameControlId", classFields.loginPanelUserUsernameControlId, Integer.class);
             loginPanel = initField("loginPanel", classFields.loginPanel, Object.class);
 
-            //isShopVisible = initField("isShopVisible", "", Boolean.class);
+            shopInterface = initField("shopInterface", "oN", Object.class);
 
             packetBuilder = initField("packetBuilder", baseClassFields.packetBuilder, Object.class);
 
@@ -285,6 +285,8 @@ public class MudClientWrapper {
     public List<RSGroundObject> getObjectList() { return newWrappedEntityList(this.objectList, this.objectListIndex, RSGroundObject.class); }
     public List<RSPlayerCharacter> getPlayerList() { return newWrappedEntityList(this.playerList, this.playerListIndex, RSPlayerCharacter.class); }
     public List<RSWallObject> getWallObjectList() { return newWrappedEntityList(this.wallObjectList, this.wallObjectListIndex, RSWallObject.class); }
+
+    public ShopInterfaceWrapper getShopInterface() { return new ShopInterfaceWrapper(shopInterface.getValue(), this); }
 
     public List<String> getOptionsMenuList() { return isOptionsMenuVisible.getValue()
         ? Arrays.stream(optionsMenuText.getValue(), 0, optionsMenuCount.getValue()).collect(Collectors.toList())

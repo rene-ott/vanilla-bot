@@ -89,6 +89,7 @@ public class BotModule extends AbstractModule {
         bind(InventoryItemAction.class).in(Singleton.class);
         bind(WalkAction.class).in(Singleton.class);
         bind(BankAction.class).in(Singleton.class);
+        bind(ShopAction.class).in(Singleton.class);
         bind(ScriptDependencyContext.class).in(Singleton.class);
 
         bindAppSettings();

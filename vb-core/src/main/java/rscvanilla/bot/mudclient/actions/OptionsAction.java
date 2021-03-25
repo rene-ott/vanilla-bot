@@ -24,18 +24,6 @@ public class OptionsAction extends BaseAction {
         return mudClientWrapper.isOptionsMenuVisible.getValue();
     }
 
-    public int getAnswerOptionPosition(String answerTextPrefix) {
-        var answerOptions = mudClientWrapper.getOptionsMenuList()
-            .stream().filter(it -> it.startsWith(answerTextPrefix))
-            .collect(Collectors.toList());
-
-        if (answerOptions.size() != 1) {
-            return -1;
-        }
-
-        return answerOptions.indexOf(answerOptions.get(0));
-    }
-
     public boolean hasAnswerOptionText(String answerTextPrefix) {
         var answerOptions = mudClientWrapper.getOptionsMenuList()
             .stream().map(String::toLowerCase).filter(it -> it.startsWith(answerTextPrefix.toLowerCase()))

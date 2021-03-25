@@ -19,6 +19,8 @@ public enum OpCodeOut {
     WALL_COMMAND1(14),
     WALL_COMMAND2(127),
     DROP_ITEM(246),
+    BUY_ITEM(236),
+    SELL_ITEM(221),
     USE_ITEM_ON_ITEM(91);
 
     private final int id;
