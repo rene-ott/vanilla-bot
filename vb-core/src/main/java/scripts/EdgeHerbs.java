@@ -55,7 +55,8 @@ public class EdgeHerbs extends RunnableScript {
             157, // Uncut diamond
             526, // Half of a key
             527, // Half of a key
-            1277 // Half dragon square
+            1277, // Half dragon square,
+            464 // Vials
     };
 
     private static int UNID_MARRENTILL = 435;
