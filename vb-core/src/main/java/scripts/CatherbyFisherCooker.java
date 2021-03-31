@@ -27,6 +27,7 @@ public class CatherbyFisherCooker extends RunnableScript {
 
     private static final Position SHRIMP_FISH_SPOT_POS = new Position(418, 500);
     private static final Position LOBSTER_FISH_SPOT_POS = new Position(409, 504);
+    private static final Position TUNA_SWORDFISH_FISH_SPOT_POS = new Position(409, 504);
     private static final Position SHARK_FISH_SPOT_POS = new Position(406, 505);
 
     private static final int RANGE_HOUSE_DOOR_ID = 2;
@@ -44,6 +45,7 @@ public class CatherbyFisherCooker extends RunnableScript {
     // ObjectID, is atObject2, raw fish, cooked fish, burnt
     private final int[][] SHRIMP_PARAMS = { { 193, SHRIMP_FISH_SPOT_POS.getX(), SHRIMP_FISH_SPOT_POS.getY() }, { 0 }, { 349, 351 }, { 350, 352}, { 353} };
     private final int[][] LOBSTER_PARAMS = { { 194, LOBSTER_FISH_SPOT_POS.getX(), LOBSTER_FISH_SPOT_POS.getY() }, { 1 }, { 372 }, { 373 }, { 374 } };
+    private final int[][] TUNA_SWORDFISH_PARAMS = { { 194, TUNA_SWORDFISH_FISH_SPOT_POS.getX(), TUNA_SWORDFISH_FISH_SPOT_POS.getY() }, { 0 }, { 366, 369 }, { 367, 370}, { 368, 371} };
     private final int[][] SHARK_PARAMS = { { 261, SHARK_FISH_SPOT_POS.getX(), SHARK_FISH_SPOT_POS.getY() }, { 1 }, { 545 }, { 546}, { 547 } };
 
     private int[][] scriptParams;
@@ -284,6 +286,7 @@ public class CatherbyFisherCooker extends RunnableScript {
     private class GUI extends JFrame implements ActionListener {
 
         private final static String ACTION_COMMAND_SHRIMP = "Shrimp/Anchovies";
+        private final static String ACTION_COMMAND_TUNA_SWORDFISH = "Tunas/Swordfishes";
         private final static String ACTION_COMMAND_LOBSTER = "Lobsters";
         private final static String ACTION_COMMAND_SHARK = "Sharks";
 
@@ -317,14 +320,17 @@ public class CatherbyFisherCooker extends RunnableScript {
 
             var shrimpButton = createRadioButton(ACTION_COMMAND_SHRIMP, true);
             var lobsterButton = createRadioButton(ACTION_COMMAND_LOBSTER, false);
+            var tunaButton = createRadioButton(ACTION_COMMAND_TUNA_SWORDFISH, false);
             var sharkButton = createRadioButton(ACTION_COMMAND_SHARK, false);
 
             group.add(shrimpButton);
             group.add(lobsterButton);
+            group.add(tunaButton);
             group.add(sharkButton);
 
             fishSelectionPanel.add(shrimpButton);
             fishSelectionPanel.add(lobsterButton);
+            fishSelectionPanel.add(tunaButton);
             fishSelectionPanel.add(sharkButton);
 
             return group;
@@ -387,6 +393,8 @@ public class CatherbyFisherCooker extends RunnableScript {
                 scriptParams = SHRIMP_PARAMS;
             } else if (command.equals(ACTION_COMMAND_LOBSTER)) {
                 scriptParams = LOBSTER_PARAMS;
+            } else if (command.equals(ACTION_COMMAND_TUNA_SWORDFISH)) {
+                scriptParams = TUNA_SWORDFISH_PARAMS;
             } else if (command.equals(ACTION_COMMAND_SHARK)) {
                 scriptParams = SHARK_PARAMS;
             }
