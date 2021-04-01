@@ -118,7 +118,9 @@ public class WildernessAgility extends RunnableScript {
     }
 
     private void climbVines () {
-        atGroundObject(VINE_ID, VINE);
+        if (isInCombat()) {
+            walkToTile(getCurrentPos());
+        }atGroundObject(VINE_ID, VINE);
     }
 
     private void escapePit () {
