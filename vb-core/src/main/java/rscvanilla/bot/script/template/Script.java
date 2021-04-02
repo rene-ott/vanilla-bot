@@ -98,6 +98,7 @@ public abstract class Script {
 
     protected void dropAllInventoryItems(int...ids) { inventoryItemAction.dropAll(ids); }
     protected void useInventoryItemOnInventoryItem(int firstItemId, int secondItemId) { inventoryItemAction.useItemOnItem(firstItemId, secondItemId); }
+    protected void useInventoryItemOnGroundItem(int inventoryItemId, int groundItemId) { inventoryItemAction.useInventoryItemOnGroundItem(inventoryItemId, groundItemId); }
 
     /** NPC ACTION **/
     protected void pickpocketNpc(int...ids) { nonPlayerCharacterAction.pickpocketNpcById(ids); }

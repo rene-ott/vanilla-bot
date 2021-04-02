@@ -21,7 +21,8 @@ public enum OpCodeOut {
     DROP_ITEM(246),
     BUY_ITEM(236),
     SELL_ITEM(221),
-    USE_ITEM_ON_ITEM(91);
+    USE_ITEM_ON_ITEM(91),
+    USE_INVENTORY_ITEM_ON_GROUND_ITEM(53);
 
     private final int id;
 
