@@ -1,7 +1,7 @@
 package rscvanilla.bot.mudclient.handlers.gamemodel;
 
-import rscvanilla.bot.mudclient.FieldWrapper;
-import rscvanilla.bot.mudclient.WrapperTool;
+import rscvanilla.bot.mudclient.wrappers.utils.FieldWrapper;
+import rscvanilla.bot.mudclient.wrappers.utils.WrapperTool;
 import rscvanilla.cjci.model.ClientJarClassInfo;
 
 public class ItemDefWrapper {

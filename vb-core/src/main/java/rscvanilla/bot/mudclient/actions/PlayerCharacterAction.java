@@ -1,8 +1,8 @@
 package rscvanilla.bot.mudclient.actions;
 
 import rscvanilla.bot.mudclient.models.Position;
-import rscvanilla.bot.mudclient.models.wrappers.RSPlayerCharacter;
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.entities.PlayerCharacter;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 
 import javax.inject.Inject;
 import java.util.stream.Collectors;
@@ -37,6 +37,6 @@ public class PlayerCharacterAction extends BaseAction {
                 .filter(it -> it.isDistanceLessThanEqual(mudClientWrapper.getLocalPlayer(), distance))
                 .collect(Collectors.toList());
 
-        return players.stream().map(RSPlayerCharacter::getName).toArray(String[]::new);
+        return players.stream().map(PlayerCharacter::getName).toArray(String[]::new);
     }
 }

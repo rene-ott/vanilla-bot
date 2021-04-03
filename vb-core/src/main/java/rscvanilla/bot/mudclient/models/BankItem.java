@@ -10,11 +10,6 @@ public class BankItem {
         this.count = count;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public int getCount() {
-        return count;
-    }
+    public int getId() { return id; }
+    public int getCount() { return count; }
 }

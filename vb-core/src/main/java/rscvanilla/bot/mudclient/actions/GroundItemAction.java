@@ -2,8 +2,8 @@ package rscvanilla.bot.mudclient.actions;
 
 import rscvanilla.bot.mudclient.enums.OpCodeOut;
 import rscvanilla.bot.mudclient.models.Position;
-import rscvanilla.bot.mudclient.models.wrappers.RSGroundItem;
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.entities.GroundItem;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 
 import javax.inject.Inject;
 import java.util.Arrays;
@@ -64,7 +64,7 @@ public class GroundItemAction extends BaseAction {
         }
     }
 
-    private void takeGroundItem(RSGroundItem groundItem) {
+    private void takeGroundItem(GroundItem groundItem) {
         mudClientWrapper.getPacketBuilder()
                 .setOpCode(OpCodeOut.TAKE_ITEM_FROM_GROUND)
                 .putShort(groundItem.getGlobalPosition().getX())
@@ -86,7 +86,7 @@ public class GroundItemAction extends BaseAction {
         takeGroundItem(groundItems.get(0));
     }
 
-    private List<RSGroundItem> getGroundItemsFromCurrentPos(int id) {
+    private List<GroundItem> getGroundItemsFromCurrentPos(int id) {
         return mudClientWrapper.getGroundItemList()
             .stream()
             .filter(it -> it.getId() == id &&
@@ -94,7 +94,7 @@ public class GroundItemAction extends BaseAction {
             .collect(Collectors.toList());
     }
 
-    private RSGroundItem getGroundItemById(int...ids) {
+    private GroundItem getGroundItemById(int...ids) {
 
         var groundItems = mudClientWrapper.getGroundItemList()
                 .stream()
@@ -104,10 +104,10 @@ public class GroundItemAction extends BaseAction {
         if (groundItems.isEmpty())
             return null;
 
-        return (RSGroundItem) mudClientWrapper.getLocalPlayer().getNearest(groundItems);
+        return (GroundItem) mudClientWrapper.getLocalPlayer().getNearest(groundItems);
     }
 
-    private RSGroundItem getGroundItemInRectangleById(Position topPos, Position bottomPos, int...ids) {
+    private GroundItem getGroundItemInRectangleById(Position topPos, Position bottomPos, int...ids) {
 
         var groundItems = mudClientWrapper.getGroundItemList()
                 .stream()
@@ -118,6 +118,6 @@ public class GroundItemAction extends BaseAction {
         if (groundItems.isEmpty())
             return null;
 
-        return (RSGroundItem) mudClientWrapper.getLocalPlayer().getNearest(groundItems);
+        return (GroundItem) mudClientWrapper.getLocalPlayer().getNearest(groundItems);
     }
 }

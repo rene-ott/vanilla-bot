@@ -1,8 +1,8 @@
 package rscvanilla.bot.mudclient.actions;
 
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 import rscvanilla.bot.mudclient.enums.OpCodeOut;
-import rscvanilla.bot.mudclient.models.wrappers.RSNonPlayerCharacter;
+import rscvanilla.bot.mudclient.wrappers.entities.NonPlayerCharacter;
 
 import javax.inject.Inject;
 import java.util.Arrays;
@@ -64,15 +64,15 @@ public class NonPlayerCharacterAction extends BaseAction {
                 .send();
     }
 
-    private RSNonPlayerCharacter getNearestAttackableNpcById(boolean mustNotBeInCombat, int...ids) {
+    private NonPlayerCharacter getNearestAttackableNpcById(boolean mustNotBeInCombat, int...ids) {
         return getNearestNpcById(true, mustNotBeInCombat, ids);
     }
 
-    private RSNonPlayerCharacter getNearestNpcById(boolean mustNotBeInCombat, int...ids) {
+    private NonPlayerCharacter getNearestNpcById(boolean mustNotBeInCombat, int...ids) {
         return getNearestNpcById(false, mustNotBeInCombat, ids);
     }
 
-    private RSNonPlayerCharacter getNearestNpcById(boolean mustBeAttackable, boolean mustNotBeInCombat, int...ids) {
+    private NonPlayerCharacter getNearestNpcById(boolean mustBeAttackable, boolean mustNotBeInCombat, int...ids) {
 
         var matchedNpcs = mudClientWrapper.getNpcList()
             .stream()
@@ -84,6 +84,6 @@ public class NonPlayerCharacterAction extends BaseAction {
         if (matchedNpcs.isEmpty())
             return null;
 
-        return (RSNonPlayerCharacter) mudClientWrapper.getLocalPlayer().getNearest(matchedNpcs);
+        return (NonPlayerCharacter) mudClientWrapper.getLocalPlayer().getNearest(matchedNpcs);
     }
 }

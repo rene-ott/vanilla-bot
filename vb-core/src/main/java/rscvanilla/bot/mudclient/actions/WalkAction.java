@@ -1,8 +1,8 @@
 package rscvanilla.bot.mudclient.actions;
 
 import rscvanilla.bot.mudclient.models.Position;
-import rscvanilla.bot.mudclient.utils.PositionConverter;
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.models.converters.PositionConverter;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 
 import javax.inject.Inject;
 

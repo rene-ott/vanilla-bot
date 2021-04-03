@@ -3,7 +3,7 @@ package rscvanilla.bot.mudclient.handlers.userlogaction;
 import com.google.common.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 import rscvanilla.bot.mudclient.handlers.userlogaction.events.UserUsernameChangedEvent;
 
 import javax.inject.Inject;

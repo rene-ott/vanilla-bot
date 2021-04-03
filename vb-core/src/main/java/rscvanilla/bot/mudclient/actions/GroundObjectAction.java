@@ -2,8 +2,8 @@ package rscvanilla.bot.mudclient.actions;
 
 import rscvanilla.bot.mudclient.enums.OpCodeOut;
 import rscvanilla.bot.mudclient.models.Position;
-import rscvanilla.bot.mudclient.models.wrappers.RSGroundObject;
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.entities.GroundObject;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 
 import javax.inject.Inject;
 import java.util.Arrays;
@@ -72,7 +72,7 @@ public class GroundObjectAction extends BaseAction {
     }
 
 
-    private void atObjectWalkTo(RSGroundObject object, OpCodeOut opCode) {
+    private void atObjectWalkTo(GroundObject object, OpCodeOut opCode) {
         var localPosition = object.getLocalPosition();
         var globalPosition = object.getGlobalPosition();
 
@@ -86,12 +86,12 @@ public class GroundObjectAction extends BaseAction {
                 .send();
     }
 
-    RSGroundObject getNearestObject(Integer[] tupleParams) {
+    GroundObject getNearestObject(Integer[] tupleParams) {
         return getNearestObject(new Integer[][] { tupleParams });
     }
 
     // Accepts tuples (id, x, y), (id, null, null), (null, x, y)
-    private RSGroundObject getNearestObject(Integer[][] listOfTupleParams) {
+    private GroundObject getNearestObject(Integer[][] listOfTupleParams) {
         var objectStream = mudClientWrapper.getObjectList()
                 .stream()
                 .filter(Objects::nonNull)
@@ -107,6 +107,6 @@ public class GroundObjectAction extends BaseAction {
         if (objectList.isEmpty())
             return null;
 
-        return (RSGroundObject) mudClientWrapper.getLocalPlayer().getNearest(objectList);
+        return (GroundObject) mudClientWrapper.getLocalPlayer().getNearest(objectList);
     }
 }

@@ -1,6 +1,6 @@
 package rscvanilla.bot.mudclient.handlers.gamesettings;
 
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 import rscvanilla.bot.mudclient.enums.OpCodeIn;
 import rscvanilla.bot.mudclient.handlers.InterceptorHandler;
 import rscvanilla.contracts.interceptors.MudClientHandleOpcodeInMethodInterceptor;

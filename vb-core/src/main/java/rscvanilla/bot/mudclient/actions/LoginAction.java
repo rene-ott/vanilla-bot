@@ -1,6 +1,6 @@
 package rscvanilla.bot.mudclient.actions;
 
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 
 import javax.inject.Inject;
 

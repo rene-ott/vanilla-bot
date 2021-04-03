@@ -1,9 +1,9 @@
 package rscvanilla.bot.script;
 
 import rscvanilla.bot.mudclient.actions.*;
-import rscvanilla.bot.mudclient.models.wrappers.RSLocalPlayerCharacter;
+import rscvanilla.bot.mudclient.wrappers.entities.LocalPlayerCharacter;
 import rscvanilla.bot.infrastructure.printer.Printer;
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 
 import javax.inject.Inject;
 
@@ -61,7 +61,7 @@ public class ScriptDependencyContext {
 
     public MudClientWrapper getMudClientWrapper() { return mudClientWrapper; }
 
-    public RSLocalPlayerCharacter getUser() { return mudClientWrapper.getLocalPlayer(); }
+    public LocalPlayerCharacter getUser() { return mudClientWrapper.getLocalPlayer(); }
 
     public Printer getPrinter() { return printer; }
     public MessageAction getMessageAction() { return messageAction; }
