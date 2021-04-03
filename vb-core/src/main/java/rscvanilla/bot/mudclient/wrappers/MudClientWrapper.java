@@ -33,7 +33,6 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -90,13 +89,6 @@ public class MudClientWrapper {
     public FieldWrapper<Boolean> isBankVisible;
 
     public FieldWrapper<Object> shopInterface;
-
-    private FieldWrapper<String[]> ignoreList;
-
-    @SuppressWarnings("unused") private FieldWrapper<Integer> selectedItemInventoryIndex;
-    @SuppressWarnings("unused") private FieldWrapper<Integer> selectedSpell;
-    @SuppressWarnings("unused") private FieldWrapper<int[]> inventoryEquippedItemSlots;
-    @SuppressWarnings("unused") private FieldWrapper<Integer> selectedBankItemIndex;
 
     public FieldWrapper<String> userPassword;
     public FieldWrapper<Boolean> isAdmin;
@@ -186,14 +178,11 @@ public class MudClientWrapper {
             combatStyle = initField("combatStyle", classFields.combatStyle, Integer.class);
             userTileX = initField("userTileX", classFields.playerPositionX, Integer.class);
             userTileY = initField("userTileY", classFields.playerPositionY, Integer.class);
-            selectedItemInventoryIndex = initField("selectedItemInventoryIndex", classFields.selectedInventoryItemIndex, Integer.class);
-            selectedSpell = initField("selectedSpell", classFields.selectedSpell, Integer.class);
             midRegionBaseX = initField("midRegionBaseX", classFields.mid_region_base_x, Integer.class);
             midRegionBaseZ = initField("midRegionBaseZ", classFields.mid_region_base_y, Integer.class);
             fatigueSleeping = initField("fatigueSleeping", classFields.fatigueSleeping, Integer.class);
             userFatigueStat = initField("userFatigueStat", classFields.fatigueStat, Integer.class);
             isSleeping = initField("isSleeping", classFields.isSleeping, Boolean.class);
-            inventoryEquippedItemSlots = initField("inventoryEquippedItemSlots", classFields.inventoryEquippedItemSlots, int[].class);
 
             groundItemListIndex = initField("groundItemListIndex", classFields.groundItemListIndex, Integer.class);
             inventoryItemList = initField("inventoryItemList", classFields.inventoryItemList, int[].class);
@@ -218,9 +207,7 @@ public class MudClientWrapper {
             bankItemIdList = initField("bankItemIdList", classFields.bankItemIdList, int[].class);
             bankItemCountList = initField("bankItemCountList", classFields.bankItemCountList, int[].class);
 
-            selectedBankItemIndex = initField("selectedBankItemIndex", classFields.selectedBankItemIndex, Integer.class);
             optionsMenuText = initField("optionsMenuText", classFields.optionsMenuText, String[].class);
-            ignoreList = initField("ignoreList", classFields.ignoreList, String[].class);
             isAdmin = initField("isAdmin", classFields.isAdmin, Boolean.class);
 
             loginPanelUserPasswordControlId = initField("loginPanelUserPasswordControlId", classFields.loginPanelUserPasswordControlId, Integer.class);
@@ -303,8 +290,6 @@ public class MudClientWrapper {
     public List<String> getOptionsMenuList() { return isOptionsMenuVisible.getValue()
         ? Arrays.stream(optionsMenuText.getValue(), 0, optionsMenuCount.getValue()).collect(Collectors.toList())
         : List.of(); }
-
-    public List<String> getIgnoreList() { return Arrays.stream(ignoreList.getValue()).filter(Objects::nonNull).collect(Collectors.toList());}
 
     public List<BankItem> getBankItemList() { return isBankVisible.getValue()
         ? IntStream.range(0, (int) Arrays.stream(bankItemCountList.getValue()).filter(it -> it != 0).count())

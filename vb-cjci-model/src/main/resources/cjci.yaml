@@ -46,8 +46,6 @@ mud_client:
     ground_item_list_index: py
     ground_object_list: oI
     ground_object_list_index: px
-    ignore_list: oa
-    inventory_equipped_item_slots: nE
     inventory_item_list: nm
     inventory_item_list_index: pG
     inventory_item_slots_counts: nn
@@ -69,9 +67,6 @@ mud_client:
     player_list_index: pI
     player_position_x: oy
     player_position_y: oz
-    selected_bank_item_index: oX
-    selected_inventory_item_index: qT
-    selected_spell: qU
     show_dialog_server_message: rc
     user: oG
     user_name: na

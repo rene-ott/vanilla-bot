@@ -18,7 +18,6 @@ public class MudClientClassFields implements WithClassMembers {
     @YamlClassMemberKey("ground_item_list_index") public String groundItemListIndex;
     @YamlClassMemberKey("ground_object_list") public String groundObjectList;
     @YamlClassMemberKey("ground_object_list_index") public String groundObjectListIndex;
-    @YamlClassMemberKey("inventory_equipped_item_slots") public String inventoryEquippedItemSlots;
     @YamlClassMemberKey("inventory_item_list") public String inventoryItemList;
     @YamlClassMemberKey("inventory_item_list_index") public String inventoryItemListIndex;
     @YamlClassMemberKey("inventory_item_slots_counts") public String inventoryItemSlotsCounts;
@@ -35,8 +34,6 @@ public class MudClientClassFields implements WithClassMembers {
     @YamlClassMemberKey("player_list_index") public String playerListIndex;
     @YamlClassMemberKey("player_position_x") public String playerPositionX;
     @YamlClassMemberKey("player_position_y") public String playerPositionY;
-    @YamlClassMemberKey("selected_inventory_item_index") public String selectedInventoryItemIndex;
-    @YamlClassMemberKey("selected_spell") public String selectedSpell;
     @YamlClassMemberKey("show_dialog_server_message") public String showDialogServerMessage;
     @YamlClassMemberKey("user") public String user;
     @YamlClassMemberKey("user_name") public String userName;
@@ -45,12 +42,9 @@ public class MudClientClassFields implements WithClassMembers {
     @YamlClassMemberKey("wall_object_list_index") public String wallObjectListIndex;
     @YamlClassMemberKey("bank_item_id_list") public String bankItemIdList;
     @YamlClassMemberKey("bank_item_count_list") public String bankItemCountList;
-    @YamlClassMemberKey("selected_bank_item_index") public String selectedBankItemIndex;
     @YamlClassMemberKey("options_menu_text") public String optionsMenuText;
-    @YamlClassMemberKey("ignore_list") public String ignoreList;
     @YamlClassMemberKey("is_admin") public String isAdmin;
     @YamlClassMemberKey("login_panel") public String loginPanel;
     @YamlClassMemberKey("login_panel_user_password_control_id") public String loginPanelUserPasswordControlId;
     @YamlClassMemberKey("login_panel_user_username_control_id") public String loginPanelUserUsernameControlId;
-
 }
