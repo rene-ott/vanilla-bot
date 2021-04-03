@@ -2,10 +2,29 @@ applet:
   fields:
     mud_client: aE
 
+character:
+  qualified_name: com.rsc.e.i
+  fields:
+    bubble_timeout: mE
+    combat_level: mQ
+    current_health_level: mN
+    direction: mf
+    health_level: mO
+
 game_elements:
   qualified_name: com.rsc.a.a
   fields:
     items: aO
+
+game_entity:
+  qualified_name: com.rsc.e.d
+  fields:
+    id: bq
+    local_position_x: ma
+    local_position_y: mb
+    pixel_x: mc
+    pixel_y: md
+    server_index: lZ
 
 model_def:
   qualified_name: com.rsc.a.a.d
@@ -79,6 +98,16 @@ mud_client_base:
   fields:
     packet_builder: T
 
+non_player_character:
+  qualified_name: com.rsc.e.j
+  methods:
+    get_info: cA
+
+non_player_character_info:
+  qualified_name: com.rsc.a.a.g
+  fields:
+    is_attackable: bT
+
 packet_builder:
   qualified_name: com.rsc.f.e
   methods:
@@ -100,41 +129,12 @@ panel:
   methods:
     set_text: a
 
-rs_character:
-  qualified_name: com.rsc.e.i
-  fields:
-    bubble_timeout: mE
-    combat_level: mQ
-    current_health_level: mN
-    direction: mf
-    health_level: mO
-
-rs_entity:
-  qualified_name: com.rsc.e.d
-  fields:
-    id: bq
-    local_position_x: ma
-    local_position_y: mb
-    pixel_x: mc
-    pixel_y: md
-    server_index: lZ
-
-rs_non_player_character:
-  qualified_name: com.rsc.e.j
-  methods:
-    get_info: cA
-
-rs_non_player_character_info:
-  qualified_name: com.rsc.a.a.g
-  fields:
-    is_attackable: bT
-
-rs_player_character:
+player_character:
   qualified_name: com.rsc.e.k
   fields:
     name: na
 
-rs_wall_object:
+wall_object:
   qualified_name: com.rsc.e.m
   fields:
     direction: mf

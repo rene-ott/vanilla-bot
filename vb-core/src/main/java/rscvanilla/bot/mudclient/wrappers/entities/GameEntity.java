@@ -5,7 +5,7 @@ import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.wrappers.MudClientWrapperObject;
 import rscvanilla.bot.mudclient.models.converters.PositionConverter;
 import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
-import rscvanilla.cjci.model.classes.rsentity.RSEntityClassFields;
+import rscvanilla.cjci.model.classes.gameentity.GameEntityClassFields;
 
 public abstract class GameEntity<T extends com.rsc.e.d> extends MudClientWrapperObject<T> implements GloballyPositionable {
 
@@ -31,7 +31,7 @@ public abstract class GameEntity<T extends com.rsc.e.d> extends MudClientWrapper
 
     public abstract Position getLocalPosition();
 
-    private RSEntityClassFields getClassFields() {
-        return mudClientWrapper.getClientJarClassInfo().rsEntity.fields;
+    private GameEntityClassFields getClassFields() {
+        return mudClientWrapper.getClientJarClassInfo().gameEntity.fields;
     }
 }

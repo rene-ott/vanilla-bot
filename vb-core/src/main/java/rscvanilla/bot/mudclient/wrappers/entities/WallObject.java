@@ -2,7 +2,7 @@ package rscvanilla.bot.mudclient.wrappers.entities;
 
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
-import rscvanilla.cjci.model.classes.rswallobject.RSWallObjectClassFields;
+import rscvanilla.cjci.model.classes.wallobject.WallObjectClassFields;
 
 public class WallObject extends GameEntity<com.rsc.e.m> {
 
@@ -14,7 +14,7 @@ public class WallObject extends GameEntity<com.rsc.e.m> {
 
     public Position getLocalPosition() { return getStaticLocalPosition(); }
 
-    private RSWallObjectClassFields getClassFields() {
-        return mudClientWrapper.getClientJarClassInfo().rsWallObject.fields;
+    private WallObjectClassFields getClassFields() {
+        return mudClientWrapper.getClientJarClassInfo().wallObject.fields;
     }
 }

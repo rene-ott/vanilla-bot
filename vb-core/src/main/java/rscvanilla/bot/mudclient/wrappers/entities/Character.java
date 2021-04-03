@@ -2,7 +2,7 @@ package rscvanilla.bot.mudclient.wrappers.entities;
 
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
-import rscvanilla.cjci.model.classes.rscharacter.RSCharacterClassFields;
+import rscvanilla.cjci.model.classes.character.CharacterClassFields;
 
 public abstract class Character<T extends com.rsc.e.i> extends GameEntity<T> {
 
@@ -24,7 +24,7 @@ public abstract class Character<T extends com.rsc.e.i> extends GameEntity<T> {
 
     public abstract Position getLocalPosition();
 
-    private RSCharacterClassFields getClassFields() {
-        return mudClientWrapper.getClientJarClassInfo().rsCharacter.fields;
+    private CharacterClassFields getClassFields() {
+        return mudClientWrapper.getClientJarClassInfo().character.fields;
     }
 }

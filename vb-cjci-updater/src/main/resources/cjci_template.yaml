@@ -89,7 +89,7 @@ mud_client:
     reset_login_screen_variables:
     start_game:
 
-rs_character:
+character:
   qualified_name: com.rsc.e.i
   fields:
     bubble_timeout:
@@ -98,7 +98,7 @@ rs_character:
     direction:
     combat_level:
 
-rs_entity:
+game_entity:
   qualified_name: com.rsc.e.d
   fields:
     id:
@@ -108,22 +108,22 @@ rs_entity:
     local_position_x:
     local_position_y:
 
-rs_player_character:
+player_character:
   qualified_name: com.rsc.e.k
   fields:
     name:
 
-rs_non_player_character:
+non_player_character:
   qualified_name: com.rsc.e.j
   methods:
     get_info:
 
-rs_non_player_character_info:
+non_player_character_info:
   qualified_name: com.rsc.a.a.g
   fields:
     is_attackable:
 
-rs_wall_object:
+wall_object:
   qualified_name: com.rsc.e.m
   fields:
     direction:

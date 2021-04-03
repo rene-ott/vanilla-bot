@@ -14,12 +14,12 @@ import rscvanilla.cjci.updater.core.matcher.classes.packetbuilder.PacketBuilderC
 import rscvanilla.cjci.updater.core.matcher.classes.packetbuilderbase.PacketBuilderBaseClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.packetbuilderbase.PacketBuilderBaseClassMethodNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.panel.PanelClassMethodNameMatcher;
-import rscvanilla.cjci.updater.core.matcher.classes.rscharacter.RSCharacterClassFieldNameMatcher;
-import rscvanilla.cjci.updater.core.matcher.classes.rsentity.RSEntityClassFieldNameMatcher;
-import rscvanilla.cjci.updater.core.matcher.classes.rsnonplayercharacter.RSNonPlayerCharacterClassMethodNameMatcher;
-import rscvanilla.cjci.updater.core.matcher.classes.rsnonplayercharacterinfo.fields.RSNonPlayerCharacterInfoClassFieldNameMatcher;
-import rscvanilla.cjci.updater.core.matcher.classes.rsplayercharacter.RSPlayerCharacterClassFieldNameMatcher;
-import rscvanilla.cjci.updater.core.matcher.classes.rswallobject.RSWallObjectClassFieldNameMatcher;
+import rscvanilla.cjci.updater.core.matcher.classes.character.CharacterClassFieldNameMatcher;
+import rscvanilla.cjci.updater.core.matcher.classes.gameentity.GameEntityClassFieldNameMatcher;
+import rscvanilla.cjci.updater.core.matcher.classes.nonplayercharacter.NonPlayerCharacterClassMethodNameMatcher;
+import rscvanilla.cjci.updater.core.matcher.classes.nonplayercharacterinfo.fields.NonPlayerCharacterInfoClassFieldNameMatcher;
+import rscvanilla.cjci.updater.core.matcher.classes.playercharacter.PlayerCharacterClassFieldNameMatcher;
+import rscvanilla.cjci.updater.core.matcher.classes.wallobject.WallObjectClassFieldNameMatcher;
 
 public class ClassMemberNameMatcherModule extends AbstractModule {
 
@@ -32,15 +32,15 @@ public class ClassMemberNameMatcherModule extends AbstractModule {
         configureSubTypesOf(PacketBuilderBaseClassFieldNameMatcher.class);
 
         configureSubTypesOf(AppletClassFieldNameMatcher.class);
-        configureSubTypesOf(RSCharacterClassFieldNameMatcher.class);
-        configureSubTypesOf(RSEntityClassFieldNameMatcher.class);
-        configureSubTypesOf(RSWallObjectClassFieldNameMatcher.class);
-        configureSubTypesOf(RSPlayerCharacterClassFieldNameMatcher.class);
+        configureSubTypesOf(CharacterClassFieldNameMatcher.class);
+        configureSubTypesOf(GameEntityClassFieldNameMatcher.class);
+        configureSubTypesOf(WallObjectClassFieldNameMatcher.class);
+        configureSubTypesOf(PlayerCharacterClassFieldNameMatcher.class);
         configureSubTypesOf(MudClientBaseClassFieldNameMatcher.class);
-        configureSubTypesOf(RSNonPlayerCharacterInfoClassFieldNameMatcher.class);
+        configureSubTypesOf(NonPlayerCharacterInfoClassFieldNameMatcher.class);
 
         configureSubTypesOf(PacketBuilderClassMethodNameMatcher.class);
-        configureSubTypesOf(RSNonPlayerCharacterClassMethodNameMatcher.class);
+        configureSubTypesOf(NonPlayerCharacterClassMethodNameMatcher.class);
         configureSubTypesOf(PanelClassMethodNameMatcher.class);
 
         configureSubTypesOf(GameElementsClassFieldNameMatcher.class);
