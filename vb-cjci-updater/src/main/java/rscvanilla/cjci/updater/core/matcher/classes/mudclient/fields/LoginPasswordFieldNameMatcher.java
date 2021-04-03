@@ -6,9 +6,9 @@ import rscvanilla.cjci.updater.core.matcher.classes.mudclient.MudClientClassFiel
 
 import java.util.regex.Pattern;
 
-@YamlClassMemberKey("user_password")
-public class UserPasswordFieldNameMatcher extends ClassMemberNameBaseMatcher implements MudClientClassFieldNameMatcher {
-    public UserPasswordFieldNameMatcher() {
+@YamlClassMemberKey("login_password")
+public class LoginPasswordFieldNameMatcher extends ClassMemberNameBaseMatcher implements MudClientClassFieldNameMatcher {
+    public LoginPasswordFieldNameMatcher() {
         pattern = Pattern.compile(
         "(?<pre> {3}private int [a-zA-Z]{2};\\R" +
         " {3}private String [a-zA-Z]{2};\\R" +

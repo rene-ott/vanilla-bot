@@ -58,9 +58,9 @@ mud_client:
     player_position_x:
     player_position_y:
     show_dialog_server_message:
-    user:
-    user_name:
-    user_password:
+    local_player:
+    login_username:
+    login_password:
     wall_object_list:
     wall_object_list_index:
     bank_item_id_list:

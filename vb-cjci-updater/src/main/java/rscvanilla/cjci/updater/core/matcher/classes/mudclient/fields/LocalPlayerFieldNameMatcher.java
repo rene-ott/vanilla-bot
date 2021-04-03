@@ -6,10 +6,10 @@ import rscvanilla.cjci.updater.core.matcher.classes.mudclient.MudClientClassFiel
 
 import java.util.regex.Pattern;
 
-@YamlClassMemberKey("user")
-public class UserFieldNameMatcher extends ClassMemberNameBaseMatcher implements MudClientClassFieldNameMatcher {
+@YamlClassMemberKey("local_player")
+public class LocalPlayerFieldNameMatcher extends ClassMemberNameBaseMatcher implements MudClientClassFieldNameMatcher {
 
-    public UserFieldNameMatcher() {
+    public LocalPlayerFieldNameMatcher() {
         pattern = Pattern.compile(
             "(?<pre> {3}public int [a-zA-Z]{2};\\R" +
             " {3}k )(?<fieldName>[a-zA-Z]{2})(?<post>;\\R" +

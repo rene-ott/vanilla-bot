@@ -7,14 +7,13 @@ import rscvanilla.cjci.updater.core.matcher.classes.BaseTests;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
+public class LoginUsernameFieldNameMatcherTests extends BaseTests {
 
-public class UserNameFieldNameMatcherTests extends BaseTests {
-
-    private UserNameFieldNameMatcher matcher;
+    private LoginUsernameFieldNameMatcher matcher;
 
     @BeforeEach
     public void setMatcher() {
-        matcher = new UserNameFieldNameMatcher();
+        matcher = new LoginUsernameFieldNameMatcher();
     }
 
     @Test

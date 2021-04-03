@@ -82,7 +82,7 @@ public class MudClientWrapper {
     public FieldWrapper<Integer> fatigueSleeping;
     public FieldWrapper<Integer> userFatigueStat;
     public FieldWrapper<Boolean> isSleeping;
-    public FieldWrapper<String> userName;
+    public FieldWrapper<String> loginUsername;
     private FieldWrapper<com.rsc.f> gameMode;
     public FieldWrapper<Integer> autoLoginTimeOut;
     public FieldWrapper<Boolean> isOptionsMenuVisible;
@@ -90,7 +90,7 @@ public class MudClientWrapper {
 
     public FieldWrapper<Object> shopInterface;
 
-    public FieldWrapper<String> userPassword;
+    public FieldWrapper<String> loginPassword;
     public FieldWrapper<Boolean> isAdmin;
 
     private MethodWrapper<MethodWrapper.Unit> walkToArea;
@@ -113,7 +113,8 @@ public class MudClientWrapper {
 
     public FieldWrapper<com.rsc.e.m[]> wallObjectList;
     public FieldWrapper<Integer> wallObjectListIndex;
-    public FieldWrapper<com.rsc.e.k> user;
+
+    public FieldWrapper<com.rsc.e.k> localPlayer;
 
     // Type argument is Object because java can't handle when in the package there's same named subpackage and class
     private FieldWrapper<Object> packetBuilder;
@@ -193,8 +194,8 @@ public class MudClientWrapper {
             objectListIndex = initField("objectListIndex", classFields.groundObjectListIndex, Integer.class);
             playerList = initField("playerList", classFields.playerList, com.rsc.e.k[].class);
             playerListIndex = initField("playerListIndex", classFields.playerListIndex, Integer.class);
-            userName = initField("userName", classFields.userName, String.class);
-            userPassword = initField("userPassword", classFields.userPassword, String.class);
+            loginUsername = initField("loginUsername", classFields.loginUsername, String.class);
+            loginPassword = initField("loginPassword", classFields.loginPassword, String.class);
             gameMode = initField("gameMode", classFields.gameMode, com.rsc.f.class);
             autoLoginTimeOut = initField("autoLoginTimeOut", classFields.autoLoginTimeout, Integer.class);
             isOptionsMenuVisible = initField("isOptionsMenuVisible", classFields.isOptionsMenuVisible, Boolean.class);
@@ -202,7 +203,7 @@ public class MudClientWrapper {
             isBankVisible = initField("isBankVisible", classFields.isBankVisible, Boolean.class);
             wallObjectList = initField("wallObjectList", classFields.wallObjectList, com.rsc.e.m[].class);
             wallObjectListIndex = initField("wallObjectListIndex", classFields.wallObjectListIndex, Integer.class);
-            user = initField("user", classFields.user, com.rsc.e.k.class);
+            localPlayer = initField("localPlayer", classFields.localPlayer, com.rsc.e.k.class);
 
             bankItemIdList = initField("bankItemIdList", classFields.bankItemIdList, int[].class);
             bankItemCountList = initField("bankItemCountList", classFields.bankItemCountList, int[].class);
@@ -228,8 +229,8 @@ public class MudClientWrapper {
         getLoginPanelWrapper().setText(loginPanelUserUsernameControlId.getValue(), username);
         getLoginPanelWrapper().setText(loginPanelUserPasswordControlId.getValue(), password);
 
-        userName.setValue(username);
-        userPassword.setValue(password);
+        loginUsername.setValue(username);
+        loginPassword.setValue(password);
     }
 
     private void initMethods() {
@@ -298,7 +299,7 @@ public class MudClientWrapper {
         : List.of(); }
 
 
-    public LocalPlayerCharacter getLocalPlayer() { return new LocalPlayerCharacter(user.getValue(), this); }
+    public LocalPlayerCharacter getLocalPlayer() { return new LocalPlayerCharacter(localPlayer.getValue(), this); }
     public Position getMidRegionBase() { return new Position(midRegionBaseX.getValue(), midRegionBaseZ.getValue()); }
 
     public void walkToArea(int startX, int startY, int x1, int y1, int x2, int y2, boolean reachBorder, boolean walkToEntity) {
@@ -324,7 +325,7 @@ public class MudClientWrapper {
     public boolean isOnLoginScreen() { return gameMode.getValue() == EnumUtil.getEnumFromString(gameMode.getValue().getClass(), "LOGIN"); }
 
     public boolean isLoginUserOrPasswordMissing() {
-        return Strings.isNullOrEmpty(userName.getValue()) || Strings.isNullOrEmpty(userPassword.getValue());
+        return Strings.isNullOrEmpty(loginUsername.getValue()) || Strings.isNullOrEmpty(loginPassword.getValue());
     }
 
     private <TWrappedEntity extends GameEntity<TInternalObject>, TInternalObject extends com.rsc.e.d> List<TWrappedEntity> newWrappedEntityList(

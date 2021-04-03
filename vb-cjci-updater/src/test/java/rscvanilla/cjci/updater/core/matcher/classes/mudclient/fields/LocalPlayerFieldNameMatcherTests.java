@@ -8,13 +8,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 
-public class UserFieldNameMatcherTests extends BaseTests {
+public class LocalPlayerFieldNameMatcherTests extends BaseTests {
 
-    private UserFieldNameMatcher matcher;
+    private LocalPlayerFieldNameMatcher matcher;
 
     @BeforeEach
     public void setMatcher() {
-        matcher = new UserFieldNameMatcher();
+        matcher = new LocalPlayerFieldNameMatcher();
     }
 
     @Test

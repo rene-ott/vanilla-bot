@@ -1,4 +1,4 @@
-package rscvanilla.cjci.updater.core.searcher.classes.rscharacter;
+package rscvanilla.cjci.updater.core.searcher.classes.character;
 
 import rscvanilla.cjci.updater.core.searcher.ClassMemberBaseSearcher;
 import rscvanilla.cjci.updater.core.matcher.classes.character.CharacterClassFieldNameMatcher;

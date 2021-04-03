@@ -35,9 +35,9 @@ public class MudClientClassFields implements WithClassMembers {
     @YamlClassMemberKey("player_position_x") public String playerPositionX;
     @YamlClassMemberKey("player_position_y") public String playerPositionY;
     @YamlClassMemberKey("show_dialog_server_message") public String showDialogServerMessage;
-    @YamlClassMemberKey("user") public String user;
-    @YamlClassMemberKey("user_name") public String userName;
-    @YamlClassMemberKey("user_password") public String userPassword;
+    @YamlClassMemberKey("local_player") public String localPlayer;
+    @YamlClassMemberKey("login_username") public String loginUsername;
+    @YamlClassMemberKey("login_password") public String loginPassword;
     @YamlClassMemberKey("wall_object_list") public String wallObjectList;
     @YamlClassMemberKey("wall_object_list_index") public String wallObjectListIndex;
     @YamlClassMemberKey("bank_item_id_list") public String bankItemIdList;

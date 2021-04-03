@@ -59,10 +59,10 @@ public class UserCredentialManager {
     }
 
     public String getUsername() {
-        return mudClientWrapper.userName.getValue();
+        return mudClientWrapper.loginUsername.getValue();
     }
 
     public String getPassword() {
-        return mudClientWrapper.userPassword.getValue();
+        return mudClientWrapper.loginPassword.getValue();
     }
 }
