@@ -3,6 +3,7 @@ package rscvanilla.bot.mudclient.wrappers;
 import com.google.common.base.Strings;
 import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.infrastructure.utils.EnumUtil;
+import rscvanilla.bot.mudclient.models.items.InventoryItem;
 import rscvanilla.bot.mudclient.wrappers.utils.FieldWrapper;
 import rscvanilla.bot.mudclient.wrappers.utils.MethodWrapper;
 import rscvanilla.bot.mudclient.wrappers.utils.WrapperTool;
@@ -12,7 +13,7 @@ import rscvanilla.bot.mudclient.handlers.gamemessage.GameMessageHandler;
 import rscvanilla.bot.mudclient.handlers.gamemodel.GameModelHandler;
 import rscvanilla.bot.mudclient.handlers.gamesettings.GameSettingsHandler;
 import rscvanilla.bot.mudclient.handlers.userlogaction.UserLoginActionHandler;
-import rscvanilla.bot.mudclient.models.BankItem;
+import rscvanilla.bot.mudclient.models.items.BankItem;
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.logger.AppLoggerFactory;
@@ -51,31 +52,31 @@ public class MudClientWrapper {
 
     // Some type arguments are `Object` because java can't handle when in the package there's same named subpackage and class
 
-    private FieldWrapper<com.rsc.e.j[]> npcList;
-    private FieldWrapper<Integer> npcListIndex;
+    private FieldWrapper<com.rsc.e.j[]> nonPlayerCharacters;
+    private FieldWrapper<Integer> nonPlayerCharactersCount;
 
-    private FieldWrapper<com.rsc.e.f[]> groundItemList;
-    private FieldWrapper<Integer> groundItemListIndex;
+    private FieldWrapper<com.rsc.e.f[]> groundItems;
+    private FieldWrapper<Integer> groundItemsCount;
 
-    private FieldWrapper<Integer> objectListIndex;
-    private FieldWrapper<com.rsc.e.e[]> objectList;
+    private FieldWrapper<Integer> groundObjectsCount;
+    private FieldWrapper<com.rsc.e.e[]> groundObjects;
 
-    private FieldWrapper<com.rsc.e.k[]> playerList;
-    private FieldWrapper<Integer> playerListIndex;
+    private FieldWrapper<com.rsc.e.k[]> playerCharacters;
+    private FieldWrapper<Integer> playerCharactersCount;
 
-    public FieldWrapper<com.rsc.e.m[]> wallObjectList;
-    public FieldWrapper<Integer> wallObjectListIndex;
+    public FieldWrapper<com.rsc.e.m[]> wallObjects;
+    public FieldWrapper<Integer> wallObjectsCount;
 
-    public FieldWrapper<int[]> inventoryItemList;
-    public FieldWrapper<Integer> inventoryItemListIndex;
-    public FieldWrapper<int[]> inventoryItemSlotsCounts;
+    public FieldWrapper<int[]> inventoryItems;
+    public FieldWrapper<Integer> inventoryItemsCount;
+    public FieldWrapper<int[]> inventoryItemsCounts;
 
-    private FieldWrapper<int[]> bankItemIdList;
-    private FieldWrapper<int[]> bankItemCountList;
+    private FieldWrapper<int[]> bankItems;
+    private FieldWrapper<int[]> bankItemsCounts;
     public FieldWrapper<Boolean> isBankVisible;
 
-    private FieldWrapper<String[]> optionsMenuText;
-    private FieldWrapper<Integer> optionsMenuCount;
+    private FieldWrapper<String[]> optionsMenuTexts;
+    private FieldWrapper<Integer> optionsMenuTextsCount;
     public FieldWrapper<Boolean> isOptionsMenuVisible;
 
     public FieldWrapper<Integer> localPlayerPositionX;
@@ -170,8 +171,6 @@ public class MudClientWrapper {
         try {
             logger.debug("Init [MudClientWrapper] fields:");
 
-            npcList = initField("npcList", classFields.npcList, com.rsc.e.j[].class);
-            groundItemList = initField("groundItemList", classFields.groundItemList, com.rsc.e.f[].class);
             combatStyle = initField("combatStyle", classFields.combatStyle, Integer.class);
             localPlayerPositionX = initField("localPlayerPositionX", classFields.localPlayerPositionX, Integer.class);
             localPlayerPositionY = initField("localPlayerPositionY", classFields.localPlayerPositionY, Integer.class);
@@ -180,28 +179,40 @@ public class MudClientWrapper {
             fatigueSleeping = initField("fatigueSleeping", classFields.fatigueSleeping, Integer.class);
             userFatigueStat = initField("userFatigueStat", classFields.fatigueStat, Integer.class);
             isSleeping = initField("isSleeping", classFields.isSleeping, Boolean.class);
-            groundItemListIndex = initField("groundItemListIndex", classFields.groundItemListIndex, Integer.class);
-            inventoryItemList = initField("inventoryItemList", classFields.inventoryItemList, int[].class);
-            inventoryItemListIndex = initField("inventoryItemListIndex", classFields.inventoryItemListIndex, Integer.class);
-            inventoryItemSlotsCounts = initField("inventoryItemSlotsCounts", classFields.inventoryItemSlotsCounts, int[].class);
-            npcListIndex = initField("npcListIndex", classFields.npcListIndex, Integer.class);
-            objectList = initField("objectList", classFields.groundObjectList, com.rsc.e.e[].class);
-            objectListIndex = initField("objectListIndex", classFields.groundObjectListIndex, Integer.class);
-            playerList = initField("playerList", classFields.playerList, com.rsc.e.k[].class);
-            playerListIndex = initField("playerListIndex", classFields.playerListIndex, Integer.class);
+
+            groundItems = initField("groundItems", classFields.groundItems, com.rsc.e.f[].class);
+            groundItemsCount = initField("groundItemsCount", classFields.groundItemsCount, Integer.class);
+
+            inventoryItems = initField("inventoryItemsCount", classFields.inventoryItems, int[].class);
+            inventoryItemsCount = initField("inventoryItemsCount", classFields.inventoryItemsCount, Integer.class);
+            inventoryItemsCounts = initField("inventoryItemsCounts", classFields.inventoryItemsCounts, int[].class);
+
+            bankItems = initField("bankItems", classFields.bankItems, int[].class);
+            bankItemsCounts = initField("bankItemsCounts", classFields.bankItemsCounts, int[].class);
+            isBankVisible = initField("isBankVisible", classFields.isBankVisible, Boolean.class);
+
+            groundObjects = initField("groundObjects", classFields.groundObjects, com.rsc.e.e[].class);
+            groundObjectsCount = initField("groundObjectsCount", classFields.groundObjectsCount, Integer.class);
+
+            nonPlayerCharactersCount = initField("nonPlayerCharactersCount", classFields.nonPlayerCharactersCount, Integer.class);
+            nonPlayerCharacters = initField("nonPlayerCharacters", classFields.nonPlayerCharacters, com.rsc.e.j[].class);
+
+            playerCharacters = initField("playerCharacters", classFields.playerCharacters, com.rsc.e.k[].class);
+            playerCharactersCount = initField("playerCharactersCount", classFields.playerCharactersCount, Integer.class);
+
+            wallObjects = initField("wallObjects", classFields.wallObjects, com.rsc.e.m[].class);
+            wallObjectsCount = initField("wallObjectsCount", classFields.wallObjectsCount, Integer.class);
+
+            isOptionsMenuVisible = initField("isOptionsMenuVisible", classFields.isOptionsMenuVisible, Boolean.class);
+            optionsMenuTextsCount = initField("optionsMenuTextsCount", classFields.optionsMenuTextsCount, Integer.class);
+            optionsMenuTexts = initField("optionsMenuTexts", classFields.optionsMenuTexts, String[].class);
+
             loginUsername = initField("loginUsername", classFields.loginUsername, String.class);
             loginPassword = initField("loginPassword", classFields.loginPassword, String.class);
             gameMode = initField("gameMode", classFields.gameMode, com.rsc.f.class);
             autoLoginTimeOut = initField("autoLoginTimeOut", classFields.autoLoginTimeout, Integer.class);
-            isOptionsMenuVisible = initField("isOptionsMenuVisible", classFields.isOptionsMenuVisible, Boolean.class);
-            optionsMenuCount = initField("optionsCount", classFields.optionsCount, Integer.class);
-            isBankVisible = initField("isBankVisible", classFields.isBankVisible, Boolean.class);
-            wallObjectList = initField("wallObjectList", classFields.wallObjectList, com.rsc.e.m[].class);
-            wallObjectListIndex = initField("wallObjectListIndex", classFields.wallObjectListIndex, Integer.class);
             localPlayer = initField("localPlayer", classFields.localPlayer, com.rsc.e.k.class);
-            bankItemIdList = initField("bankItemIdList", classFields.bankItemIdList, int[].class);
-            bankItemCountList = initField("bankItemCountList", classFields.bankItemCountList, int[].class);
-            optionsMenuText = initField("optionsMenuText", classFields.optionsMenuText, String[].class);
+
             isAdmin = initField("isAdmin", classFields.isAdmin, Boolean.class);
             loginPanelPasswordControlId = initField("loginPanelPasswordControlId", classFields.loginPanelPasswordControlId, Integer.class);
             loginPanelUsernameControlId = initField("loginPanelUsernameControlId", classFields.loginPanelUsernameControlId, Integer.class);
@@ -269,25 +280,28 @@ public class MudClientWrapper {
     @Deprecated()
     public com.rsc.d getRawMudClient() { return mudClient.getValue(); }
 
-    public List<NonPlayerCharacter> getNpcList() { return newWrappedEntityList(this.npcList, this.npcListIndex, NonPlayerCharacter.class); }
-    public List<GroundItem> getGroundItemList() { return newWrappedEntityList(this.groundItemList, this.groundItemListIndex, GroundItem.class); }
-    public List<GroundObject> getObjectList() { return newWrappedEntityList(this.objectList, this.objectListIndex, GroundObject.class); }
-    public List<PlayerCharacter> getPlayerList() { return newWrappedEntityList(this.playerList, this.playerListIndex, PlayerCharacter.class); }
-    public List<WallObject> getWallObjectList() { return newWrappedEntityList(this.wallObjectList, this.wallObjectListIndex, WallObject.class); }
+    public List<GroundObject> getGroundObjects() { return newWrapperGameEntityList(this.groundObjects, this.groundObjectsCount, GroundObject.class); }
+    public List<PlayerCharacter> getPlayerList() { return newWrapperGameEntityList(this.playerCharacters, this.playerCharactersCount, PlayerCharacter.class); }
+    public List<WallObject> getWallObjects() { return newWrapperGameEntityList(this.wallObjects, this.wallObjectsCount, WallObject.class); }
+    public List<NonPlayerCharacter> getNonPlayerCharacters() { return newWrapperGameEntityList(this.nonPlayerCharacters, this.nonPlayerCharactersCount, NonPlayerCharacter.class); }
+    public List<GroundItem> getGroundItems() { return newWrapperGameEntityList(this.groundItems, this.groundItemsCount, GroundItem.class); }
+
+    public List<String> getOptionsMenuTexts() { return Arrays.stream(optionsMenuTexts.getValue(), 0, optionsMenuTextsCount.getValue()).collect(Collectors.toList()); }
+
+    public List<BankItem> getBankItems() {
+        return IntStream.range(0, (int) Arrays.stream(bankItemsCounts.getValue()).filter(it -> it != 0).count())
+            .mapToObj(it -> new BankItem(bankItems.getValue()[it], bankItemsCounts.getValue()[it]))
+            .collect(Collectors.toList());
+    }
+
+    public List<InventoryItem> getInventoryItems() {
+        return IntStream
+            .range(0, inventoryItemsCount.getValue())
+            .mapToObj(i -> new InventoryItem(inventoryItems.getValue()[i], inventoryItemsCounts.getValue()[i]))
+            .collect(Collectors.toList());
+    }
 
     public ShopInterface getShopInterface() { return new ShopInterface(shopInterface.getValue(), this); }
-
-    public List<String> getOptionsMenuList() { return isOptionsMenuVisible.getValue()
-        ? Arrays.stream(optionsMenuText.getValue(), 0, optionsMenuCount.getValue()).collect(Collectors.toList())
-        : List.of(); }
-
-    public List<BankItem> getBankItemList() { return isBankVisible.getValue()
-        ? IntStream.range(0, (int) Arrays.stream(bankItemCountList.getValue()).filter(it -> it != 0).count())
-                    .mapToObj(it -> new BankItem(bankItemIdList.getValue()[it], bankItemCountList.getValue()[it]))
-                    .collect(Collectors.toList())
-        : List.of(); }
-
-
     public LocalPlayerCharacter getLocalPlayer() { return new LocalPlayerCharacter(localPlayer.getValue(), this); }
     public Position getMidRegionBase() { return new Position(midRegionBaseX.getValue(), midRegionBaseY.getValue()); }
 
@@ -317,9 +331,9 @@ public class MudClientWrapper {
         return Strings.isNullOrEmpty(loginUsername.getValue()) || Strings.isNullOrEmpty(loginPassword.getValue());
     }
 
-    private <TWrappedEntity extends GameEntity<TInternalObject>, TInternalObject extends com.rsc.e.d> List<TWrappedEntity> newWrappedEntityList(
+    private <TWrappedEntity extends GameEntity<TInternalObject>, TInternalObject extends com.rsc.e.d> List<TWrappedEntity> newWrapperGameEntityList(
         FieldWrapper<TInternalObject[]> internalArray, FieldWrapper<Integer> internalArrayLength, Class<TWrappedEntity> clazz) {
-        return WrapperTool.newWrappedEntityList(internalArray.getValue(), internalArrayLength.getValue(), clazz, this);
+        return WrapperTool.newWrapperGameEntityList(internalArray.getValue(), internalArrayLength.getValue(), clazz, this);
     }
 
     private <T> FieldWrapper<T> initField(String fieldDisplayName, String fieldName, Class<?> fieldType) {

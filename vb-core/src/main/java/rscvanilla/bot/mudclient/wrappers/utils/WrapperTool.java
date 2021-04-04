@@ -83,18 +83,18 @@ public class WrapperTool {
         }
     }
 
-    public static <TObject extends GameEntity<TInternalObject>, TInternalObject extends com.rsc.e.d> List<TObject> newWrappedEntityList(
+    public static <TObject extends GameEntity<TInternalObject>, TInternalObject extends com.rsc.e.d> List<TObject> newWrapperGameEntityList(
         TInternalObject[] internalArray,
         int internalArrayLength,
         Class<TObject> clazz,
         MudClientWrapper mudClientWrapper
     ) {
         return IntStream.range(0, internalArrayLength)
-            .mapToObj(i -> newWrappedEntityInstance(internalArray[i], clazz, mudClientWrapper))
+            .mapToObj(i -> newWrapperGameEntityList(internalArray[i], clazz, mudClientWrapper))
             .collect(Collectors.toList());
     }
 
-    private static <TEntity extends GameEntity<TInternalObject>, TInternalObject extends com.rsc.e.d> TEntity newWrappedEntityInstance(
+    private static <TEntity extends GameEntity<TInternalObject>, TInternalObject extends com.rsc.e.d> TEntity newWrapperGameEntityList(
         TInternalObject internalObject,
         Class<TEntity> clazz,
         MudClientWrapper mudClientWrapper

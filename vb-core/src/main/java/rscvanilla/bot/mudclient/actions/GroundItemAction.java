@@ -87,16 +87,16 @@ public class GroundItemAction extends BaseAction {
     }
 
     private List<GroundItem> getGroundItemsFromCurrentPos(int id) {
-        return mudClientWrapper.getGroundItemList()
+        return mudClientWrapper.getGroundItems()
             .stream()
             .filter(it -> it.getId() == id &&
                           it.getGlobalPosition().equals(mudClientWrapper.getLocalPlayer().getGlobalPosition()))
             .collect(Collectors.toList());
     }
 
-    private GroundItem getGroundItemById(int...ids) {
+    public GroundItem getGroundItemById(int...ids) {
 
-        var groundItems = mudClientWrapper.getGroundItemList()
+        var groundItems = mudClientWrapper.getGroundItems()
                 .stream()
                 .filter(it -> Arrays.stream(ids).anyMatch(id -> id == it.getId()))
                 .collect(Collectors.toList());
@@ -109,7 +109,7 @@ public class GroundItemAction extends BaseAction {
 
     private GroundItem getGroundItemInRectangleById(Position topPos, Position bottomPos, int...ids) {
 
-        var groundItems = mudClientWrapper.getGroundItemList()
+        var groundItems = mudClientWrapper.getGroundItems()
                 .stream()
                 .filter(it -> Arrays.stream(ids).anyMatch(id -> id == it.getId()))
                 .filter(it -> positionAction.isPositionInRectangle(it.getGlobalPosition(), topPos, bottomPos))
