@@ -143,7 +143,7 @@ public class InventoryItemAction extends BaseAction {
     }
 
     public boolean isInventoryFull() {
-        return mudClientWrapper.inventoryItemListIndex.getValue() == 30;
+        return mudClientWrapper.inventoryItemsCount.getValue() == 30;
     }
 
     private int getFirstInventoryItemIndexById(int id) {

@@ -54,7 +54,7 @@ public class WallObjectAction extends BaseAction {
     }
 
     private WallObject getWallObject(int id, int x, int y) {
-        var matchedWallObjects = mudClientWrapper.getWallObjectList()
+        var matchedWallObjects = mudClientWrapper.getWallObjects()
                 .stream()
                 .filter(Objects::nonNull)
                 .filter(it -> id == it.getId() && it.getGlobalPosition().getX() == x && it.getGlobalPosition().getY() == y)

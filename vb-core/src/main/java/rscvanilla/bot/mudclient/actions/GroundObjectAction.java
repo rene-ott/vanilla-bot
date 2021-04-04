@@ -91,7 +91,7 @@ public class GroundObjectAction extends BaseAction {
 
     // Accepts tuples (id, x, y), (id, null, null), (null, x, y)
     private GroundObject getNearestObject(Integer[][] listOfTupleParams) {
-        var objectStream = mudClientWrapper.getObjectList()
+        var objectStream = mudClientWrapper.getGroundObjects()
                 .stream()
                 .filter(Objects::nonNull)
                 .filter(it -> Arrays.stream(listOfTupleParams)

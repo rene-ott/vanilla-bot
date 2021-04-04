@@ -25,7 +25,7 @@ public class OptionsAction extends BaseAction {
     }
 
     public boolean hasAnswerOptionText(String answerTextPrefix) {
-        var answerOptions = mudClientWrapper.getOptionsMenuList()
+        var answerOptions = mudClientWrapper.getOptionsMenuTexts()
             .stream().map(String::toLowerCase).filter(it -> it.startsWith(answerTextPrefix.toLowerCase()))
             .collect(Collectors.toList());
 

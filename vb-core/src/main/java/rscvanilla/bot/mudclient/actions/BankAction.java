@@ -48,7 +48,7 @@ public class BankAction extends BaseAction {
     }
 
     private BankItem getBankItem(int id) {
-        var bankItems = mudClientWrapper.getBankItemList()
+        var bankItems = mudClientWrapper.getBankItems()
             .stream()
             .filter(it -> it.getId() == id)
             .collect(Collectors.toList());

@@ -37,35 +37,35 @@ mud_client:
     fatigue_sleeping:
     fatigue_stat:
     game_mode:
-    ground_item_list:
-    ground_item_list_index:
-    ground_object_list:
-    ground_object_list_index:
-    inventory_item_list:
-    inventory_item_list_index:
-    inventory_item_slots_counts:
+    ground_items:
+    ground_items_count:
+    ground_objects:
+    ground_objects_count:
+    inventory_items:
+    inventory_items_count:
+    inventory_items_counts:
     is_bank_visible:
     is_options_menu_visible:
     is_sleeping:
     mid_region_base_x:
     mid_region_base_y:
     mouse_button_click:
-    npc_list:
-    npc_list_index:
-    options_count:
-    player_list:
-    player_list_index:
+    non_player_characters:
+    non_player_characters_count:
+    options_menu_texts_count:
+    player_characters:
+    player_characters_count:
     local_player_position_x:
     local_player_position_y:
     show_dialog_server_message:
     local_player:
     login_username:
     login_password:
-    wall_object_list:
-    wall_object_list_index:
-    bank_item_id_list:
-    bank_item_count_list:
-    options_menu_text:
+    wall_objects:
+    wall_objects_count:
+    bank_items:
+    bank_items_counts:
+    options_menu_texts:
     is_admin:
     login_panel:
     login_panel_password_control_id:
