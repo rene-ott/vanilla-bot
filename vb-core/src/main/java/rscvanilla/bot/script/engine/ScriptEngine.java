@@ -3,7 +3,7 @@ package rscvanilla.bot.script.engine;
 import rscvanilla.bot.events.messages.GameMessageEvent;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.printer.Printer;
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
 import rscvanilla.bot.script.engine.executor.ScriptThreadExecutor;
 import rscvanilla.bot.script.engine.executor.ScriptThreadExecutorListener;

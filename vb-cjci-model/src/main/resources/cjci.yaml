@@ -2,10 +2,29 @@ applet:
   fields:
     mud_client: aE
 
+character:
+  qualified_name: com.rsc.e.i
+  fields:
+    bubble_timeout: mE
+    combat_level: mQ
+    current_health_level: mN
+    direction: mf
+    health_level: mO
+
 game_elements:
   qualified_name: com.rsc.a.a
   fields:
     items: aO
+
+game_entity:
+  qualified_name: com.rsc.e.d
+  fields:
+    id: bq
+    local_position_x: ma
+    local_position_y: mb
+    pixel_x: mc
+    pixel_y: md
+    server_index: lZ
 
 model_def:
   qualified_name: com.rsc.a.a.d
@@ -27,8 +46,6 @@ mud_client:
     ground_item_list_index: py
     ground_object_list: oI
     ground_object_list_index: px
-    ignore_list: oa
-    inventory_equipped_item_slots: nE
     inventory_item_list: nm
     inventory_item_list_index: pG
     inventory_item_slots_counts: nn
@@ -36,9 +53,14 @@ mud_client:
     is_bank_visible: rb
     is_options_menu_visible: re
     is_sleeping: pH
+    local_player: oG
+    local_player_position_x: oy
+    local_player_position_y: oz
     login_panel: qG
-    login_panel_user_password_control_id: pj
-    login_panel_user_username_control_id: pm
+    login_panel_password_control_id: pj
+    login_panel_username_control_id: pm
+    login_password: rF
+    login_username: na
     mid_region_base_x: ov
     mid_region_base_y: ow
     mouse_button_click: s
@@ -48,15 +70,7 @@ mud_client:
     options_menu_text: pO
     player_list: ns
     player_list_index: pI
-    player_position_x: oy
-    player_position_y: oz
-    selected_bank_item_index: oX
-    selected_inventory_item_index: qT
-    selected_spell: qU
     show_dialog_server_message: rc
-    user: oG
-    user_name: na
-    user_password: rF
     wall_object_list: oJ
     wall_object_list_index: ro
   methods:
@@ -79,6 +93,16 @@ mud_client_base:
   fields:
     packet_builder: T
 
+non_player_character:
+  qualified_name: com.rsc.e.j
+  methods:
+    get_info: cA
+
+non_player_character_info:
+  qualified_name: com.rsc.a.a.g
+  fields:
+    is_attackable: bT
+
 packet_builder:
   qualified_name: com.rsc.f.e
   methods:
@@ -100,41 +124,12 @@ panel:
   methods:
     set_text: a
 
-rs_character:
-  qualified_name: com.rsc.e.i
-  fields:
-    bubble_timeout: mE
-    combat_level: mQ
-    current_health_level: mN
-    direction: mf
-    health_level: mO
-
-rs_entity:
-  qualified_name: com.rsc.e.d
-  fields:
-    id: bq
-    local_position_x: ma
-    local_position_y: mb
-    pixel_x: mc
-    pixel_y: md
-    server_index: lZ
-
-rs_non_player_character:
-  qualified_name: com.rsc.e.j
-  methods:
-    get_info: cA
-
-rs_non_player_character_info:
-  qualified_name: com.rsc.a.a.g
-  fields:
-    is_attackable: bT
-
-rs_player_character:
+player_character:
   qualified_name: com.rsc.e.k
   fields:
     name: na
 
-rs_wall_object:
+wall_object:
   qualified_name: com.rsc.e.m
   fields:
     direction: mf

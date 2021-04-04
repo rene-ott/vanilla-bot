@@ -9,15 +9,15 @@ public class ClientJarClassInfoService {
 
     private final MudClientClassMemberService mudClientClassMemberService;
     private final AppletClassMemberService appletClassMemberService;
-    private final RSCharacterClassMemberService rsCharacterClassMemberService;
-    private final RSEntityClassMemberService rsEntityClassMemberService;
-    private final RSWallObjectClassMemberService rsWallObjectClassMemberService;
-    private final RSPlayerCharacterClassMemberService rsPlayerCharacterClassMemberService;
+    private final CharacterClassMemberService characterClassMemberService;
+    private final GameEntityClassMemberService gameEntityClassMemberService;
+    private final WallObjectClassMemberService wallObjectClassMemberService;
+    private final PlayerCharacterClassMemberService playerCharacterClassMemberService;
     private final MudClientBaseClassMemberService mudClientBaseClassMemberService;
     private final PacketBuilderClassMemberService packetBuilderClassMemberService;
     private final PacketBuilderBaseClassMemberService packetBuilderBaseClassMemberService;
-    private final RSNonPlayerCharacterClassMemberService rsNonPlayerCharacterClassMemberService;
-    private final RSNonPlayerCharacterInfoClassMemberService rsNonPlayerCharacterInfoClassMemberService;
+    private final NonPlayerCharacterClassMemberService nonPlayerCharacterClassMemberService;
+    private final NonPlayerCharacterInfoClassMemberService nonPlayerCharacterInfoClassMemberService;
     private final PanelClassMemberService panelClassMemberService;
     private final GameElementsClassMemberService gameElementsClassMemberService;
     private final ModelDefClassMemberService modelDefClassMemberService;
@@ -25,27 +25,27 @@ public class ClientJarClassInfoService {
     @Inject
     public ClientJarClassInfoService(MudClientClassMemberService mudClientClassMemberService,
                                      AppletClassMemberService appletClassMemberService,
-                                     RSCharacterClassMemberService rsCharacterClassMemberService,
-                                     RSEntityClassMemberService rsEntityClassMemberService,
-                                     RSWallObjectClassMemberService rsWallObjectClassMemberService,
-                                     RSPlayerCharacterClassMemberService rsPlayerCharacterClassMemberService,
+                                     CharacterClassMemberService rsCharacterClassMemberService,
+                                     GameEntityClassMemberService gameEntityClassMemberService,
+                                     WallObjectClassMemberService wallObjectClassMemberService,
+                                     PlayerCharacterClassMemberService playerCharacterClassMemberService,
                                      MudClientBaseClassMemberService mudClientBaseClassMemberService,
                                      PacketBuilderClassMemberService packetBuilderClassMemberService,
                                      PacketBuilderBaseClassMemberService packetBuilderBaseClassMemberService,
-                                     RSNonPlayerCharacterClassMemberService rsNonPlayerCharacterClassMemberService,
-                                     RSNonPlayerCharacterInfoClassMemberService rsNonPlayerCharacterInfoClassMemberService,
+                                     NonPlayerCharacterClassMemberService nonPlayerCharacterClassMemberService,
+                                     NonPlayerCharacterInfoClassMemberService nonPlayerCharacterInfoClassMemberService,
                                      PanelClassMemberService panelClassMemberService, GameElementsClassMemberService gameElementsClassMemberService, ModelDefClassMemberService modelDefClassMemberService) {
         this.mudClientClassMemberService = mudClientClassMemberService;
         this.appletClassMemberService = appletClassMemberService;
-        this.rsCharacterClassMemberService = rsCharacterClassMemberService;
-        this.rsEntityClassMemberService = rsEntityClassMemberService;
-        this.rsWallObjectClassMemberService = rsWallObjectClassMemberService;
-        this.rsPlayerCharacterClassMemberService = rsPlayerCharacterClassMemberService;
+        this.characterClassMemberService = rsCharacterClassMemberService;
+        this.gameEntityClassMemberService = gameEntityClassMemberService;
+        this.wallObjectClassMemberService = wallObjectClassMemberService;
+        this.playerCharacterClassMemberService = playerCharacterClassMemberService;
         this.mudClientBaseClassMemberService = mudClientBaseClassMemberService;
         this.packetBuilderClassMemberService = packetBuilderClassMemberService;
         this.packetBuilderBaseClassMemberService = packetBuilderBaseClassMemberService;
-        this.rsNonPlayerCharacterClassMemberService = rsNonPlayerCharacterClassMemberService;
-        this.rsNonPlayerCharacterInfoClassMemberService = rsNonPlayerCharacterInfoClassMemberService;
+        this.nonPlayerCharacterClassMemberService = nonPlayerCharacterClassMemberService;
+        this.nonPlayerCharacterInfoClassMemberService = nonPlayerCharacterInfoClassMemberService;
         this.panelClassMemberService = panelClassMemberService;
         this.gameElementsClassMemberService = gameElementsClassMemberService;
         this.modelDefClassMemberService = modelDefClassMemberService;
@@ -54,15 +54,15 @@ public class ClientJarClassInfoService {
     public void setClassValuesTo(ClientJarClassInfo clientJarClassInfo) {
         mudClientClassMemberService.setValuesToClassMembers(clientJarClassInfo.mudClient);
         appletClassMemberService.setValuesToClassMembers(clientJarClassInfo.applet);
-        rsCharacterClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsCharacter);
-        rsEntityClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsEntity);
-        rsPlayerCharacterClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsPlayerCharacter);
-        rsWallObjectClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsWallObject);
+        characterClassMemberService.setValuesToClassMembers(clientJarClassInfo.character);
+        gameEntityClassMemberService.setValuesToClassMembers(clientJarClassInfo.gameEntity);
+        playerCharacterClassMemberService.setValuesToClassMembers(clientJarClassInfo.playerCharacter);
+        wallObjectClassMemberService.setValuesToClassMembers(clientJarClassInfo.wallObject);
         mudClientBaseClassMemberService.setValuesToClassMembers(clientJarClassInfo.mudClientBase);
         packetBuilderClassMemberService.setValuesToClassMembers(clientJarClassInfo.packetBuilder);
         packetBuilderBaseClassMemberService.setValuesToClassMembers(clientJarClassInfo.packetBuilderBase);
-        rsNonPlayerCharacterClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsNonPlayerCharacter);
-        rsNonPlayerCharacterInfoClassMemberService.setValuesToClassMembers(clientJarClassInfo.rsNonPlayerCharacterInfo);
+        nonPlayerCharacterClassMemberService.setValuesToClassMembers(clientJarClassInfo.nonPlayerCharacter);
+        nonPlayerCharacterInfoClassMemberService.setValuesToClassMembers(clientJarClassInfo.nonPlayerCharacterInfo);
         panelClassMemberService.setValuesToClassMembers(clientJarClassInfo.panel);
         gameElementsClassMemberService.setValuesToClassMembers(clientJarClassInfo.gameElements);
         modelDefClassMemberService.setValuesToClassMembers(clientJarClassInfo.modelDef);

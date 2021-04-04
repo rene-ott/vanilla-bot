@@ -3,7 +3,7 @@ package rscvanilla.bot.script.template;
 import rscvanilla.bot.mudclient.actions.*;
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.infrastructure.printer.Printer;
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 import rscvanilla.bot.script.ScriptDependencyContext;
 
 public abstract class Script {

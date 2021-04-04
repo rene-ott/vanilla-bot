@@ -41,7 +41,6 @@ mud_client:
     ground_item_list_index:
     ground_object_list:
     ground_object_list_index:
-    inventory_equipped_item_slots:
     inventory_item_list:
     inventory_item_list_index:
     inventory_item_slots_counts:
@@ -56,24 +55,21 @@ mud_client:
     options_count:
     player_list:
     player_list_index:
-    player_position_x:
-    player_position_y:
-    selected_inventory_item_index:
-    selected_spell:
+    local_player_position_x:
+    local_player_position_y:
     show_dialog_server_message:
-    user:
-    user_name:
-    user_password:
+    local_player:
+    login_username:
+    login_password:
     wall_object_list:
     wall_object_list_index:
     bank_item_id_list:
     bank_item_count_list:
-    selected_bank_item_index:
     options_menu_text:
     is_admin:
     login_panel:
-    login_panel_user_password_control_id:
-    login_panel_user_username_control_id:
+    login_panel_password_control_id:
+    login_panel_username_control_id:
   methods:
     login:
     logout:
@@ -89,7 +85,7 @@ mud_client:
     reset_login_screen_variables:
     start_game:
 
-rs_character:
+character:
   qualified_name: com.rsc.e.i
   fields:
     bubble_timeout:
@@ -98,7 +94,7 @@ rs_character:
     direction:
     combat_level:
 
-rs_entity:
+game_entity:
   qualified_name: com.rsc.e.d
   fields:
     id:
@@ -108,22 +104,22 @@ rs_entity:
     local_position_x:
     local_position_y:
 
-rs_player_character:
+player_character:
   qualified_name: com.rsc.e.k
   fields:
     name:
 
-rs_non_player_character:
+non_player_character:
   qualified_name: com.rsc.e.j
   methods:
     get_info:
 
-rs_non_player_character_info:
+non_player_character_info:
   qualified_name: com.rsc.a.a.g
   fields:
     is_attackable:
 
-rs_wall_object:
+wall_object:
   qualified_name: com.rsc.e.m
   fields:
     direction:

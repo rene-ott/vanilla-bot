@@ -3,7 +3,7 @@ package rscvanilla.bot.mudclient.handlers.userlogaction;
 import com.google.common.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 import rscvanilla.bot.mudclient.handlers.userlogaction.events.UserUsernameChangedEvent;
 
 import javax.inject.Inject;
@@ -59,10 +59,10 @@ public class UserCredentialManager {
     }
 
     public String getUsername() {
-        return mudClientWrapper.userName.getValue();
+        return mudClientWrapper.loginUsername.getValue();
     }
 
     public String getPassword() {
-        return mudClientWrapper.userPassword.getValue();
+        return mudClientWrapper.loginPassword.getValue();
     }
 }

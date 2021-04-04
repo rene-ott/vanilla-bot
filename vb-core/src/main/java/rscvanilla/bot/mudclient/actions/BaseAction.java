@@ -1,7 +1,7 @@
 package rscvanilla.bot.mudclient.actions;
 
-import rscvanilla.bot.mudclient.MudClientWrapper;
-import rscvanilla.bot.mudclient.PacketBuilderWrapper;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.misc.PacketBuilder;
 
 public abstract class BaseAction {
     protected MudClientWrapper mudClientWrapper;
@@ -10,7 +10,7 @@ public abstract class BaseAction {
         this.mudClientWrapper = mudClientWrapper;
     }
 
-    protected PacketBuilderWrapper getPacketBuilder() {
+    protected PacketBuilder getPacketBuilder() {
         return mudClientWrapper.getPacketBuilder();
     }
 }

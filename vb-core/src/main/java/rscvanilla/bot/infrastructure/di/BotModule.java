@@ -19,7 +19,7 @@ import rscvanilla.bot.infrastructure.annotations.AssetsDirectoryPath;
 import rscvanilla.bot.infrastructure.annotations.ScriptsDirectoryPath;
 import rscvanilla.bot.infrastructure.printer.Printer;
 import rscvanilla.bot.infrastructure.printer.TabPrinter;
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 import rscvanilla.bot.mudclient.actions.*;
 import rscvanilla.bot.mudclient.handlers.captcha.CaptchaDataLoader;
 import rscvanilla.bot.mudclient.handlers.captcha.CaptchaHandler;

@@ -2,8 +2,8 @@ package rscvanilla.bot.mudclient.actions;
 
 import rscvanilla.bot.mudclient.enums.OpCodeOut;
 import rscvanilla.bot.mudclient.models.Position;
-import rscvanilla.bot.mudclient.models.wrappers.RSWallObject;
-import rscvanilla.bot.mudclient.MudClientWrapper;
+import rscvanilla.bot.mudclient.wrappers.entities.WallObject;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 
 import javax.inject.Inject;
 import java.util.Objects;
@@ -31,7 +31,7 @@ public class WallObjectAction extends BaseAction {
         atWallObjectWalkTo(wallObject);
     }
 
-    private void atWallObjectWalkTo(RSWallObject object) {
+    private void atWallObjectWalkTo(WallObject object) {
         var localPosition = object.getLocalPosition();
         var globalPosition = object.getGlobalPosition();
 
@@ -53,7 +53,7 @@ public class WallObjectAction extends BaseAction {
         return getWallObject(id, globalX, globalY) != null;
     }
 
-    private RSWallObject getWallObject(int id, int x, int y) {
+    private WallObject getWallObject(int id, int x, int y) {
         var matchedWallObjects = mudClientWrapper.getWallObjectList()
                 .stream()
                 .filter(Objects::nonNull)
@@ -63,6 +63,6 @@ public class WallObjectAction extends BaseAction {
         if (matchedWallObjects.isEmpty())
             return null;
 
-        return (RSWallObject) mudClientWrapper.getLocalPlayer().getNearest(matchedWallObjects);
+        return (WallObject) mudClientWrapper.getLocalPlayer().getNearest(matchedWallObjects);
     }
 }
