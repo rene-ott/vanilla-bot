@@ -71,7 +71,6 @@ public class GroundObjectAction extends BaseAction {
         atObjectWalkTo(object, opCode);
     }
 
-
     private void atObjectWalkTo(GroundObject object, OpCodeOut opCode) {
         var localPosition = object.getLocalPosition();
         var globalPosition = object.getGlobalPosition();

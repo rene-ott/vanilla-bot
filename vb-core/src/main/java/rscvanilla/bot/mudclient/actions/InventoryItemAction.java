@@ -13,13 +13,16 @@ public class InventoryItemAction extends BaseAction {
 
     private final WalkAction walkAction;
     private final GroundObjectAction groundObjectAction;
+    private final GroundItemAction groundItemAction;
 
     @Inject
     public InventoryItemAction(MudClientWrapper hooks, WalkAction walkAction,
-                               GroundObjectAction groundObjectAction) {
+                               GroundObjectAction groundObjectAction,
+                               GroundItemAction groundItemAction) {
         super(hooks);
         this.walkAction = walkAction;
         this.groundObjectAction = groundObjectAction;
+        this.groundItemAction = groundItemAction;
     }
 
     public void useSleepingBag() {
@@ -82,6 +85,28 @@ public class InventoryItemAction extends BaseAction {
         for (var itemId : itemIds) {
             useItemOnGroundObject(itemId, objectId);
         }
+    }
+
+    public void useInventoryItemOnGroundItem(int inventoryItemId, int groundItemId) {
+        var inventoryItemIndex = getFirstInventoryItemIndexById(inventoryItemId);
+        if (inventoryItemIndex == -1)
+            return;
+
+        var groundItem = groundItemAction.getGroundItemById(groundItemId);
+        if (groundItem == null)
+            return;
+
+        var groundItemLocalPos = groundItem.getLocalPosition();
+        var groundItemGlobalPos = groundItem.getGlobalPosition();
+
+        walkAction.walkToGroundItem(groundItemLocalPos.getX(), groundItemLocalPos.getY(), true);
+        mudClientWrapper.getPacketBuilder()
+            .setOpCode(OpCodeOut.USE_INVENTORY_ITEM_ON_GROUND_ITEM)
+            .putShort(groundItemGlobalPos.getX())
+            .putShort(groundItemGlobalPos.getY())
+            .putShort(groundItemId)
+            .putShort(inventoryItemIndex)
+            .send();
     }
 
     public void useItemOnGroundObject(int itemId, int objectId) {
