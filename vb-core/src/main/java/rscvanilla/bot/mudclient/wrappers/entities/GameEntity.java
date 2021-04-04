@@ -14,7 +14,7 @@ public abstract class GameEntity<T extends com.rsc.e.d> extends MudClientWrapper
     }
 
     // Players have id set as 0
-    public int getId() { return this.<Integer>getFieldValue("getId", getClassFields().id, int.class); }
+    public int getId() { return this.<Integer>getFieldValue("getId", getClassFields().id, Integer.class); }
     private int getPixelX() { return this.<Integer>getFieldValue("getPixelX", getClassFields().pixelX, Integer.class); }
     private int getPixelY() { return this.<Integer>getFieldValue("getPixelY", getClassFields().pixelY, Integer.class); }
     public int getServerIndex() { return this.<Integer>getFieldValue("getServerIndex", getClassFields().serverIndex, Integer.class); }

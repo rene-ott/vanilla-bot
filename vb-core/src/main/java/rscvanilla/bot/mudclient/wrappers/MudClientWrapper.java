@@ -38,9 +38,6 @@ import java.util.stream.IntStream;
 
 public class MudClientWrapper {
 
-    public static final String FIELD_USER_NAME = "userName";
-    public static final String FIELD_USER_PASSWORD = "userPassword";
-
     private static final Logger logger = LoggerFactory.getLogger(MudClientWrapper.class);
     private static final Logger simpleLogger = AppLoggerFactory.getSimpleLogger();
 

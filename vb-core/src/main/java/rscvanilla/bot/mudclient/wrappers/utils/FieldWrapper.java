@@ -1,19 +1,12 @@
 package rscvanilla.bot.mudclient.wrappers.utils;
 
-import rscvanilla.bot.infrastructure.BotException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
-import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
+import rscvanilla.bot.infrastructure.BotException;
 
 import java.lang.reflect.Field;
 
 public class FieldWrapper<T> {
-
-    // If field wrapper isn't generic class, not specialised to MudClientWrapper then we shouldn't hardcode values.
-    private static final String[] KNOWN_FIELDS_WITH_MISSING_VALUE = new String[] {
-        MudClientWrapper.FIELD_USER_NAME,
-        MudClientWrapper.FIELD_USER_PASSWORD
-    };
 
     private final Object internalObject;
     private final Field matchedField;
@@ -55,8 +48,8 @@ public class FieldWrapper<T> {
                     );
                 }
             } else {
-                if (!ArrayUtils.contains(KNOWN_FIELDS_WITH_MISSING_VALUE, fieldDisplayName)) {
-                    //throw BotException.of("Internal object field [%s] value for wrapper field [%s] is null", matchedFieldName, fieldDisplayName);
+                if (!ArrayUtils.contains(NullValuedFieldWrappers.MUD_CLIENT_WRAPPER, fieldDisplayName)) {
+                    throw BotException.of("Internal object field [%s] value for wrapper field [%s] is null", matchedFieldName, fieldDisplayName);
                 }
             }
         } catch (IllegalAccessException e) {
