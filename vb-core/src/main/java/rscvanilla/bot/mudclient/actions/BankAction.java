@@ -2,7 +2,7 @@ package rscvanilla.bot.mudclient.actions;
 
 import rscvanilla.bot.mudclient.enums.OpCodeOut;
 import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
-import rscvanilla.bot.mudclient.models.BankItem;
+import rscvanilla.bot.mudclient.models.items.BankItem;
 
 import javax.inject.Inject;
 import java.util.stream.Collectors;

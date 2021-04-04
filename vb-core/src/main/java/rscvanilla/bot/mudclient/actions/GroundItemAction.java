@@ -94,7 +94,7 @@ public class GroundItemAction extends BaseAction {
             .collect(Collectors.toList());
     }
 
-    private GroundItem getGroundItemById(int...ids) {
+    public GroundItem getGroundItemById(int...ids) {
 
         var groundItems = mudClientWrapper.getGroundItemList()
                 .stream()

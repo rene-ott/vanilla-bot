@@ -4,9 +4,8 @@ import rscvanilla.bot.mudclient.enums.OpCodeOut;
 import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class InventoryItemAction extends BaseAction {
@@ -132,14 +131,7 @@ public class InventoryItemAction extends BaseAction {
     }
 
     public boolean isItemInInventory(int...ids) {
-        for (var id : ids) {
-            var itemIndex = getFirstInventoryItemIndexById(id);
-            if (itemIndex != -1) {
-                return true;
-            }
-        }
-
-        return false;
+        return Arrays.stream(ids).map(this::getFirstInventoryItemIndexById).anyMatch(itemIndex -> itemIndex != -1);
     }
 
     public boolean isItemInInventory(int id, int count) {
@@ -147,43 +139,20 @@ public class InventoryItemAction extends BaseAction {
     }
 
     public int getInventoryItemCount(int id) {
-        var itemCount = 0;
-        for (var itemIndex : getInventoryItemIndexesById(id)) {
-            itemCount += mudClientWrapper.inventoryItemSlotsCounts.getValue()[itemIndex];
-        }
-
-        return itemCount;
+        return (int) mudClientWrapper.getInventoryItems().stream().filter(it -> it.getId() == id).count();
     }
 
     public boolean isInventoryFull() {
         return mudClientWrapper.inventoryItemListIndex.getValue() == 30;
     }
 
-    private List<Integer> getInventoryItemIndexesById(int id) {
-        var indices = new ArrayList<Integer>();
-
-        var itemCountInInventory = mudClientWrapper.inventoryItemListIndex.getValue();
-        if (itemCountInInventory == 0) {
-            return indices;
-        }
-
-        var inventoryItems = mudClientWrapper.inventoryItemList.getValue();
-        var copyOfInventoryItems = Arrays.copyOf(inventoryItems, itemCountInInventory);
-
-        IntStream.range(0, copyOfInventoryItems.length).forEach(index -> {
-            if (copyOfInventoryItems[index] == id) {
-                indices.add(index);
-            }
-        });
-
-        return indices;
-    }
-
     private int getFirstInventoryItemIndexById(int id) {
-        var indices = getInventoryItemIndexesById(id);
-        if (indices.size() == 0)
-            return -1;
+        var indices = IntStream
+            .range(0, mudClientWrapper.getInventoryItems().size())
+            .boxed()
+            .filter(it -> mudClientWrapper.getInventoryItems().get(it).getId() == id)
+            .collect(Collectors.toList());
 
-        return indices.get(0);
+        return indices.size() == 0 ? -1 : indices.get(0);
     }
 }

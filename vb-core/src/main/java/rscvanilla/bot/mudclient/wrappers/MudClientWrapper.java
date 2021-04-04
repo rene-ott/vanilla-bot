@@ -3,6 +3,7 @@ package rscvanilla.bot.mudclient.wrappers;
 import com.google.common.base.Strings;
 import rscvanilla.bot.GameApplet;
 import rscvanilla.bot.infrastructure.utils.EnumUtil;
+import rscvanilla.bot.mudclient.models.items.InventoryItem;
 import rscvanilla.bot.mudclient.wrappers.utils.FieldWrapper;
 import rscvanilla.bot.mudclient.wrappers.utils.MethodWrapper;
 import rscvanilla.bot.mudclient.wrappers.utils.WrapperTool;
@@ -12,7 +13,7 @@ import rscvanilla.bot.mudclient.handlers.gamemessage.GameMessageHandler;
 import rscvanilla.bot.mudclient.handlers.gamemodel.GameModelHandler;
 import rscvanilla.bot.mudclient.handlers.gamesettings.GameSettingsHandler;
 import rscvanilla.bot.mudclient.handlers.userlogaction.UserLoginActionHandler;
-import rscvanilla.bot.mudclient.models.BankItem;
+import rscvanilla.bot.mudclient.models.items.BankItem;
 import rscvanilla.bot.mudclient.models.Position;
 import rscvanilla.bot.infrastructure.BotException;
 import rscvanilla.bot.infrastructure.logger.AppLoggerFactory;
@@ -287,6 +288,12 @@ public class MudClientWrapper {
                     .collect(Collectors.toList())
         : List.of(); }
 
+    public List<InventoryItem> getInventoryItems() {
+        return IntStream
+            .range(0, inventoryItemListIndex.getValue())
+            .mapToObj(i -> new InventoryItem(inventoryItemList.getValue()[i], inventoryItemSlotsCounts.getValue()[i]))
+            .collect(Collectors.toList());
+    }
 
     public LocalPlayerCharacter getLocalPlayer() { return new LocalPlayerCharacter(localPlayer.getValue(), this); }
     public Position getMidRegionBase() { return new Position(midRegionBaseX.getValue(), midRegionBaseY.getValue()); }

@@ -47,11 +47,8 @@ public abstract class Script {
         mudClientWrapper = dependencyContext.getMudClientWrapper();
     }
 
-    public void test() {
-        shopAction.testShop();
-    }
-
     /** FOR DEV **/
+    @Deprecated
     protected MudClientWrapper getMudClientWrapper() { return mudClientWrapper; }
 
     /** USER **/
@@ -73,7 +70,7 @@ public abstract class Script {
     public boolean isAnotherPlayerOnPos(Position pos) { return playerCharacterAction.isAnotherPlayerOnPos(pos); }
 
     public void buyShopItem(int id, int count) { shopAction.buyShopItem(id, count); }
-    public int getCurrentShopItemCount(int id) { return shopAction.getCurrentShopItemCount(id); }
+    public int getCurrentShopItemCount(int id) { return shopAction.getShopItemCount(id); }
     public boolean isShopWindowVisible() { return shopAction.isShopVisible(); }
 
     /** MESSAGE ACTION **/

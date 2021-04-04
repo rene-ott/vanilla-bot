@@ -13,8 +13,6 @@ public class ShopAction extends BaseAction {
         super(mudClientWrapper);
     }
 
-    public void testShop() {
-    }
 
     public boolean isShopVisible() {
         return mudClientWrapper.getShopInterface() != null && mudClientWrapper.getShopInterface().isShopVisible();
@@ -25,7 +23,7 @@ public class ShopAction extends BaseAction {
             return;
         }
 
-        var currentShopItemCount = getCurrentShopItemCount(id);
+        var currentShopItemCount = getShopItemCount(id);
         if (currentShopItemCount == 0) {
             return;
         }
@@ -38,7 +36,7 @@ public class ShopAction extends BaseAction {
             .send();
     }
 
-    public int getCurrentShopItemCount(int id) {
+    public int getShopItemCount(int id) {
         var shopItems = mudClientWrapper.getShopInterface()
                 .getShopItems()
                 .stream()
@@ -48,6 +46,6 @@ public class ShopAction extends BaseAction {
         if (shopItems.size() == 0)
             return 0;
 
-        return shopItems.get(0).getCurrentStackSize();
+        return shopItems.get(0).getCount();
     }
 }

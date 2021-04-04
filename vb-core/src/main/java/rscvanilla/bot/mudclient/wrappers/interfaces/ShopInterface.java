@@ -1,7 +1,7 @@
 package rscvanilla.bot.mudclient.wrappers.interfaces;
 
 import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
-import rscvanilla.bot.mudclient.models.ShopItem;
+import rscvanilla.bot.mudclient.models.items.ShopItem;
 import rscvanilla.bot.mudclient.wrappers.MudClientWrapperObject;
 
 import java.util.List;
@@ -15,10 +15,10 @@ public class ShopInterface extends MudClientWrapperObject<Object> {
     }
 
     public boolean isShopVisible() { return this.<Boolean>getFieldValue("isShopVisible", "lm", Boolean.class); }
-    public int getShopItemCount() { return this.<Byte>getFieldValue("getShopItemCount", "ln", Byte.class); }
+    public int getShopItemsCount() { return this.<Byte>getFieldValue("getShopItemCount", "ln", Byte.class); }
 
     public List<ShopItem> getShopItems() {
-        return IntStream.range(0, getShopItemCount())
+        return IntStream.range(0, getShopItemsCount())
                 .mapToObj(i -> new ShopItem(getShopItemIdList()[i], getShopItemStackSize()[i], getShopItemCurrentStackSize()[i]))
                 .collect(Collectors.toList());
     }
