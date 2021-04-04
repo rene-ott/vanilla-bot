@@ -55,8 +55,8 @@ mud_client:
     options_count:
     player_list:
     player_list_index:
-    player_position_x:
-    player_position_y:
+    local_player_position_x:
+    local_player_position_y:
     show_dialog_server_message:
     local_player:
     login_username:
@@ -68,8 +68,8 @@ mud_client:
     options_menu_text:
     is_admin:
     login_panel:
-    login_panel_user_password_control_id:
-    login_panel_user_username_control_id:
+    login_panel_password_control_id:
+    login_panel_username_control_id:
   methods:
     login:
     logout:

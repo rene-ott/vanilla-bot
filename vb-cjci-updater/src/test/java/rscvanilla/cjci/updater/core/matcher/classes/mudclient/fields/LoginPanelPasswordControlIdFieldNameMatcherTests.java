@@ -8,13 +8,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 
-public class LoginPanelUserUsernameControlIdFieldNameMatcherTests extends BaseTests {
+public class LoginPanelPasswordControlIdFieldNameMatcherTests extends BaseTests {
 
-    private LoginPanelUserUsernameControlIdFieldNameMatcher matcher;
+    private LoginPanelPasswordControlIdFieldNameMatcher matcher;
 
     @BeforeEach
     public void setMatcher() {
-        matcher = new LoginPanelUserUsernameControlIdFieldNameMatcher();
+        matcher = new LoginPanelPasswordControlIdFieldNameMatcher();
     }
 
     @Test
@@ -23,12 +23,12 @@ public class LoginPanelUserUsernameControlIdFieldNameMatcherTests extends BaseTe
 
         var match = new StringBuilder()
             .append("            this.oU = 2;").append(lineSeparator)
-            .append("            this.mU = this.qA.J(this.***pg***);").append(lineSeparator)
-            .append("            this.ry = this.qA.J(this.pd);")
+            .append("            this.mU = this.qA.J(this.pg);").append(lineSeparator)
+            .append("            this.ry = this.qA.J(this.***pd***);")
             .toString();
 
         var result = matcher.match(mudClient);
-        assertThat(result.getMemberName(), equalTo("pg"));
+        assertThat(result.getMemberName(), equalTo("pd"));
         assertThat(result.getMatch(), equalTo(match));
     }
 }

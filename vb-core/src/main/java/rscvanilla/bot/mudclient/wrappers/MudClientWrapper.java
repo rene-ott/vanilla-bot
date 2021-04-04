@@ -49,6 +49,8 @@ public class MudClientWrapper {
     private final AppletClassFields appletClassFields;
     private final MudClientBaseClassFields baseClassFields;
 
+    // Some type arguments are `Object` because java can't handle when in the package there's same named subpackage and class
+
     private FieldWrapper<com.rsc.e.j[]> npcList;
     private FieldWrapper<Integer> npcListIndex;
 
@@ -61,33 +63,44 @@ public class MudClientWrapper {
     private FieldWrapper<com.rsc.e.k[]> playerList;
     private FieldWrapper<Integer> playerListIndex;
 
+    public FieldWrapper<com.rsc.e.m[]> wallObjectList;
+    public FieldWrapper<Integer> wallObjectListIndex;
+
     public FieldWrapper<int[]> inventoryItemList;
     public FieldWrapper<Integer> inventoryItemListIndex;
     public FieldWrapper<int[]> inventoryItemSlotsCounts;
 
     private FieldWrapper<int[]> bankItemIdList;
     private FieldWrapper<int[]> bankItemCountList;
+    public FieldWrapper<Boolean> isBankVisible;
 
     private FieldWrapper<String[]> optionsMenuText;
     private FieldWrapper<Integer> optionsMenuCount;
-
-    public FieldWrapper<Integer> combatStyle;
-    public FieldWrapper<Integer> userTileX;
-    public FieldWrapper<Integer> userTileY;
-    public FieldWrapper<Integer> midRegionBaseX;
-    public FieldWrapper<Integer> midRegionBaseZ;
-    public FieldWrapper<Integer> fatigueSleeping;
-    public FieldWrapper<Integer> userFatigueStat;
-    public FieldWrapper<Boolean> isSleeping;
-    public FieldWrapper<String> loginUsername;
-    private FieldWrapper<com.rsc.f> gameMode;
-    public FieldWrapper<Integer> autoLoginTimeOut;
     public FieldWrapper<Boolean> isOptionsMenuVisible;
-    public FieldWrapper<Boolean> isBankVisible;
+
+    public FieldWrapper<Integer> localPlayerPositionX;
+    public FieldWrapper<Integer> localPlayerPositionY;
+
+    public FieldWrapper<Integer> midRegionBaseX;
+    public FieldWrapper<Integer> midRegionBaseY;
+
+    public FieldWrapper<String> loginUsername;
+    public FieldWrapper<String> loginPassword;
+
+    private FieldWrapper<Object> loginPanel;
+    private FieldWrapper<Integer> loginPanelPasswordControlId;
+    private FieldWrapper<Integer> loginPanelUsernameControlId;
 
     public FieldWrapper<Object> shopInterface;
+    public FieldWrapper<com.rsc.e.k> localPlayer;
+    private FieldWrapper<com.rsc.f> gameMode;
+    private FieldWrapper<Object> packetBuilder;
 
-    public FieldWrapper<String> loginPassword;
+    public FieldWrapper<Boolean> isSleeping;
+    public FieldWrapper<Integer> fatigueSleeping;
+    public FieldWrapper<Integer> userFatigueStat;
+    public FieldWrapper<Integer> autoLoginTimeOut;
+    public FieldWrapper<Integer> combatStyle;
     public FieldWrapper<Boolean> isAdmin;
 
     private MethodWrapper<MethodWrapper.Unit> walkToArea;
@@ -98,6 +111,8 @@ public class MudClientWrapper {
     private MethodWrapper<MethodWrapper.Unit> logout;
     private MethodWrapper<MethodWrapper.Unit> walkToWall;
 
+    private final PacketBuilder packetBuilderWrapper;
+
     // ArrayLists are created on bytecode level with javassist, therefore there's no type argument
     @SuppressWarnings("rawtypes") public FieldWrapper<ArrayList> resetLoginScreenVariablesMethodInterceptors;
     @SuppressWarnings("rawtypes") public FieldWrapper<ArrayList> sendLoginMethodInterceptors;
@@ -105,22 +120,6 @@ public class MudClientWrapper {
     @SuppressWarnings("rawtypes") public FieldWrapper<ArrayList> showGameMessageMethodInterceptors;
     @SuppressWarnings("rawtypes") public FieldWrapper<ArrayList> handleOpCodeInMethodInterceptors;
     @SuppressWarnings("rawtypes") public FieldWrapper<ArrayList> startGameMethodInterceptors;
-
-    private final PacketBuilder packetBuilderWrapper;
-
-    public FieldWrapper<com.rsc.e.m[]> wallObjectList;
-    public FieldWrapper<Integer> wallObjectListIndex;
-
-    public FieldWrapper<com.rsc.e.k> localPlayer;
-
-    // Type argument is Object because java can't handle when in the package there's same named subpackage and class
-    private FieldWrapper<Object> packetBuilder;
-
-    private FieldWrapper<Integer> loginPanelUserPasswordControlId;
-    private FieldWrapper<Integer> loginPanelUserUsernameControlId;
-
-    // Type argument is Object because java can't handle when in the package there's same named subpackage and class
-    private FieldWrapper<Object> loginPanel;
 
     @Inject
     public MudClientWrapper(GameApplet gameApplet, ClientJarClassInfo clientJarClassInfo) {
@@ -140,19 +139,19 @@ public class MudClientWrapper {
 
     private void initMudClientField(GameApplet gameApplet) {
         try {
-            logger.debug("Initializing [MudClientWrapper] mudclient field:");
+            logger.debug("Init [GameApplet] fields:");
 
             mudClient = WrapperTool.loadField(gameApplet, simpleLogger, "mudClient", appletClassFields.mudClient, com.rsc.d.class);
 
             simpleLogger.debug("");
         } catch (BotException e) {
-            throw BotException.of("Failed to initialize [MudClientWrapper] mudclient field!", e);
+            throw BotException.of("Failed to init [GameApplet] field!", e);
         }
     }
 
     private void initializeInjectedInterceptors() {
         try {
-            logger.debug("Initializing [MudClientWrapper] interceptor fields:");
+            logger.debug("Init [MudClientWrapper] interceptor fields:");
 
             resetLoginScreenVariablesMethodInterceptors = initInterceptor("resetLoginScreenVariablesMethodInterceptors", MudClientResetLoginScreenVariablesMethodInterceptor.FIELD_NAME);
             initGameScreenVariablesMethodInterceptors = initInterceptor("initGameScreenVariablesMethodInterceptors", MudClientInitGameScreenVariablesMethodInterceptor.FIELD_NAME);
@@ -163,25 +162,24 @@ public class MudClientWrapper {
 
             simpleLogger.debug("");
         } catch (BotException e) {
-            throw BotException.of("Failed to initialize [MudClientWrapper] interceptor fields!", e);
+            throw BotException.of("Failed to init [MudClientWrapper] interceptor fields!", e);
         }
     }
 
     private void initFields() {
         try {
-            logger.debug("Initializing [MudClientWrapper] fields:");
+            logger.debug("Init [MudClientWrapper] fields:");
 
             npcList = initField("npcList", classFields.npcList, com.rsc.e.j[].class);
             groundItemList = initField("groundItemList", classFields.groundItemList, com.rsc.e.f[].class);
             combatStyle = initField("combatStyle", classFields.combatStyle, Integer.class);
-            userTileX = initField("userTileX", classFields.playerPositionX, Integer.class);
-            userTileY = initField("userTileY", classFields.playerPositionY, Integer.class);
+            localPlayerPositionX = initField("localPlayerPositionX", classFields.localPlayerPositionX, Integer.class);
+            localPlayerPositionY = initField("localPlayerPositionY", classFields.localPlayerPositionY, Integer.class);
             midRegionBaseX = initField("midRegionBaseX", classFields.mid_region_base_x, Integer.class);
-            midRegionBaseZ = initField("midRegionBaseZ", classFields.mid_region_base_y, Integer.class);
+            midRegionBaseY = initField("midRegionBaseY", classFields.mid_region_base_y, Integer.class);
             fatigueSleeping = initField("fatigueSleeping", classFields.fatigueSleeping, Integer.class);
             userFatigueStat = initField("userFatigueStat", classFields.fatigueStat, Integer.class);
             isSleeping = initField("isSleeping", classFields.isSleeping, Boolean.class);
-
             groundItemListIndex = initField("groundItemListIndex", classFields.groundItemListIndex, Integer.class);
             inventoryItemList = initField("inventoryItemList", classFields.inventoryItemList, int[].class);
             inventoryItemListIndex = initField("inventoryItemListIndex", classFields.inventoryItemListIndex, Integer.class);
@@ -201,30 +199,24 @@ public class MudClientWrapper {
             wallObjectList = initField("wallObjectList", classFields.wallObjectList, com.rsc.e.m[].class);
             wallObjectListIndex = initField("wallObjectListIndex", classFields.wallObjectListIndex, Integer.class);
             localPlayer = initField("localPlayer", classFields.localPlayer, com.rsc.e.k.class);
-
             bankItemIdList = initField("bankItemIdList", classFields.bankItemIdList, int[].class);
             bankItemCountList = initField("bankItemCountList", classFields.bankItemCountList, int[].class);
-
             optionsMenuText = initField("optionsMenuText", classFields.optionsMenuText, String[].class);
             isAdmin = initField("isAdmin", classFields.isAdmin, Boolean.class);
-
-            loginPanelUserPasswordControlId = initField("loginPanelUserPasswordControlId", classFields.loginPanelUserPasswordControlId, Integer.class);
-            loginPanelUserUsernameControlId = initField("loginPanelUserUsernameControlId", classFields.loginPanelUserUsernameControlId, Integer.class);
+            loginPanelPasswordControlId = initField("loginPanelPasswordControlId", classFields.loginPanelPasswordControlId, Integer.class);
+            loginPanelUsernameControlId = initField("loginPanelUsernameControlId", classFields.loginPanelUsernameControlId, Integer.class);
             loginPanel = initField("loginPanel", classFields.loginPanel, Object.class);
-
             shopInterface = initField("shopInterface", "oN", Object.class);
-
             packetBuilder = initField("packetBuilder", baseClassFields.packetBuilder, Object.class);
-
             simpleLogger.debug("");
         } catch (BotException e) {
-            throw BotException.of("Failed to initialize [MudClientWrapper] fields!", e);
+            throw BotException.of("Failed to init [MudClientWrapper] fields!", e);
         }
     }
 
     public void setUserCredentials(String username, String password) {
-        getLoginPanelWrapper().setText(loginPanelUserUsernameControlId.getValue(), username);
-        getLoginPanelWrapper().setText(loginPanelUserPasswordControlId.getValue(), password);
+        getLoginPanel().setText(loginPanelUsernameControlId.getValue(), username);
+        getLoginPanel().setText(loginPanelPasswordControlId.getValue(), password);
 
         loginUsername.setValue(username);
         loginPassword.setValue(password);
@@ -232,7 +224,7 @@ public class MudClientWrapper {
 
     private void initMethods() {
         try {
-            logger.debug("Initializing [MudClientWrapper] methods:");
+            logger.debug("Init [MudClientWrapper] methods:");
 
             walkToArea = initMethod("walkToArea", classMethods.walkToArea, int.class, int.class, int.class, int.class,int.class,int.class, boolean.class, boolean.class);
             sendWalkToGroundItem = initMethod("sendWalkToGroundItem", classMethods.sendWalkToGroundItem, int.class, int.class, int.class, int.class, int.class, int.class, boolean.class);
@@ -244,7 +236,7 @@ public class MudClientWrapper {
 
             simpleLogger.debug("");
         } catch (BotException e) {
-            throw BotException.of("Failed to initialize [MudClientWrapper] methods!", e);
+            throw BotException.of("Failed to init [MudClientWrapper] methods!", e);
         }
     }
 
@@ -271,7 +263,7 @@ public class MudClientWrapper {
 
     public PacketBuilder getPacketBuilder() { return packetBuilderWrapper; }
     public ClientJarClassInfo getClientJarClassInfo() { return clientJarClassInfo; }
-    private Panel getLoginPanelWrapper() { return new Panel(loginPanel.getValue(), this); }
+    private Panel getLoginPanel() { return new Panel(loginPanel.getValue(), this); }
 
     // Accessing to MudClient members should be done through this wrapper class.
     @Deprecated()
@@ -297,7 +289,7 @@ public class MudClientWrapper {
 
 
     public LocalPlayerCharacter getLocalPlayer() { return new LocalPlayerCharacter(localPlayer.getValue(), this); }
-    public Position getMidRegionBase() { return new Position(midRegionBaseX.getValue(), midRegionBaseZ.getValue()); }
+    public Position getMidRegionBase() { return new Position(midRegionBaseX.getValue(), midRegionBaseY.getValue()); }
 
     public void walkToArea(int startX, int startY, int x1, int y1, int x2, int y2, boolean reachBorder, boolean walkToEntity) {
         try {

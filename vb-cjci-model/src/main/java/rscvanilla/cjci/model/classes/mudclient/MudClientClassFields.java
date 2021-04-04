@@ -32,8 +32,8 @@ public class MudClientClassFields implements WithClassMembers {
     @YamlClassMemberKey("options_count") public String optionsCount;
     @YamlClassMemberKey("player_list") public String playerList;
     @YamlClassMemberKey("player_list_index") public String playerListIndex;
-    @YamlClassMemberKey("player_position_x") public String playerPositionX;
-    @YamlClassMemberKey("player_position_y") public String playerPositionY;
+    @YamlClassMemberKey("local_player_position_x") public String localPlayerPositionX;
+    @YamlClassMemberKey("local_player_position_y") public String localPlayerPositionY;
     @YamlClassMemberKey("show_dialog_server_message") public String showDialogServerMessage;
     @YamlClassMemberKey("local_player") public String localPlayer;
     @YamlClassMemberKey("login_username") public String loginUsername;
@@ -45,6 +45,6 @@ public class MudClientClassFields implements WithClassMembers {
     @YamlClassMemberKey("options_menu_text") public String optionsMenuText;
     @YamlClassMemberKey("is_admin") public String isAdmin;
     @YamlClassMemberKey("login_panel") public String loginPanel;
-    @YamlClassMemberKey("login_panel_user_password_control_id") public String loginPanelUserPasswordControlId;
-    @YamlClassMemberKey("login_panel_user_username_control_id") public String loginPanelUserUsernameControlId;
+    @YamlClassMemberKey("login_panel_password_control_id") public String loginPanelPasswordControlId;
+    @YamlClassMemberKey("login_panel_username_control_id") public String loginPanelUsernameControlId;
 }

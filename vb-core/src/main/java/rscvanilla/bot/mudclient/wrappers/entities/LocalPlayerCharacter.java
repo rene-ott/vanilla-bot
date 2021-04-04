@@ -12,7 +12,7 @@ public class LocalPlayerCharacter extends PlayerCharacter {
 
     @Override
     public Position getLocalPosition() {
-        return new Position(mudClientWrapper.userTileX.getValue(), mudClientWrapper.userTileY.getValue());
+        return new Position(mudClientWrapper.localPlayerPositionX.getValue(), mudClientWrapper.localPlayerPositionY.getValue());
     }
 
     public int getFatigue() { return mudClientWrapper.userFatigueStat.getValue() * 100 / 750; }

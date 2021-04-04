@@ -8,13 +8,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 
-public class LoginPanelUserPasswordControlIdFieldNameMatcherTests extends BaseTests {
+public class LocalPlayerPositionYFieldNameMatcherTests extends BaseTests {
 
-    private LoginPanelUserPasswordControlIdFieldNameMatcher matcher;
+    private LocalPlayerPositionYFieldNameMatcher matcher;
 
     @BeforeEach
     public void setMatcher() {
-        matcher = new LoginPanelUserPasswordControlIdFieldNameMatcher();
+        matcher = new LocalPlayerPositionYFieldNameMatcher();
     }
 
     @Test
@@ -22,13 +22,14 @@ public class LoginPanelUserPasswordControlIdFieldNameMatcherTests extends BaseTe
         var mudClient = readClassMudClient();
 
         var match = new StringBuilder()
-            .append("            this.oU = 2;").append(lineSeparator)
-            .append("            this.mU = this.qA.J(this.pg);").append(lineSeparator)
-            .append("            this.ry = this.qA.J(this.***pd***);")
-            .toString();
+                .append("   public com.rsc.b.e or;").append(lineSeparator)
+                .append("   public int os;").append(lineSeparator)
+                .append("   public int ***ot***;").append(lineSeparator)
+                .append("   public boolean ou;")
+                .toString();
 
         var result = matcher.match(mudClient);
-        assertThat(result.getMemberName(), equalTo("pd"));
+        assertThat(result.getMemberName(), equalTo("ot"));
         assertThat(result.getMatch(), equalTo(match));
     }
 }

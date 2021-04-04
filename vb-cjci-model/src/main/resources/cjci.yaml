@@ -54,9 +54,11 @@ mud_client:
     is_options_menu_visible: re
     is_sleeping: pH
     local_player: oG
+    local_player_position_x: oy
+    local_player_position_y: oz
     login_panel: qG
-    login_panel_user_password_control_id: pj
-    login_panel_user_username_control_id: pm
+    login_panel_password_control_id: pj
+    login_panel_username_control_id: pm
     login_password: rF
     login_username: na
     mid_region_base_x: ov
@@ -68,8 +70,6 @@ mud_client:
     options_menu_text: pO
     player_list: ns
     player_list_index: pI
-    player_position_x: oy
-    player_position_y: oz
     show_dialog_server_message: rc
     wall_object_list: oJ
     wall_object_list_index: ro

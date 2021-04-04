@@ -6,10 +6,10 @@ import rscvanilla.cjci.updater.core.matcher.classes.mudclient.MudClientClassFiel
 
 import java.util.regex.Pattern;
 
-@YamlClassMemberKey("login_panel_user_username_control_id")
-public class LoginPanelUserUsernameControlIdFieldNameMatcher extends ClassMemberNameBaseMatcher implements MudClientClassFieldNameMatcher {
+@YamlClassMemberKey("login_panel_username_control_id")
+public class LoginPanelUsernameControlIdFieldNameMatcher extends ClassMemberNameBaseMatcher implements MudClientClassFieldNameMatcher {
 
-    public LoginPanelUserUsernameControlIdFieldNameMatcher() {
+    public LoginPanelUsernameControlIdFieldNameMatcher() {
         pattern = Pattern.compile(
             "(?<pre> {12}this\\.[a-zA-Z]{2} = 2;\\R" +
             " {12}this\\.[a-zA-Z]{2} = this\\.[a-zA-Z]{2}\\.[a-zA-Z]{1,2}\\(this\\.)(?<fieldName>[a-zA-Z]{2})(?<post>\\);\\R" +

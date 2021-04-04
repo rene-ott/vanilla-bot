@@ -8,13 +8,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 
-public class PlayerPositionXFieldNameMatcherTests extends BaseTests {
+public class LocalPlayerPositionXFieldNameMatcherTests extends BaseTests {
 
-    private PlayerPositionXFieldNameMatcher matcher;
+    private LocalPlayerPositionXFieldNameMatcher matcher;
 
     @BeforeEach
     public void setMatcher() {
-        matcher = new PlayerPositionXFieldNameMatcher();
+        matcher = new LocalPlayerPositionXFieldNameMatcher();
     }
 
     @Test
