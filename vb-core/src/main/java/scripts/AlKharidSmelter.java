@@ -256,6 +256,12 @@ public class AlKharidSmelter extends RunnableScript {
             this.primaryOre = primaryOre;
             this.secondaryOre = secondaryOre;
         }
+
+        private ScriptParams(int barId, Ore primaryOre) {
+            this.barId = barId;
+            this.primaryOre = primaryOre;
+            this.secondaryOre = null;
+        }
     }
 
     private class Ore {
@@ -304,7 +310,7 @@ public class AlKharidSmelter extends RunnableScript {
 
         private void createButtons() {
             createButton(BRONZE, true);
-            createButton(IRON, false);
+            createButton(IRON, true);
             createButton(SILVER, false);
             createButton(STEEL, true);
             createButton(GOLD, false);
@@ -346,7 +352,7 @@ public class AlKharidSmelter extends RunnableScript {
             if (command.equals(BRONZE)) {
                 scriptParams = new ScriptParams(169, new Ore(150, 9, 1), new Ore(202, 9, 1));
             } else if (command.equals(IRON)) {
-                throw new NotImplementedException();
+                scriptParams = new ScriptParams(170, new Ore(151, 16, 1));
             } else if (command.equals(SILVER)) {
                 throw new NotImplementedException();
             } else if (command.equals(STEEL)) {

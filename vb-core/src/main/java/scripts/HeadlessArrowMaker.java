@@ -35,14 +35,20 @@ public class HeadlessArrowMaker extends RunnableScript {
             waitFor(500);
             return;
         }
+        if (isItemInInventory(13) && isItemInInventory(14)) {
+            useInventoryItemOnInventoryItem(13, 14);
+            waitFor(300);
+            return;
+        }
 
-        if (isItemInInventory(14) && isItemInInventory(13)) {
-            useInventoryItemOnInventoryItem(14, 13);
-            waitFor(500);
+        if (isItemInInventory(637) && isItemInInventory(670)) {
+            useInventoryItemOnInventoryItem(637, 670);
+            waitFor(300);
             return;
         }
 
         atGroundObject(1, 0);
+
     }
 
     @Override

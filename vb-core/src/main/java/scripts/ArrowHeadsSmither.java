@@ -19,13 +19,13 @@ public class ArrowHeadsSmither extends RunnableScript {
             return;
         }
 
-        if (isBankWindowVisible() && getInventoryItemCount(169) != 25) {
-            if (getBankItemCount(169) < 1) {
+        if (isBankWindowVisible() && getInventoryItemCount(170) != 25) {
+            if (getBankItemCount(170) < 1) {
                 stopScript();
                 return;
             }
 
-            withdrawBankItem(169, 27);
+            withdrawBankItem(170, 27);
             waitFor(300);
             return;
         }
@@ -49,7 +49,7 @@ public class ArrowHeadsSmither extends RunnableScript {
         }
 
         if (hasBarsInInventory()) {
-            useInventoryItemOnGroundObject(169, 50);
+            useInventoryItemOnGroundObject(170, 50);
             waitFor(300);
             return;
         }
@@ -59,7 +59,7 @@ public class ArrowHeadsSmither extends RunnableScript {
     }
 
     private boolean hasBarsInInventory() {
-        return getInventoryItemCount(169) > 0;
+        return getInventoryItemCount(170) > 0;
     }
 
     @Override
