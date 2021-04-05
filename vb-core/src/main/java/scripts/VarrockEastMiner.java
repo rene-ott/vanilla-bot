@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class VarrockWestMiner extends RunnableScript {
+public class VarrockEastMiner extends RunnableScript {
 
     private final static Position BANK_TOP_POS = new Position(98,515);
     private final static Position BANK_BOTTOM_POS = new Position(106, 510);
@@ -41,7 +41,7 @@ public class VarrockWestMiner extends RunnableScript {
 
     private boolean isPowerMining;
 
-    public VarrockWestMiner(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
+    public VarrockEastMiner(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
         super(dependencyContext, argumentContext);
     }
 
@@ -50,7 +50,7 @@ public class VarrockWestMiner extends RunnableScript {
         super.onStart();
 
         disableScriptLoop();
-        new VarrockWestMiner.GUI("Varrock West Miner", Thread.currentThread()).init();
+        new VarrockEastMiner.GUI("Varrock West Miner", Thread.currentThread()).init();
     }
 
     @Override
