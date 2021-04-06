@@ -48,7 +48,6 @@ public class HeadlessArrowMaker extends RunnableScript {
         }
 
         atGroundObject(1, 0);
-
     }
 
     @Override

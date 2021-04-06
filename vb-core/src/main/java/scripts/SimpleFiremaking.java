@@ -8,6 +8,7 @@ public class SimpleFiremaking extends RunnableScript {
 
     private static final int TINDERBOX = 166;
     private static final int LOGS = 14;
+    private static final int[] TREES = {0, 1, 70};
 
     private static final int FIRE = 97;
     private static final int FERN = 34;
@@ -70,7 +71,7 @@ public class SimpleFiremaking extends RunnableScript {
         }
 
         waitFor(400);
-        atGroundObject(0, 1);
+        atGroundObject(TREES);
     }
 
     @Override
