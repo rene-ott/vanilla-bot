@@ -97,6 +97,9 @@ public abstract class Script {
     protected void useInventoryItemOnInventoryItem(int firstItemId, int secondItemId) { inventoryItemAction.useItemOnItem(firstItemId, secondItemId); }
     protected void useInventoryItemOnGroundItem(int inventoryItemId, int groundItemId) { inventoryItemAction.useInventoryItemOnGroundItem(inventoryItemId, groundItemId); }
 
+    protected void castSpellOnInventoryItem(int spellId, int inventoryItemId) {
+        inventoryItemAction.castSpellOnInventoryItem(spellId, inventoryItemId);
+    }
     /** NPC ACTION **/
     protected void pickpocketNpc(int...ids) { nonPlayerCharacterAction.pickpocketNpcById(ids); }
     protected void attackNpc(int...ids) { nonPlayerCharacterAction.attackNpcById(ids); }

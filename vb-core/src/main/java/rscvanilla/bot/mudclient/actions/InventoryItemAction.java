@@ -86,6 +86,18 @@ public class InventoryItemAction extends BaseAction {
         }
     }
 
+    public void castSpellOnInventoryItem(int spellId, int inventoryItemId) {
+        var inventoryItemIndex = getFirstInventoryItemIndexById(inventoryItemId);
+        if (inventoryItemIndex == -1)
+            return;
+
+        mudClientWrapper.getPacketBuilder()
+            .setOpCode(OpCodeOut.CAST_SPELL_ON_INVENTORY_ITEM)
+            .putShort(spellId)
+            .putShort(inventoryItemIndex)
+            .send();
+    }
+
     public void useInventoryItemOnGroundItem(int inventoryItemId, int groundItemId) {
         var inventoryItemIndex = getFirstInventoryItemIndexById(inventoryItemId);
         if (inventoryItemIndex == -1)

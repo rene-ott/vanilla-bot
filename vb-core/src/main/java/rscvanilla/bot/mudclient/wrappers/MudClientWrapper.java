@@ -286,7 +286,9 @@ public class MudClientWrapper {
     public List<NonPlayerCharacter> getNonPlayerCharacters() { return newWrapperGameEntityList(this.nonPlayerCharacters, this.nonPlayerCharactersCount, NonPlayerCharacter.class); }
     public List<GroundItem> getGroundItems() { return newWrapperGameEntityList(this.groundItems, this.groundItemsCount, GroundItem.class); }
 
-    public List<String> getOptionsMenuTexts() { return Arrays.stream(optionsMenuTexts.getValue(), 0, optionsMenuTextsCount.getValue()).collect(Collectors.toList()); }
+    public List<String> getOptionsMenuTexts() {
+        return isOptionsMenuVisible.getValue() ? Arrays.stream(optionsMenuTexts.getValue(), 0, optionsMenuTextsCount.getValue()).collect(Collectors.toList()) : List.of();
+    }
 
     public List<BankItem> getBankItems() {
         return IntStream.range(0, (int) Arrays.stream(bankItemsCounts.getValue()).filter(it -> it != 0).count())

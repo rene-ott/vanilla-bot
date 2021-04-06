@@ -4,15 +4,37 @@ import rscvanilla.bot.script.ScriptDependencyContext;
 import rscvanilla.bot.script.antiban.ScriptAntiBanParams;
 import rscvanilla.bot.script.template.RunnableScript;
 
-public class PlateBodySmither extends RunnableScript {
+import javax.swing.*;
 
-    public PlateBodySmither(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
+public class VarrockWestPlateBodySmither extends RunnableScript {
+
+    private final int[][] barAndPlateTuples = new int[][] {
+        new int[] { 169, 117},
+        new int[] { 170, 8 },
+        new int[] { 171, 118 },
+        new int[] { 173, 119, },
+        new int[] { 174, 120 },
+        new int[] { 408, 401 }
+    };
+
+    private int bar;
+    private int plateBody;
+
+    public VarrockWestPlateBodySmither(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
         super(dependencyContext, argumentContext);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        var inputDialogText = "Bronze = 0\nIron = 1\nSteel = 2\nMith=3\nAddy=4\nRune=5";
+        var frameTitle = "Varrock West Platemail Body Smither";
+        var selectedParAndTupleIndex = Integer.parseInt(JOptionPane.showInputDialog(new JFrame(frameTitle), inputDialogText));
+        int[] selectedBarAndTuple = barAndPlateTuples[selectedParAndTupleIndex];
+
+        plateBody = selectedBarAndTuple[1];
+        bar = selectedBarAndTuple[0];
     }
 
     @Override
@@ -25,14 +47,14 @@ public class PlateBodySmither extends RunnableScript {
             return;
         }
 
-        if (isBankWindowVisible() && getInventoryItemCount(169) != 25) {
-            if (getBankItemCount(169) < 25) {
+        if (isBankWindowVisible() && getInventoryItemCount(bar) != 25) {
+            if (getBankItemCount(bar) < 25) {
                 stopScript();
                 return;
             }
 
-            depositAllBankItems(117);
-            withdrawBankItem(169, 25);
+            depositAllBankItems(plateBody);
+            withdrawBankItem(bar, 25);
             waitFor(300);
             return;
         }
@@ -62,7 +84,7 @@ public class PlateBodySmither extends RunnableScript {
         }
 
         if (hasBarsInInventory()) {
-            useInventoryItemOnGroundObject(169, 50);
+            useInventoryItemOnGroundObject(bar, 50);
             waitFor(300);
             return;
         }
@@ -77,11 +99,11 @@ public class PlateBodySmither extends RunnableScript {
     }
 
     private boolean hasBarsInInventory() {
-        return getInventoryItemCount(169) > 0;
+        return getInventoryItemCount(bar) > 0;
     }
 
     private boolean has5PlatesInBody() {
-        return getInventoryItemCount(117) == 5;
+        return getInventoryItemCount(plateBody) == 5;
     }
 
     @Override
