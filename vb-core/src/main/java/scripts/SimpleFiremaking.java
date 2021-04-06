@@ -13,6 +13,7 @@ public class SimpleFiremaking extends RunnableScript {
     private static final int FERN = 34;
     private static final int BULL_BUSHES = 36;
     private static final int FLOWERS_RED = 37;
+    private static final int MUSHROOM = 38;
     private static final int FLOWERS_BLUE = 285;
     private static final int FUNGUS = 205;
 
