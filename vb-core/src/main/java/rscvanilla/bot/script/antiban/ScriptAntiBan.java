@@ -1,5 +1,6 @@
 package rscvanilla.bot.script.antiban;
 
+import rscvanilla.bot.infrastructure.SystemTrayNotification;
 import rscvanilla.bot.script.template.RunnableScriptState;
 import rscvanilla.bot.script.template.RunnableScriptStatus;
 import org.slf4j.Logger;
@@ -154,6 +155,7 @@ public class ScriptAntiBan {
         logger.trace("doAntiBan");
 
         playSound();
+        SystemTrayNotification.showWarning("Vanilla Bot", "Anti-Ban: Player Detected");
 
         if (!state.isRunning()) {
             return;
