@@ -70,6 +70,7 @@ mud_client:
     options_menu_texts_count: nG
     player_characters: ns
     player_characters_count: pI
+    shop_interface: oN
     show_dialog_server_message: rc
     wall_objects: oJ
     wall_objects_count: ro
@@ -128,6 +129,13 @@ player_character:
   qualified_name: com.rsc.e.k
   fields:
     name: na
+
+shop_interface:
+  qualified_name: com.rsc.d.b.c
+  fields:
+    is_shop_visible: lm
+    shop_items_counts: lu
+    shop_items_ids: lv
 
 wall_object:
   qualified_name: com.rsc.e.m

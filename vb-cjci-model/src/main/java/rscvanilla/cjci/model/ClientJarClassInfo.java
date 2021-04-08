@@ -14,6 +14,7 @@ import rscvanilla.cjci.model.classes.gameentity.GameEntityClass;
 import rscvanilla.cjci.model.classes.nonplayercharacter.NonPlayerCharacterClass;
 import rscvanilla.cjci.model.classes.nonplayercharacterinfo.NonPlayerCharacterInfoClass;
 import rscvanilla.cjci.model.classes.playercharacter.PlayerCharacterClass;
+import rscvanilla.cjci.model.classes.shopinterface.ShopInterfaceClass;
 import rscvanilla.cjci.model.classes.wallobject.WallObjectClass;
 
 @JsonPropertyOrder(alphabetic = true)
@@ -32,4 +33,5 @@ public class ClientJarClassInfo {
     public PanelClass panel = new PanelClass();
     public GameElementsClass gameElements = new GameElementsClass();
     public ModelDefClass modelDef = new ModelDefClass();
+    public ShopInterfaceClass shopInterface = new ShopInterfaceClass();
 }

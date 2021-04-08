@@ -135,3 +135,10 @@ model_def:
   fields:
     id:
     name:
+
+shop_interface:
+  qualified_name: com.rsc.d.b.c
+  fields:
+    shop_items_ids:
+    shop_items_counts:
+    is_shop_visible:
