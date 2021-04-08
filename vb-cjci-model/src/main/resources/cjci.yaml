@@ -134,7 +134,9 @@ shop_interface:
   qualified_name: com.rsc.d.b.c
   fields:
     is_shop_visible: lm
+    shop_items_count: ln
     shop_items_counts: lu
+    shop_items_default_counts: lw
     shop_items_ids: lv
 
 wall_object:

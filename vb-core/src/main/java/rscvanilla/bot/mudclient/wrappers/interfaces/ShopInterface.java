@@ -1,9 +1,8 @@
 package rscvanilla.bot.mudclient.wrappers.interfaces;
 
-import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 import rscvanilla.bot.mudclient.models.items.ShopItem;
+import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 import rscvanilla.bot.mudclient.wrappers.MudClientWrapperObject;
-import rscvanilla.cjci.model.classes.playercharacter.PlayerCharacterClassFields;
 import rscvanilla.cjci.model.classes.shopinterface.ShopInterfaceClassFields;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public class ShopInterface extends MudClientWrapperObject<Object> {
     }
 
     public boolean isShopVisible() { return this.<Boolean>getFieldValue("isShopVisible", getClassFields().isShopVisible, Boolean.class); }
-    public int getShopItemsCount() { return this.<Byte>getFieldValue("getShopItemCount", "ln", Byte.class); }
+    public int getShopItemsCount() { return this.<Byte>getFieldValue("getShopItemsCount", getClassFields().shopItemsCount, Byte.class); }
 
     public List<ShopItem> getShopItems() {
         return IntStream.range(0, getShopItemsCount())
@@ -25,9 +24,9 @@ public class ShopInterface extends MudClientWrapperObject<Object> {
                 .collect(Collectors.toList());
     }
 
-    public int[] getShopItemIds() { return getFieldValue("getShopItemIds", getClassFields().shopItemIds, int[].class); }
+    public int[] getShopItemIds() { return getFieldValue("getShopItemIds", getClassFields().shopItemsIds, int[].class); }
     public int[] getShopItemsCounts() { return getFieldValue("getShopItemsCounts", getClassFields().shopItemsCounts, int[].class); }
-    public int[] getShopItemsDefaultCounts() { return getFieldValue("getShopItemsDefaultCounts", "lw", int[].class); }
+    public int[] getShopItemsDefaultCounts() { return getFieldValue("getShopItemsDefaultCounts", getClassFields().shopItemsDefaultCounts, int[].class); }
 
     private ShopInterfaceClassFields getClassFields() {
         return mudClientWrapper.getClientJarClassInfo().shopInterface.fields;
