@@ -19,6 +19,7 @@ import rscvanilla.cjci.updater.core.matcher.classes.gameentity.GameEntityClassFi
 import rscvanilla.cjci.updater.core.matcher.classes.nonplayercharacter.NonPlayerCharacterClassMethodNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.nonplayercharacterinfo.fields.NonPlayerCharacterInfoClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.playercharacter.PlayerCharacterClassFieldNameMatcher;
+import rscvanilla.cjci.updater.core.matcher.classes.shopinterface.ShopInterfaceClassFieldNameMatcher;
 import rscvanilla.cjci.updater.core.matcher.classes.wallobject.WallObjectClassFieldNameMatcher;
 
 public class ClassMemberNameMatcherModule extends AbstractModule {
@@ -45,6 +46,8 @@ public class ClassMemberNameMatcherModule extends AbstractModule {
 
         configureSubTypesOf(GameElementsClassFieldNameMatcher.class);
         configureSubTypesOf(ModelDefClassFieldNameMatcher.class);
+        configureSubTypesOf(ShopInterfaceClassFieldNameMatcher.class);
+
     }
 
     private <T> void configureSubTypesOf(Class<T> clazz) {

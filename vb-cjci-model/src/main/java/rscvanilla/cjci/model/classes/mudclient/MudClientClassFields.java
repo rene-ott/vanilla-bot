@@ -47,4 +47,6 @@ public class MudClientClassFields implements WithClassMembers {
     @YamlClassMemberKey("login_panel") public String loginPanel;
     @YamlClassMemberKey("login_panel_password_control_id") public String loginPanelPasswordControlId;
     @YamlClassMemberKey("login_panel_username_control_id") public String loginPanelUsernameControlId;
+    @YamlClassMemberKey("shop_interface") public String shopInterface;
+
 }
