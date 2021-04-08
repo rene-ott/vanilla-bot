@@ -21,6 +21,8 @@ shadowJar {
         minimize()
         archiveFileName = "agent.jar"
     }
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
 }
 
 task copyToLib(type: Copy) {
