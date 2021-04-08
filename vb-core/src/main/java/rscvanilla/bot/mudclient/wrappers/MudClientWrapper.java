@@ -217,7 +217,7 @@ public class MudClientWrapper {
             loginPanelPasswordControlId = initField("loginPanelPasswordControlId", classFields.loginPanelPasswordControlId, Integer.class);
             loginPanelUsernameControlId = initField("loginPanelUsernameControlId", classFields.loginPanelUsernameControlId, Integer.class);
             loginPanel = initField("loginPanel", classFields.loginPanel, Object.class);
-            shopInterface = initField("shopInterface", "oN", Object.class);
+            shopInterface = initField("shopInterface", classFields.shopInterface, Object.class);
             packetBuilder = initField("packetBuilder", baseClassFields.packetBuilder, Object.class);
             simpleLogger.debug("");
         } catch (BotException e) {

@@ -70,6 +70,7 @@ mud_client:
     login_panel:
     login_panel_password_control_id:
     login_panel_username_control_id:
+    shop_interface:
   methods:
     login:
     logout:
