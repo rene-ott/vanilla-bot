@@ -14,7 +14,7 @@ public class NonPlayerCharacter extends Character<com.rsc.e.j> {
     public Position getLocalPosition() { return getDynamicLocalPosition(); }
 
     private NonPlayerCharacterInfo getInfo() {
-        return new NonPlayerCharacterInfo(getMethod(getClassMethods().getInfo, "cA").invokeFunction(), mudClientWrapper);
+        return new NonPlayerCharacterInfo(getMethod("get_info", getClassMethods().getInfo).invokeFunction(), mudClientWrapper);
     }
 
     public boolean isAttackable() { return getInfo().isAttackable(); }
