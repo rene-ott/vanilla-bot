@@ -38,11 +38,16 @@ public class ScriptClassLoader extends ClassLoader {
 
             var loadedClass = loadClass(scriptName);
             if (!scriptName.contains("$")) {
-                scriptClassFiles.add((Class<? extends RunnableScript>) loadedClass);
+                scriptClassFiles.add(uncheckedCast(loadedClass));
             }
         }
 
         return scriptClassFiles;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Class<? extends RunnableScript> uncheckedCast(Class<?> loadedClass) {
+        return (Class<? extends RunnableScript>)  loadedClass;
     }
 
     public Class<?> loadClass(String name) {
