@@ -1,6 +1,7 @@
 package rscvanilla.bot.mudclient.actions;
 
 import rscvanilla.bot.mudclient.enums.OpCodeOut;
+import rscvanilla.bot.mudclient.models.items.ItemBase;
 import rscvanilla.bot.mudclient.wrappers.MudClientWrapper;
 
 import javax.inject.Inject;
@@ -151,11 +152,15 @@ public class InventoryItemAction extends BaseAction {
     }
 
     public int getInventoryItemCount(int id) {
-        return (int) mudClientWrapper.getInventoryItems().stream().filter(it -> it.getId() == id).count();
+        return mudClientWrapper.getInventoryItems()
+            .stream()
+            .filter(it -> it.getId() == id)
+            .mapToInt(ItemBase::getCount)
+            .sum();
     }
 
     public boolean isInventoryFull() {
-        return mudClientWrapper.inventoryItemsCount.getValue() == 30;
+        return mudClientWrapper.getInventoryItems().size() == 30;
     }
 
     private int getFirstInventoryItemIndexById(int id) {
