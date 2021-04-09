@@ -15,7 +15,7 @@ public class ShopAction extends BaseAction {
 
 
     public boolean isShopVisible() {
-        return mudClientWrapper.getShopInterface() != null && mudClientWrapper.getShopInterface().isShopVisible();
+        return mudClientWrapper.getShopInterface().isShopVisible();
     }
 
     public void buyShopItem(int id, int count) {

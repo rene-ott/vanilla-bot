@@ -25,11 +25,12 @@ public class ShopItemsCountFieldNameMatcherTests extends BaseTests {
         var match = new StringBuilder()
             .append("   private final k M;").append(lineSeparator)
             .append("   public boolean lg;").append(lineSeparator)
-            .append("   public byte ***lh***;")
+            .append("   public byte lh;").append(lineSeparator)
+            .append("   public int ***li***;")
             .toString();
 
         var result = matcher.match(mudClient);
-        assertThat(result.getMemberName(), equalTo("lh"));
+        assertThat(result.getMemberName(), equalTo("li"));
         assertThat(result.getMatch(), equalTo(match));
     }
 }

@@ -21,10 +21,10 @@ public class TestScript extends RunnableScript {
         if (isShopWindowVisible()) {
             System.out.println("Window visible");
 
-            var shopItemCount = getCurrentShopItemCount(135);
+            var shopItemCount = getCurrentShopItemCount(465);
             if (shopItemCount > 0) {
                 System.out.println("Buy item");
-                buyShopItem(135, shopItemCount);
+                buyShopItem(465, shopItemCount);
             }
         }
         waitFor(3000);

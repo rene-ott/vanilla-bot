@@ -13,7 +13,8 @@ public class ShopItemsCountFieldNameMatcher extends ClassMemberNameBaseMatcher i
         pattern = Pattern.compile(
             "(?<pre> {3}private final k [a-zA-Z]{1,2};\\R" +
                 " {3}public boolean [a-zA-Z]{2};\\R" +
-                " {3}public byte )(?<fieldName>[a-zA-Z]{2})(?<post>;)",
+                " {3}public byte [a-zA-Z]{2};\\R" +
+                " {3}public int )(?<fieldName>[a-zA-Z]{2})(?<post>;)",
             Pattern.MULTILINE
         );
     }

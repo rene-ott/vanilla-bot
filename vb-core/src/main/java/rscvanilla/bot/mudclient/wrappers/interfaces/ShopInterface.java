@@ -16,11 +16,11 @@ public class ShopInterface extends MudClientWrapperObject<Object> {
     }
 
     public boolean isShopVisible() { return this.<Boolean>getFieldValue("isShopVisible", getClassFields().isShopVisible, Boolean.class); }
-    public int getShopItemsCount() { return this.<Byte>getFieldValue("getShopItemsCount", getClassFields().shopItemsCount, Byte.class); }
+    public int getShopItemsCount() { return this.<Integer>getFieldValue("getShopItemsCount", getClassFields().shopItemsCount, Integer.class); }
 
     public List<ShopItem> getShopItems() {
         return IntStream.range(0, getShopItemsCount())
-                .mapToObj(i -> new ShopItem(getShopItemIds()[i], getShopItemsDefaultCounts()[i], getShopItemsCounts()[i]))
+                .mapToObj(i -> new ShopItem(getShopItemIds()[i], getShopItemsCounts()[i], getShopItemsDefaultCounts()[i]))
                 .collect(Collectors.toList());
     }
 
