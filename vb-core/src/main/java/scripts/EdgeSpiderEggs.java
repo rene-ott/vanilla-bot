@@ -7,7 +7,7 @@ import rscvanilla.bot.script.template.RunnableScript;
 
 import javax.swing.*;
 
-public class EdgeHerbs extends RunnableScript {
+public class EdgeSpiderEggs extends RunnableScript {
 
     private final static Position BANK_TOP_POS = new Position(212, 453);
     private final static Position BANK_BOTTOM_POS = new Position(220, 448);
@@ -33,48 +33,21 @@ public class EdgeHerbs extends RunnableScript {
     private final static int GATE_2_ID = 305;
     private final static Position GATE_2_POS = new Position(196, 3266);
 
-    private final static Position DRUID_AREA_TOP_POS = new Position(203, 3257);
-    private final static Position DRUID_AREA_BOTTOM_POS = new Position(219, 3241);
+    private final static Position EGGS_AREA_TOP_POS = new Position(210, 3230);
+    private final static Position EGGS_AREA_BOTTOM_POS = new Position(197, 3243);
 
-    private final static int[] VALUABLE_ITEMS = new int[] {
-            42, // Law rune
-            33, // Air rune
-            40, // Nature rune
-            469, // Snape grass
-            165, // Guam,
-            437, // Harralander
-            438, // Ranarr weed
-            439, // Irit leaf
-            440, // Avantoe
-            441, // Kwuarm
-            442, // Cadantine
-            443, // Dwarf Weed
-            160, // Uncut sapphire
-            159, // Uncut emerald
-            158, // Uncut ruby
-            157, // Uncut diamond
-            526, // Half of a key
-            527, // Half of a key
-            1277, // Half dragon square,
-            464 // Vials
-    };
-
-    private static int UNID_MARRENTILL = 435;
-    private static int UNID_TARROMIN = 436;
-    private static int MARRENTILL = 445;
-    private static int TARROMIN = 446;
+    private final static int RED_SPIDER_EGGS = 219;
 
     private int combatStyle;
 
-
-    public EdgeHerbs(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
+    public EdgeSpiderEggs(ScriptDependencyContext dependencyContext, ScriptAntiBanParams argumentContext) {
         super(dependencyContext, argumentContext);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        combatStyle = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Edge Druid Herbs"), "Enter fight mode (0-3): "));
+        combatStyle = Integer.parseInt(JOptionPane.showInputDialog(new JFrame("Edge Spider Eggs"), "Enter fight mode (0-3): "));
     }
 
     @Override
@@ -90,17 +63,17 @@ public class EdgeHerbs extends RunnableScript {
         }
 
         switch (newState) {
-            case KILL_DRUIDS -> killDruids();
+            case PICK_UP_EGGS -> pickUpEggs();
             case WALK_TO_BANK -> walkToBank();
             case BANK -> bankItems();
-            case WALK_TO_DRUIDS -> walkToDruids();
+            case WALK_TO_EGGS -> walkToEggs();
             default -> throw new IllegalStateException();
         }
     }
 
     private void bankItems() {
         if (isBankWindowVisible()) {
-            depositAllBankItems(VALUABLE_ITEMS);
+            depositAllBankItems(RED_SPIDER_EGGS);
             waitFor(300);
             return;
         }
@@ -116,6 +89,7 @@ public class EdgeHerbs extends RunnableScript {
     }
 
     private void walkToBank() {
+        walkToTile(198, 3248);
         walkToTile(196, 3265);
         if (isInFrontOfGate2ToBank()) {
             atGroundObject(GATE_2_ID, GATE_2_POS);
@@ -150,49 +124,22 @@ public class EdgeHerbs extends RunnableScript {
         walkToTile(216, 451);
     }
 
-    private void killDruids() {
+    private void pickUpEggs() {
         if (getCombatStyle() != combatStyle) {
             setCombatStyle(combatStyle);
         }
 
-        if (isInCombat()) {
-            return;
-        }
+        if (isItemOnGroundInRectangleArea(EGGS_AREA_TOP_POS, EGGS_AREA_BOTTOM_POS, RED_SPIDER_EGGS)) {
+            if (isInCombat()){
+                walkToTile(getCurrentPos());
+                return;
+            }
 
-        if (isItemInInventory(UNID_MARRENTILL)) {
-            useInventoryItem(UNID_MARRENTILL);
-            return;
+            takeGroundItemFromRectangleArea(EGGS_AREA_TOP_POS, EGGS_AREA_BOTTOM_POS, RED_SPIDER_EGGS);
         }
-
-        if (isItemInInventory(MARRENTILL)) {
-            dropAllInventoryItems(MARRENTILL);
-            return;
-        }
-
-        if (isItemInInventory(UNID_TARROMIN)) {
-            useInventoryItem(UNID_TARROMIN);
-            return;
-        }
-
-        if (isItemInInventory(TARROMIN)) {
-            dropAllInventoryItems(TARROMIN);
-            return;
-        }
-
-        if (isItemOnGroundInRectangleArea(DRUID_AREA_TOP_POS, DRUID_AREA_BOTTOM_POS, VALUABLE_ITEMS)) {
-            takeGroundItemFromRectangleArea(DRUID_AREA_TOP_POS, DRUID_AREA_BOTTOM_POS, VALUABLE_ITEMS);
-            return;
-        }
-
-        if (isItemOnGroundInRectangleArea(DRUID_AREA_TOP_POS, DRUID_AREA_BOTTOM_POS, UNID_TARROMIN, UNID_MARRENTILL)) {
-            takeGroundItemFromRectangleArea(DRUID_AREA_TOP_POS, DRUID_AREA_BOTTOM_POS, UNID_TARROMIN, UNID_MARRENTILL);
-            return;
-        }
-
-        attackNpc(270);
     }
 
-    private void walkToDruids() {
+    private void walkToEggs() {
         if (isInBank()) {
             if (isBankDoorClosed()) {
                 print("W2B: Bank door is closed!");
@@ -203,7 +150,7 @@ public class EdgeHerbs extends RunnableScript {
 
         walkToTile(218, 463);
 
-        if (isInFrontOfDoorToDruids()) {
+        if (isInFrontOfDoorToEggs()) {
             if (isDoorClosed()) {
                 print("W2B: Door is closed!");
                 atWallObject(HOUSE_DOOR_ID, HOUSE_DOOR_POS);
@@ -218,24 +165,25 @@ public class EdgeHerbs extends RunnableScript {
             return;
         }
 
-        if (isInFrontOfGate1ToDruids() && isGate1Closed()) {
+        if (isInFrontOfGate1ToEggs() && isGate1Closed()) {
             atGroundObject(GATE_1_ID, GATE_1_POS);
             return;
         }
 
-        if (isInFrontOfGate2ToDruids()) {
+        if (isInFrontOfGate2ToEggs()) {
             atGroundObject(GATE_2_ID, GATE_2_POS);
             return;
         }
 
         walkToTile(216, 3284);
         walkToTile(213, 3273);
-        walkToTile(212, 3253);
-        walkToTile(196, 3270);
+        walkToTile(196, 3271);
+        walkToTile(198, 3252);
+        walkToTile(204, 3237);
     }
 
-    private boolean isAtDruids() {
-        return isCurrentPosInRectangle(new Position(203, 3257), new Position(219, 3241));
+    private boolean isAtEggs() {
+        return isCurrentPosInRectangle(EGGS_AREA_TOP_POS, EGGS_AREA_BOTTOM_POS);
     }
 
     private boolean isInFrontOfBank() {
@@ -250,7 +198,7 @@ public class EdgeHerbs extends RunnableScript {
         return isGroundObjectReachable(GATE_1_ID, GATE_1_POS);
     }
 
-    private boolean isInFrontOfGate2ToDruids() {
+    private boolean isInFrontOfGate2ToEggs() {
         return isCurrentPosInRectangle(new Position(199, 3266), new Position(194, 3277));
     }
 
@@ -262,11 +210,11 @@ public class EdgeHerbs extends RunnableScript {
         return isCurrentPosInRectangle(new Position(210, 3273), new Position(209, 3272));
     }
 
-    private boolean isInFrontOfGate1ToDruids() {
+    private boolean isInFrontOfGate1ToEggs() {
         return isCurrentPosInRectangle(new Position(218, 3270), new Position(211, 3276));
     }
 
-    private boolean isInFrontOfDoorToDruids() {
+    private boolean isInFrontOfDoorToEggs() {
         return isCurrentPosInRectangle(new Position(216, 464), new Position(218, 462));
     }
 
@@ -279,21 +227,21 @@ public class EdgeHerbs extends RunnableScript {
     }
 
     private State getScriptState() {
-        if (isAtDruids()) {
+        if (isAtEggs()) {
             if (!isInventoryFull()) {
-                return State.KILL_DRUIDS;
+                return State.PICK_UP_EGGS;
             } else {
                 return State.WALK_TO_BANK;
             }
         } else if (isInBank()) {
             if (isInventoryEmpty()) {
-                return State.WALK_TO_DRUIDS;
+                return State.WALK_TO_EGGS;
             } else {
                 return State.BANK;
             }
         } else {
             if (isInventoryEmpty()) {
-                return State.WALK_TO_DRUIDS;
+                return State.WALK_TO_EGGS;
             } else {
                 return State.WALK_TO_BANK;
             }
@@ -301,7 +249,7 @@ public class EdgeHerbs extends RunnableScript {
     }
 
     private boolean isInventoryEmpty() {
-     return !isItemInInventory(VALUABLE_ITEMS);
+     return !isItemInInventory(RED_SPIDER_EGGS);
     }
 
     private boolean isInBank() {
@@ -319,8 +267,8 @@ public class EdgeHerbs extends RunnableScript {
     public void onGameMessageReceived(String message) { }
 
     private enum State {
-        WALK_TO_DRUIDS,
-        KILL_DRUIDS,
+        WALK_TO_EGGS,
+        PICK_UP_EGGS,
         WALK_TO_BANK,
         BANK
     }
