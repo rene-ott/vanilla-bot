@@ -36,7 +36,6 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
 
     private final IgnoredPlayersDialogOpenButton ignoredPlayersDialogOpenButton;
 
-    private final String ACTION_NOTHING = "-";
     private final String ACTION_PAUSE = "Pause";
     private final String ACTION_STOP = "Stop";
 
@@ -55,6 +54,7 @@ public class ScriptAntiBanPanel extends JPanel implements ItemListener, ChangeLi
         panelHolder[1][1].add(distanceSpinner = createSpinner(1, 60, 10));
 
         panelHolder[2][0].add(new JLabel("Action:"));
+        String ACTION_NOTHING = "-";
         panelHolder[2][1].add(actionComboBox = createActionComboBox(ACTION_NOTHING, ACTION_PAUSE, ACTION_STOP));
 
         panelHolder[3][0].add(new JLabel("Pause min:"));

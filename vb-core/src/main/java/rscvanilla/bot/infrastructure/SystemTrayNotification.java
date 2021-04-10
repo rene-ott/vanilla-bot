@@ -32,5 +32,6 @@ public class SystemTrayNotification {
         tray.add(trayIcon);
 
         trayIcon.displayMessage(caption, message, TrayIcon.MessageType.WARNING);
+        tray.remove(trayIcon);
     }
 }

@@ -1,6 +1,7 @@
 package rscvanilla.bot.script.template;
 
 import rscvanilla.bot.events.messages.GameMessageEvent;
+import rscvanilla.bot.infrastructure.SystemTrayNotification;
 import rscvanilla.bot.infrastructure.utils.ExecutorUtil;
 import rscvanilla.bot.mudclient.handlers.gamemessage.GameMessageQueue;
 import rscvanilla.bot.script.ScriptDependencyContext;
@@ -189,7 +190,10 @@ public abstract class RunnableScript extends Script implements Runnable, ScriptW
 
         switch (type) {
             case GAME -> onGameMessageReceived(event.getMessage());
-            case CHAT -> onChatMessageReceived(event.getSender(), event.getMessage());
+            case CHAT -> {
+                SystemTrayNotification.showWarning("Vanilla Bot", "Player [" + event.getSender() +"] spoke");
+                onChatMessageReceived(event.getSender(), event.getMessage());
+            }
         }
     }
 

@@ -130,6 +130,8 @@ public class ScriptAntiBan {
             if (isPlayerMarkedAsDetected) {
                 this.detectedPlayers.put(player, currentTimeInMillis);
                 writeLog("(AB) Player [" + player + "] has been detected.");
+                SystemTrayNotification.showWarning("Vanilla Bot", "Player [" + player +"] has been detected");
+
             }
         }
 
@@ -155,7 +157,6 @@ public class ScriptAntiBan {
         logger.trace("doAntiBan");
 
         playSound();
-        SystemTrayNotification.showWarning("Vanilla Bot", "Anti-Ban: Player Detected");
 
         if (!state.isRunning()) {
             return;
