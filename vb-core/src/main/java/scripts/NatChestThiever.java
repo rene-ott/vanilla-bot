@@ -17,6 +17,13 @@ public class NatChestThiever extends RunnableScript {
 
     @Override
     protected void loop() {
+
+        if (getFatigue() > 90) {
+            useSleepingBag();
+            waitFor(4000);
+            return;
+        }
+
         atGroundObject2(335);
         waitFor(500);
     }
