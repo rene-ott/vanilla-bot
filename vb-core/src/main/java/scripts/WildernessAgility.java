@@ -47,7 +47,7 @@ public class WildernessAgility extends RunnableScript {
 
     @Override
     protected void loop() {
-        waitFor(1000);
+        waitFor(500);
 
         if (getFatigue() > 90) {
             useSleepingBag();
@@ -79,7 +79,7 @@ public class WildernessAgility extends RunnableScript {
             return Action.SWING;
         }  else if (isCurrentPosInRectangle(AFTER_PIPE_TOP, AFTER_PIPE_BOTTOM) && stonesFailed && !swingFailed) {
             return Action.JUMP_STONES;
-        } else if (getCurrentPos().equals(new Position(297,105))) {
+        } else if (isCurrentPosInRectangle(new Position(300,103), new Position(296,107))) {
             stonesFailed = false;
             return Action.WALK_LEDGE;
         } else if (isCurrentPosInRectangle(AFTER_PIPE_TOP, AFTER_PIPE_BOTTOM) && !stonesFailed && !swingFailed) {
@@ -120,7 +120,8 @@ public class WildernessAgility extends RunnableScript {
     private void climbVines () {
         if (isInCombat()) {
             walkToTile(getCurrentPos());
-        }atGroundObject(VINE_ID, VINE);
+        }
+        atGroundObject(VINE_ID, VINE);
     }
 
     private void escapePit () {
