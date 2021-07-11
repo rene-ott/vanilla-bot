@@ -94,6 +94,7 @@ public abstract class Script {
     protected void useInventoryItemOnGroundObject(int objectId, int...itemIds) { inventoryItemAction.useItemOnGroundObject(objectId, itemIds); }
 
     protected void dropAllInventoryItems(int...ids) { inventoryItemAction.dropAll(ids); }
+    protected void dropInventoryItem(int id) { inventoryItemAction.dropItem(id); }
     protected void useInventoryItemOnInventoryItem(int firstItemId, int secondItemId) { inventoryItemAction.useItemOnItem(firstItemId, secondItemId); }
     protected void useInventoryItemOnGroundItem(int inventoryItemId, int groundItemId) { inventoryItemAction.useInventoryItemOnGroundItem(inventoryItemId, groundItemId); }
 
